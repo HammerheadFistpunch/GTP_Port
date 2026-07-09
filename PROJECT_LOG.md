@@ -4,103 +4,136 @@ _Last Updated: 2026-07-09_
 
 ---
 
-## Project Status
+# Current Status
 
-**Phase:** Foundation
+**Phase:** Homepage Assembly
 
-Progress:
+**Current Goal:**
+Build the first complete version of the AngrySquirrel.org homepage using reusable Astro components.
 
-- [x] Project architecture planned
-- [x] GitHub repository created
-- [x] Cloudflare Pages deployed
+---
+
+# Completed
+
+## Project Foundation
+
+- [x] Project concept defined
+- [x] Website architecture planned
 - [x] Astro project initialized
-- [x] Design specification completed
-- [x] File/folder structure finalized
-- [x] Design system created
-- [x] Base layout created
-- [x] Navigation component created
-- [x] Footer component created
-- [x] Homepage scaffold created
-
-Current Task:
-
-> Build reusable UI components.
-
-Next Task:
-
-> Create Hero.astro
+- [x] GitHub repository created
+- [x] Cloudflare Pages deployment completed
+- [x] Domain planned through Cloudflare
 
 ---
 
-## Current Stack
+## Design System
 
-| Component | Choice |
-|-----------|--------|
-| Framework | Astro |
-| Hosting | Cloudflare Pages |
-| Repository | GitHub |
-| CMS | TinaCMS (Planned) |
-| Images | Immich (Planned) |
-| Search | Pagefind (Planned) |
-| Comments | Giscus (Planned) |
+- [x] Dark theme established
+- [x] Color palette created
+- [x] Typography system created
+- [x] Global CSS created
+- [x] Utility classes created
 
----
+Design system:
 
-## Completed Milestones
+- Background: `#121417`
+- Surface: `#1B1F24`
+- Elevated Surface: `#252A31`
+- Text: `#F2F4F5`
+- Secondary Text: `#A8B0B8`
+- Accent: Steel Blue `#4682B4`
 
-### Foundation
+Fonts:
 
-- Astro initialized
-- Git connected
-- Cloudflare deployment working
-- Project architecture finalized
-- Global design system implemented
-- Typography established
-- Navigation implemented
-- Footer implemented
+- UI: Lato
+- Editorial: Newsreader
 
 ---
 
-## Upcoming Milestones
+## Layout System
 
-### UI Components
+Completed:
 
-- [ ] Hero
-- [ ] Button
-- [ ] Section Title
-- [ ] Container
-- [ ] Portfolio Card
-- [ ] Journal Card
-
-### Homepage
-
-- [ ] Hero
-- [ ] Featured Work
-- [ ] Recent Journal
-- [ ] About Section
-
-### Content System
-
-- [ ] Portfolio collection
-- [ ] Journal collection
-- [ ] Resume collection
-
-### CMS
-
-- [ ] TinaCMS
-
-### Refinement
-
-- [ ] Search
-- [ ] Comments
-- [ ] Analytics
-- [ ] SEO
-- [ ] Performance optimization
+- [x] BaseLayout.astro
+- [x] Navigation.astro
+- [x] Footer.astro
 
 ---
 
-## Notes
+## UI Components
 
-Current focus is building a complete, reusable component library before adding content.
+Completed:
 
-The goal is to have every page assembled from reusable components with minimal duplicated code.
+- [x] Hero.astro
+- [x] Button.astro
+- [x] Container.astro
+- [x] SectionTitle.astro
+
+---
+
+## Content Components
+
+Completed:
+
+- [x] PortfolioCard.astro
+- [x] JournalCard.astro
+- [x] FeaturedArticle.astro
+
+---
+
+# Current Work
+
+## Homepage Assembly
+
+Building:
+
+- [ ] Homepage hero refinement
+- [ ] Featured Work section
+- [ ] Journal feature section
+- [ ] Recent articles section
+- [ ] About section
+- [ ] Final homepage spacing/layout polish
+
+Current file:
+
+```
+src/pages/index.astro
+```
+
+---
+
+# Upcoming
+
+## Media System
+
+- [ ] Image asset structure
+- [ ] Placeholder images
+- [ ] Gallery component
+- [ ] VideoEmbed component
+- [ ] Lightbox component
+
+## Content System
+
+- [ ] Astro Content Collections
+- [ ] Project schema
+- [ ] Journal schema
+- [ ] Resume schema
+
+## CMS
+
+- [ ] TinaCMS integration
+
+## Publishing Features
+
+- [ ] Pagefind search
+- [ ] Giscus comments
+- [ ] Cloudflare Analytics
+- [ ] SEO optimization
+
+---
+
+# Notes
+
+The project is now moving from architecture into visual development.
+
+The goal is to avoid page-specific code wherever possible. New content should eventually be created through Markdown/content collections rather than manually editing pages.
