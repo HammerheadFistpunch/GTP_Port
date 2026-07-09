@@ -1,15 +1,24 @@
 src/
 ├── components/
+│
 │   ├── blog/
 │   │   ├── BlogCard.astro
 │   │   ├── FeaturedArticle.astro
-│   │   └── CategoryNav.astro
+│   │   ├── CategoryNav.astro
+│   │   ├── ArticleMeta.astro        ← add
+│   │   └── RelatedArticles.astro    ← add
 │   │
 │   ├── portfolio/
 │   │   ├── PortfolioCard.astro
 │   │   ├── Gallery.astro
 │   │   ├── Lightbox.astro
-│   │   └── VideoEmbed.astro
+│   │   ├── VideoEmbed.astro
+│   │   ├── ProjectMeta.astro        ← add
+│   │   └── RelatedProjects.astro    ← add
+│   │
+│   ├── media/
+│   │   ├── Image.astro              ← add
+│   │   └── VideoPlayer.astro        ← add
 │   │
 │   ├── ui/
 │   │   ├── Navigation.astro
@@ -25,23 +34,20 @@ src/
 ├── layouts/
 │   ├── BaseLayout.astro
 │   ├── BlogLayout.astro
-│   └── PortfolioLayout.astro
+│   ├── PortfolioLayout.astro
+│   └── ResumeLayout.astro           ← add
 │
 ├── pages/
 │   ├── index.astro
 │   ├── about.astro
 │   ├── contact.astro
 │   ├── resume.astro
-│   │
+│
 │   ├── portfolio/
 │   │   ├── index.astro
-│   │   ├── software/
-│   │   ├── photography/
-│   │   ├── video/
-│   │   ├── writing/
-│   │   └── case-studies/
+│   │   ├── [...slug].astro           ← add
 │   │
-│   └── blog/
+│   └── journal/
 │       ├── index.astro
 │       ├── category/
 │       ├── tag/
@@ -49,9 +55,12 @@ src/
 │       └── [...slug].astro
 │
 ├── content/
-│   ├── blog/
+│   ├── journal/
+│   │
 │   ├── projects/
+│   │
 │   ├── resume/
+│   │
 │   └── config.ts
 │
 ├── styles/
