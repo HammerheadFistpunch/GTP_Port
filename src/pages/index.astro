@@ -1,13 +1,284 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
 import Hero from "../components/ui/Hero.astro";
+import Container from "../components/ui/Container.astro";
+import SectionTitle from "../components/ui/SectionTitle.astro";
+
+import PortfolioCard from "../components/portfolio/PortfolioCard.astro";
+
+import FeaturedArticle from "../components/journal/FeaturedArticle.astro";
+import JournalCard from "../components/journal/JournalCard.astro";
+
+
+const projects = [
+  {
+    title: "Software Development",
+    description:
+      "Applications, systems, and experiments built through code.",
+    image: "/images/project-placeholder.jpg",
+    category: "Software",
+    href: "/portfolio/software"
+  },
+
+  {
+    title: "Photography",
+    description:
+      "Visual storytelling through landscapes, vehicles, and people.",
+    image: "/images/project-placeholder.jpg",
+    category: "Photography",
+    href: "/portfolio/photography"
+  },
+
+  {
+    title: "Video Production",
+    description:
+      "Documentary, production, and visual media projects.",
+    image: "/images/project-placeholder.jpg",
+    category: "Video",
+    href: "/portfolio/video"
+  }
+];
+
+
+const articles = [
+
+  {
+    title:
+      "The Death of the Station Wagon",
+
+    excerpt:
+      "Exploring automotive design, culture, and why certain vehicles remain timeless.",
+
+    image:
+      "/images/article-placeholder.jpg",
+
+    category:
+      "Cars",
+
+    date:
+      "July 2026",
+
+    href:
+      "/journal"
+  },
+
+
+  {
+    title:
+      "Building a Personal Digital Home",
+
+    excerpt:
+      "Why owning your publishing platform still matters in a changing internet.",
+
+    image:
+      "/images/article-placeholder.jpg",
+
+    category:
+      "Technology",
+
+    date:
+      "July 2026",
+
+    href:
+      "/journal"
+  }
+
+];
+
 ---
 
-<BaseLayout title="AngrySquirrel">
+<BaseLayout title="AngrySquirrel.org">
+
 
   <Hero
+
     title="Software. Photography. Engineering. Stories."
-    description="A portfolio and editorial journal exploring software development, photography, filmmaking, Land Cruisers, technology, and the projects worth documenting."
+
+    description="A personal portfolio and editorial journal exploring technology, vehicles, photography, filmmaking, and the projects worth documenting."
+
   />
 
+
+  <section>
+
+    <Container>
+
+      <SectionTitle
+
+        title="Featured Work"
+
+        subtitle="Selected projects across software, photography, video, and creative technology."
+
+      />
+
+
+      <div class="project-grid">
+
+        {
+          projects.map(project => (
+
+            <PortfolioCard
+              {...project}
+            />
+
+          ))
+        }
+
+      </div>
+
+
+    </Container>
+
+  </section>
+
+
+
+  <section>
+
+    <Container>
+
+      <SectionTitle
+
+        title="The AngrySquirrel Journal"
+
+        subtitle="Long-form writing, field notes, technology, cars, and personal projects."
+
+      />
+
+
+      <FeaturedArticle
+
+        {...articles[0]}
+
+      />
+
+
+      <div class="journal-list">
+
+        {
+          articles.slice(1).map(article => (
+
+            <JournalCard
+              {...article}
+            />
+
+          ))
+        }
+
+      </div>
+
+
+    </Container>
+
+  </section>
+
+
+
+  <section class="about">
+
+
+    <Container>
+
+
+      <div class="about-box">
+
+
+        <h2>
+
+          Building things worth documenting.
+
+        </h2>
+
+
+        <p>
+
+          AngrySquirrel.org combines engineering,
+          creative work, and storytelling into one
+          place.
+
+        </p>
+
+
+        <a href="/about">
+
+          Learn More →
+
+        </a>
+
+
+      </div>
+
+
+    </Container>
+
+
+  </section>
+
+
 </BaseLayout>
+
+
+
+<style>
+
+
+.project-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+  gap:2rem;
+
+}
+
+
+
+.journal-list {
+
+  margin-top:3rem;
+
+}
+
+
+
+.about {
+
+  padding-bottom:6rem;
+
+}
+
+
+
+.about-box {
+
+  background:var(--bg-surface);
+
+  border-radius:var(--radius-md);
+
+  padding:3rem;
+
+  border:1px solid var(--border-color);
+
+}
+
+
+
+.about-box h2 {
+
+  margin-bottom:1rem;
+
+}
+
+
+
+.about-box a {
+
+  font-weight:700;
+
+}
+
+
+</style>
