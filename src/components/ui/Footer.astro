@@ -1,0 +1,112 @@
+<footer class="site-footer">
+
+    <div class="footer-inner">
+
+        <div>
+
+            <h3>AngrySquirrel</h3>
+
+            <p>
+                Software, photography, filmmaking, engineering,
+                and long-form writing.
+            </p>
+
+        </div>
+
+        <nav>
+
+            <a href="/">Home</a>
+
+            <a href="/portfolio">Corpus</a>
+
+            <a href="/journal">Journal</a>
+
+            <a href="/about">About</a>
+
+            <a href="/contact">Get in Touch</a>
+
+        </nav>
+
+    </div>
+
+    <div class="copyright">
+
+        © {new Date().getFullYear()} AngrySquirrel.org
+
+    </div>
+
+</footer>
+
+<style>
+
+.site-footer {
+
+    border-top: 1px solid var(--border-color);
+
+    margin-top: var(--space-xl);
+
+    padding: 4rem 2rem;
+
+    background: var(--bg-surface);
+
+}
+
+.footer-inner {
+
+    max-width: var(--content-width);
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 4rem;
+
+}
+
+.footer-inner nav {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: .75rem;
+
+}
+
+.footer-inner a {
+
+    color: var(--text-secondary);
+
+}
+
+.footer-inner a:hover {
+
+    color: var(--accent);
+
+}
+
+.copyright {
+
+    margin-top: 3rem;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: .9rem;
+
+}
+
+@media (max-width:768px){
+
+.footer-inner{
+
+flex-direction:column;
+
+}
+
+}
+
+</style>

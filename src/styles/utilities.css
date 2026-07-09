@@ -1,0 +1,105 @@
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.container {
+    width: min(1200px, calc(100% - 3rem));
+    margin-inline: auto;
+}
+
+
+/* ==========================================================
+   READING WIDTH
+========================================================== */
+
+.reading-width {
+    width: min(760px, calc(100% - 3rem));
+    margin-inline: auto;
+}
+
+
+/* ==========================================================
+   GRID
+========================================================== */
+
+.grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.grid-2 {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.grid-3 {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+
+/* ==========================================================
+   FLEX
+========================================================== */
+
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* ==========================================================
+   SPACING
+========================================================== */
+
+.mt-lg {
+    margin-top: var(--space-lg);
+}
+
+.mb-lg {
+    margin-bottom: var(--space-lg);
+}
+
+.py-lg {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+}
+
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+
+
+/* ==========================================================
+   TEXT
+========================================================== */
+
+.text-center {
+    text-align: center;
+}
+
+.accent {
+    color: var(--accent);
+}
