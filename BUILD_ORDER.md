@@ -1,108 +1,147 @@
-# AngrySquirrel.org Build Order
+# Build Order
 
-_Last Updated: 2026-07-09_
+## Current Status
 
----
+**Project:** GTP_Port
+**Framework:** Astro
+**Hosting:** Cloudflare Pages
+**Repository:** GitHub
 
-# Phase 1 — Foundation ✅
-
-- [x] Astro initialization
-- [x] GitHub setup
-- [x] Cloudflare Pages deployment
-- [x] Folder architecture
-- [x] Design specification
+Current build phase: **Foundation + Design System transition into Content Architecture**
 
 ---
 
-# Phase 2 — Design System ✅
+# Completed
 
-- [x] variables.css
-- [x] global.css
-- [x] typography.css
-- [x] utilities.css
+## Phase 1 — Foundation
 
----
+* [x] Created new Astro project
+* [x] Created GitHub repository
+* [x] Connected Cloudflare Pages deployment
+* [x] Verified automatic deployment pipeline
+* [x] Confirmed static Astro build workflow
 
-# Phase 3 — Core Layout ✅
+## Phase 2 — Design System Foundation
 
-- [x] BaseLayout
-- [x] Navigation
-- [x] Footer
+* [x] Established base layout structure
+* [x] Created Navigation component
+* [x] Created Footer component
+* [x] Created Hero component
+* [x] Created Button component
+* [x] Created Container component
+* [x] Created SectionTitle component
+* [x] Created PortfolioCard component
+* [x] Created JournalCard component
+* [x] Created FeaturedArticle component
 
----
+## Phase 3 — Astro Content Migration
 
-# Phase 4 — UI Components ✅
-
-- [x] Hero
-- [x] Button
-- [x] Container
-- [x] SectionTitle
-
----
-
-# Phase 5 — Content Components ✅
-
-- [x] PortfolioCard
-- [x] JournalCard
-- [x] FeaturedArticle
+* [x] Migrated content collections to Astro v6 format
+* [x] Moved content configuration to `src/content.config.ts`
+* [x] Added collection loaders
+* [x] Verified Astro build reaches route generation
 
 ---
 
-# Phase 6 — Homepage Development 🚧
+# Current Work
 
-Current Phase
+## Content Architecture
 
-## Build
+### Journal
 
-- [ ] Assemble homepage sections
-- [ ] Add featured projects
-- [ ] Add journal feature
-- [ ] Add article feed
-- [ ] Add about section
-- [ ] Refine responsive layout
+Status:
 
----
+* Collection configured
+* Dynamic route created
+* Route generation repaired
+* Content rendering pending
 
-# Phase 7 — Media System
+Remaining:
 
-- [ ] Asset folders
-- [ ] Image component
-- [ ] Gallery
-- [ ] Lightbox
-- [ ] Video embeds
+* Add journal markdown entries
+* Connect JournalCard components
+* Build editorial archive layout
 
----
+### Portfolio
 
-# Phase 8 — Content Collections
+Status:
 
-- [ ] Portfolio collection
-- [ ] Journal collection
-- [ ] Resume collection
-- [ ] Dynamic routes
+* Collection configured
+* Dynamic route created
+* Route generation repaired
+* Content rendering pending
 
----
+Remaining:
 
-# Phase 9 — CMS
-
-- [ ] TinaCMS
-- [ ] Visual editing workflow
+* Add project markdown entries
+* Connect PortfolioCard components
+* Build case study layout
 
 ---
 
-# Phase 10 — Publishing Features
+# Next Build Steps
 
-- [ ] Pagefind search
-- [ ] Giscus comments
-- [ ] Cloudflare Analytics
-- [ ] SEO metadata
-- [ ] Sitemap
-- [ ] Performance tuning
+## 1. Finish Content Routes
+
+* [ ] Verify `/journal`
+* [ ] Verify `/journal/[slug]`
+* [ ] Verify `/portfolio`
+* [ ] Verify `/portfolio/[slug]`
+
+## 2. Build Homepage
+
+Target structure:
+
+* Hero
+* Featured Work
+* The AngrySquirrel Journal
+
+  * FeaturedArticle
+  * JournalCard list
+* About section
+
+Use placeholder content initially.
+
+## 3. Apply Visual System
+
+* Dark theme implementation
+* Steel blue accent palette
+* Editorial serif typography
+* Spacing system
+* Card styling
+* Responsive behavior
+
+## 4. Expand Content Types
+
+Add support for:
+
+* Software projects
+* Photography galleries
+* Video projects
+* Published writing
+* Resume content
 
 ---
 
-# Phase 11 — Launch
+# Future Phases
 
-- [ ] Final design review
-- [ ] Mobile testing
-- [ ] Accessibility review
-- [ ] Production deployment
+## CMS
+
+Deferred until core site is complete.
+
+Planned:
+
+* TinaCMS integration
+* Git-backed editing workflow
+* Content collections management
+
+## Integrations
+
+Later:
+
+* Immich photo integration
+* Giscus comments
+* Resume generation
+* Cloudflare Analytics
+* Search
+* SEO improvements

@@ -1,139 +1,131 @@
-# AngrySquirrel.org Project Log
+# Project Log
 
-_Last Updated: 2026-07-09_
+## 2026-07-09
 
----
+## Deployment / Build Milestone
 
-# Current Status
+### Completed
 
-**Phase:** Homepage Assembly
-
-**Current Goal:**
-Build the first complete version of the AngrySquirrel.org homepage using reusable Astro components.
-
----
-
-# Completed
-
-## Project Foundation
-
-- [x] Project concept defined
-- [x] Website architecture planned
-- [x] Astro project initialized
-- [x] GitHub repository created
-- [x] Cloudflare Pages deployment completed
-- [x] Domain planned through Cloudflare
-
----
-
-## Design System
-
-- [x] Dark theme established
-- [x] Color palette created
-- [x] Typography system created
-- [x] Global CSS created
-- [x] Utility classes created
-
-Design system:
-
-- Background: `#121417`
-- Surface: `#1B1F24`
-- Elevated Surface: `#252A31`
-- Text: `#F2F4F5`
-- Secondary Text: `#A8B0B8`
-- Accent: Steel Blue `#4682B4`
-
-Fonts:
-
-- UI: Lato
-- Editorial: Newsreader
-
----
-
-## Layout System
-
-Completed:
-
-- [x] BaseLayout.astro
-- [x] Navigation.astro
-- [x] Footer.astro
-
----
-
-## UI Components
-
-Completed:
-
-- [x] Hero.astro
-- [x] Button.astro
-- [x] Container.astro
-- [x] SectionTitle.astro
-
----
-
-## Content Components
-
-Completed:
-
-- [x] PortfolioCard.astro
-- [x] JournalCard.astro
-- [x] FeaturedArticle.astro
-
----
-
-# Current Work
-
-## Homepage Assembly
-
-Building:
-
-- [ ] Homepage hero refinement
-- [ ] Featured Work section
-- [ ] Journal feature section
-- [ ] Recent articles section
-- [ ] About section
-- [ ] Final homepage spacing/layout polish
-
-Current file:
+Successfully connected:
 
 ```
-src/pages/index.astro
+GitHub
+   ↓
+Cloudflare Pages
+   ↓
+Astro Build
+   ↓
+Static Deployment
+```
+
+The deployment pipeline is operational.
+
+---
+
+# Astro Migration Work
+
+## Problem
+
+Astro v6 introduced breaking changes to content collections.
+
+Previous structure:
+
+```
+src/content/config.ts
+```
+
+New structure:
+
+```
+src/content.config.ts
+```
+
+## Resolution
+
+Completed migration:
+
+* Moved content configuration
+* Added collection loaders
+* Updated journal and project collections
+* Verified content synchronization
+
+---
+
+# Routing Debugging
+
+Resolved:
+
+* Incorrect BaseLayout import path
+* Missing dynamic route generation for journal
+* Missing dynamic route generation for portfolio
+
+Current routes:
+
+```
+/
+├── journal
+│   └── [...slug]
+│
+└── portfolio
+    └── [...slug]
 ```
 
 ---
 
-# Upcoming
+# Current Issue
 
-## Media System
+The site builds successfully through Astro compilation, but:
 
-- [ ] Image asset structure
-- [ ] Placeholder images
-- [ ] Gallery component
-- [ ] VideoEmbed component
-- [ ] Lightbox component
+* `/journal` is currently empty
+* `/portfolio` is currently empty
 
-## Content System
+Cause:
 
-- [ ] Astro Content Collections
-- [ ] Project schema
-- [ ] Journal schema
-- [ ] Resume schema
-
-## CMS
-
-- [ ] TinaCMS integration
-
-## Publishing Features
-
-- [ ] Pagefind search
-- [ ] Giscus comments
-- [ ] Cloudflare Analytics
-- [ ] SEO optimization
+Content templates exist, but content rendering and placeholder data are not fully connected yet.
 
 ---
 
-# Notes
+# Completed Components
 
-The project is now moving from architecture into visual development.
+Current UI foundation:
 
-The goal is to avoid page-specific code wherever possible. New content should eventually be created through Markdown/content collections rather than manually editing pages.
+* Navigation
+* Footer
+* Hero
+* Button
+* Container
+* SectionTitle
+* PortfolioCard
+* JournalCard
+* FeaturedArticle
+
+---
+
+# Next Session
+
+Priority order:
+
+1. Finish journal rendering
+2. Finish portfolio rendering
+3. Verify dynamic content pages
+4. Build homepage
+5. Apply final dark editorial design system
+
+---
+
+# Design Direction
+
+The site remains:
+
+* Dark themed
+* Steel blue accent color
+* Editorial typography
+* Portfolio + publication hybrid
+* Static-first architecture
+
+Primary goals:
+
+* Add content without modifying code
+* Maintain fast static deployment
+* Keep Astro responsible for design/layout
+* Add CMS only after the foundation is complete
