@@ -1,0 +1,151 @@
+---
+import Container from "./Container.astro";
+import Button from "./Button.astro";
+
+interface Props {
+
+  title: string;
+
+  description: string;
+
+  image?: string;
+
+  primaryText?: string;
+  primaryLink?: string;
+
+  secondaryText?: string;
+  secondaryLink?: string;
+
+}
+
+const {
+
+  title,
+
+  description,
+
+  image,
+
+  primaryText = "View Work",
+  primaryLink = "/portfolio",
+
+  secondaryText = "Read Journal",
+  secondaryLink = "/journal"
+
+} = Astro.props;
+---
+
+<section class="hero">
+
+  <Container>
+
+    <div class="hero-grid">
+
+      <div class="hero-copy">
+
+        <h1>{title}</h1>
+
+        <p>{description}</p>
+
+        <div class="buttons">
+
+          <Button href={primaryLink}>
+            {primaryText}
+          </Button>
+
+          <Button
+            href={secondaryLink}
+            variant="secondary">
+
+            {secondaryText}
+
+          </Button>
+
+        </div>
+
+      </div>
+
+      {image && (
+
+        <div class="hero-image">
+
+          <img
+            src={image}
+            alt={title}
+          />
+
+        </div>
+
+      )}
+
+    </div>
+
+  </Container>
+
+</section>
+
+<style>
+
+.hero {
+
+  padding: 7rem 0;
+
+}
+
+.hero-grid {
+
+  display: grid;
+
+  grid-template-columns: 1.2fr 1fr;
+
+  gap: 5rem;
+
+  align-items: center;
+
+}
+
+.hero-copy h1 {
+
+  margin-bottom: 1rem;
+
+}
+
+.hero-copy p {
+
+  font-size: 1.2rem;
+
+  margin-bottom: 2rem;
+
+}
+
+.buttons {
+
+  display: flex;
+
+  gap: 1rem;
+
+  flex-wrap: wrap;
+
+}
+
+.hero-image img {
+
+  width: 100%;
+
+  border-radius: var(--radius-md);
+
+  box-shadow: var(--shadow-soft);
+
+}
+
+@media (max-width: 900px) {
+
+.hero-grid {
+
+grid-template-columns: 1fr;
+
+}
+
+}
+
+</style>

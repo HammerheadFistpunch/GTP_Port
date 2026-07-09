@@ -1,0 +1,130 @@
+---
+interface Props {
+  title: string;
+  excerpt: string;
+  image: string;
+  date: string;
+  category: string;
+  href: string;
+}
+
+const {
+  title,
+  excerpt,
+  image,
+  date,
+  category,
+  href,
+} = Astro.props;
+---
+
+<a class="journal-card" href={href}>
+
+  <img
+    src={image}
+    alt={title}
+    loading="lazy"
+  />
+
+  <div class="content">
+
+    <div class="meta">
+      {category} · {date}
+    </div>
+
+    <h3>
+      {title}
+    </h3>
+
+    <p>
+      {excerpt}
+    </p>
+
+  </div>
+
+</a>
+
+
+<style>
+
+.journal-card {
+
+  display:grid;
+
+  grid-template-columns:220px 1fr;
+
+  gap:1.5rem;
+
+  padding-bottom:2rem;
+
+  margin-bottom:2rem;
+
+  border-bottom:1px solid var(--border-color);
+
+  color:inherit;
+
+  text-decoration:none;
+
+}
+
+
+.journal-card img {
+
+  width:100%;
+
+  aspect-ratio:16 / 10;
+
+  object-fit:cover;
+
+  border-radius:var(--radius-sm);
+
+}
+
+
+.content h3 {
+
+  margin:.5rem 0 1rem;
+
+}
+
+
+.meta {
+
+  font-family:var(--font-ui);
+
+  font-size:.85rem;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
+
+  color:var(--accent);
+
+}
+
+
+.content p {
+
+  margin:0;
+
+}
+
+
+.journal-card:hover h3 {
+
+  color:var(--accent);
+
+}
+
+
+@media(max-width:800px){
+
+  .journal-card {
+
+    grid-template-columns:1fr;
+
+  }
+
+}
+
+</style>

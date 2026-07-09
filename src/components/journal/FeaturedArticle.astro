@@ -1,0 +1,157 @@
+---
+interface Props {
+  title: string;
+  excerpt: string;
+  image: string;
+  category: string;
+  date: string;
+  href: string;
+}
+
+const {
+  title,
+  excerpt,
+  image,
+  category,
+  date,
+  href,
+} = Astro.props;
+---
+
+<section class="featured">
+
+  <img
+    src={image}
+    alt={title}
+  />
+
+  <div class="overlay">
+
+    <div class="content">
+
+      <div class="meta">
+        {category} · {date}
+      </div>
+
+      <h2>
+        {title}
+      </h2>
+
+      <p>
+        {excerpt}
+      </p>
+
+      <a href={href}>
+        Read Article →
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<style>
+
+.featured {
+
+  position:relative;
+
+  overflow:hidden;
+
+  border-radius:var(--radius-md);
+
+}
+
+
+.featured img {
+
+  width:100%;
+
+  aspect-ratio:21 / 9;
+
+  object-fit:cover;
+
+}
+
+
+.overlay {
+
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  align-items:flex-end;
+
+  padding:3rem;
+
+  background:
+    linear-gradient(
+      transparent,
+      rgba(0,0,0,.85)
+    );
+
+}
+
+
+.content {
+
+  max-width:700px;
+
+}
+
+
+.meta {
+
+  color:var(--accent);
+
+  font-size:.85rem;
+
+  font-weight:700;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
+
+}
+
+
+.content h2 {
+
+  color:white;
+
+  margin:.75rem 0;
+
+}
+
+
+.content p {
+
+  color:#f2f4f5;
+
+}
+
+
+.content a {
+
+  color:white;
+
+  font-weight:700;
+
+}
+
+
+@media(max-width:800px){
+
+.overlay {
+
+padding:1.5rem;
+
+}
+
+}
+
+</style>

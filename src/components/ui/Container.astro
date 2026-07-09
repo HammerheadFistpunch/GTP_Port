@@ -1,0 +1,34 @@
+---
+interface Props {
+  width?: "default" | "reading" | "wide";
+}
+
+const { width = "default" } = Astro.props;
+
+const className =
+  width === "reading"
+    ? "reading-width"
+    : width === "wide"
+      ? "container wide"
+      : "container";
+---
+
+<div class={className}>
+  <slot />
+</div>
+
+<style>
+.container {
+  width: min(1200px, calc(100% - 3rem));
+  margin-inline: auto;
+}
+
+.container.wide {
+  width: min(1400px, calc(100% - 3rem));
+}
+
+.reading-width {
+  width: min(760px, calc(100% - 3rem));
+  margin-inline: auto;
+}
+</style>

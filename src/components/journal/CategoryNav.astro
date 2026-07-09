@@ -1,0 +1,69 @@
+---
+const categories = [
+
+"Technology",
+
+"Cars",
+
+"Photography",
+
+"Projects",
+
+"Personal"
+
+];
+---
+
+<nav class="categories">
+
+{categories.map(category => (
+
+<a href={`/journal/category/${category.toLowerCase()}`}>
+
+{category}
+
+</a>
+
+))}
+
+</nav>
+
+<style>
+
+.categories{
+
+display:flex;
+
+gap:1rem;
+
+flex-wrap:wrap;
+
+margin-bottom:3rem;
+
+}
+
+.categories a{
+
+padding:.5rem 1rem;
+
+border-radius:999px;
+
+background:var(--bg-surface);
+
+border:1px solid var(--border-color);
+
+transition:.2s;
+
+}
+
+.categories a:hover{
+
+background:var(--accent);
+
+color:white;
+
+text-decoration:none;
+
+}
+
+</style>
