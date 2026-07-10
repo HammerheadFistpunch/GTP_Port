@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import CategoryNav from "../../components/journal/CategoryNav.astro";
 import JournalCard from "../../components/journal/JournalCard.astro";
@@ -17,22 +17,29 @@ const posts = (await getCollection("journal", ({ data }) => !data.draft))
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   dateStyle: "long",
 });
+
+const journalPage = await getEntry("pages", "journal");
+
+if (!journalPage) {
+  throw new Error("Missing Journal page content: src/content/pages/journal.md");
+}
+
+const page = journalPage.data;
 ---
 
 <BaseLayout
-  title="Journal | AngrySquirrel.org"
-  description="Long-form writing about technology, cars, photography, projects, and the things worth documenting."
+  title={`${page.title} | AngrySquirrel.org`}
+  description={page.description}
 >
-  <section class="archive-hero">
+  <section class:list={["archive-hero", `archive-hero--${page.headerStyle}`]}>
     <Container>
-      <p class="eyebrow">The AngrySquirrel Journal</p>
-      <h1>Stories, field notes, and useful obsessions.</h1>
-      <p class="introduction">
-        Long-form writing about technology, cars, photography, projects, and
-        the things worth documenting.
-      </p>
+      {page.eyebrow && <p class="eyebrow">{page.eyebrow}</p>}
+      <h1>{page.headline}</h1>
+      <p class="introduction">{page.description}</p>
 
-      <CategoryNav />
+      {page.topics.length > 0 && (
+        <CategoryNav categories={page.topics} />
+      )}
     </Container>
   </section>
 
@@ -60,7 +67,12 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
 <style>
   .archive-hero {
-    padding-bottom: var(--space-lg);
+    padding: var(--space-lg) 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .archive-hero--featured {
+    padding: var(--space-xl) 0 var(--space-lg);
   }
 
   .eyebrow {
@@ -74,7 +86,13 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   }
 
   .archive-hero h1 {
+    max-width: 22ch;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+  }
+
+  .archive-hero--featured h1 {
     max-width: 15ch;
+    font-size: clamp(3rem, 7vw, 5.5rem);
   }
 
   .introduction {
@@ -83,7 +101,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   }
 
   .archive-list {
-    padding-top: 0;
+    padding-top: var(--space-lg);
   }
 
   .archive-list h2 {

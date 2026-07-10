@@ -1,5 +1,9 @@
 ---
-const categories = [
+interface Props {
+  categories?: string[];
+}
+
+const defaultCategories = [
 
 "Technology",
 
@@ -12,6 +16,8 @@ const categories = [
 "Personal"
 
 ];
+
+const { categories = defaultCategories } = Astro.props;
 ---
 
 <div class="categories" aria-label="Journal topics">

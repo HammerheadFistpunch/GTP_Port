@@ -3,6 +3,30 @@ PROJECT_LOG.md
 
 # GTP_Port Project Log
 
+## 2026-07-10 — Journal archive header moved to managed content
+
+Changed:
+
+- Added a `pages` content collection for editable landing-page copy and simple
+  presentation choices.
+- Added `src/content/pages/journal.md` as the source of truth for the Journal
+  page title, eyebrow, headline, description, header style, and topic list.
+- Updated the Journal archive to load this content instead of hardcoding it in
+  the Astro page.
+- Added `compact` and `featured` header variants while keeping layout and
+  responsive styling under Astro's control.
+- Set the Journal archive to the compact variant by default.
+- Updated `CategoryNav.astro` to accept the managed topic list as a prop.
+
+Result:
+
+- TinaCMS can manage the Journal landing-page fields after its collection is
+  connected to `src/content/pages/*.md`.
+- Editors can choose a compact or featured header without directly editing
+  Astro or CSS.
+- The layout, spacing, typography, and responsive behavior remain reusable
+  application code rather than CMS-owned markup.
+
 ## 2026-07-10 — Task 4: collection archives completed
 
 Changed:
