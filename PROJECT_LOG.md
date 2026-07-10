@@ -1,131 +1,145 @@
-# Project Log
+PROJECT_LOG.md
 
-## 2026-07-09
 
-## Deployment / Build Milestone
+# GTP_Port Project Log
 
-### Completed
+## 2026-07-10 — Repository audit and plan correction
 
-Successfully connected:
+Audit scope:
 
-```
-GitHub
-   ↓
-Cloudflare Pages
-   ↓
-Astro Build
-   ↓
-Static Deployment
-```
+- Repository: `HammerheadFistpunch/GTP_Port`
+- Branch: `master`
+- Commit: `865e5fc` (`updated markdowns`)
+- Compared the repository against `BUILD_ORDER.md`, `Roadmap.md`,
+  `PROJECT_LOG.md`, `README.md`, and `Audit.md`.
+- Inspected every tracked source, component, layout, page, style, content, and
+  configuration file.
+- Installed locked dependencies in an isolated workspace and ran the Astro
+  production build.
+- No application code, styles, content, configuration, or dependencies were
+  changed during this audit.
 
-The deployment pipeline is operational.
+### Verified working
 
----
+- Astro 7.0.7 installs from the committed lockfile.
+- Static output mode is active.
+- Production build completes successfully.
+- Six top-level pages are emitted: Home, Journal, Portfolio, About, Resume, and
+  Contact.
+- Journal and project collections load one Markdown placeholder each.
+- The homepage renders a styled hero, featured-work section, journal preview,
+  about callout, navigation, and footer.
+- The shared dark palette, Lato/Newsreader type direction, spacing tokens,
+  container primitives, cards, and basic responsive grids are present.
 
-# Astro Migration Work
+### Build result
 
-## Problem
+Command:
 
-Astro v6 introduced breaking changes to content collections.
-
-Previous structure:
-
-```
-src/content/config.ts
-```
-
-New structure:
-
-```
-src/content.config.ts
-```
-
-## Resolution
-
-Completed migration:
-
-* Moved content configuration
-* Added collection loaders
-* Updated journal and project collections
-* Verified content synchronization
-
----
-
-# Routing Debugging
-
-Resolved:
-
-* Incorrect BaseLayout import path
-* Missing dynamic route generation for journal
-* Missing dynamic route generation for portfolio
-
-Current routes:
-
-```
-/
-├── journal
-│   └── [...slug]
-│
-└── portfolio
-    └── [...slug]
+```text
+npm run build
 ```
 
----
+Result:
 
-# Current Issue
+- Build succeeded.
+- Astro emitted warnings because the journal and project detail routes both
+  resolve their placeholder entry to the parent archive path.
+- Six pages were generated; no journal article or portfolio project detail page
+  was generated.
+- About, Resume, and Contact built as zero-byte HTML files.
+- Journal and Portfolio archive pages built with empty `<title>` elements.
 
-The site builds successfully through Astro compilation, but:
+### Corrected implementation status
 
-* `/journal` is currently empty
-* `/portfolio` is currently empty
+#### Complete
 
-Cause:
+- Git repository and default branch
+- Astro project foundation
+- Static build configuration
+- Cloudflare Pages deployment history and automatic deployment workflow
+- Root content configuration using Astro glob loaders
+- Global stylesheet organization
+- Base color and typography direction
 
-Content templates exist, but content rendering and placeholder data are not fully connected yet.
+#### Implemented but incomplete
 
----
+- `BaseLayout.astro`
+- Navigation and footer
+- Hero, Button, Container, and SectionTitle
+- JournalCard and FeaturedArticle
+- PortfolioCard
+- Homepage shell
+- Journal and Portfolio archive shells
+- Journal and Projects collection schemas
 
-# Completed Components
+#### Broken or disconnected
 
-Current UI foundation:
+- Dynamic journal route
+- Dynamic portfolio route
+- Markdown body rendering on detail pages
+- Archive-to-detail links
+- Homepage-to-collection data flow
+- Homepage placeholder image assets
+- Homepage category portfolio routes
+- Category navigation routes
 
-* Navigation
-* Footer
-* Hero
-* Button
-* Container
-* SectionTitle
-* PortfolioCard
-* JournalCard
-* FeaturedArticle
+#### Empty placeholders
 
----
+Seventeen tracked source files contain no implementation:
 
-# Next Session
+- 11 components: ArticleMeta, RelatedArticles, Image, VideoPlayer, Gallery,
+  Lightbox, ProjectMeta, RelatedProjects, VideoEmbed, Timeline, SearchBox
+- 3 layouts: BlogLayout, PortfolioLayout, `layouts/[...slug].astro`
+- 3 pages: About, Resume, Contact
 
-Priority order:
+### Planning discrepancies found
 
-1. Finish journal rendering
-2. Finish portfolio rendering
-3. Verify dynamic content pages
-4. Build homepage
-5. Apply final dark editorial design system
+- The previous documents described the architecture as structurally complete;
+  detail routing and rendering are not operational.
+- The previous documents described the component library as mostly complete or
+  mature; nearly half of the named components are empty files.
+- The previous documents marked archive and project/article pages complete;
+  archives are minimal unlinked lists and detail pages are not generated.
+- The previous documents placed the project in a polish-only phase; functional
+  page and content work remains.
+- `README.md`, `BUILD_ORDER.md`, `Roadmap.md`, and `Audit.md` used conflicting
+  phase definitions and completion claims.
 
----
+### Current focus
 
-# Design Direction
+The project is now correctly classified as **Functional Core Completion**.
 
-The site remains:
+The next implementation cycle is defined in `BUILD_ORDER.md` and begins with:
 
-* Dark themed
-* Steel blue accent color
-* Editorial typography
-* Portfolio + publication hybrid
-* Static-first architecture
+1. Repair content detail routing and Markdown rendering.
+2. Expand the Journal and Projects schemas.
+3. Implement Journal and Portfolio detail layouts.
+4. Complete and link both archive pages.
+5. Connect the homepage to collection data and valid assets/routes.
+6. Build non-empty About, Resume, and Contact pages.
+7. Complete shared document and navigation accessibility.
+8. Verify the full static route set before design polish.
 
-Primary goals:
+### Decision log
 
-* Add content without modifying code
-* Maintain fast static deployment
-* Keep Astro responsible for design/layout
-* Add CMS only after the foundation is complete
+- Keep Astro static-first.
+- Keep Git-backed Markdown content.
+- Keep `journal` and `projects` as the collection names.
+- Keep `/journal` and `/portfolio` as the public route names.
+- Keep the current source folder organization.
+- Keep CMS concerns out of layout and component architecture.
+- Defer TinaCMS, Giscus, Immich, Pagefind, and advanced features until the core
+  Markdown publishing path works end to end.
+- Do not count an empty file as an implemented component, layout, or page.
+
+### Next milestone exit condition
+
+The project may move into design-system completion when:
+
+- Journal and project detail pages generate and render Markdown.
+- Both archives link to working detail pages.
+- Homepage previews are collection-driven and contain no broken local assets or
+  links.
+- About, Resume, and Contact are non-empty.
+- The production build completes without warnings.
