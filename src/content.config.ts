@@ -18,6 +18,13 @@ const mediaItem = z.object({
     caption: z.string().optional(),
 });
 
+const link = z.object({
+    label: z.string(),
+    href: z.string(),
+});
+
+const headerStyle = z.enum(["compact", "featured"]).default("compact");
+
 const journal = defineCollection({
     loader: glob({
         pattern: "**/*.md",
@@ -69,13 +76,73 @@ const pages = defineCollection({
         pattern: "**/*.md",
         base: "./src/content/pages",
     }),
+    schema: z.discriminatedUnion("pageType", [
+        z.object({
+            pageType: z.literal("home"),
+            description: z.string(),
+            hero: z.object({
+                eyebrow: z.string().optional(),
+                title: z.string(),
+                description: z.string(),
+                image: z.string().optional(),
+                primaryCta: link,
+                secondaryCta: link,
+            }),
+            featuredWork: z.object({
+                title: z.string(),
+                subtitle: z.string(),
+                limit: z.number().int().positive().default(3),
+                emptyMessage: z.string(),
+            }),
+            journalPreview: z.object({
+                title: z.string(),
+                subtitle: z.string(),
+                limit: z.number().int().positive().default(3),
+                emptyMessage: z.string(),
+            }),
+            aboutCallout: z.object({
+                title: z.string(),
+                description: z.string(),
+                link: link,
+            }),
+        }),
+        z.object({
+            pageType: z.literal("archive"),
+            title: z.string(),
+            eyebrow: z.string().optional(),
+            headline: z.string(),
+            description: z.string(),
+            headerStyle,
+            sectionTitle: z.string(),
+            emptyMessage: z.string(),
+            topics: z.array(z.string()).default([]),
+        }),
+        z.object({
+            pageType: z.literal("standard"),
+            title: z.string(),
+            eyebrow: z.string().optional(),
+            headline: z.string(),
+            description: z.string(),
+            headerStyle,
+            links: z.array(link).default([]),
+        }),
+    ]),
+});
+
+const settings = defineCollection({
+    loader: glob({
+        pattern: "**/*.md",
+        base: "./src/content/settings",
+    }),
     schema: z.object({
-        title: z.string(),
-        eyebrow: z.string().optional(),
-        headline: z.string(),
-        description: z.string(),
-        headerStyle: z.enum(["compact", "featured"]).default("compact"),
-        topics: z.array(z.string()).default([]),
+        siteName: z.string(),
+        logoText: z.string(),
+        siteDescription: z.string(),
+        footerTitle: z.string(),
+        footerDescription: z.string(),
+        copyrightName: z.string(),
+        navigation: z.array(link),
+        footerLinks: z.array(link),
     }),
 });
 
@@ -83,4 +150,5 @@ export const collections = {
     journal,
     projects,
     pages,
+    settings,
 };

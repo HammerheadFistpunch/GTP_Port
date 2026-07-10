@@ -2,7 +2,7 @@
 interface Props {
   title: string;
   excerpt: string;
-  image: string;
+  image?: string;
   category: string;
   date: string;
   href: string;
@@ -20,10 +20,16 @@ const {
 
 <section class="featured">
 
-  <img
-    src={image}
-    alt={title}
-  />
+  {image ? (
+    <img
+      src={image}
+      alt={title}
+    />
+  ) : (
+    <div class="image-placeholder" aria-hidden="true">
+      <span>{category}</span>
+    </div>
+  )}
 
   <div class="overlay">
 
@@ -72,6 +78,32 @@ const {
   aspect-ratio:21 / 9;
 
   object-fit:cover;
+
+}
+
+.image-placeholder {
+
+  display:grid;
+
+  place-items:center;
+
+  width:100%;
+
+  aspect-ratio:21 / 9;
+
+  background:var(--bg-elevated);
+
+  color:var(--accent);
+
+  font-family:var(--font-ui);
+
+  font-size:.85rem;
+
+  font-weight:700;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
 
 }
 

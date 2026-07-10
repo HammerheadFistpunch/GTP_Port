@@ -1,0 +1,16 @@
+---
+import { getEntry, render } from "astro:content";
+import StandardPageLayout from "../layouts/StandardPageLayout.astro";
+
+const entry = await getEntry("pages", "about");
+
+if (!entry || entry.data.pageType !== "standard") {
+  throw new Error("Missing or invalid About content: src/content/pages/about.md");
+}
+
+const { Content } = await render(entry);
+---
+
+<StandardPageLayout {...entry.data}>
+  <Content />
+</StandardPageLayout>

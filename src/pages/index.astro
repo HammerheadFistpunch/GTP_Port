@@ -1,284 +1,167 @@
 ---
+import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
 import Hero from "../components/ui/Hero.astro";
 import Container from "../components/ui/Container.astro";
 import SectionTitle from "../components/ui/SectionTitle.astro";
-
 import PortfolioCard from "../components/portfolio/PortfolioCard.astro";
-
 import FeaturedArticle from "../components/journal/FeaturedArticle.astro";
 import JournalCard from "../components/journal/JournalCard.astro";
 
+const homeEntry = await getEntry("pages", "home");
 
-const projects = [
-  {
-    title: "Software Development",
-    description:
-      "Applications, systems, and experiments built through code.",
-    image: "/images/project-placeholder.jpg",
-    category: "Software",
-    href: "/portfolio/software"
-  },
+if (!homeEntry || homeEntry.data.pageType !== "home") {
+  throw new Error("Missing or invalid homepage content: src/content/pages/home.md");
+}
 
-  {
-    title: "Photography",
-    description:
-      "Visual storytelling through landscapes, vehicles, and people.",
-    image: "/images/project-placeholder.jpg",
-    category: "Photography",
-    href: "/portfolio/photography"
-  },
+const page = homeEntry.data;
 
-  {
-    title: "Video Production",
-    description:
-      "Documentary, production, and visual media projects.",
-    image: "/images/project-placeholder.jpg",
-    category: "Video",
-    href: "/portfolio/video"
-  }
-];
+const allProjects = (await getCollection("projects", ({ data }) => !data.draft))
+  .sort((a, b) => {
+    if (a.data.featured !== b.data.featured) {
+      return Number(b.data.featured) - Number(a.data.featured);
+    }
 
+    const dateDifference = (b.data.date?.getTime() ?? 0)
+      - (a.data.date?.getTime() ?? 0);
 
-const articles = [
+    return dateDifference || a.data.title.localeCompare(b.data.title);
+  });
 
-  {
-    title:
-      "The Death of the Station Wagon",
+const projects = allProjects.slice(0, page.featuredWork.limit);
 
-    excerpt:
-      "Exploring automotive design, culture, and why certain vehicles remain timeless.",
+const allPosts = (await getCollection("journal", ({ data }) => !data.draft))
+  .sort((a, b) => {
+    if (a.data.featured !== b.data.featured) {
+      return Number(b.data.featured) - Number(a.data.featured);
+    }
 
-    image:
-      "/images/article-placeholder.jpg",
+    return b.data.date.getTime() - a.data.date.getTime();
+  });
 
-    category:
-      "Cars",
+const articles = allPosts.slice(0, page.journalPreview.limit);
+const featuredArticle = articles[0];
+const remainingArticles = articles.slice(1);
 
-    date:
-      "July 2026",
-
-    href:
-      "/journal"
-  },
-
-
-  {
-    title:
-      "Building a Personal Digital Home",
-
-    excerpt:
-      "Why owning your publishing platform still matters in a changing internet.",
-
-    image:
-      "/images/article-placeholder.jpg",
-
-    category:
-      "Technology",
-
-    date:
-      "July 2026",
-
-    href:
-      "/journal"
-  }
-
-];
-
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "long",
+});
 ---
 
-<BaseLayout title="AngrySquirrel.org">
-
-
+<BaseLayout description={page.description}>
   <Hero
-
-    title="Software. Photography. Engineering. Stories."
-
-    description="A personal portfolio and editorial journal exploring technology, vehicles, photography, filmmaking, and the projects worth documenting."
-
+    eyebrow={page.hero.eyebrow}
+    title={page.hero.title}
+    description={page.hero.description}
+    image={page.hero.image}
+    primaryText={page.hero.primaryCta.label}
+    primaryLink={page.hero.primaryCta.href}
+    secondaryText={page.hero.secondaryCta.label}
+    secondaryLink={page.hero.secondaryCta.href}
   />
 
-
   <section>
-
     <Container>
-
       <SectionTitle
-
-        title="Featured Work"
-
-        subtitle="Selected projects across software, photography, video, and creative technology."
-
+        title={page.featuredWork.title}
+        subtitle={page.featuredWork.subtitle}
       />
 
-
-      <div class="project-grid">
-
-        {
-          projects.map(project => (
-
+      {projects.length > 0 ? (
+        <div class="project-grid">
+          {projects.map((project) => (
             <PortfolioCard
-              {...project}
+              title={project.data.title}
+              description={project.data.description}
+              image={project.data.coverImage}
+              category={project.data.projectType}
+              href={`/portfolio/${project.id}/`}
             />
-
-          ))
-        }
-
-      </div>
-
-
+          ))}
+        </div>
+      ) : (
+        <p>{page.featuredWork.emptyMessage}</p>
+      )}
     </Container>
-
   </section>
-
-
 
   <section>
-
     <Container>
-
       <SectionTitle
-
-        title="The AngrySquirrel Journal"
-
-        subtitle="Long-form writing, field notes, technology, cars, and personal projects."
-
+        title={page.journalPreview.title}
+        subtitle={page.journalPreview.subtitle}
       />
 
+      {featuredArticle ? (
+        <FeaturedArticle
+          title={featuredArticle.data.title}
+          excerpt={featuredArticle.data.description}
+          image={featuredArticle.data.coverImage}
+          category={featuredArticle.data.category}
+          date={dateFormatter.format(featuredArticle.data.date)}
+          href={`/journal/${featuredArticle.id}/`}
+        />
+      ) : (
+        <p>{page.journalPreview.emptyMessage}</p>
+      )}
 
-      <FeaturedArticle
-
-        {...articles[0]}
-
-      />
-
-
-      <div class="journal-list">
-
-        {
-          articles.slice(1).map(article => (
-
+      {remainingArticles.length > 0 && (
+        <div class="journal-list">
+          {remainingArticles.map((article) => (
             <JournalCard
-              {...article}
+              title={article.data.title}
+              excerpt={article.data.description}
+              image={article.data.coverImage}
+              category={article.data.category}
+              date={dateFormatter.format(article.data.date)}
+              href={`/journal/${article.id}/`}
             />
-
-          ))
-        }
-
-      </div>
-
-
+          ))}
+        </div>
+      )}
     </Container>
-
   </section>
-
-
 
   <section class="about">
-
-
     <Container>
-
-
       <div class="about-box">
-
-
-        <h2>
-
-          Building things worth documenting.
-
-        </h2>
-
-
-        <p>
-
-          AngrySquirrel.org combines engineering,
-          creative work, and storytelling into one
-          place.
-
-        </p>
-
-
-        <a href="/about">
-
-          Learn More →
-
+        <h2>{page.aboutCallout.title}</h2>
+        <p>{page.aboutCallout.description}</p>
+        <a href={page.aboutCallout.link.href}>
+          {page.aboutCallout.link.label} →
         </a>
-
-
       </div>
-
-
     </Container>
-
-
   </section>
-
-
 </BaseLayout>
 
-
-
 <style>
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
 
+  .journal-list {
+    margin-top: 3rem;
+  }
 
-.project-grid {
+  .about {
+    padding-bottom: 6rem;
+  }
 
-  display:grid;
+  .about-box {
+    padding: 3rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+  }
 
-  grid-template-columns:
-    repeat(auto-fit,minmax(280px,1fr));
+  .about-box h2 {
+    margin-bottom: 1rem;
+  }
 
-  gap:2rem;
-
-}
-
-
-
-.journal-list {
-
-  margin-top:3rem;
-
-}
-
-
-
-.about {
-
-  padding-bottom:6rem;
-
-}
-
-
-
-.about-box {
-
-  background:var(--bg-surface);
-
-  border-radius:var(--radius-md);
-
-  padding:3rem;
-
-  border:1px solid var(--border-color);
-
-}
-
-
-
-.about-box h2 {
-
-  margin-bottom:1rem;
-
-}
-
-
-
-.about-box a {
-
-  font-weight:700;
-
-}
-
-
+  .about-box a {
+    font-weight: 700;
+  }
 </style>

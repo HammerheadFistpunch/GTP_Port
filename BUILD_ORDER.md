@@ -194,6 +194,8 @@ Verification:
 
 ### Task 5 — Connect the homepage to real collections
 
+Status: **Complete — 2026-07-10**
+
 Files:
 
 - `src/pages/index.astro`
@@ -214,7 +216,19 @@ Acceptance criteria:
 - No homepage image request returns 404.
 - No homepage CTA or card points to a missing route.
 
+Verification:
+
+- Homepage project and Journal previews are loaded directly from their content
+  collections, with featured entries sorted first.
+- Preview counts, section titles, subtitles, empty states, hero content, calls
+  to action, and the About callout are managed in `src/content/pages/home.md`.
+- Optional cover images use component fallbacks instead of missing placeholder
+  assets.
+- Generated homepage links point to the verified project and Journal routes.
+
 ### Task 6 — Build the supporting page shells
+
+Status: **Complete shell — editable content pending final copy**
 
 Files:
 
@@ -236,6 +250,14 @@ Acceptance criteria:
 - All three routes build to non-empty HTML.
 - Navigation never lands on a blank page.
 - Resume markup has a print-friendly foundation.
+
+Verification:
+
+- About, Resume, and Contact render through a shared standard-page layout.
+- Each page has a managed title, eyebrow, headline, description, header style,
+  optional links, and Markdown body under `src/content/pages/`.
+- All three routes generate non-empty HTML; final personal details and contact
+  methods remain content work rather than template work.
 
 ### Task 7 — Complete shared navigation and document accessibility
 

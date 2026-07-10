@@ -3,6 +3,59 @@ PROJECT_LOG.md
 
 # GTP_Port Project Log
 
+## 2026-07-10 — Site-wide content moved out of templates
+
+Changed:
+
+- Added a `settings` content collection and
+  `src/content/settings/site.md` for site identity, navigation, footer copy,
+  footer links, and default metadata.
+- Expanded the `pages` collection with explicit Home, archive, and standard
+  page models.
+- Moved Home, Journal, Corpus, About, Resume, and Contact copy into managed
+  Markdown entries under `src/content/pages/`.
+- Replaced hard-coded homepage project and Journal arrays with live collection
+  queries.
+- Added featured-first sorting, managed preview limits, managed empty states,
+  and safe optional-image fallbacks.
+- Added `StandardPageLayout.astro` so supporting pages share Astro-owned layout
+  while their headers, links, and body copy remain editable.
+- Updated Navigation, Footer, BaseLayout, Hero, and FeaturedArticle to consume
+  managed data instead of embedding site copy.
+- Added `CONTENT_GUIDE.md` to document the future TinaCMS collection mapping and
+  the boundary between editable content and application code.
+
+Verified:
+
+- All content schemas synchronized successfully.
+- `npm run build` generated all eight expected pages without warnings.
+- Home, About, Resume, Contact, Journal, and Corpus output files are non-empty.
+- Every generated internal page link resolves to a generated destination.
+- The homepage contains no missing placeholder-image references.
+- Site identity and major page copy no longer appear as hard-coded strings in
+  Astro templates.
+
+Content now managed outside Astro templates:
+
+- Site name, logo, default description, navigation, footer, and copyright
+- Homepage hero, calls to action, section copy, preview limits, and About callout
+- Journal and Corpus archive headers, section labels, topics, and empty states
+- About, Resume, and Contact headers, links, and Markdown bodies
+- Journal entries and Portfolio projects
+
+Astro still owns:
+
+- Routes and content queries
+- Layout and responsive behavior
+- Components and interaction patterns
+- Typography, spacing, colors, and visual variants
+
+TinaCMS status:
+
+- The content is organized and schema-validated for Tina collection mapping.
+- Tina installation, editing UI, and GitHub authentication remain a separate
+  integration step.
+
 ## 2026-07-10 — Journal archive header moved to managed content
 
 Changed:

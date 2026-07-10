@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PortfolioCard from "../../components/portfolio/PortfolioCard.astro";
 import Container from "../../components/ui/Container.astro";
@@ -15,26 +15,31 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft))
 
     return dateDifference || a.data.title.localeCompare(b.data.title);
   });
+
+const portfolioPage = await getEntry("pages", "portfolio");
+
+if (!portfolioPage || portfolioPage.data.pageType !== "archive") {
+  throw new Error("Missing Portfolio page content: src/content/pages/portfolio.md");
+}
+
+const page = portfolioPage.data;
 ---
 
 <BaseLayout
-  title="Corpus | AngrySquirrel.org"
-  description="A curated portfolio of software, photography, video, writing, engineering, and case-study work."
+  title={page.title}
+  description={page.description}
 >
-  <section class="archive-hero">
+  <section class:list={["archive-hero", `archive-hero--${page.headerStyle}`]}>
     <Container>
-      <p class="eyebrow">The Corpus</p>
-      <h1>Work built to solve, show, or explain something.</h1>
-      <p class="introduction">
-        A curated portfolio of software, photography, video, writing,
-        engineering, and case-study work.
-      </p>
+      {page.eyebrow && <p class="eyebrow">{page.eyebrow}</p>}
+      <h1>{page.headline}</h1>
+      <p class="introduction">{page.description}</p>
     </Container>
   </section>
 
   <section class="archive-list" aria-labelledby="portfolio-projects">
     <Container>
-      <h2 id="portfolio-projects">Selected projects</h2>
+      <h2 id="portfolio-projects">{page.sectionTitle}</h2>
 
       {projects.length > 0 ? (
         <div class="project-grid">
@@ -49,7 +54,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft))
           ))}
         </div>
       ) : (
-        <p>No published Portfolio projects yet.</p>
+        <p>{page.emptyMessage}</p>
       )}
     </Container>
   </section>
@@ -57,7 +62,12 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft))
 
 <style>
   .archive-hero {
-    padding-bottom: var(--space-lg);
+    padding: var(--space-lg) 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .archive-hero--featured {
+    padding: var(--space-xl) 0 var(--space-lg);
   }
 
   .eyebrow {
@@ -71,7 +81,13 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft))
   }
 
   .archive-hero h1 {
+    max-width: 22ch;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+  }
+
+  .archive-hero--featured h1 {
     max-width: 16ch;
+    font-size: clamp(3rem, 7vw, 5.5rem);
   }
 
   .introduction {
@@ -80,7 +96,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft))
   }
 
   .archive-list {
-    padding-top: 0;
+    padding-top: var(--space-lg);
   }
 
   .archive-list h2 {

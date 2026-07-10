@@ -8,6 +8,8 @@ interface Props {
 
   description: string;
 
+  eyebrow?: string;
+
   image?: string;
 
   primaryText?: string;
@@ -24,13 +26,15 @@ const {
 
   description,
 
+  eyebrow,
+
   image,
 
-  primaryText = "View Work",
-  primaryLink = "/portfolio",
+  primaryText,
+  primaryLink,
 
-  secondaryText = "Read Journal",
-  secondaryLink = "/journal"
+  secondaryText,
+  secondaryLink
 
 } = Astro.props;
 ---
@@ -43,25 +47,33 @@ const {
 
       <div class="hero-copy">
 
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+
         <h1>{title}</h1>
 
         <p>{description}</p>
 
-        <div class="buttons">
+        {(primaryText && primaryLink) || (secondaryText && secondaryLink) ? (
+          <div class="buttons">
 
-          <Button href={primaryLink}>
-            {primaryText}
-          </Button>
+            {primaryText && primaryLink && (
+              <Button href={primaryLink}>
+                {primaryText}
+              </Button>
+            )}
 
-          <Button
-            href={secondaryLink}
-            variant="secondary">
+            {secondaryText && secondaryLink && (
+              <Button
+                href={secondaryLink}
+                variant="secondary">
 
-            {secondaryText}
+                {secondaryText}
 
-          </Button>
+              </Button>
+            )}
 
-        </div>
+          </div>
+        ) : null}
 
       </div>
 
@@ -107,6 +119,24 @@ const {
 .hero-copy h1 {
 
   margin-bottom: 1rem;
+
+}
+
+.eyebrow {
+
+  margin-bottom: var(--space-sm);
+
+  color: var(--accent);
+
+  font-family: var(--font-ui);
+
+  font-size: .85rem;
+
+  font-weight: 700;
+
+  letter-spacing: .08em;
+
+  text-transform: uppercase;
 
 }
 

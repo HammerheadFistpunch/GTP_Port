@@ -1,0 +1,103 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Container from "../components/ui/Container.astro";
+
+interface Link {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  eyebrow?: string;
+  headline: string;
+  description: string;
+  headerStyle?: "compact" | "featured";
+  links?: Link[];
+}
+
+const {
+  title,
+  eyebrow,
+  headline,
+  description,
+  headerStyle = "compact",
+  links = [],
+} = Astro.props;
+---
+
+<BaseLayout {title} {description}>
+  <article class:list={["standard-page", `standard-page--${headerStyle}`]}>
+    <header class="page-header">
+      <Container width="reading">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        <h1>{headline}</h1>
+        <p class="introduction">{description}</p>
+
+        {links.length > 0 && (
+          <nav class="page-links" aria-label={`${title} links`}>
+            {links.map((link) => (
+              <a href={link.href}>{link.label} →</a>
+            ))}
+          </nav>
+        )}
+      </Container>
+    </header>
+
+    <Container width="reading">
+      <div class="article-content page-content">
+        <slot />
+      </div>
+    </Container>
+  </article>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-lg) 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .standard-page--featured .page-header {
+    padding: var(--space-xl) 0 var(--space-lg);
+  }
+
+  .eyebrow {
+    margin-bottom: var(--space-sm);
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .page-header h1 {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+  }
+
+  .standard-page--featured .page-header h1 {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .introduction {
+    max-width: 44rem;
+    margin-bottom: 0;
+    font-size: 1.2rem;
+  }
+
+  .page-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .page-links a {
+    font-weight: 700;
+  }
+
+  .page-content {
+    padding: var(--space-lg) 0 var(--space-xl);
+  }
+</style>

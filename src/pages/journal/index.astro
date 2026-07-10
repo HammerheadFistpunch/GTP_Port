@@ -20,7 +20,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
 const journalPage = await getEntry("pages", "journal");
 
-if (!journalPage) {
+if (!journalPage || journalPage.data.pageType !== "archive") {
   throw new Error("Missing Journal page content: src/content/pages/journal.md");
 }
 
@@ -28,7 +28,7 @@ const page = journalPage.data;
 ---
 
 <BaseLayout
-  title={`${page.title} | AngrySquirrel.org`}
+  title={page.title}
   description={page.description}
 >
   <section class:list={["archive-hero", `archive-hero--${page.headerStyle}`]}>
@@ -45,7 +45,7 @@ const page = journalPage.data;
 
   <section class="archive-list" aria-labelledby="journal-entries">
     <Container width="reading">
-      <h2 id="journal-entries">Latest entries</h2>
+      <h2 id="journal-entries">{page.sectionTitle}</h2>
 
       {posts.length > 0 ? (
         posts.map((post) => (
@@ -59,7 +59,7 @@ const page = journalPage.data;
           />
         ))
       ) : (
-        <p>No published Journal entries yet.</p>
+        <p>{page.emptyMessage}</p>
       )}
     </Container>
   </section>

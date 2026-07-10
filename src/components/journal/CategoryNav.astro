@@ -1,23 +1,9 @@
 ---
 interface Props {
-  categories?: string[];
+  categories: string[];
 }
 
-const defaultCategories = [
-
-"Technology",
-
-"Cars",
-
-"Photography",
-
-"Projects",
-
-"Personal"
-
-];
-
-const { categories = defaultCategories } = Astro.props;
+const { categories } = Astro.props;
 ---
 
 <div class="categories" aria-label="Journal topics">

@@ -1,22 +1,24 @@
 ---
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Corpus", href: "/portfolio" },
-  { label: "The AngrySquirrel Journal", href: "/journal" },
-  { label: "About", href: "/about" },
-  { label: "Get in Touch", href: "/contact" },
-];
+import { getEntry } from "astro:content";
+
+const siteEntry = await getEntry("settings", "site");
+
+if (!siteEntry) {
+  throw new Error("Missing site settings: src/content/settings/site.md");
+}
+
+const site = siteEntry.data;
 ---
 
 <nav class="site-nav">
   <div class="nav-container">
 
     <a href="/" class="logo">
-      AngrySquirrel.org
+      {site.logoText}
     </a>
 
     <ul class="nav-links">
-      {navItems.map((item) => (
+      {site.navigation.map((item) => (
         <li>
           <a href={item.href}>{item.label}</a>
         </li>

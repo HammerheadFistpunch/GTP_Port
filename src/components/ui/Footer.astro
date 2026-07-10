@@ -1,29 +1,32 @@
+---
+import { getEntry } from "astro:content";
+
+const siteEntry = await getEntry("settings", "site");
+
+if (!siteEntry) {
+    throw new Error("Missing site settings: src/content/settings/site.md");
+}
+
+const site = siteEntry.data;
+---
+
 <footer class="site-footer">
 
     <div class="footer-inner">
 
         <div>
 
-            <h3>AngrySquirrel</h3>
+            <h3>{site.footerTitle}</h3>
 
-            <p>
-                Software, photography, filmmaking, engineering,
-                and long-form writing.
-            </p>
+            <p>{site.footerDescription}</p>
 
         </div>
 
         <nav>
 
-            <a href="/">Home</a>
-
-            <a href="/portfolio">Corpus</a>
-
-            <a href="/journal">Journal</a>
-
-            <a href="/about">About</a>
-
-            <a href="/contact">Get in Touch</a>
+            {site.footerLinks.map((item) => (
+                <a href={item.href}>{item.label}</a>
+            ))}
 
         </nav>
 
@@ -31,7 +34,7 @@
 
     <div class="copyright">
 
-        © {new Date().getFullYear()} AngrySquirrel.org
+        © {new Date().getFullYear()} {site.copyrightName}
 
     </div>
 
