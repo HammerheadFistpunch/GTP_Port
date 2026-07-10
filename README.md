@@ -51,3 +51,5 @@ npm run build
 The minimum completion gate for every implementation batch is a warning-free
 production build plus verification that expected routes, links, and local assets
 exist.
+
+push to build
