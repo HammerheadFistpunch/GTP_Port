@@ -1,144 +1,21 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
 ---
 
-<BaseLayout title="AngrySquirrel">
+<BaseLayout>
+  <main>
+    <h1>Portfolio</h1>
 
-<section class="hero">
-
-    <div class="hero-content">
-
-        <h1>
-
-            Software.<br>
-
-            Photography.<br>
-
-            Engineering.<br>
-
-            Stories.
-
-        </h1>
-
-        <p>
-
-            A portfolio and editorial journal exploring
-            software development, photography,
-            filmmaking, Land Cruisers,
-            technology, and the projects worth documenting.
-
-        </p>
-
-        <div class="buttons">
-
-            <a class="button" href="/portfolio">
-
-                View Corpus
-
-            </a>
-
-            <a class="button secondary" href="/journal">
-
-                Read Journal
-
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
+    {
+      projects.map((project) => (
+        <article>
+          <h2>{project.data.title}</h2>
+          <p>{project.data.description}</p>
+        </article>
+      ))
+    }
+  </main>
 </BaseLayout>
-
-<style>
-
-.hero{
-
-min-height:75vh;
-
-display:flex;
-
-align-items:center;
-
-padding:0 2rem;
-
-}
-
-.hero-content{
-
-max-width:800px;
-
-margin:auto;
-
-}
-
-.hero h1{
-
-font-family:var(--font-editorial);
-
-font-size:clamp(3rem,8vw,6rem);
-
-line-height:1.05;
-
-margin-bottom:1rem;
-
-}
-
-.hero p{
-
-font-size:1.2rem;
-
-color:var(--text-secondary);
-
-max-width:650px;
-
-margin-bottom:2rem;
-
-}
-
-.buttons{
-
-display:flex;
-
-gap:1rem;
-
-flex-wrap:wrap;
-
-}
-
-.button{
-
-padding:.9rem 1.6rem;
-
-border-radius:var(--radius-sm);
-
-background:var(--accent);
-
-color:white;
-
-font-weight:700;
-
-text-decoration:none;
-
-}
-
-.secondary{
-
-background:transparent;
-
-border:1px solid var(--accent);
-
-color:var(--accent);
-
-}
-
-.button:hover{
-
-text-decoration:none;
-
-opacity:.9;
-
-}
-
-</style>

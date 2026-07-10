@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("journal");
+---
+
+<BaseLayout>
+  <main>
+    <h1>Journal</h1>
+
+    {
+      posts.map((post) => (
+        <article>
+          <h2>{post.data.title}</h2>
+          <p>{post.data.description}</p>
+        </article>
+      ))
+    }
+  </main>
+</BaseLayout>
