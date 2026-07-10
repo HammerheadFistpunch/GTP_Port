@@ -54,6 +54,8 @@ meet their acceptance criteria.
 
 ### Task 1 — Repair content entry routing
 
+Status: **Complete — 2026-07-10**
+
 Files:
 
 - `src/pages/journal/[...slug].astro`
@@ -72,7 +74,16 @@ Acceptance criteria:
 - `/portfolio/test-project/` is generated and displays its Markdown body.
 - `npm run build` completes without dynamic-route conflict warnings.
 
+Verification:
+
+- Astro generated eight pages, including both expected detail routes.
+- Both generated detail documents contain their titles, descriptions, and
+  rendered Markdown bodies.
+- The production build completed without warnings.
+
 ### Task 2 — Expand the content schemas
+
+Status: **Complete — 2026-07-10**
 
 Files:
 
@@ -95,7 +106,18 @@ Acceptance criteria:
 - Archive, detail, and homepage views can be driven from collection data rather
   than separate hard-coded object shapes.
 
+Verification:
+
+- Journal entries now support category, tags, cover image, featured/draft
+  state, publish date, and optional update date.
+- Projects now support project type, tags, cover image, featured/draft state,
+  date, technologies, external links, and typed media items.
+- Both placeholder entries validate and all eight static pages still build
+  without warnings.
+
 ### Task 3 — Implement the journal and portfolio layouts
+
+Status: **Complete — 2026-07-10**
 
 Files:
 
@@ -117,7 +139,21 @@ Acceptance criteria:
 - Page titles and descriptions reach the document head.
 - Markdown content uses the intended Newsreader editorial typography.
 
+Verification:
+
+- The empty legacy `BlogLayout.astro` was replaced by `JournalLayout.astro`.
+- Journal detail pages use `ArticleMeta` for category, dates, and tags.
+- Portfolio detail pages use `ProjectMeta` for project type, date,
+  technologies, and tags.
+- Both layouts support optional cover images; Portfolio also supports external
+  project links.
+- Generated detail pages contain unique titles, meta descriptions, metadata,
+  distinct layouts, and rendered Markdown.
+- All eight static pages build without warnings.
+
 ### Task 4 — Complete both archive pages
+
+Status: **Complete — 2026-07-10**
 
 Files:
 
@@ -140,6 +176,21 @@ Acceptance criteria:
 - Both archives have non-empty document titles.
 - Every displayed entry opens a working detail page.
 - No archive link points to an unimplemented route.
+
+Verification:
+
+- Journal entries are filtered for published content and sorted with featured
+  items first, then newest date.
+- Portfolio projects are filtered for published content and sorted with
+  featured items first, then date/title.
+- Both archives use their existing card components and link to generated detail
+  pages.
+- Cards use styled local fallbacks when no cover image is supplied, avoiding
+  broken placeholder assets.
+- Journal topics are displayed without dead category URLs until filtering or
+  category routes are implemented.
+- Archive titles, meta descriptions, and link destinations were verified in the
+  generated HTML; all eight pages build without warnings.
 
 ### Task 5 — Connect the homepage to real collections
 

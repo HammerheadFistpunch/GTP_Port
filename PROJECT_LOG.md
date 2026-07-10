@@ -3,6 +3,126 @@ PROJECT_LOG.md
 
 # GTP_Port Project Log
 
+## 2026-07-10 — Task 4: collection archives completed
+
+Changed:
+
+- Rebuilt the Journal archive as an editorial landing page with a useful title,
+  description, topic list, and linked Journal cards.
+- Rebuilt the Corpus archive as a portfolio landing page with a useful title,
+  description, responsive project grid, and linked Portfolio cards.
+- Added deterministic published-content sorting to both collections.
+- Updated JournalCard and PortfolioCard to support optional images and styled
+  no-image fallbacks.
+- Replaced the unimplemented Journal category links with non-clickable topic
+  labels until a real filter or category route exists.
+- Removed nested main landmarks from both archive pages.
+
+Verified:
+
+- Journal output has the title `Journal | AngrySquirrel.org` and links to
+  `/journal/test-post/`.
+- Portfolio output has the title `Corpus | AngrySquirrel.org` and links to
+  `/portfolio/test-project/`.
+- Both destination HTML files exist and are non-empty.
+- Neither archive references missing placeholder images.
+- The Journal archive contains no `/journal/category/` links.
+- `npm run build` generated all eight expected pages without warnings.
+
+Next:
+
+- Task 5 — replace the homepage's hard-coded preview arrays and missing image
+  references with featured collection entries and verified destinations.
+
+## 2026-07-10 — Task 3: detail layouts implemented
+
+Changed:
+
+- Replaced the empty legacy `BlogLayout.astro` with the correctly named
+  `JournalLayout.astro`.
+- Implemented `JournalLayout.astro` with article metadata, editorial header,
+  optional cover image, reading-width content, and Journal return navigation.
+- Implemented `PortfolioLayout.astro` with project metadata, a visually distinct
+  project header, optional cover image, external project links, and content.
+- Implemented `ArticleMeta.astro` for category, published/updated dates, and
+  tags.
+- Implemented `ProjectMeta.astro` for project type, year, technologies, and
+  tags.
+- Added optional description metadata support to `BaseLayout.astro`.
+- Simplified both dynamic route files so they load/render content and delegate
+  presentation to the reusable layouts.
+
+Verified:
+
+- Journal and Portfolio detail pages have separate visual treatments.
+- Both generated documents contain unique titles and meta descriptions.
+- Journal metadata renders the Projects category, publication date, Astro tag,
+  and Build Log tag.
+- Portfolio metadata renders the Software project type and Astro technology.
+- Both Markdown bodies still render correctly.
+- `npm run build` generated all eight expected pages without warnings.
+
+Next:
+
+- Task 4 — turn the minimal Journal and Portfolio archives into complete,
+  collection-driven card layouts that link to the verified detail routes.
+
+## 2026-07-10 — Task 2: content schemas expanded
+
+Changed:
+
+- Moved the Zod import to the Astro 7 `astro/zod` entrypoint.
+- Added shared title, description, tags, cover image, featured, and draft fields.
+- Added Journal publish date, optional update date, and controlled category
+  fields.
+- Added Portfolio project type, optional date, technologies, link fields, and
+  typed image/video media entries.
+- Updated both placeholder Markdown files with valid representative
+  frontmatter.
+
+Verified:
+
+- Content synchronization detected and rebuilt the updated schemas.
+- Both placeholder entries passed schema validation.
+- `npm run build` completed successfully without warnings.
+- All eight expected static pages, including the Journal and Portfolio detail
+  pages, were generated.
+
+Next:
+
+- Task 3 — implement dedicated Journal and Portfolio layouts plus their
+  metadata components, then move the temporary detail-page presentation into
+  those reusable layouts.
+
+## 2026-07-10 — Task 1: content detail routing repaired
+
+Changed:
+
+- Updated `src/pages/journal/[...slug].astro` to build routes from the Astro 7
+  content entry `id`.
+- Updated `src/pages/portfolio/[...slug].astro` to build routes from the Astro 7
+  content entry `id`.
+- Replaced the removed entry instance rendering API with
+  `render(entry)` from `astro:content`.
+- Added complete `BaseLayout` page shells for both detail routes.
+- Added page titles, headings, descriptions, Journal date metadata, archive
+  return links, and rendered Markdown content.
+
+Verified:
+
+- `npm run build` completed successfully without warnings.
+- Astro generated eight pages instead of six.
+- `/journal/test-post/` generated as non-empty HTML and contains the Journal
+  title, date, description, and Markdown body.
+- `/portfolio/test-project/` generated as non-empty HTML and contains the
+  project title, description, and Markdown body.
+- The previous `/journal` and `/portfolio` route-conflict warnings are resolved.
+
+Next:
+
+- Task 2 — expand the Journal and Projects content schemas and update the two
+  placeholder entries to validate the new frontmatter model.
+
 ## 2026-07-10 — Repository audit and plan correction
 
 Audit scope:

@@ -14,19 +14,19 @@ const categories = [
 ];
 ---
 
-<nav class="categories">
+<div class="categories" aria-label="Journal topics">
 
 {categories.map(category => (
 
-<a href={`/journal/category/${category.toLowerCase()}`}>
+<span>
 
 {category}
 
-</a>
+</span>
 
 ))}
 
-</nav>
+</div>
 
 <style>
 
@@ -42,7 +42,7 @@ margin-bottom:3rem;
 
 }
 
-.categories a{
+.categories span{
 
 padding:.5rem 1rem;
 
@@ -52,17 +52,7 @@ background:var(--bg-surface);
 
 border:1px solid var(--border-color);
 
-transition:.2s;
-
-}
-
-.categories a:hover{
-
-background:var(--accent);
-
-color:white;
-
-text-decoration:none;
+color:var(--text-secondary);
 
 }
 

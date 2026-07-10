@@ -1,21 +1,92 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CategoryNav from "../../components/journal/CategoryNav.astro";
+import JournalCard from "../../components/journal/JournalCard.astro";
+import Container from "../../components/ui/Container.astro";
 
-const posts = await getCollection("journal");
+const posts = (await getCollection("journal", ({ data }) => !data.draft))
+  .sort((a, b) => {
+    if (a.data.featured !== b.data.featured) {
+      return Number(b.data.featured) - Number(a.data.featured);
+    }
+
+    return b.data.date.getTime() - a.data.date.getTime();
+  });
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "long",
+});
 ---
 
-<BaseLayout>
-  <main>
-    <h1>Journal</h1>
+<BaseLayout
+  title="Journal | AngrySquirrel.org"
+  description="Long-form writing about technology, cars, photography, projects, and the things worth documenting."
+>
+  <section class="archive-hero">
+    <Container>
+      <p class="eyebrow">The AngrySquirrel Journal</p>
+      <h1>Stories, field notes, and useful obsessions.</h1>
+      <p class="introduction">
+        Long-form writing about technology, cars, photography, projects, and
+        the things worth documenting.
+      </p>
 
-    {
-      posts.map((post) => (
-        <article>
-          <h2>{post.data.title}</h2>
-          <p>{post.data.description}</p>
-        </article>
-      ))
-    }
-  </main>
+      <CategoryNav />
+    </Container>
+  </section>
+
+  <section class="archive-list" aria-labelledby="journal-entries">
+    <Container width="reading">
+      <h2 id="journal-entries">Latest entries</h2>
+
+      {posts.length > 0 ? (
+        posts.map((post) => (
+          <JournalCard
+            title={post.data.title}
+            excerpt={post.data.description}
+            image={post.data.coverImage}
+            date={dateFormatter.format(post.data.date)}
+            category={post.data.category}
+            href={`/journal/${post.id}/`}
+          />
+        ))
+      ) : (
+        <p>No published Journal entries yet.</p>
+      )}
+    </Container>
+  </section>
 </BaseLayout>
+
+<style>
+  .archive-hero {
+    padding-bottom: var(--space-lg);
+  }
+
+  .eyebrow {
+    margin-bottom: var(--space-sm);
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .archive-hero h1 {
+    max-width: 15ch;
+  }
+
+  .introduction {
+    max-width: 44rem;
+    font-size: 1.2rem;
+  }
+
+  .archive-list {
+    padding-top: 0;
+  }
+
+  .archive-list h2 {
+    margin-bottom: var(--space-md);
+  }
+</style>

@@ -1,21 +1,95 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PortfolioCard from "../../components/portfolio/PortfolioCard.astro";
+import Container from "../../components/ui/Container.astro";
 
-const projects = await getCollection("projects");
+const projects = (await getCollection("projects", ({ data }) => !data.draft))
+  .sort((a, b) => {
+    if (a.data.featured !== b.data.featured) {
+      return Number(b.data.featured) - Number(a.data.featured);
+    }
+
+    const dateDifference = (b.data.date?.getTime() ?? 0)
+      - (a.data.date?.getTime() ?? 0);
+
+    return dateDifference || a.data.title.localeCompare(b.data.title);
+  });
 ---
 
-<BaseLayout>
-  <main>
-    <h1>Portfolio</h1>
+<BaseLayout
+  title="Corpus | AngrySquirrel.org"
+  description="A curated portfolio of software, photography, video, writing, engineering, and case-study work."
+>
+  <section class="archive-hero">
+    <Container>
+      <p class="eyebrow">The Corpus</p>
+      <h1>Work built to solve, show, or explain something.</h1>
+      <p class="introduction">
+        A curated portfolio of software, photography, video, writing,
+        engineering, and case-study work.
+      </p>
+    </Container>
+  </section>
 
-    {
-      projects.map((project) => (
-        <article>
-          <h2>{project.data.title}</h2>
-          <p>{project.data.description}</p>
-        </article>
-      ))
-    }
-  </main>
+  <section class="archive-list" aria-labelledby="portfolio-projects">
+    <Container>
+      <h2 id="portfolio-projects">Selected projects</h2>
+
+      {projects.length > 0 ? (
+        <div class="project-grid">
+          {projects.map((project) => (
+            <PortfolioCard
+              title={project.data.title}
+              description={project.data.description}
+              image={project.data.coverImage}
+              category={project.data.projectType}
+              href={`/portfolio/${project.id}/`}
+            />
+          ))}
+        </div>
+      ) : (
+        <p>No published Portfolio projects yet.</p>
+      )}
+    </Container>
+  </section>
 </BaseLayout>
+
+<style>
+  .archive-hero {
+    padding-bottom: var(--space-lg);
+  }
+
+  .eyebrow {
+    margin-bottom: var(--space-sm);
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .archive-hero h1 {
+    max-width: 16ch;
+  }
+
+  .introduction {
+    max-width: 44rem;
+    font-size: 1.2rem;
+  }
+
+  .archive-list {
+    padding-top: 0;
+  }
+
+  .archive-list h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+</style>

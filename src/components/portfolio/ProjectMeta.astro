@@ -1,0 +1,72 @@
+---
+interface Props {
+  projectType: string;
+  date?: Date;
+  technologies?: string[];
+  tags?: string[];
+}
+
+const {
+  projectType,
+  date,
+  technologies = [],
+  tags = [],
+} = Astro.props;
+
+const year = date?.getFullYear();
+const labels = [...new Set([...technologies, ...tags])];
+---
+
+<div class="project-meta" aria-label="Project information">
+  <div class="summary">
+    <span class="project-type">{projectType}</span>
+    {year && <span>{year}</span>}
+  </div>
+
+  {labels.length > 0 && (
+    <ul class="labels" aria-label="Technologies and project tags">
+      {labels.map((label) => <li>{label}</li>)}
+    </ul>
+  )}
+</div>
+
+<style>
+  .project-meta {
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-ui);
+  }
+
+  .summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .project-type {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .labels li {
+    margin: 0;
+    padding: 0.25rem 0.6rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+  }
+</style>

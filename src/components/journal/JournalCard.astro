@@ -2,7 +2,7 @@
 interface Props {
   title: string;
   excerpt: string;
-  image: string;
+  image?: string;
   date: string;
   category: string;
   href: string;
@@ -20,11 +20,17 @@ const {
 
 <a class="journal-card" href={href}>
 
-  <img
-    src={image}
-    alt={title}
-    loading="lazy"
-  />
+  {image ? (
+    <img
+      src={image}
+      alt={title}
+      loading="lazy"
+    />
+  ) : (
+    <div class="image-placeholder" aria-hidden="true">
+      <span>{category}</span>
+    </div>
+  )}
 
   <div class="content">
 
@@ -77,6 +83,36 @@ const {
   object-fit:cover;
 
   border-radius:var(--radius-sm);
+
+}
+
+.image-placeholder {
+
+  display:grid;
+
+  place-items:center;
+
+  min-height:138px;
+
+  aspect-ratio:16 / 10;
+
+  background:var(--bg-elevated);
+
+  border:1px solid var(--border-color);
+
+  border-radius:var(--radius-sm);
+
+  color:var(--accent);
+
+  font-family:var(--font-ui);
+
+  font-size:.8rem;
+
+  font-weight:700;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
 
 }
 

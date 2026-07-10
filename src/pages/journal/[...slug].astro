@@ -1,13 +1,17 @@
 ---
-import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  getCollection,
+  render,
+  type CollectionEntry,
+} from "astro:content";
+import JournalLayout from "../../layouts/JournalLayout.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("journal");
 
   return posts.map((post) => ({
     params: {
-      slug: post.slug,
+      slug: post.id,
     },
     props: {
       post,
@@ -15,6 +19,14 @@ export async function getStaticPaths() {
   }));
 }
 
+interface Props {
+  post: CollectionEntry<"journal">;
+}
+
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 ---
+
+<JournalLayout {...post.data}>
+  <Content />
+</JournalLayout>
