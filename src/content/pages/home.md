@@ -1,9 +1,9 @@
 ---
-pageType: home
 eyebrow: ''
+pageType: home
 description: 'A personal portfolio and editorial journal exploring technology, vehicles, photography, filmmaking, and the projects worth documenting.'
 hero:
-  eyebrow: Software · Photography · Engineering · Stories and nudies
+  eyebrow: Software · Photography · Engineering · Stories & Great bushy eyebrows
   title: Building and documenting the things worth understanding.
   description: 'A personal portfolio and editorial journal exploring technology, vehicles, photography, filmmaking, and the projects worth documenting.'
   primaryCta:

@@ -1,30 +1,31 @@
 ---
-siteName: "AngrySquirrel.org"
-logoText: "AngrySquirrel.org"
-siteDescription: "A personal portfolio and editorial journal exploring technology, vehicles, photography, filmmaking, engineering, and the projects worth documenting."
-footerTitle: "AngrySquirrel"
-footerDescription: "Software, photography, filmmaking, engineering, and long-form writing."
-copyrightName: "AngrySquirrel.org"
+siteName: AngrySquirrel.org
+logoText: AngrySquirrel.org
+siteDescription: 'One mans story, only its a squirrel'
+footerTitle: AngrySquirrel
+footerDescription: Bad footie wootie
+copyrightName: AngrySquirrel.org
 navigation:
-  - label: "Home"
-    href: "/"
-  - label: "Corpus"
-    href: "/portfolio"
-  - label: "The AngrySquirrel Journal"
-    href: "/journal"
-  - label: "About"
-    href: "/about"
-  - label: "Get in Touch"
-    href: "/contact"
+  - label: Home
+    href: /
+  - label: Corpus
+    href: /portfolio
+  - label: The AngrySquirrel Journal
+    href: /journal
+  - label: About
+    href: /about
+  - label: Get in Touch
+    href: /contact
 footerLinks:
-  - label: "Home"
-    href: "/"
-  - label: "Corpus"
-    href: "/portfolio"
-  - label: "Journal"
-    href: "/journal"
-  - label: "About"
-    href: "/about"
-  - label: "Get in Touch"
-    href: "/contact"
+  - label: Home
+    href: /
+  - label: Corpus
+    href: /portfolio
+  - label: Journal
+    href: /journal
+  - label: About
+    href: /about
+  - label: Get in Touch
+    href: /contact
 ---
+
