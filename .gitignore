@@ -23,3 +23,6 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .vs/
+node_modules
+.env
+tina/__generated__
