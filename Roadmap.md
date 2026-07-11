@@ -1,199 +1,144 @@
-Roadmap.md
-
-
 # GTP_Port Roadmap
 
-Last reconciled: 2026-07-10 against `master` commit `865e5fc`.
+Last updated: 2026-07-10  
+Working branch: `gpt-handoff`
 
 ## Vision
 
-Build AngrySquirrel.org as a fast, dark, editorial-first personal site that
-combines long-form publishing with a professional corpus of software,
-photography, video, writing, engineering, and case-study work.
+Build AngrySquirrel.org as a fast, dark, editorial-first personal site combining long-form publishing with a professional portfolio of software, photography, video, writing, engineering, and case-study work.
 
 The system remains:
 
-- Static-first
+- static-first
 - Git-backed
-- Content-focused
-- Photography-friendly
-- Maintainable without routine code changes
-- Designed in Astro, with any future CMS limited to editing content
-
-## Status legend
-
-- **Complete** — implemented and verified
-- **Partial** — useful implementation exists, but the milestone is not complete
-- **Placeholder** — file or route exists without a usable implementation
-- **Not started** — no implementation exists
+- content-focused
+- editable without routine code changes
+- designed and routed by Astro
+- managed through TinaCMS without giving the CMS ownership of layout or styling
 
 ## Milestone 1 — Foundation
 
 Status: **Complete**
 
-- Astro project and dependency lockfile
+- Astro project
 - GitHub repository
-- Cloudflare Pages deployment history
-- Automatic deployment pipeline
-- Static production build
-- Top-level source organization
+- Cloudflare Pages deployment
+- static build pipeline
+- content collections
+- shared source organization
 
-Exit evidence: Astro 7.0.7 production build succeeds from the locked dependency
-set.
+## Milestone 2 — Functional content core
 
-## Milestone 2 — Visual foundation
+Status: **Complete**
 
-Status: **Partial**
+- working Journal and Portfolio detail routes
+- rendered Markdown bodies
+- expanded content schemas
+- dedicated detail layouts
+- linked archive pages
+- collection-driven homepage
+- non-empty supporting pages
+- editable site settings and page content
+- valid static route set
 
-Implemented:
+## Milestone 3 — TinaCMS local integration
 
-- Dark charcoal/slate surfaces
-- Steel-blue accent
-- Lato UI and Newsreader editorial direction
-- Basic spacing, radius, border, shadow, and width tokens
-- Global typography and utility files
-- BaseLayout, Navigation, Footer, Hero, Button, Container, SectionTitle
-- JournalCard, FeaturedArticle, PortfolioCard
+Status: **Nearly complete**
+
+Complete:
+
+- Tina CLI installed
+- Tina Astro integration installed
+- Astro aligned to version 6.4.6
+- static output preserved
+- Tina admin running locally
+- existing Markdown mapped into Tina collections
+- homepage edit successfully verified end to end
+- page editing separated into Homepage, Archive Pages, and Standard Pages
 
 Remaining:
 
-- Complete focus, active, hover, and reduced-motion states
-- Deliberate mobile navigation
-- Final responsive type and spacing scale
-- Contrast audit
-- Component-state consistency
-- Performance decision for web font loading
+- verify every collection
+- remove initializer demo leftovers
+- run a clean production build
+- commit the completed local integration
 
-Exit condition: the functional core is complete and every used component has
-verified desktop, mobile, keyboard, and contrast behavior.
-
-## Milestone 3 — Functional content core
-
-Status: **Current milestone**
-
-Required:
-
-- Working Journal entry routes
-- Working Portfolio project routes
-- Rendered Markdown bodies
-- Expanded content schemas
-- Journal and Portfolio detail layouts
-- Linked, designed archive pages
-- Collection-driven homepage previews
-- Valid local media or deliberate fallbacks
-- Non-empty About, Resume, and Contact pages
-- Complete per-page titles and descriptions
-- Warning-free production build
-
-Exit condition: a new Markdown journal entry or project automatically appears
-on its archive, opens at a stable URL, renders through the correct layout, and
-can be featured on the homepage without editing a separate data array.
-
-## Milestone 4 — Page and component completion
+## Milestone 4 — TinaCloud and GitHub publishing
 
 Status: **Not started**
 
-Journal:
+- create/connect TinaCloud project
+- configure client ID and token
+- configure GitHub authentication
+- confirm `gpt-handoff` or production branch behavior
+- test deployed `/admin/`
+- verify CMS commits and Cloudflare rebuilds
 
-- ArticleMeta
-- Categories or filters with real destinations
-- RelatedArticles
-- Reading time
-- Image and code treatment
+Exit condition: a browser-based Tina edit creates a Git commit and the deployed static site rebuilds successfully.
 
-Portfolio:
+## Milestone 5 — Accessibility and shared shell completion
 
-- ProjectMeta
-- Project types and filters
-- Gallery
-- Lightbox
-- Video embeds
-- RelatedProjects
+Status: **Next after Tina production access**
 
-Supporting pages:
+- skip link
+- visible focus states
+- current-page navigation state
+- deliberate mobile navigation
+- reduced-motion handling
+- favicon and metadata cleanup
+- keyboard and contrast review
 
-- Biography and current focus
-- Resume timeline and print layout
-- Contact methods
-
-Media:
-
-- Reusable image component
-- Reusable video player/embed strategy
-- Accessible captions and fallbacks
-
-Exit condition: every component counted as complete contains a used, tested
-implementation; unused placeholder files are removed or explicitly deferred.
-
-## Milestone 5 — Design completion and Version 1.0 review
+## Milestone 6 — Page and component completion
 
 Status: **Not started**
 
-- Homepage hierarchy and visual rhythm
-- Editorial Journal archive presentation
-- Curated Portfolio presentation
-- Journal reading experience
-- Project case-study experience
-- Phone, tablet, laptop, and wide-screen review
-- Keyboard and screen-reader review
-- Color-contrast audit
-- Broken-link and asset crawl
-- Cross-browser smoke test
+- Journal filters or category routes
+- related articles
+- project filters
+- galleries and lightbox
+- video embeds
+- reusable media components
+- resume timeline and print refinement
 
-Exit condition: the site is visually complete with representative placeholder
-content, and future content of the supported types does not require new layout
-work.
-
-## Milestone 6 — Real content
+## Milestone 7 — Design completion
 
 Status: **Not started**
 
-- Replace all placeholder content
-- Publish representative journal entries
-- Publish software projects and case studies
-- Publish photography collections
-- Publish video and writing work
-- Complete biography, resume, and contact information
+- homepage hierarchy and rhythm
+- Journal archive polish
+- Portfolio archive polish
+- article reading experience
+- case-study presentation
+- phone, tablet, laptop, and wide-screen review
+- cross-browser review
 
-Exit condition: every public section contains credible real content and no
-placeholder copy or media remains.
-
-## Milestone 7 — Launch quality
+## Milestone 8 — Real content
 
 Status: **Not started**
 
-- Metadata and canonical URLs
-- Open Graph and social images
-- Sitemap and robots.txt
+- replace placeholders
+- publish representative Journal entries
+- publish portfolio projects and case studies
+- add photography, video, and writing work
+- complete biography, resume, and contact information
+
+## Milestone 9 — Launch quality
+
+Status: **Not started**
+
+- canonical URLs
+- Open Graph metadata
+- sitemap and robots.txt
 - RSS
-- Image optimization and lazy loading
-- Accessibility QA
+- image optimization
 - Lighthouse and performance work
-- Pagefind search
+- Pagefind
 - Cloudflare Web Analytics
-- Custom-domain launch checks
+- custom-domain launch checks
 
-Exit condition: the site is accessible, discoverable, performant, measurable,
-and ready for the AngrySquirrel.org production domain.
+## Later integrations
 
-## Milestone 8 — Publishing workflow and integrations
-
-Status: **Deferred**
-
-- TinaCMS
-- GitHub authentication for editing, if required by the selected Tina workflow
-- Giscus comments
-- Immich album integration
-- Resume PDF generation from structured data
-- Advanced related-content engine
-- Series and reading progress
-
-Exit condition: these tools improve publishing without taking ownership of the
-Astro design, routing, layout, or component system.
-
-## Immediate task source
-
-`BUILD_ORDER.md` is the canonical ordered implementation list. `PROJECT_LOG.md`
-records verified progress. `Audit.md` records the evidence behind the current
-status. This roadmap defines milestones and should not be used as a substitute
-for the concrete build order.
+- Giscus
+- Immich
+- resume PDF generation
+- advanced related-content features
