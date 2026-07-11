@@ -1,5 +1,54 @@
 # GTP_Port Project Log
 
+## 2026-07-10 — Subscription-free Tina workflow selected
+
+Decision:
+
+- TinaCloud will not be used.
+- TinaCMS remains a local editing interface.
+- Markdown remains the source of truth in GitHub.
+- Cloudflare Pages will rebuild the static Astro site after repository pushes.
+- The deployed site will not expose a hosted CMS editing interface.
+
+Final editing workflow:
+
+```text
+Pull latest branch
+→ run local Tina
+→ edit Markdown through localhost/admin
+→ run production build
+→ commit and push
+→ Cloudflare rebuilds
+```
+
+Multi-machine use:
+
+- clone the same repository on each machine
+- check out `gpt-handoff`
+- pull before editing
+- install dependencies
+- run `npm run dev`
+- commit and push through VS Code Source Control
+
+Cloudflare diagnosis:
+
+- Cloudflare correctly detects pushes to `gpt-handoff`.
+- The deployment failure was reproduced locally.
+- `npm run build` currently invokes `tinacms build && astro build`.
+- `tinacms build` requires TinaCloud `clientId` and `token`.
+- The production build must therefore be changed to `astro build` for the local-only Tina architecture.
+- Cloudflare should use `NODE_VERSION=22.22.0`.
+
+Next required repository changes:
+
+- change the production build script to `astro build`
+- raise the Node engine minimum to `22.22.0`
+- remove unused `@astrojs/cloudflare`
+- regenerate the lockfile
+- clean Tina initializer demo files
+- verify a complete local build
+- push and confirm a successful Cloudflare deployment
+
 ## 2026-07-10 — TinaCMS local integration running
 
 Changed:
@@ -21,27 +70,11 @@ Changed:
 
 Verified:
 
-- `npx tinacms --version` returns `2.5.3`.
 - Tina's local GraphQL server starts successfully.
 - Tina generates its local client and TypeScript files.
 - The CMS loads at `/admin/index.html`.
 - Editing the nested homepage hero eyebrow updates `src/content/pages/home.md`.
 - Astro immediately renders the edited value on the homepage.
-- The local content editing path is working:
-
-```text
-Tina editor
-→ Markdown file
-→ Astro content collection
-→ rendered static page
-```
-
-Current limitation:
-
-- TinaCloud credentials and GitHub authentication are not configured yet.
-- Production editing through the deployed `/admin/` has not been tested.
-- Demo files created by the initializer may still need cleanup.
-- The cleaned six-collection Tina schema still needs one complete save-and-render verification pass.
 
 ## 2026-07-10 — Site-wide content moved out of templates
 

@@ -11,10 +11,12 @@ The system remains:
 
 - static-first
 - Git-backed
+- subscription-free
 - content-focused
-- editable without routine code changes
+- editable without routine template changes
 - designed and routed by Astro
-- managed through TinaCMS without giving the CMS ownership of layout or styling
+- locally managed through TinaCMS
+- deployed through GitHub and Cloudflare Pages
 
 ## Milestone 1 — Foundation
 
@@ -22,7 +24,7 @@ Status: **Complete**
 
 - Astro project
 - GitHub repository
-- Cloudflare Pages deployment
+- Cloudflare Pages connection
 - static build pipeline
 - content collections
 - shared source organization
@@ -31,13 +33,13 @@ Status: **Complete**
 
 Status: **Complete**
 
-- working Journal and Portfolio detail routes
+- Journal and Portfolio detail routes
 - rendered Markdown bodies
 - expanded content schemas
 - dedicated detail layouts
 - linked archive pages
 - collection-driven homepage
-- non-empty supporting pages
+- supporting pages
 - editable site settings and page content
 - valid static route set
 
@@ -47,38 +49,40 @@ Status: **Nearly complete**
 
 Complete:
 
-- Tina CLI installed
-- Tina Astro integration installed
+- Tina CLI and Astro integration installed
 - Astro aligned to version 6.4.6
 - static output preserved
 - Tina admin running locally
-- existing Markdown mapped into Tina collections
-- homepage edit successfully verified end to end
-- page editing separated into Homepage, Archive Pages, and Standard Pages
+- existing Markdown mapped into six Tina collections
+- homepage edit verified end to end
+- local multi-machine workflow defined
 
 Remaining:
 
 - verify every collection
 - remove initializer demo leftovers
-- run a clean production build
+- repair the production build script
+- run a clean static build
 - commit the completed local integration
 
-## Milestone 4 — TinaCloud and GitHub publishing
+Exit condition: any machine with the repository can pull, run Tina locally, edit content, build successfully, and push changes.
 
-Status: **Not started**
+## Milestone 4 — GitHub and Cloudflare publishing
 
-- create/connect TinaCloud project
-- configure client ID and token
-- configure GitHub authentication
-- confirm `gpt-handoff` or production branch behavior
-- test deployed `/admin/`
-- verify CMS commits and Cloudflare rebuilds
+Status: **In progress**
 
-Exit condition: a browser-based Tina edit creates a Git commit and the deployed static site rebuilds successfully.
+- Cloudflare watches `gpt-handoff`
+- Git pushes trigger deployments
+- set Cloudflare Node version to `22.22.0`
+- change production build to `astro build`
+- remove TinaCloud credential requirements
+- confirm a successful automatic deployment
+
+Exit condition: a pushed content or code commit produces a successful Cloudflare Pages deployment without TinaCloud.
 
 ## Milestone 5 — Accessibility and shared shell completion
 
-Status: **Next after Tina production access**
+Status: **Next after deployment repair**
 
 - skip link
 - visible focus states
@@ -109,8 +113,7 @@ Status: **Not started**
 - Portfolio archive polish
 - article reading experience
 - case-study presentation
-- phone, tablet, laptop, and wide-screen review
-- cross-browser review
+- responsive and cross-browser review
 
 ## Milestone 8 — Real content
 
@@ -142,3 +145,9 @@ Status: **Not started**
 - Immich
 - resume PDF generation
 - advanced related-content features
+
+## Explicitly excluded
+
+- TinaCloud dependency
+- subscription-based CMS publishing
+- hosted production `/admin/`

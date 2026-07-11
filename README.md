@@ -1,55 +1,65 @@
-README.md
-
-
 # GTP_Port
 
-Astro source for AngrySquirrel.org: a dark, editorial-first personal website
-combining long-form publishing with a professional portfolio of software,
-photography, video, writing, engineering, and case-study work.
+Astro source for AngrySquirrel.org: a dark, editorial-first personal website combining long-form publishing with a professional portfolio of software, photography, video, writing, engineering, and case-study work.
 
 ## Current status
 
-The repository and deployment foundation are working. The visual foundation and
-homepage shell are partially implemented. The current milestone is **Functional
-Core Completion**: repair Journal and Portfolio detail routing, complete the
-content schemas and layouts, connect archives and homepage previews to Markdown,
-and replace blank supporting pages.
+The functional content architecture and local TinaCMS editing workflow are working. The immediate task is to repair the production build so Cloudflare Pages builds Astro directly without TinaCloud credentials.
 
-Do not treat the project as polish-only yet. See the verified audit and ordered
-tasks below.
+The project intentionally remains subscription-free:
+
+- Astro generates the static website.
+- TinaCMS provides a local visual editor.
+- Markdown in GitHub is the source of truth.
+- Cloudflare Pages rebuilds after pushes.
+- No hosted production CMS is required.
+
+## Editing workflow
+
+```text
+Pull latest branch
+→ npm run dev
+→ edit through localhost/admin
+→ npm run build
+→ commit and push
+→ Cloudflare deploys
+```
+
+Any machine with repository access, Node.js, and Git can use the same workflow.
 
 ## Planning documents
 
-- `BUILD_ORDER.md` — canonical next implementation tasks and acceptance criteria
+- `BUILD_ORDER.md` — canonical implementation order and acceptance criteria
 - `PROJECT_LOG.md` — verified progress and decision history
 - `Roadmap.md` — milestone sequence and exit conditions
-- `Audit.md` — evidence from the 2026-07-10 repository and production-build audit
+- `NEXT_STEPS.md` — immediate handoff for the next work session
+- `Audit.md` — historical repository and production-build audit
 
-## Design references
+## Stack
 
-- `AI notes/Pat Rich website design_July 2026.md`
-- `AI notes/mood board.png`
-- `AI notes/structure.md`
-
-## Stack direction
-
-- Astro, static-first
+- Astro 6
+- static output
 - GitHub-backed Markdown content
+- TinaCMS local editor
 - Cloudflare Pages deployment
-- TinaCMS deferred until the content model and Markdown workflow are stable
-- Pagefind, Giscus, Immich, resume generation, analytics, and launch-quality
-  integrations scheduled after the functional core and design are complete
 
 ## Development
 
-```text
-npm ci
+```bash
+npm install
 npm run dev
+```
+
+Local Tina admin:
+
+```text
+http://localhost:4321/admin/
+```
+
+Production verification:
+
+```bash
 npm run build
 ```
 
-The minimum completion gate for every implementation batch is a warning-free
-production build plus verification that expected routes, links, and local assets
-exist.
-
-push to build
+The build must complete successfully before committing and pushing.
