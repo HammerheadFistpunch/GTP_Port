@@ -4,6 +4,7 @@ import { tinaAdminDevRedirect } from '@tinacms/astro/vite';
 
 // https://astro.build/config
 export default defineConfig({
+    site: 'https://angrysquirrel.org',
     output: 'static',
 
     integrations: [tina()],

@@ -2,7 +2,7 @@
 
 ## Checkpoint
 
-Chunks 1 through 3A are complete and locally verified.
+Milestones 1 through 5 are complete and locally verified.
 
 Completed:
 
@@ -13,6 +13,11 @@ Completed:
 - Structured Resume collection and timeline
 - Removal of unused zero-byte placeholders
 - Documentation reconciliation
+- Skip link, visible focus, current-page state, and reduced-motion support
+- Compact keyboard-accessible mobile navigation
+- Explicit favicon links and consistent shared page descriptions
+- Canonical URL, Open Graph, and social card metadata foundation
+- Shared-shell keyboard and color-contrast review
 
 ## User checkpoint
 
@@ -41,18 +46,15 @@ Cloudflare should use:
 
 ## Fresh-window starting point
 
-Begin with **Chunk 4A: Accessibility foundation**.
+Begin **Milestone 6: Page and component completion**.
 
-Scope:
+Remaining scope:
 
-- skip link
-- visible keyboard focus
-- current-page navigation state
-- reduced-motion support
-- keyboard and contrast verification
-
-Keep mobile navigation in a separate Chunk 4B.
+- Journal category filters or routes
+- Portfolio project filters
+- Inline narrative video blocks
+- Resume print refinement
 
 ## Current verification target
 
-`npm run build` should generate nine pages without TinaCloud credentials.
+`npm run build` should generate nine pages without TinaCloud credentials and every generated page should contain a description, canonical URL, and social metadata.

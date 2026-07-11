@@ -1,9 +1,9 @@
 ---
-siteName: AngrySquirrel.org
-logoText: AngrySquirrel.org
-siteDescription: 'One mans story, only its a squirrel'
-footerTitle: AngrySquirrel
-footerDescription: Bad footie wootie
+siteName: TheAngrySquirrel
+logoText: TheAngrySquirrel
+siteDescription: 'Patrick Rich - HammerheadFistpunch. Two names, one legend'
+footerTitle: TheAngrySquirrel
+footerDescription: 'Patrick Rich - HammerheadFistpunch. Two names, one legend'
 copyrightName: AngrySquirrel.org
 navigation:
   - label: Home

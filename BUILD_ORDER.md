@@ -2,11 +2,11 @@
 
 Last updated: 2026-07-11
 Working branch: `gpt-handoff`
-Verified baseline: remote commit `2e5aa86` plus delivered Chunks 1 through 3A
+Verified baseline: `gpt-handoff` after Milestones 1 through 5
 
 ## Current phase
 
-> Accessibility and shared shell completion
+> Milestone 6 - Page and component completion
 
 The functional content core is complete. Astro builds the site directly, TinaCMS runs locally, Markdown remains the source of truth, and the interrupted placeholder components have been restored or removed.
 
@@ -22,6 +22,11 @@ The functional content core is complete. Astro builds the site directly, TinaCMS
 - Related Journal entries and Portfolio projects
 - Structured Resume editor and timeline
 - No zero-byte files under `src/`
+- Accessibility foundation and skip link
+- Keyboard-accessible compact mobile navigation
+- Current-page navigation states and reduced-motion handling
+- Explicit favicons, canonical URLs, and social metadata foundation
+- Passing shared-shell color contrast
 - `npm run build` and `git diff --check` pass
 
 ## Publishing workflow
@@ -40,32 +45,19 @@ TinaCloud and a hosted production `/admin/` are intentionally excluded.
 
 ## Next build order
 
-### Chunk 4A - Accessibility foundation
+### Milestone 6 remaining work
 
-- Add a skip link.
-- Add global visible `:focus-visible` styles.
-- Mark the current navigation destination.
-- Add reduced-motion handling.
-- Verify keyboard navigation and color contrast.
-
-### Chunk 4B - Mobile navigation
-
-- Replace wrapping navigation with a deliberate compact menu.
-- Support keyboard and screen-reader operation.
-- Prevent clipping at narrow widths.
-
-### Chunk 4C - Shared metadata cleanup
-
-- Verify favicon behavior.
-- Add consistent page descriptions.
-- Prepare canonical and social metadata for the launch milestone.
+1. Add Journal category filters or category routes.
+2. Add Portfolio project filters.
+3. Add inline narrative video blocks.
+4. Complete Resume print refinement.
+5. Reconcile documentation and close Milestone 6.
 
 ### Then
 
-- Page-by-page design refinement
-- Real content replacement
-- SEO, RSS, sitemap, robots, and image optimization
-- Search and launch checks
+- Milestone 7 page-by-page design refinement
+- Milestone 8 real content replacement
+- Milestone 9 launch-quality SEO, RSS, sitemap, robots, image optimization, search, and launch checks
 
 ## Deferred integrations
 

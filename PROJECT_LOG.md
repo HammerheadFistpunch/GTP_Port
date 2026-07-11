@@ -1,5 +1,35 @@
 # GTP_Port Project Log
 
+## 2026-07-11 - Milestone 5 accessibility and shared shell completed
+
+Completed:
+
+- Added a skip-to-content link and global visible keyboard-focus styles.
+- Added current-page state to primary navigation, including detail routes.
+- Added reduced-motion handling.
+- Replaced wrapping mobile navigation with a compact accessible menu.
+- Added Escape-to-close, outside-click handling, focus return, and 44px mobile targets.
+- Preserved navigation access when JavaScript is unavailable.
+- Explicitly linked the existing SVG and ICO favicons.
+- Added the production site URL and canonical URLs.
+- Added shared Open Graph and Twitter card metadata with optional content images.
+- Verified descriptions flow through Homepage, archive, standard, Journal, and Portfolio layouts.
+- Raised the steel-blue accent from `#4682B4` to `#4F91C7` so normal accent text passes on both primary and surface backgrounds.
+
+Verified:
+
+- User approved Chunks 4A and 4B and pushed both to `gpt-handoff`.
+- Cloudflare Pages deployment succeeds from `gpt-handoff` without TinaCloud.
+- Primary text contrast is 16.72:1 on the main background.
+- Secondary text contrast is 8.41:1 on the main background.
+- Updated accent contrast is 5.45:1 on the main background and 4.90:1 on charcoal surfaces.
+- Production build generates nine static pages.
+- `git diff --check` passes.
+
+Next:
+
+- Begin Milestone 6 page and component completion.
+
 ## 2026-07-11 - Functional component recovery completed
 
 Completed:

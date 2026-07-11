@@ -45,7 +45,7 @@ Status: **Complete**
 
 ## Milestone 3 — TinaCMS local integration
 
-Status: **Complete locally; deployment confirmation pending**
+Status: **Complete**
 
 Complete:
 
@@ -68,28 +68,32 @@ Exit condition: any machine with the repository can pull, run Tina locally, edit
 
 ## Milestone 4 — GitHub and Cloudflare publishing
 
-Status: **In progress**
+Status: **Complete**
 
 - Cloudflare watches `gpt-handoff`
 - Git pushes trigger deployments
 - set Cloudflare Node version to `22.22.0`
 - change production build to `astro build`
 - remove TinaCloud credential requirements
-- confirm a successful automatic deployment
+- successful automatic deployment confirmed on 2026-07-11
 
 Exit condition: a pushed content or code commit produces a successful Cloudflare Pages deployment without TinaCloud.
 
 ## Milestone 5 — Accessibility and shared shell completion
 
-Status: **Next**
+Status: **Complete**
 
 - skip link
 - visible focus states
 - current-page navigation state
-- deliberate mobile navigation
+- deliberate keyboard-accessible mobile navigation
 - reduced-motion handling
-- favicon and metadata cleanup
-- keyboard and contrast review
+- explicit SVG and ICO favicon links
+- canonical URL support
+- Open Graph and social-sharing metadata foundation
+- page descriptions verified across shared layouts
+- keyboard review completed
+- color contrast reviewed and steel-blue accent raised to a passing ratio
 
 ## Milestone 6 — Page and component completion
 
