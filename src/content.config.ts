@@ -25,6 +25,27 @@ const link = z.object({
 
 const headerStyle = z.enum(["compact", "featured"]).default("compact");
 
+const timelineItem = z.object({
+    period: z.string(),
+    title: z.string(),
+    organization: z.string().optional(),
+    location: z.string().optional(),
+    description: z.string().optional(),
+    highlights: z.array(z.string()).default([]),
+});
+
+const competency = z.object({
+    title: z.string(),
+    description: z.string(),
+});
+
+const educationItem = z.object({
+    degree: z.string(),
+    institution: z.string(),
+    focus: z.string().optional(),
+    period: z.string().optional(),
+});
+
 const journal = defineCollection({
     loader: glob({
         pattern: "**/*.md",
@@ -125,6 +146,10 @@ const pages = defineCollection({
             description: z.string(),
             headerStyle,
             links: z.array(link).default([]),
+            professionalSummary: z.string().default(""),
+            competencies: z.array(competency).default([]),
+            experience: z.array(timelineItem).default([]),
+            education: z.array(educationItem).default([]),
         }),
     ]),
 });

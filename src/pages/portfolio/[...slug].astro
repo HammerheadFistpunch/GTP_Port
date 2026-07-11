@@ -9,24 +9,56 @@ import PortfolioLayout from "../../layouts/PortfolioLayout.astro";
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
 
-  return projects.map((project) => ({
-    params: {
-      slug: project.id,
-    },
-    props: {
-      project,
-    },
-  }));
+  const publishedProjects = projects.filter((project) => !project.data.draft);
+
+  return publishedProjects.map((project) => {
+    const relatedProjects = publishedProjects
+      .filter((candidate) => candidate.id !== project.id)
+      .map((candidate) => ({
+        candidate,
+        score:
+          (candidate.data.projectType === project.data.projectType ? 3 : 0) +
+          candidate.data.tags.filter((tag) => project.data.tags.includes(tag)).length +
+          candidate.data.technologies.filter((technology) =>
+            project.data.technologies.includes(technology)
+          ).length,
+      }))
+      .sort((a, b) =>
+        b.score - a.score ||
+        (b.candidate.data.date?.getTime() ?? 0) -
+          (a.candidate.data.date?.getTime() ?? 0)
+      )
+      .slice(0, 3)
+      .map(({ candidate }) => ({
+        title: candidate.data.title,
+        description: candidate.data.description,
+        image: candidate.data.coverImage,
+        category: candidate.data.projectType,
+        href: `/portfolio/${candidate.id}/`,
+      }));
+
+    return {
+      params: { slug: project.id },
+      props: { project, relatedProjects },
+    };
+  });
 }
 
 interface Props {
   project: CollectionEntry<"projects">;
+  relatedProjects: Array<{
+    title: string;
+    description: string;
+    image?: string;
+    category: string;
+    href: string;
+  }>;
 }
 
-const { project } = Astro.props;
+const { project, relatedProjects } = Astro.props;
 const { Content } = await render(project);
 ---
 
-<PortfolioLayout {...project.data}>
+<PortfolioLayout {...project.data} {relatedProjects}>
   <Content />
 </PortfolioLayout>

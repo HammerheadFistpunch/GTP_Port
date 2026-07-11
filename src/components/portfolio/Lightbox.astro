@@ -11,97 +11,74 @@ interface Props {
 }
 
 const { id, images } = Astro.props;
+const closeTarget = `${id}-heading`;
 ---
 
-<div class="lightbox" data-lightbox-root>
+<div class="lightbox">
   <div class="thumbnail-grid">
     {images.map((image, index) => (
-      <button
-        type="button"
+      <a
         class="thumbnail"
-        data-lightbox-open
-        data-index={index}
-        data-src={image.src}
-        data-alt={image.alt}
-        data-caption={image.caption}
+        href={`#${id}-image-${index + 1}`}
         aria-label={`Open image ${index + 1}: ${image.alt}`}
-        aria-haspopup="dialog"
       >
         <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
-      </button>
+      </a>
     ))}
   </div>
 
-  <dialog class="lightbox-dialog" data-lightbox-dialog aria-labelledby={`${id}-title`}>
-    <div class="dialog-toolbar">
-      <p id={`${id}-title`}>Image viewer</p>
-      <button type="button" class="close" data-lightbox-close aria-label="Close image viewer">
-        &times;
-      </button>
-    </div>
+  {images.map((image, index) => {
+    const previousIndex = (index - 1 + images.length) % images.length;
+    const nextIndex = (index + 1) % images.length;
 
-    <div class="active-image">
-      <button type="button" class="previous" data-lightbox-previous aria-label="Previous image">
-        &lsaquo;
-      </button>
-      <img data-lightbox-image alt="" />
-      <button type="button" class="next" data-lightbox-next aria-label="Next image">
-        &rsaquo;
-      </button>
-    </div>
+    return (
+      <div
+        id={`${id}-image-${index + 1}`}
+        class="lightbox-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Image ${index + 1} of ${images.length}: ${image.alt}`}
+      >
+        <a class="backdrop" href={`#${closeTarget}`} aria-label="Close image viewer"></a>
 
-    <p class="caption" data-lightbox-caption></p>
-  </dialog>
+        <div class="lightbox-panel">
+          <div class="dialog-toolbar">
+            <p>Image {index + 1} of {images.length}</p>
+            <a class="control close" href={`#${closeTarget}`} aria-label="Close image viewer">
+              &times;
+            </a>
+          </div>
+
+          <div class="active-image">
+            {images.length > 1 && (
+              <a
+                class="control previous"
+                href={`#${id}-image-${previousIndex + 1}`}
+                aria-label="Previous image"
+              >
+                &lsaquo;
+              </a>
+            )}
+
+            <img src={image.src} alt={image.alt} />
+
+            {images.length > 1 && (
+              <a
+                class="control next"
+                href={`#${id}-image-${nextIndex + 1}`}
+                aria-label="Next image"
+              >
+                &rsaquo;
+              </a>
+            )}
+          </div>
+
+          {image.caption && <p class="caption">{image.caption}</p>}
+        </div>
+      </div>
+    );
+  })}
 </div>
-
-<script>
-  function setupLightbox(root: Element) {
-    const dialog = root.querySelector("[data-lightbox-dialog]");
-    const image = root.querySelector("[data-lightbox-image]");
-    const caption = root.querySelector("[data-lightbox-caption]");
-    const triggers = [...root.querySelectorAll<HTMLElement>("[data-lightbox-open]")];
-    const closeButton = root.querySelector("[data-lightbox-close]");
-    const previousButton = root.querySelector("[data-lightbox-previous]");
-    const nextButton = root.querySelector("[data-lightbox-next]");
-
-    if (!(dialog instanceof HTMLDialogElement) || !(image instanceof HTMLImageElement)) return;
-
-    let activeIndex = 0;
-    let returnFocus: HTMLElement | null = null;
-
-    const showImage = (index: number) => {
-      activeIndex = (index + triggers.length) % triggers.length;
-      const trigger = triggers[activeIndex];
-      image.src = trigger.dataset.src ?? "";
-      image.alt = trigger.dataset.alt ?? "";
-
-      if (caption instanceof HTMLElement) {
-        caption.textContent = trigger.dataset.caption ?? "";
-        caption.hidden = !caption.textContent;
-      }
-    };
-
-    triggers.forEach((trigger, index) => {
-      trigger.addEventListener("click", () => {
-        returnFocus = trigger;
-        showImage(index);
-        dialog.showModal();
-      });
-    });
-
-    closeButton?.addEventListener("click", () => dialog.close());
-    previousButton?.addEventListener("click", () => showImage(activeIndex - 1));
-    nextButton?.addEventListener("click", () => showImage(activeIndex + 1));
-
-    dialog.addEventListener("click", (event) => {
-      if (event.target === dialog) dialog.close();
-    });
-
-    dialog.addEventListener("close", () => returnFocus?.focus());
-  }
-
-  document.querySelectorAll("[data-lightbox-root]").forEach(setupLightbox);
-</script>
 
 <style>
   .thumbnail-grid {
@@ -111,8 +88,8 @@ const { id, images } = Astro.props;
   }
 
   .thumbnail {
+    display: block;
     overflow: hidden;
-    padding: 0;
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
@@ -126,22 +103,42 @@ const { id, images } = Astro.props;
     transition: transform 0.2s ease;
   }
 
-  .thumbnail:hover img {
+  .thumbnail:hover img,
+  .thumbnail:focus-visible img {
     transform: scale(1.025);
   }
 
-  .lightbox-dialog {
+  .lightbox-overlay {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: none;
+    place-items: center;
+    padding: var(--space-sm);
+  }
+
+  .lightbox-overlay:target {
+    display: grid;
+  }
+
+  .backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    cursor: zoom-out;
+  }
+
+  .lightbox-panel {
+    position: relative;
+    z-index: 1;
     width: min(94vw, 1200px);
-    max-width: none;
+    max-height: 94vh;
+    overflow: auto;
     padding: var(--space-sm);
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     color: var(--text-primary);
-  }
-
-  .lightbox-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.88);
   }
 
   .dialog-toolbar {
@@ -157,19 +154,19 @@ const { id, images } = Astro.props;
     margin: 0;
   }
 
-  .close,
-  .previous,
-  .next {
+  .control {
     display: grid;
     place-items: center;
     width: 2.75rem;
     height: 2.75rem;
+    flex: 0 0 auto;
     background: var(--bg-elevated);
     border: 1px solid var(--border-color);
     border-radius: 999px;
     color: var(--text-primary);
-    cursor: pointer;
     font-size: 1.75rem;
+    line-height: 1;
+    text-decoration: none;
   }
 
   .active-image {

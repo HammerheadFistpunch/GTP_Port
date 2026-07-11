@@ -1,149 +1,76 @@
 # GTP_Port Build Order
 
-Last updated: 2026-07-10  
+Last updated: 2026-07-11
 Working branch: `gpt-handoff`
+Verified baseline: remote commit `2e5aa86` plus delivered Chunks 1 through 3A
 
 ## Current phase
 
-> **Local TinaCMS Verification + Cloudflare Build Repair**
+> Accessibility and shared shell completion
 
-The Astro content architecture and local Tina editing path are working. The project will remain subscription-free: TinaCMS will be used as a local editor, GitHub will synchronize content, and Cloudflare Pages will build the static Astro site after each push.
+The functional content core is complete. Astro builds the site directly, TinaCMS runs locally, Markdown remains the source of truth, and the interrupted placeholder components have been restored or removed.
 
 ## Verified complete
 
-- Static Astro architecture
-- Cloudflare Pages connected to `gpt-handoff`
-- Home, Journal, Portfolio, About, Resume, and Contact routes
+- Static Astro 6.4.6 architecture
+- Subscription-free local TinaCMS workflow
+- Seven focused Tina collections
+- Nine generated static pages
 - Journal and Portfolio detail routes
-- Collection-driven homepage, archives, and detail pages
-- Editable Markdown under `src/content/`
-- Site settings and page copy moved out of Astro templates
-- TinaCMS local development server
-- Tina admin available locally at `/admin/index.html`
-- Homepage Markdown edit verified through Tina and Astro
-- Six Tina collections configured
-- Static output preserved in `astro.config.mjs`
-- Multi-machine workflow defined through Git pull, edit, commit, and push
+- Portfolio galleries, lightbox, native video, YouTube, and Vimeo
+- Automatic lightbox for inline project-story images
+- Related Journal entries and Portfolio projects
+- Structured Resume editor and timeline
+- No zero-byte files under `src/`
+- `npm run build` and `git diff --check` pass
 
-## Architecture decision
-
-TinaCloud will not be used.
-
-Final publishing workflow:
+## Publishing workflow
 
 ```text
-Clone or pull repository
-→ npm run dev
-→ edit through local Tina admin
-→ review and commit changes
-→ push to GitHub
-→ Cloudflare Pages rebuilds the static site
+Pull gpt-handoff
+-> npm run dev
+-> edit through local Tina
+-> review the site
+-> npm run build
+-> commit and push in VS Code
+-> Cloudflare Pages rebuilds
 ```
 
-The deployed website will not provide a public `/admin/` editing interface.
+TinaCloud and a hosted production `/admin/` are intentionally excluded.
 
-## Immediate next tasks
+## Next build order
 
-### Task 1 — Repair the production build script
+### Chunk 4A - Accessibility foundation
 
-Change `package.json` so production builds run Astro directly:
+- Add a skip link.
+- Add global visible `:focus-visible` styles.
+- Mark the current navigation destination.
+- Add reduced-motion handling.
+- Verify keyboard navigation and color contrast.
 
-```json
-"build": "astro build"
-```
+### Chunk 4B - Mobile navigation
 
-Keep local development as:
+- Replace wrapping navigation with a deliberate compact menu.
+- Support keyboard and screen-reader operation.
+- Prevent clipping at narrow widths.
 
-```json
-"dev": "tinacms dev -c \"astro dev\""
-```
+### Chunk 4C - Shared metadata cleanup
 
-Also:
+- Verify favicon behavior.
+- Add consistent page descriptions.
+- Prepare canonical and social metadata for the launch milestone.
 
-- update the Node engine to `>=22.22.0`
-- remove the unused `@astrojs/cloudflare` package
-- regenerate `package-lock.json`
+### Then
 
-### Task 2 — Run a clean local build
+- Page-by-page design refinement
+- Real content replacement
+- SEO, RSS, sitemap, robots, and image optimization
+- Search and launch checks
 
-Run:
+## Deferred integrations
 
-```bash
-npm install
-npm run build
-```
-
-Verify:
-
-- the build does not request TinaCloud credentials
-- all expected routes generate
-- no internal links break
-- content collections validate
-- output is written to `dist/`
-
-### Task 3 — Clean Tina initializer leftovers
-
-Review and remove unused demo files and routes, including:
-
-- `content/posts/hello-world.md`
-- `src/pages/tinacms-demo.astro`
-- `src/components/tina/`
-- `src/lib/tina/islands.ts`
-- `src/pages/tina-island/`
-
-Also remove empty placeholder components that are not imported.
-
-Do not remove:
-
-- `tina/config.ts`
-- `@tinacms/astro`
-- `@tinacms/cli`
-- `tinacms`
-- the local Tina development script
-
-### Task 4 — Verify Cloudflare deployment
-
-Cloudflare settings:
-
-| Setting | Value |
-| --- | --- |
-| Production branch | `gpt-handoff` |
-| Build command | `npm run build` |
-| Output directory | `dist` |
-| Node environment variable | `NODE_VERSION=22.22.0` |
-
-Commit and push the repaired build configuration. Confirm Cloudflare completes the deployment.
-
-### Task 5 — Verify all six Tina collections
-
-Open and save one item in each collection:
-
-- Site Settings
-- Homepage
-- Archive Pages
-- Standard Pages
-- Journal Entries
-- Portfolio Projects
-
-Confirm each save updates the expected Markdown file and renders correctly.
-
-### Task 6 — Resume functional-core work
-
-After deployment is stable:
-
-- navigation accessibility
-- current-page states
-- mobile navigation
-- focus and reduced-motion styles
-- favicon and metadata cleanup
-- final functional-core audit
-
-## Deferred
-
+- Inline narrative video blocks
+- Immich albums
 - Pagefind
 - Giscus
-- Immich integration
-- gallery and lightbox
-- related content
-- resume PDF generation
-- final visual polish
+- Resume PDF generation

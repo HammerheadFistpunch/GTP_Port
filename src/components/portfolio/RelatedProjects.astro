@@ -1,0 +1,45 @@
+---
+import PortfolioCard from "./PortfolioCard.astro";
+
+interface RelatedProject {
+  title: string;
+  description: string;
+  image?: string;
+  category: string;
+  href: string;
+}
+
+interface Props {
+  projects: RelatedProject[];
+  title?: string;
+}
+
+const { projects, title = "Related projects" } = Astro.props;
+---
+
+{projects.length > 0 && (
+  <aside class="related" aria-labelledby="related-projects-heading">
+    <h2 id="related-projects-heading">{title}</h2>
+    <div class="project-grid">
+      {projects.map((project) => <PortfolioCard {...project} />)}
+    </div>
+  </aside>
+)}
+
+<style>
+  .related {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-color);
+  }
+
+  .related h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    gap: var(--space-md);
+  }
+</style>

@@ -16,6 +16,8 @@ navigation:
     href: /about
   - label: Get in Touch
     href: /contact
+  - label: Resume
+    href: /resume
 footerLinks:
   - label: Home
     href: /
@@ -27,5 +29,7 @@ footerLinks:
     href: /about
   - label: Get in Touch
     href: /contact
+  - label: Resume
+    href: /resume
 ---
 

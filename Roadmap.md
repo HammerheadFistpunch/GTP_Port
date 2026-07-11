@@ -1,6 +1,6 @@
 # GTP_Port Roadmap
 
-Last updated: 2026-07-10  
+Last updated: 2026-07-11
 Working branch: `gpt-handoff`
 
 ## Vision
@@ -45,7 +45,7 @@ Status: **Complete**
 
 ## Milestone 3 — TinaCMS local integration
 
-Status: **Nearly complete**
+Status: **Complete locally; deployment confirmation pending**
 
 Complete:
 
@@ -53,17 +53,16 @@ Complete:
 - Astro aligned to version 6.4.6
 - static output preserved
 - Tina admin running locally
-- existing Markdown mapped into six Tina collections
+- existing Markdown mapped into seven Tina collections
 - homepage edit verified end to end
 - local multi-machine workflow defined
 
-Remaining:
+Verified after the integration:
 
-- verify every collection
-- remove initializer demo leftovers
-- repair the production build script
-- run a clean static build
-- commit the completed local integration
+- production build runs Astro directly
+- clean nine-page static build
+- focused Resume collection added
+- interrupted placeholder components restored or removed
 
 Exit condition: any machine with the repository can pull, run Tina locally, edit content, build successfully, and push changes.
 
@@ -82,7 +81,7 @@ Exit condition: a pushed content or code commit produces a successful Cloudflare
 
 ## Milestone 5 — Accessibility and shared shell completion
 
-Status: **Next after deployment repair**
+Status: **Next**
 
 - skip link
 - visible focus states
@@ -94,15 +93,19 @@ Status: **Next after deployment repair**
 
 ## Milestone 6 — Page and component completion
 
-Status: **Not started**
+Status: **In progress**
 
 - Journal filters or category routes
-- related articles
+- related articles - complete
 - project filters
-- galleries and lightbox
-- video embeds
-- reusable media components
-- resume timeline and print refinement
+- galleries and lightbox - complete
+- inline narrative image lightbox - complete
+- video embeds - complete for project-level media
+- inline video blocks within project narrative content
+- reusable media components - complete
+- related projects - complete
+- resume timeline and structured editor - complete
+- resume print refinement - pending
 
 ## Milestone 7 — Design completion
 
@@ -143,6 +146,7 @@ Status: **Not started**
 
 - Giscus
 - Immich
+- inline narrative video blocks
 - resume PDF generation
 - advanced related-content features
 

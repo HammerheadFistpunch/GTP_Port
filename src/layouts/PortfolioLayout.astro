@@ -3,6 +3,8 @@ import BaseLayout from "./BaseLayout.astro";
 import ProjectMeta from "../components/portfolio/ProjectMeta.astro";
 import Gallery from "../components/portfolio/Gallery.astro";
 import VideoEmbed from "../components/portfolio/VideoEmbed.astro";
+import InlineImageLightbox from "../components/portfolio/InlineImageLightbox.astro";
+import RelatedProjects from "../components/portfolio/RelatedProjects.astro";
 import Container from "../components/ui/Container.astro";
 
 interface ProjectLinks {
@@ -21,6 +23,13 @@ interface Props {
   links?: ProjectLinks;
   coverImage?: string;
   media?: ProjectMedia[];
+  relatedProjects?: Array<{
+    title: string;
+    description: string;
+    image?: string;
+    category: string;
+    href: string;
+  }>;
 }
 
 interface ProjectMedia {
@@ -40,6 +49,7 @@ const {
   links,
   coverImage,
   media = [],
+  relatedProjects = [],
 } = Astro.props;
 
 const galleryImages = media
@@ -97,6 +107,8 @@ const projectLinks = [
         <slot />
       </div>
 
+      <InlineImageLightbox />
+
       <Gallery id="project-gallery" images={galleryImages} />
 
       {videos.length > 0 && (
@@ -113,6 +125,8 @@ const projectLinks = [
           </div>
         </section>
       )}
+
+      <RelatedProjects projects={relatedProjects} />
     </Container>
   </article>
 </BaseLayout>

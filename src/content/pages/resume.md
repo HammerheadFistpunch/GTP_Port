@@ -6,6 +6,10 @@ headline: "Experience across production, communications, strategy, and technical
 description: "A structured overview of professional experience and capabilities."
 headerStyle: "compact"
 links: []
+professionalSummary: ""
+competencies: []
+experience: []
+education: []
 ---
 
 Resume content will be managed here as the structured resume system is built.

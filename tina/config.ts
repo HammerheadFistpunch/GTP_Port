@@ -438,7 +438,7 @@ export default defineConfig({
                 format: "md",
 
                 match: {
-                    include: "{about,contact,resume}",
+                    include: "{about,contact}",
                 },
 
                 ui: {
@@ -517,6 +517,224 @@ export default defineConfig({
                         type: "rich-text",
                         name: "body",
                         label: "Page Content",
+                        isBody: true,
+                    },
+                ],
+            },
+
+            /*
+             * RESUME
+             *
+             * Maps only to:
+             * src/content/pages/resume.md
+             */
+            {
+                name: "resumePage",
+                label: "Resume",
+                path: "src/content/pages",
+                format: "md",
+
+                match: {
+                    include: "resume",
+                },
+
+                ui: {
+                    allowedActions: {
+                        create: false,
+                        delete: false,
+                    },
+                },
+
+                fields: [
+                    {
+                        type: "string",
+                        name: "pageType",
+                        label: "Page Type",
+                        required: true,
+                        options: [
+                            {
+                                value: "standard",
+                                label: "Standard Page",
+                            },
+                        ],
+                        description:
+                            "Internal setting used by Astro to identify the resume page.",
+                    },
+                    {
+                        type: "string",
+                        name: "title",
+                        label: "Page Title",
+                        required: true,
+                        isTitle: true,
+                    },
+                    {
+                        type: "string",
+                        name: "eyebrow",
+                        label: "Eyebrow",
+                    },
+                    {
+                        type: "string",
+                        name: "headline",
+                        label: "Headline",
+                        required: true,
+                    },
+                    {
+                        type: "string",
+                        name: "description",
+                        label: "Description",
+                        required: true,
+                        ui: {
+                            component: "textarea",
+                        },
+                    },
+                    {
+                        type: "string",
+                        name: "headerStyle",
+                        label: "Header Style",
+                        required: true,
+                        options: [
+                            {
+                                value: "compact",
+                                label: "Compact",
+                            },
+                            {
+                                value: "featured",
+                                label: "Featured",
+                            },
+                        ],
+                    },
+                    {
+                        type: "object",
+                        name: "links",
+                        label: "Page Links",
+                        list: true,
+                        fields: linkFields,
+                    },
+                    {
+                        type: "string",
+                        name: "professionalSummary",
+                        label: "Professional Summary",
+                        ui: {
+                            component: "textarea",
+                        },
+                    },
+                    {
+                        type: "object",
+                        name: "competencies",
+                        label: "Core Competencies",
+                        list: true,
+                        ui: {
+                            itemProps: (item) => ({
+                                label: item?.title || "Competency",
+                            }),
+                        },
+                        fields: [
+                            {
+                                type: "string",
+                                name: "title",
+                                label: "Competency",
+                                required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "description",
+                                label: "Supporting Detail",
+                                required: true,
+                                ui: {
+                                    component: "textarea",
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        type: "object",
+                        name: "experience",
+                        label: "Experience",
+                        list: true,
+                        ui: {
+                            itemProps: (item) => ({
+                                label: item?.title || "Experience entry",
+                            }),
+                        },
+                        fields: [
+                            {
+                                type: "string",
+                                name: "period",
+                                label: "Period",
+                                required: true,
+                                description: "Example: 2022 - Present",
+                            },
+                            {
+                                type: "string",
+                                name: "title",
+                                label: "Role or Title",
+                                required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "organization",
+                                label: "Organization",
+                            },
+                            {
+                                type: "string",
+                                name: "location",
+                                label: "Location",
+                            },
+                            {
+                                type: "string",
+                                name: "description",
+                                label: "Description",
+                                ui: {
+                                    component: "textarea",
+                                },
+                            },
+                            {
+                                type: "string",
+                                name: "highlights",
+                                label: "Highlights",
+                                list: true,
+                            },
+                        ],
+                    },
+                    {
+                        type: "object",
+                        name: "education",
+                        label: "Education",
+                        list: true,
+                        ui: {
+                            itemProps: (item) => ({
+                                label: item?.degree || "Education entry",
+                            }),
+                        },
+                        fields: [
+                            {
+                                type: "string",
+                                name: "degree",
+                                label: "Degree or Credential",
+                                required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "institution",
+                                label: "Institution",
+                                required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "focus",
+                                label: "Focus or Emphasis",
+                            },
+                            {
+                                type: "string",
+                                name: "period",
+                                label: "Period",
+                            },
+                        ],
+                    },
+                    {
+                        type: "rich-text",
+                        name: "body",
+                        label: "Additional Resume Content",
                         isBody: true,
                     },
                 ],

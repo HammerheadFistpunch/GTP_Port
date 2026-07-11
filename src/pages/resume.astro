@@ -1,6 +1,8 @@
 ---
 import { getEntry, render } from "astro:content";
 import StandardPageLayout from "../layouts/StandardPageLayout.astro";
+import Timeline from "../components/resume/Timeline.astro";
+import ResumeOverview from "../components/resume/ResumeOverview.astro";
 
 const entry = await getEntry("pages", "resume");
 
@@ -12,5 +14,11 @@ const { Content } = await render(entry);
 ---
 
 <StandardPageLayout {...entry.data}>
+  <ResumeOverview
+    professionalSummary={entry.data.professionalSummary}
+    competencies={entry.data.competencies}
+  />
+  <Timeline items={entry.data.experience} />
+  <ResumeOverview education={entry.data.education} />
   <Content />
 </StandardPageLayout>

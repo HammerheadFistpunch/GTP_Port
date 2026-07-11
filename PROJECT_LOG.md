@@ -1,5 +1,38 @@
 # GTP_Port Project Log
 
+## 2026-07-11 - Functional component recovery completed
+
+Completed:
+
+- Restored portfolio Image, VideoPlayer, Gallery, Lightbox, and VideoEmbed components.
+- Connected Tina project media to Portfolio detail pages.
+- Added automatic lightbox behavior to images inserted inside project narrative content.
+- Added automatic related Journal entries and Portfolio projects.
+- Added a dedicated structured Resume collection with summary, competencies, experience, and education.
+- Added responsive and print-aware Resume components.
+- Removed the final unused zero-byte SearchBox and generic layout placeholders.
+- Reconciled project documentation around the verified current state.
+
+Verified:
+
+- TinaCMS starts locally after all schema changes.
+- Astro generates nine static pages.
+- `git diff --check` passes.
+- No zero-byte files remain under `src/`.
+
+Deferred:
+
+- Inline narrative video blocks
+- Immich album integration
+- Pagefind search
+- Resume PDF generation
+
+Next:
+
+- Commit and push the approved checkpoint in VS Code.
+- Confirm Cloudflare deployment.
+- Begin accessibility Chunk 4A.
+
 ## 2026-07-10 — Subscription-free Tina workflow selected
 
 Decision:

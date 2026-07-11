@@ -1,0 +1,150 @@
+---
+interface Competency {
+  title: string;
+  description: string;
+}
+
+interface EducationItem {
+  degree: string;
+  institution: string;
+  focus?: string;
+  period?: string;
+}
+
+interface Props {
+  professionalSummary?: string;
+  competencies?: Competency[];
+  education?: EducationItem[];
+}
+
+const {
+  professionalSummary,
+  competencies = [],
+  education = [],
+} = Astro.props;
+---
+
+{professionalSummary && (
+  <section class="resume-section" aria-labelledby="summary-heading">
+    <h2 id="summary-heading">Professional summary</h2>
+    <p class="summary">{professionalSummary}</p>
+  </section>
+)}
+
+{competencies.length > 0 && (
+  <section class="resume-section" aria-labelledby="competencies-heading">
+    <h2 id="competencies-heading">Core competencies</h2>
+    <dl class="competencies">
+      {competencies.map((competency) => (
+        <div>
+          <dt>{competency.title}</dt>
+          <dd>{competency.description}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+)}
+
+{education.length > 0 && (
+  <section class="resume-section" aria-labelledby="education-heading">
+    <h2 id="education-heading">Education</h2>
+    <div class="education-list">
+      {education.map((item) => (
+        <article>
+          <div>
+            <h3>{item.degree}</h3>
+            <p class="institution">{item.institution}</p>
+            {item.focus && <p>{item.focus}</p>}
+          </div>
+          {item.period && <p class="period">{item.period}</p>}
+        </article>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .resume-section {
+    margin: var(--space-lg) 0;
+  }
+
+  .resume-section > h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .summary {
+    font-family: var(--font-editorial);
+    font-size: 1.1rem;
+  }
+
+  .competencies {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0;
+  }
+
+  .competencies div,
+  .education-list article {
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+  }
+
+  dt {
+    font-weight: 700;
+  }
+
+  dd {
+    margin: 0.35rem 0 0;
+  }
+
+  .education-list {
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .education-list article {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .education-list h3,
+  .education-list p {
+    margin: 0;
+  }
+
+  .institution {
+    margin-top: 0.35rem !important;
+    font-weight: 700;
+  }
+
+  .period {
+    flex: 0 0 auto;
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .education-list article {
+      display: block;
+    }
+
+    .period {
+      margin-top: var(--space-sm) !important;
+    }
+  }
+
+  @media print {
+    .competencies div,
+    .education-list article {
+      break-inside: avoid;
+      background: transparent;
+      border-color: #999;
+    }
+  }
+</style>

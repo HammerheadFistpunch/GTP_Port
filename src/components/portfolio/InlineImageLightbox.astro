@@ -1,0 +1,178 @@
+<dialog class="inline-lightbox" data-inline-lightbox aria-label="Image viewer">
+  <div class="dialog-toolbar">
+    <p data-inline-lightbox-count></p>
+    <button type="button" class="control close" data-inline-lightbox-close aria-label="Close image viewer">
+      &times;
+    </button>
+  </div>
+
+  <div class="active-image">
+    <button type="button" class="control previous" data-inline-lightbox-previous aria-label="Previous image">
+      &lsaquo;
+    </button>
+    <img data-inline-lightbox-image alt="" />
+    <button type="button" class="control next" data-inline-lightbox-next aria-label="Next image">
+      &rsaquo;
+    </button>
+  </div>
+
+  <p class="caption" data-inline-lightbox-caption></p>
+</dialog>
+
+<script>
+  const dialog = document.querySelector("[data-inline-lightbox]");
+  const content = document.querySelector(".project-content");
+
+  if (dialog instanceof HTMLDialogElement && content instanceof HTMLElement) {
+    const images = [...content.querySelectorAll("img")];
+    const activeImage = dialog.querySelector("[data-inline-lightbox-image]");
+    const caption = dialog.querySelector("[data-inline-lightbox-caption]");
+    const count = dialog.querySelector("[data-inline-lightbox-count]");
+    const closeButton = dialog.querySelector("[data-inline-lightbox-close]");
+    const previousButton = dialog.querySelector("[data-inline-lightbox-previous]");
+    const nextButton = dialog.querySelector("[data-inline-lightbox-next]");
+
+    let activeIndex = 0;
+    let returnFocus: HTMLElement | null = null;
+
+    const showImage = (index: number) => {
+      if (!(activeImage instanceof HTMLImageElement) || images.length === 0) return;
+
+      activeIndex = (index + images.length) % images.length;
+      const sourceImage = images[activeIndex];
+      const alt = sourceImage.alt || `Project image ${activeIndex + 1}`;
+
+      activeImage.src = sourceImage.currentSrc || sourceImage.src;
+      activeImage.alt = alt;
+
+      if (caption instanceof HTMLElement) {
+        caption.textContent = sourceImage.alt;
+        caption.hidden = !sourceImage.alt;
+      }
+
+      if (count instanceof HTMLElement) {
+        count.textContent = `Image ${activeIndex + 1} of ${images.length}`;
+      }
+
+      if (previousButton instanceof HTMLElement) previousButton.hidden = images.length < 2;
+      if (nextButton instanceof HTMLElement) nextButton.hidden = images.length < 2;
+    };
+
+    const openImage = (image: HTMLImageElement, index: number) => {
+      returnFocus = image;
+      showImage(index);
+      dialog.showModal();
+    };
+
+    images.forEach((image, index) => {
+      image.tabIndex = 0;
+      image.setAttribute("role", "button");
+      image.setAttribute("aria-label", `Open image: ${image.alt || `Project image ${index + 1}`}`);
+
+      image.addEventListener("click", () => openImage(image, index));
+      image.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openImage(image, index);
+        }
+      });
+    });
+
+    closeButton?.addEventListener("click", () => dialog.close());
+    previousButton?.addEventListener("click", () => showImage(activeIndex - 1));
+    nextButton?.addEventListener("click", () => showImage(activeIndex + 1));
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener("close", () => returnFocus?.focus());
+  }
+</script>
+
+<style>
+  :global(.project-content img) {
+    cursor: zoom-in;
+  }
+
+  :global(.project-content img:focus-visible) {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .inline-lightbox {
+    width: min(94vw, 1200px);
+    max-width: none;
+    padding: var(--space-sm);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+  }
+
+  .inline-lightbox::backdrop {
+    background: rgba(0, 0, 0, 0.88);
+  }
+
+  .dialog-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .dialog-toolbar p,
+  .caption {
+    margin: 0;
+  }
+
+  .control {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+
+  .active-image {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .active-image img {
+    width: 100%;
+    max-height: 78vh;
+    object-fit: contain;
+  }
+
+  .caption {
+    padding-top: var(--space-sm);
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .active-image {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .active-image img {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+
+    .previous,
+    .next {
+      justify-self: center;
+    }
+  }
+</style>

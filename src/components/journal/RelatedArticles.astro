@@ -1,0 +1,38 @@
+---
+import JournalCard from "./JournalCard.astro";
+
+interface RelatedArticle {
+  title: string;
+  excerpt: string;
+  image?: string;
+  date: string;
+  category: string;
+  href: string;
+}
+
+interface Props {
+  articles: RelatedArticle[];
+  title?: string;
+}
+
+const { articles, title = "Keep reading" } = Astro.props;
+---
+
+{articles.length > 0 && (
+  <aside class="related" aria-labelledby="related-articles-heading">
+    <h2 id="related-articles-heading">{title}</h2>
+    {articles.map((article) => <JournalCard {...article} />)}
+  </aside>
+)}
+
+<style>
+  .related {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-color);
+  }
+
+  .related h2 {
+    margin-bottom: var(--space-md);
+  }
+</style>

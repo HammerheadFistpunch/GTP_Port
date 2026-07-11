@@ -1,0 +1,137 @@
+---
+interface TimelineItem {
+  period: string;
+  title: string;
+  organization?: string;
+  location?: string;
+  description?: string;
+  highlights?: string[];
+}
+
+interface Props {
+  items: TimelineItem[];
+  title?: string;
+}
+
+const { items, title = "Experience" } = Astro.props;
+---
+
+{items.length > 0 && (
+  <section class="timeline" aria-labelledby="timeline-heading">
+    <h2 id="timeline-heading">{title}</h2>
+    <ol>
+      {items.map((item) => (
+        <li>
+          <div class="marker" aria-hidden="true"></div>
+          <article>
+            <p class="period">{item.period}</p>
+            <h3>{item.title}</h3>
+            {item.organization && <p class="organization">{item.organization}</p>}
+            {item.location && <p class="location">{item.location}</p>}
+            {item.description && <p>{item.description}</p>}
+            {item.highlights && item.highlights.length > 0 && (
+              <ul class="highlights">
+                {item.highlights.map((highlight) => <li>{highlight}</li>)}
+              </ul>
+            )}
+          </article>
+        </li>
+      ))}
+    </ol>
+  </section>
+)}
+
+<style>
+  .timeline {
+    margin: var(--space-lg) 0;
+  }
+
+  .timeline > h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .timeline > ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .timeline > ol > li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    gap: var(--space-sm);
+    margin: 0;
+    padding-bottom: var(--space-md);
+  }
+
+  .timeline > ol > li::before {
+    position: absolute;
+    top: 1rem;
+    bottom: -0.25rem;
+    left: 0.45rem;
+    width: 2px;
+    background: var(--border-color);
+    content: "";
+  }
+
+  .timeline > ol > li:last-child::before {
+    display: none;
+  }
+
+  .marker {
+    position: relative;
+    z-index: 1;
+    width: 0.95rem;
+    height: 0.95rem;
+    margin-top: 0.3rem;
+    background: var(--accent);
+    border: 3px solid var(--bg-primary);
+    border-radius: 999px;
+  }
+
+  article {
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+  }
+
+  .period,
+  .organization,
+  .location {
+    font-family: var(--font-ui);
+  }
+
+  .period {
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .organization {
+    margin-top: -0.5rem;
+    font-weight: 700;
+  }
+
+  .location {
+    margin-top: -0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .highlights {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    article {
+      break-inside: avoid;
+      background: transparent;
+      border-color: #999;
+    }
+  }
+</style>

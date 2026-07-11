@@ -1,65 +1,19 @@
-# GTP_Port
+# Documentation checkpoint - 2026-07-11
 
-Astro source for AngrySquirrel.org: a dark, editorial-first personal website combining long-form publishing with a professional portfolio of software, photography, video, writing, engineering, and case-study work.
+Replace these project-root files after applying Chunk 3A:
 
-## Current status
+- `Audit.md`
+- `BUILD_ORDER.md`
+- `NEXT_STEPS.md`
+- `PROJECT_LOG.md`
+- `Roadmap.md`
 
-The functional content architecture and local TinaCMS editing workflow are working. The immediate task is to repair the production build so Cloudflare Pages builds Astro directly without TinaCloud credentials.
+The documents record Chunks 1 through 3A as locally complete, preserve Cloudflare deployment confirmation as pending until the user pushes, and identify Chunk 4A accessibility as the next fresh-window task.
 
-The project intentionally remains subscription-free:
-
-- Astro generates the static website.
-- TinaCMS provides a local visual editor.
-- Markdown in GitHub is the source of truth.
-- Cloudflare Pages rebuilds after pushes.
-- No hosted production CMS is required.
-
-## Editing workflow
-
-```text
-Pull latest branch
-→ npm run dev
-→ edit through localhost/admin
-→ npm run build
-→ commit and push
-→ Cloudflare deploys
-```
-
-Any machine with repository access, Node.js, and Git can use the same workflow.
-
-## Planning documents
-
-- `BUILD_ORDER.md` — canonical implementation order and acceptance criteria
-- `PROJECT_LOG.md` — verified progress and decision history
-- `Roadmap.md` — milestone sequence and exit conditions
-- `NEXT_STEPS.md` — immediate handoff for the next work session
-- `Audit.md` — historical repository and production-build audit
-
-## Stack
-
-- Astro 6
-- static output
-- GitHub-backed Markdown content
-- TinaCMS local editor
-- Cloudflare Pages deployment
-
-## Development
-
-```bash
-npm install
-npm run dev
-```
-
-Local Tina admin:
-
-```text
-http://localhost:4321/admin/
-```
-
-Production verification:
+Before committing, run:
 
 ```bash
 npm run build
+git diff --check
+git status --short
 ```
-
-The build must complete successfully before committing and pushing.
