@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import ProjectMeta from "../components/portfolio/ProjectMeta.astro";
+import Gallery from "../components/portfolio/Gallery.astro";
+import VideoEmbed from "../components/portfolio/VideoEmbed.astro";
 import Container from "../components/ui/Container.astro";
 
 interface ProjectLinks {
@@ -18,6 +20,14 @@ interface Props {
   technologies?: string[];
   links?: ProjectLinks;
   coverImage?: string;
+  media?: ProjectMedia[];
+}
+
+interface ProjectMedia {
+  type: "image" | "video";
+  src: string;
+  alt?: string;
+  caption?: string;
 }
 
 const {
@@ -29,7 +39,18 @@ const {
   technologies = [],
   links,
   coverImage,
+  media = [],
 } = Astro.props;
+
+const galleryImages = media
+  .filter((item) => item.type === "image")
+  .map((item) => ({
+    src: item.src,
+    alt: item.alt || title,
+    caption: item.caption,
+  }));
+
+const videos = media.filter((item) => item.type === "video");
 
 const projectLinks = [
   links?.demo && { label: "View Project", href: links.demo },
@@ -75,6 +96,23 @@ const projectLinks = [
       <div class="project-content">
         <slot />
       </div>
+
+      <Gallery id="project-gallery" images={galleryImages} />
+
+      {videos.length > 0 && (
+        <section class="project-videos" aria-labelledby="project-videos-heading">
+          <h2 id="project-videos-heading">Project videos</h2>
+          <div class="video-list">
+            {videos.map((video, index) => (
+              <VideoEmbed
+                src={video.src}
+                title={video.alt || `${title} video ${index + 1}`}
+                caption={video.caption}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </Container>
   </article>
 </BaseLayout>
@@ -127,5 +165,18 @@ const projectLinks = [
 
   .project-content {
     font-family: var(--font-editorial);
+  }
+
+  .project-videos {
+    padding: var(--space-lg) 0 0;
+  }
+
+  .project-videos h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .video-list {
+    display: grid;
+    gap: var(--space-md);
   }
 </style>

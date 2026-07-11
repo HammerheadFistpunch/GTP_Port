@@ -1,0 +1,50 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  loading?: "eager" | "lazy";
+  aspectRatio?: string;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  caption,
+  loading = "lazy",
+  aspectRatio,
+  class: className,
+} = Astro.props;
+---
+
+<figure class:list={["media-image", className]}>
+  <img
+    {src}
+    {alt}
+    {loading}
+    decoding="async"
+    style={aspectRatio ? `aspect-ratio: ${aspectRatio}` : undefined}
+  />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .media-image {
+    margin: 0;
+  }
+
+  .media-image img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  figcaption {
+    margin-top: 0.75rem;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+</style>

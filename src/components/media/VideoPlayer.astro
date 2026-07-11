@@ -1,0 +1,43 @@
+---
+interface Props {
+  src: string;
+  title: string;
+  poster?: string;
+  caption?: string;
+}
+
+const { src, title, poster, caption } = Astro.props;
+---
+
+<figure class="video-player">
+  <video controls preload="metadata" {poster} aria-label={title}>
+    <source src={src} />
+    <p>
+      Your browser cannot play this video.
+      <a href={src}>Open the video file</a> instead.
+    </p>
+  </video>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .video-player {
+    margin: 0;
+  }
+
+  video {
+    display: block;
+    width: 100%;
+    background: #000;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+  }
+
+  figcaption {
+    margin-top: 0.75rem;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+</style>

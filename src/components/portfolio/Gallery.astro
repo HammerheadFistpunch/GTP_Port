@@ -1,0 +1,34 @@
+---
+import Lightbox from "./Lightbox.astro";
+
+interface GalleryImage {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+interface Props {
+  id: string;
+  images: GalleryImage[];
+  title?: string;
+}
+
+const { id, images, title = "Project gallery" } = Astro.props;
+---
+
+{images.length > 0 && (
+  <section class="gallery" aria-labelledby={`${id}-heading`}>
+    <h2 id={`${id}-heading`}>{title}</h2>
+    <Lightbox {id} {images} />
+  </section>
+)}
+
+<style>
+  .gallery {
+    padding: var(--space-lg) 0 0;
+  }
+
+  .gallery h2 {
+    margin-bottom: var(--space-md);
+  }
+</style>

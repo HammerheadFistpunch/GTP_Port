@@ -1,0 +1,85 @@
+---
+import VideoPlayer from "../media/VideoPlayer.astro";
+
+interface Props {
+  src: string;
+  title: string;
+  provider?: "native" | "youtube" | "vimeo";
+  poster?: string;
+  caption?: string;
+}
+
+const { src, title, provider, poster, caption } = Astro.props;
+
+function detectProvider(url: string): "native" | "youtube" | "vimeo" {
+  if (/youtu\.be|youtube\.com/i.test(url)) return "youtube";
+  if (/vimeo\.com/i.test(url)) return "vimeo";
+  return "native";
+}
+
+function getEmbedUrl(url: string, videoProvider: "youtube" | "vimeo") {
+  if (videoProvider === "youtube") {
+    const shortMatch = url.match(/youtu\.be\/([^?&/]+)/);
+    const queryMatch = url.match(/[?&]v=([^?&/]+)/);
+    const embedMatch = url.match(/youtube\.com\/embed\/([^?&/]+)/);
+    const id = shortMatch?.[1] ?? queryMatch?.[1] ?? embedMatch?.[1];
+    return id ? `https://www.youtube-nocookie.com/embed/${id}` : url;
+  }
+
+  const match = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  return match?.[1] ? `https://player.vimeo.com/video/${match[1]}` : url;
+}
+
+const resolvedProvider = provider ?? detectProvider(src);
+const embedUrl = resolvedProvider === "native"
+  ? undefined
+  : getEmbedUrl(src, resolvedProvider);
+---
+
+{resolvedProvider === "native" ? (
+  <VideoPlayer {src} {title} {poster} {caption} />
+) : (
+  <figure class="video-embed">
+    <div class="frame">
+      <iframe
+        src={embedUrl}
+        {title}
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+)}
+
+<style>
+  .video-embed {
+    margin: 0;
+  }
+
+  .frame {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+  }
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  figcaption {
+    margin-top: 0.75rem;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+</style>
