@@ -6,6 +6,7 @@ hero:
   eyebrow: Video · Photography · Communication · Storyteller
   title: Translating nerd to consumer for over 20 years
   description: 'A personal portfolio and editorial journal exploring technology, vehicles, photography, filmmaking, and the projects worth documenting.'
+  image: /uploads/ground-squirrel-line-art-transparent.png
   primaryCta:
     label: View Work
     href: /portfolio
