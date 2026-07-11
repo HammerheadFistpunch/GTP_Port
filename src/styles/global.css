@@ -12,6 +12,11 @@ html {
     scroll-behavior: smooth;
 }
 
+:focus-visible {
+    outline: 3px solid var(--text-primary);
+    outline-offset: 4px;
+}
+
 body {
     margin: 0;
     background: var(--bg-primary);
@@ -31,9 +36,28 @@ a {
     text-decoration: none;
 }
 
-    a:hover {
-        text-decoration: underline;
-    }
+a:hover {
+    text-decoration: underline;
+}
+
+.skip-link {
+    position: fixed;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    z-index: 2000;
+    padding: .75rem 1rem;
+    border-radius: var(--radius-sm);
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(calc(-100% - var(--space-md)));
+    transition: transform .2s ease;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
 
 main {
     min-height: 100vh;
@@ -41,4 +65,19 @@ main {
 
 section {
     padding: var(--space-xl) 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
 }

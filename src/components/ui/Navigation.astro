@@ -8,19 +8,41 @@ if (!siteEntry) {
 }
 
 const site = siteEntry.data;
+
+const normalizePath = (path: string) => {
+  if (path === "/") return path;
+  return path.replace(/\/$/, "");
+};
+
+const currentPath = normalizePath(Astro.url.pathname);
+
+const isCurrentPage = (href: string) => {
+  const itemPath = normalizePath(href);
+
+  if (itemPath === "/") {
+    return currentPath === "/";
+  }
+
+  return currentPath === itemPath || currentPath.startsWith(`${itemPath}/`);
+};
 ---
 
-<nav class="site-nav">
+<nav class="site-nav" aria-label="Primary navigation">
   <div class="nav-container">
 
-    <a href="/" class="logo">
+    <a href="/" class="logo" aria-current={currentPath === "/" ? "page" : undefined}>
       {site.logoText}
     </a>
 
     <ul class="nav-links">
       {site.navigation.map((item) => (
         <li>
-          <a href={item.href}>{item.label}</a>
+          <a
+            href={item.href}
+            aria-current={isCurrentPage(item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </a>
         </li>
       ))}
     </ul>
@@ -85,6 +107,14 @@ const site = siteEntry.data;
 
 .nav-links a:hover {
   color: var(--accent);
+}
+
+.nav-links a[aria-current="page"] {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: .45rem;
 }
 
 @media (max-width: 768px) {
