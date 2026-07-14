@@ -2,7 +2,7 @@
 title: Automotive Product Page Writing Samples
 description: A selection of automotive product-page copy demonstrating concise feature communication, brand voice, and search-aware commercial writing.
 date: '2024-06-25'
-projectType: Projects
+category: Projects
 tags:
 technologies: []
 featured: false

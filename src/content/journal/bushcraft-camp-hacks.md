@@ -2,7 +2,7 @@
 title: Bushcraft Camp Hacks
 description: An archived outdoor-writing sample covering practical bushcraft techniques, camp organization, and field-tested shortcuts.
 date: '2022-05-05'
-projectType: Cars
+category: Projects
 tags:
 technologies: []
 featured: false
