@@ -21,7 +21,7 @@ navigation:
 footerLinks:
   - label: Home
     href: /
-  - label: Corpus
+  - label: Work
     href: /portfolio
   - label: Journal
     href: /journal
