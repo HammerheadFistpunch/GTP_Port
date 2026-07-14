@@ -33,3 +33,5 @@ npm run build
 git diff --check
 git status --short
 ```
+
+Test push to resync tina
