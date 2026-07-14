@@ -1,0 +1,143 @@
+---
+interface ContactLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  links: ContactLink[];
+  ariaLabel?: string;
+}
+
+const {
+  links,
+  ariaLabel = "Contact methods",
+} = Astro.props;
+
+function linkType(link: ContactLink) {
+  const value = `${link.label} ${link.href}`.toLowerCase();
+
+  if (value.includes("linkedin")) return "linkedin";
+  if (value.includes("youtube") || value.includes("youtu.be")) return "youtube";
+  if (value.includes("email") || value.startsWith("mailto:")) return "email";
+
+  return "link";
+}
+
+function isExternal(href: string) {
+  return /^https?:\/\//i.test(href);
+}
+---
+
+{links.length > 0 && (
+  <nav class="contact-methods" aria-label={ariaLabel}>
+    {links.map((link) => {
+      const type = linkType(link);
+      const external = isExternal(link.href);
+
+      return (
+        <a
+          class:list={["contact-method", `contact-method--${type}`]}
+          href={link.href}
+          target={external ? "_blank" : undefined}
+          rel={external ? "me noopener noreferrer" : undefined}
+          aria-label={external ? `${link.label} (opens in a new tab)` : link.label}
+        >
+          <span class="contact-method__icon" aria-hidden="true">
+            {type === "linkedin" && (
+              <svg viewBox="0 0 24 24" role="img">
+                <path d="M6.5 8.25H3.25V20H6.5V8.25ZM6.72 4.62A1.86 1.86 0 0 0 4.86 2.75 1.87 1.87 0 1 0 6.72 4.62ZM20.75 13.27c0-3.54-1.89-5.19-4.42-5.19a3.82 3.82 0 0 0-3.46 1.9V8.25H9.62V20h3.25v-5.82c0-1.53.29-3.02 2.2-3.02 1.88 0 1.9 1.76 1.9 3.12V20h3.26l.52-6.73Z" />
+              </svg>
+            )}
+
+            {type === "youtube" && (
+              <svg viewBox="0 0 24 24" role="img">
+                <path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.27 3.6-6.27 3.6Z" />
+              </svg>
+            )}
+
+            {type === "email" && (
+              <svg viewBox="0 0 24 24" role="img">
+                <path d="M21 4H3a2.75 2.75 0 0 0-2.75 2.75v10.5A2.75 2.75 0 0 0 3 20h18a2.75 2.75 0 0 0 2.75-2.75V6.75A2.75 2.75 0 0 0 21 4Zm-.45 2-8.1 6.14a.75.75 0 0 1-.9 0L3.45 6h17.1ZM21 18H3a.75.75 0 0 1-.75-.75V7.52l8.1 6.14a2.75 2.75 0 0 0 3.3 0l8.1-6.14v9.73A.75.75 0 0 1 21 18Z" />
+              </svg>
+            )}
+
+            {type === "link" && (
+              <svg viewBox="0 0 24 24" role="img">
+                <path d="M10.59 13.41a2 2 0 0 0 2.82 0l4-4a2 2 0 1 0-2.82-2.82l-1.88 1.88a1 1 0 0 1-1.42-1.42l1.88-1.88a4 4 0 0 1 5.66 5.66l-4 4a4 4 0 0 1-5.66 0 1 1 0 0 1 1.42-1.42Zm2.82-2.82a2 2 0 0 0-2.82 0l-4 4a2 2 0 1 0 2.82 2.82l1.88-1.88a1 1 0 0 1 1.42 1.42l-1.88 1.88a4 4 0 0 1-5.66-5.66l4-4a4 4 0 0 1 5.66 0 1 1 0 1 1-1.42 1.42Z" />
+              </svg>
+            )}
+          </span>
+
+          <span>{link.label}</span>
+        </a>
+      );
+    })}
+  </nav>
+)}
+
+<style>
+  .contact-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: var(--space-md) 0;
+  }
+
+  .contact-method {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-elevated);
+    box-shadow: 0 0 0 rgba(79, 145, 199, 0);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .contact-method:hover {
+    border-color: var(--accent);
+    background: var(--bg-surface);
+    box-shadow: 0 8px 24px rgba(79, 145, 199, 0.16);
+    color: var(--accent);
+    text-decoration: none;
+    transform: translateY(-2px);
+  }
+
+  .contact-method__icon {
+    display: inline-grid;
+    width: 1.35rem;
+    height: 1.35rem;
+    flex: 0 0 auto;
+    place-items: center;
+  }
+
+  .contact-method__icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  @media (max-width: 480px) {
+    .contact-methods {
+      display: grid;
+    }
+
+    .contact-method {
+      justify-content: center;
+    }
+  }
+</style>

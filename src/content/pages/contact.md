@@ -5,9 +5,14 @@ eyebrow: "Get in Touch"
 headline: "Start a conversation."
 description: "Contact methods and professional links for AngrySquirrel.org."
 headerStyle: "compact"
-links: []
+links:
+  - label: LinkedIn
+    href: https://www.linkedin.com/in/patrick-rich-mba-28659312/
+  - label: YouTube
+    href: https://www.youtube.com/@hammerheadfistpunch
+  - label: Email
+    href: mailto:patrickprich@angrysquirrel.org
 ---
 
-Contact methods will be added here before launch. Because this content lives in
-Markdown, email addresses, social profiles, and other contact options can be
-updated through the CMS without changing the page component.
+The quickest way to reach me is by email. You can also connect with me on
+LinkedIn or explore my video work on YouTube.

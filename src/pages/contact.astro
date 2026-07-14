@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from "astro:content";
 import StandardPageLayout from "../layouts/StandardPageLayout.astro";
+import ContactMethods from "../components/ui/ContactMethods.astro";
 
 const entry = await getEntry("pages", "contact");
 
@@ -11,6 +12,7 @@ if (!entry || entry.data.pageType !== "standard") {
 const { Content } = await render(entry);
 ---
 
-<StandardPageLayout {...entry.data}>
+<StandardPageLayout {...entry.data} links={[]}>
+  <ContactMethods links={entry.data.links} />
   <Content />
 </StandardPageLayout>
