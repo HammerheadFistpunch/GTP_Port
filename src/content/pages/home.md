@@ -24,8 +24,8 @@ journalPreview:
   limit: 3
   emptyMessage: Journal entries are coming soon.
 aboutCallout:
-  title: Building things worth documenting.
-  description: 'AngrySquirrel.org combines engineering, creative work, and storytelling in one place.'
+  title: About me
+  description: Learn more about the man behind the fur
   link:
     label: Learn More
     href: /about
