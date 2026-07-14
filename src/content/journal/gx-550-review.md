@@ -1,28 +1,28 @@
 ---
 title: I Drove the 2024 Lexus GX 550 to See If It Is Really the Ultimate Overlanding Platform
-description: A first-drive assessment of the 2024 Lexus GX 550, from its new platform and powertrain to its on-road manners and genuine overlanding capability.
-date: '2024-02-01'
+description: 'A first-drive assessment of the 2024 Lexus GX 550, from its new platform and powertrain to its on-road manners and genuine overlanding capability.'
+date: 2024-02-01T00:00:00.000Z
 category: Cars
 tags:
-- Automotive
-- Lexus
-- GX 550
-- Overlanding
-- The Autopian
-featured: false
-draft: true
+  - Automotive
+  - Lexus
+  - GX 550
+  - Overlanding
+  - The Autopian
 coverImage: /uploads/wordpress/2024/02/image.jpeg
+featured: true
+draft: false
 ---
 
 > Archived writing sample. Originally published by [The Autopian](https://www.theautopian.com/i-drove-the-2024-lexus-gx550-to-see-if-its-really-the-ultimate-overlanding-platform/) on February 1, 2024. Imported from the author's WordPress archive for review.
 
----
+***
 
 ![Lexus Gx 550 First Drive Ts4](/uploads/wordpress/2024/02/image.jpeg "Lexus_GX_550_First_Drive_TS4")
 
 When Lexus first announced a third generation of its GX model, the bold design raised a lot of eyebrows. This led me to wonder if what I considered to be the [best SUV model out there](https://www.theautopian.com/were-about-to-find-out-if-the-2024-lexus-gx-will-finally-get-the-glory-the-gx-always-deserved/) was finally going to receive the credit it had always deserved. Now I’ve driven it both on and off-road, and I’m ready to spill the tea. Buckle up, there is a lot.
 
-*\[**Full Disclosure:** Lexus flew me out, put me up in an amazing hotel and fed me \$40 breakfast burritos. I’m new to this whole experience, but I am told that this is pretty posh, if expected, treatment. I should also disclose that Toyota SUV’s are to me what Jeeps are to David Tracy, so bear that in mind. I am a seasoned Lexus GX owner, meaning I can tell you if this new one is the real deal or not. Let’s get into that, shall we?\]*
+*\[**Full Disclosure:** Lexus flew me out, put me up in an amazing hotel and fed me $40 breakfast burritos. I’m new to this whole experience, but I am told that this is pretty posh, if expected, treatment. I should also disclose that Toyota SUV’s are to me what Jeeps are to David Tracy, so bear that in mind. I am a seasoned Lexus GX owner, meaning I can tell you if this new one is the real deal or not. Let’s get into that, shall we?]*
 
 ### What Is It?
 
@@ -36,14 +36,14 @@ The GX has historically been sort of a secret in the market — a potent trail m
 
 ![Screen Shot 2024 02 01 At 4.35.44 Am](https://images-stag.jazelc.com/uploads/theautopian-m2en/Screen-Shot-2024-02-01-at-4.35.44-AM-1024x607.png)
 
-*\[**Editor’s Note**: Meet Patrick Rich, also known as Hammerheadfistpunch, a longtime reader/commenter here, and a huge Land Cruiser fan and Lexus GX owner. I figured I’d send a real Land Cruiser owner on this trip, so have a read of Patrick’s first big first-drive review! -DT\]. *
+\*\[**Editor’s Note**: Meet Patrick Rich, also known as Hammerheadfistpunch, a longtime reader/commenter here, and a huge Land Cruiser fan and Lexus GX owner. I figured I’d send a real Land Cruiser owner on this trip, so have a read of Patrick’s first big first-drive review! -DT]. \*
 
 ### Let’s Talk Overall Size, Engine And Transmission
 
 The previous models benefited from tidy dimensions that helped the model distinguish itself compared to the larger Lexus LX and Toyota Land Cruiser, and made trail and city driving a breeze.  The new GX is significantly longer, wider, taller and heavier than the outgoing GX460. Here’s a little table I threw together showing not just the previous GX models, but also two competitors: The Land Rover Defender 110 and the Ineos Grenadier:
 
 |              |        |        |        |               |           |
-|--------------|--------|--------|--------|---------------|-----------|
+| ------------ | ------ | ------ | ------ | ------------- | --------- |
 |              | GX470  | GX460  | GX550  | Defender 110s | Grenadier |
 | Length (in)  | 188.20 | 189.20 | 197.00 | 187.30        | 191.20    |
 | Width (in)   | 74.00  | 74.20  | 78.00  | 79.10         | 76.00     |
@@ -80,7 +80,7 @@ I briefly drove the off-road-oriented “Overtrail” trim on-road from the hote
 
 For most of all on road driving, though, I drove a Premium trim, which had the larger 20 inch wheels but smaller tires and standard roll bars and shocks. I noticed plenty of body roll in both models, and in roundabouts it was easy to find front-end plow. The Overtrail felt like the less precise of the two, but there wasn’t a big difference. The Luxury models with the larger wheels and street oriented tires as well as the active suspension may be the choice if your pursuits are primarily urban in nature.
 
-Steering is ridiculously light. In a parking lot you can almost achieve full left or right lock by flicking the wheel hard one way or the other, *The Price is Right *style. I would be bothered if it weren’t also accurate, with no hints of wander, even on AT tires, though it does lack any kind of feel.
+Steering is ridiculously light. In a parking lot you can almost achieve full left or right lock by flicking the wheel hard one way or the other, \*The Price is Right \*style. I would be bothered if it weren’t also accurate, with no hints of wander, even on AT tires, though it does lack any kind of feel.
 
 ![2024 Lexus Gx Luxury+ Eminentwhitepearl 23](https://images-stag.jazelc.com/uploads/theautopian-m2en/2024_Lexus_GX_Luxury_EminentWhitePearl_23-1024x683.jpg)
 
@@ -92,7 +92,7 @@ Honestly, the thing that I can say about the on road experience in the GX is tha
 
 A major haulmark of all GX is the outward visibility. Chief Engineer Tsukasaki was quick to point out that the new GX’s greenhouse beltline is the lowest in class. It does indeed feel refreshingly low, with plenty of glass area. The result is excellent outward visibility. Compared to other models, I would say it’s actually better than the GX460, but worse than the GX470 and the 80 series, or at least I think so. Here’s a little clip I threw together:
 
-https://www.youtube.com/embed/sfshTAnY7ww?feature=oembed&enablejsapi=1&origin=https://www.theautopian.com
+[https://www.youtube.com/embed/sfshTAnY7ww?feature=oembed\&enablejsapi=1\&origin=https://www.theautopian.com](https://www.youtube.com/embed/sfshTAnY7ww?feature=oembed\&enablejsapi=1\&origin=https://www.theautopian.com)
 
 The only visual impediment is the tall, wide, long hood. It’s a lot of real estate and you can’t escape looking at it, but it has been sculpted in the middle to increase forward visibility. One minor annoyance with the hood, is that it functions like a giant mirror of the sky (It’s a prime location for a little wrap work if it bothers you). A mirror that also has some amount of flutter due, I assume, to its aluminum construction.
 
@@ -104,7 +104,7 @@ Starting at the back, this generation of the GX is longer and wider, and it’s 
 
 ![Pxl 20240125 163720782.raw 01.cover](https://images-stag.jazelc.com/uploads/theautopian-m2en/PXL_20240125_163720782.RAW-01.COVER_-1024x768.jpg)
 
-Middle row legroom and leg height while seating are both improved, and it’s a very accommodating interior for daily or touring use. My only complaints about the interior behind the driver’s seat is that there is a sloped floor just behind the second row, which isn’t easily removable [(they tumble; they don’t fold flat](https://youtu.be/JTG1_EJmzug?si=oR4bjat0YBfXYxKG&t=255)), making sleeping in the truck a compromise. Something subtle I noticed was that despite the wheelbase growing around three inches, the aperture to the 2nd and 3rd rows appears to be slightly smaller and more forward than the outgoing model — I suspect a result of larger wheel arches that can accommodate larger tires.
+Middle row legroom and leg height while seating are both improved, and it’s a very accommodating interior for daily or touring use. My only complaints about the interior behind the driver’s seat is that there is a sloped floor just behind the second row, which isn’t easily removable [(they tumble; they don’t fold flat](https://youtu.be/JTG1_EJmzug?si=oR4bjat0YBfXYxKG\&t=255)), making sleeping in the truck a compromise. Something subtle I noticed was that despite the wheelbase growing around three inches, the aperture to the 2nd and 3rd rows appears to be slightly smaller and more forward than the outgoing model — I suspect a result of larger wheel arches that can accommodate larger tires.
 
 One huge miss here is the lack of a split folding tailgate. I know a hatch is easier, but its not better. Split gates for life.
 
@@ -135,7 +135,7 @@ One neat feature of the Overtail is seats with softer foam cushioning for long d
 Now, before we incur the wrath of David Tracy, let’s talk about off-road angles. These are for the Overtrail, but the standard trims will be in (parentheses):
 
 |          |            |               |                  |              |                   |
-|----------|------------|---------------|------------------|--------------|-------------------|
+| -------- | ---------- | ------------- | ---------------- | ------------ | ----------------- |
 | Approach | Breakover  | Departure     | Ground clearance | Wading depth | Suspension travel |
 | 26.00    | 24.00 (23) | 22.00 (21-23) | 8.66\*           | 27.50        | 24.50 (22)        |
 
@@ -157,7 +157,7 @@ Still, while the easy loop gave us a chance to familiarize ourselves with the ve
 
 The summary is that it’s quite good. But lets back up a little and start with the tech that makes it happen.
 
-https://www.youtube.com/embed/yPUlTQy37c0?feature=oembed&enablejsapi=1&origin=https://www.theautopian.com
+[https://www.youtube.com/embed/yPUlTQy37c0?feature=oembed\&enablejsapi=1\&origin=https://www.theautopian.com](https://www.youtube.com/embed/yPUlTQy37c0?feature=oembed\&enablejsapi=1\&origin=https://www.theautopian.com)
 
 Crawl Control is Toyota/Lexus’s automated off-road “cruise control,” and it takes control of traction management, the throttle, and brakes to maintain a set speed. It was first introduced in the 200 series Land Cruiser and has since made its way into other models including the outgoing GX460. Crawl Control, MTS and eKDSS are exclusive to the Overtrail trim.
 
@@ -165,9 +165,9 @@ With the GX550, I am pleased to report that using Crawl Control no longer sounds
 
 Also new with this version of Crawl Control is the ability to drive through the set speed limit without it disabling entirely. This allows use on an obstacle, then you can drive at a higher speed to the next obstacle, where you can use Crawl Control again without resetting. It’s a welcome addition, though I do wish Toyota would do like other manufactures and make the speed control more variable and accessed through the cruise control or paddles or something instead of preset speeds on a dial.
 
-https://www.youtube.com/embed/PwszmxeHsCk?feature=oembed&enablejsapi=1&origin=https://www.theautopian.com
+[https://www.youtube.com/embed/PwszmxeHsCk?feature=oembed\&enablejsapi=1\&origin=https://www.theautopian.com](https://www.youtube.com/embed/PwszmxeHsCk?feature=oembed\&enablejsapi=1\&origin=https://www.theautopian.com)
 
-Another feature to help assist with maneuverability is OTA (Off-road Turn Assist), which brakes the inside wheel under certain conditions to make turning tighter is still present, but I couldn’t get it to manifest after several tries. Chalking that up to user error or early build cars. Without OTA the turning radius is a respectable 19.7 feet. \[*Ed Note: On the Ford Bronco, which has a similar feature, you usually have to really hammer the throttle to get that to work. I wonder if that was the issue, here. -DT\]. *
+Another feature to help assist with maneuverability is OTA (Off-road Turn Assist), which brakes the inside wheel under certain conditions to make turning tighter is still present, but I couldn’t get it to manifest after several tries. Chalking that up to user error or early build cars. Without OTA the turning radius is a respectable 19.7 feet. \[\*Ed Note: On the Ford Bronco, which has a similar feature, you usually have to really hammer the throttle to get that to work. I wonder if that was the issue, here. -DT]. \*
 
 ### A Great Off-Road User Interface
 
@@ -243,9 +243,9 @@ With TNGA-F being common to all new Toyota trucks, there should be a fair amount
 
 ![P1211636](https://images-stag.jazelc.com/uploads/theautopian-m2en/P1211636-1024x768.jpg)
 
-Be prepared to shell out at the dealer, though. Prices for the base Premium start at \$64,250 + \$1,350 destination, and climb to \$81,250 + destination for the Luxury+. Overtrail starts at \$69,250 + destination. It does seem the configuration tool is up on the [site](https://www.lexus.com/models/GX), so you can play around and find out for yourselves where your ideal model rests. Fun fact: you can “add” a moonroof delete and save \$1100. My ideal Nori green overtrail came out to \$68.555, including destination.
+Be prepared to shell out at the dealer, though. Prices for the base Premium start at $64,250 + $1,350 destination, and climb to $81,250 + destination for the Luxury+. Overtrail starts at $69,250 + destination. It does seem the configuration tool is up on the [site](https://www.lexus.com/models/GX), so you can play around and find out for yourselves where your ideal model rests. Fun fact: you can “add” a moonroof delete and save $1100. My ideal Nori green overtrail came out to $68.555, including destination.
 
-It’s a lot, and it’s a pretty big price jump over the GX460, which ranged from \$60,000 to \$71,000. With the upcoming Land Cruiser 250 starting in the mid 50s, I think it makes sense. It sure would be nice to be able to order a “terrain package” on a base premium with all the off-road goodies, but I’m guessing the numbers can’t justify it.
+It’s a lot, and it’s a pretty big price jump over the GX460, which ranged from $60,000 to $71,000. With the upcoming Land Cruiser 250 starting in the mid 50s, I think it makes sense. It sure would be nice to be able to order a “terrain package” on a base premium with all the off-road goodies, but I’m guessing the numbers can’t justify it.
 
 On that topic, Lexus thinks they are going to be able to sell about 33,000 of these annually, and I think that’s conservative. People seem to love the look, and the increased utility and essential traits that have made the GX a winner have only gotten stronger in this generation. With its platform mate, the Land Cruiser J250 not yet on sale and the yet-to-be-seen 4Runner still on the horizon, the GX550 is the vehicle of the moment for the overlander. Yeah, it’s a lot of money, but it is a lot of machine. If I were cross-shopping in this price range, I would have a long hard think between this and an [Ineos Grenadier](https://www.theautopian.com/the-ineos-grenadier-is-almost-the-perfect-off-roader-almost/). The Grenadier is a little closer to my 80 series, and has a few more hardcore features, and while I haven’t driven it, I’ve heard good things. After having driving the GX550, though, I just know I’d want the GX. Hands down.
 
@@ -255,7 +255,7 @@ With a small 21.1 gallon fuel tank, the dismal range issue of the GX line appear
 
 ### The New GX Is Legit
 
-![~p1211690](https://images-stag.jazelc.com/uploads/theautopian-m2en/P1211690-1-1024x768.jpg)
+![\~p1211690](https://images-stag.jazelc.com/uploads/theautopian-m2en/P1211690-1-1024x768.jpg)
 
 Some cars give you the tingle the minute you sit in them, some never endear themselves to you even though they should. Some cars you can’t wait to get out of and some cars you want to hate, but you just can’t. The cars I fall in love with, though, are the ones that want you to get to know them. I’ve owned the same pair of Danner boots for many years, and they are my daily drivers. A good pair of boots fit well right from the box, and then go about quietly doing their job. Over the course of time and miles they break in and get even better. When the soles wear out you will resole them instead of throw them away. They’ve got plenty of life left. A decade later and you and your old boots have seen some things. I’m not saying I’ve cried throwing away old footwear, but I’m not NOT saying that.
 
