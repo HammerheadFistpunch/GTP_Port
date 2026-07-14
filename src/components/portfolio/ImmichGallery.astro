@@ -136,7 +136,10 @@ const galleryId = "immich-gallery";
         button.setAttribute("aria-label", `Open ${altPrefix.toLowerCase()} ${index + 1}`);
 
         const thumbnail = document.createElement("img");
-        thumbnail.src = resolveAssetUrl(image.thumbnailUrl, shareUrl);
+        // Immich's thumbnail is intentionally small and looks soft in a
+        // portfolio-sized grid. The preview provides enough detail for crisp
+        // cards on high-density displays without requesting the original.
+        thumbnail.src = resolveAssetUrl(image.previewUrl, shareUrl);
         thumbnail.alt = `${altPrefix} ${index + 1}`;
         thumbnail.loading = "lazy";
         thumbnail.decoding = "async";
@@ -200,14 +203,15 @@ const galleryId = "immich-gallery";
   }
 
   .immich-gallery__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
-    gap: var(--space-sm);
+    column-count: 2;
+    column-gap: var(--space-sm);
   }
 
   :global(.immich-gallery__thumbnail) {
     display: block;
-    min-width: 0;
+    width: 100%;
+    margin: 0 0 var(--space-sm);
+    break-inside: avoid;
     overflow: hidden;
     padding: 0;
     background: var(--bg-surface);
@@ -219,8 +223,7 @@ const galleryId = "immich-gallery";
   :global(.immich-gallery__thumbnail img) {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
+    height: auto;
     transition: transform 0.2s ease;
   }
 
@@ -309,6 +312,12 @@ const galleryId = "immich-gallery";
 
     .immich-gallery__control {
       justify-self: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .immich-gallery__grid {
+      column-count: 1;
     }
   }
 </style>
