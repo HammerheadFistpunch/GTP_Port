@@ -1,22 +1,22 @@
 ---
 title: 'How All-Wheel Drive Works: A Detailed Technical Explainer'
-description: A detailed guide to the mechanical, electronic, and practical differences among all-wheel-drive and four-wheel-drive systems.
-date: '2021-03-03'
+description: 'A detailed guide to the mechanical, electronic, and practical differences among all-wheel-drive and four-wheel-drive systems.'
+date: 2021-03-03T00:00:00.000Z
 category: Cars
 tags:
-- Automotive
-- AWD
-- 4WD
-- Engineering
-- Jalopnik
-featured: false
-draft: true
+  - Automotive
+  - AWD
+  - 4WD
+  - Engineering
+  - Jalopnik
 coverImage: /uploads/wordpress/2024/02/image-4.png
+featured: true
+draft: false
 ---
 
 > Archived writing sample. Originally published by [Jalopnik](https://jalopnik.com/how-all-wheel-drive-works-a-ridiculously-detailed-tech-1846233533) on March 3, 2021. Imported from the author's WordPress archive for review.
 
----
+***
 
 ![Image for article titled How All-Wheel Drive Works: A Ridiculously Detailed Technical Explainer](/uploads/wordpress/2024/02/image-4.png)
 
@@ -26,18 +26,18 @@ coverImage: /uploads/wordpress/2024/02/image-4.png
 
 As a lifelong enthusiast and prolific Jalopnik commenter ([HammerheadFistpunch](https://jalopnik.com/author/hammerheadfistpunch)) specializing in all things off-road, I’ve always wanted to write the story of all-wheel drive (AWD), how it works, and how to use that knowledge to cut through the marketing BS for so many years. I’ve taken a few stabs at it, but never in such excruciating detail. Now, finally, I have something I feel is a mostly complete picture of the subject, and I want to share it with you. So, in the absence of some clever metaphor, let’s get into it.
 
-#### **Categories Of Four-Wheel Drive/All-Wheel Drive **Systems
+#### \*\*Categories Of Four-Wheel Drive/All-Wheel Drive \*\*Systems
 
 Let’s begin by laying the foundation using the Society of Automotive Engineers technical paper [J1952 - All-Wheel Drive Systems Classifications](https://www.sae.org/standards/content/j1952_199512/). It’s not the law but it should be, and I’m going to be sticking to it, in part, because it defines AWD as any system that drives all the wheels.
 
-All of those [debates about four-wheel drive (4WD) being different from AWD](https://jalopnik.com/heres-the-difference-between-all-wheel-drive-and-four-w-1830575881#:~:text=Full%2DTime%204WD%3A%20This%20means,with%20a%20locking%20center%20differential.&text=Full%2DTime%20AWD%3A%20Power%20is,variable%20how%20much%20goes%20where.)—ignore them. In this piece, I’ll only be using “4WD” in reference to specific AWD system names. J1952 calls everything AWD and categorizes systems by how they operate, not by the components they’re made up of. It’s clear and accurate, and I’m all about it.
+All of those [debates about four-wheel drive (4WD) being different from AWD](https://jalopnik.com/heres-the-difference-between-all-wheel-drive-and-four-w-1830575881#:~:text=Full%2DTime%204WD%3A%20This%20means,with%20a%20locking%20center%20differential.\&text=Full%2DTime%20AWD%3A%20Power%20is,variable%20how%20much%20goes%20where.)—ignore them. In this piece, I’ll only be using “4WD” in reference to specific AWD system names. J1952 calls everything AWD and categorizes systems by how they operate, not by the components they’re made up of. It’s clear and accurate, and I’m all about it.
 
 #### SAE AWD classifications
 
-- Part-time asynchronous / Synchronous
-- Full-time fixed torque / Variable-torque passive / Variable-torque active
-- On-demand synchronous variable-torque passive / Active
-- On-demand independently powered variable-torque active
+* Part-time asynchronous / Synchronous
+* Full-time fixed torque / Variable-torque passive / Variable-torque active
+* On-demand synchronous variable-torque passive / Active
+* On-demand independently powered variable-torque active
 
 If none of these make sense to you, don’t worry. They will.
 
@@ -49,8 +49,8 @@ If none of these make sense to you, don’t worry. They will.
 
 This is what most people call 4WD, and has two defining characteristics:
 
-- User-selectable.
-- No inter-axle differential action.
+* User-selectable.
+* No inter-axle differential action.
 
 The first is simple enough. A part-time all-wheel drive system requires the driver to do something to go from two-wheel drive to all-wheel drive: either pull a lever, turn a dial, push a button, or activate a setting to connect the second axle to engine power.
 
@@ -148,7 +148,7 @@ We often talk about torque as what the engine produces. In order to understand t
 
 We’ll use a two-wheel drive car with one driven wheel on pavement and the other on snow as an example. Imagine your open differential, two-wheel drive vehicle makes a maximum of 150 lb-ft of torque and has a single 1:1 gear ratio, for simplicity. For the sake of argument, let’s say that traction between tire and snow is 30 lb-ft of *available torque*. That is, the tire will slip and lose traction when more than 30 lbs-ft of input torque is applied as that is all the snow/tire interface can push back with. Let also say that 65 lb-ft is what is required to move the car.
 
-When you floor it and call on all 150 lb-ft of *potential engine *torque, how much torque is actually applied to moving the car? 60 lb-ft. This is still true if your car made 2000 lb-ft instead of 150. So why 60 and not 30? Well, you’ll remember that open differentials always split torque 50:50, or 1:1. This is a function of the side gears being the same size and gear ratio, effectively identical “levers” to transmit torque. What one side can *apply* the other can too. In this scenario, the snow side will quickly exceed 30 lb-ft and spin while the other stays put. Note that both axles are getting 30 lb-ft each, for a total of 60 lb-ft. The stationary wheel on the pavement still gets 30 lb-ft, but it’s not spinning because the total applied torque (60) is still less than the required (65), so the car stays put and one tire appears to get no drive.
+When you floor it and call on all 150 lb-ft of \*potential engine \*torque, how much torque is actually applied to moving the car? 60 lb-ft. This is still true if your car made 2000 lb-ft instead of 150. So why 60 and not 30? Well, you’ll remember that open differentials always split torque 50:50, or 1:1. This is a function of the side gears being the same size and gear ratio, effectively identical “levers” to transmit torque. What one side can *apply* the other can too. In this scenario, the snow side will quickly exceed 30 lb-ft and spin while the other stays put. Note that both axles are getting 30 lb-ft each, for a total of 60 lb-ft. The stationary wheel on the pavement still gets 30 lb-ft, but it’s not spinning because the total applied torque (60) is still less than the required (65), so the car stays put and one tire appears to get no drive.
 
 This example shows the 1:1 relationship of output torques, called the torque bias ratio or TBR. A 1:1 differential, like an open differential, cannot bias torque. That is to say that an open differential cannot have two different output torques while differentiating. On an AWD vehicle, this means the front and rear axles will always send equal amounts of torque, the amount which can be applied to at a single axle.
 
@@ -196,13 +196,13 @@ Moving beyond viscous couplings, are internal limited-slip differentials. One of
 
 *Graphic: Toyota*
 
-The above diagram** **is the Torsen type-C from my Lexus, Type-C for “center”. Geared as a planetary gearset, it allows for speed bias and torque bias in a single unit—so it can offer differential action, but also not necessarily give the same torque to each axle, meaning if one axle can apply less torque than the other, torque can be sent across the differential to re-sync them.
+The above diagram\*\* \*\*is the Torsen type-C from my Lexus, Type-C for “center”. Geared as a planetary gearset, it allows for speed bias and torque bias in a single unit—so it can offer differential action, but also not necessarily give the same torque to each axle, meaning if one axle can apply less torque than the other, torque can be sent across the differential to re-sync them.
 
 This particular Torsen features a nominal torque-split different than 50:50, with one output having more gear teeth than the other output, such that the fixed nominal torque split is now rear-biased 40:60 front to rear. This doesn’t change the output speeds, just the relative nominal torque split. i.e. different length levers, but the same rotational speed.
 
 As a limited-slip device, it can send torque across the differential to different outputs. The GX470 can go from 29:71 front to rear to 53:47 front to rear depending on road conditions and traction needs. This range is its torque distribution ratio, from 53 % to the front to 71 % to the rear. So long as the front axle never needs more than 53% of the torque or the rear more than 71% then slip is managed.
 
-The amount of torque that can be biased by a device is known as the Torque Bias Ratio \[TBR\] as mentioned above, with open differentials being 1:1. A 3:1 TBR limited slip can bias 3 times the available torque for one output compared to the other.
+The amount of torque that can be biased by a device is known as the Torque Bias Ratio \[TBR] as mentioned above, with open differentials being 1:1. A 3:1 TBR limited slip can bias 3 times the available torque for one output compared to the other.
 
 Here is an example of what that means.
 
@@ -240,7 +240,7 @@ The system uses a Torsen center differential with a 41:59 front to rear nominal 
 
 Where the DCCD comes into play is when you need additional bias. As commanded by the computer or user, the clutches apply additional friction to the center differential increasing the TBR up to and including fully locked. In a locked state you move to part-time AWD where speed bias is entirely gone and torque bias is full.
 
-Fully locked allows you to realize maximum traction and torque bias potential, and stabilizes the car in loose conditions, but it makes the vehicle resistant to turning and has all the drawbacks of part-time AWD. Auto + mode increases the** **amount of lockup pressure based on sensor feedback, auto - decreases it. Manually controlling it takes the computer out of the equation and forces the clutches to engage at predetermined levels up to fully locked.
+Fully locked allows you to realize maximum traction and torque bias potential, and stabilizes the car in loose conditions, but it makes the vehicle resistant to turning and has all the drawbacks of part-time AWD. Auto + mode increases the\*\* \*\*amount of lockup pressure based on sensor feedback, auto - decreases it. Manually controlling it takes the computer out of the equation and forces the clutches to engage at predetermined levels up to fully locked.
 
 The beauty of active systems is the ability for external sensors and programming to adapt to situations automatically, never leaving a driver without the traction of full-time AWD, and increasing potential traction and driving characteristics on the fly.
 
@@ -248,10 +248,10 @@ The beauty of active systems is the ability for external sensors and programming
 
 What a mouthful; let’s dissect.
 
-- On-demand - Meaning torque is sent to the secondary axle as needed, and not by default.
-- Synchronous - This means that it can be engaged while in motion.
-- Variable Torque - When engaged the torque sent to the secondary axle can vary.
-- Passive - Doesn’t rely on external feedback systems.
+* On-demand - Meaning torque is sent to the secondary axle as needed, and not by default.
+* Synchronous - This means that it can be engaged while in motion.
+* Variable Torque - When engaged the torque sent to the secondary axle can vary.
+* Passive - Doesn’t rely on external feedback systems.
 
 One such system was VW T3/T4 Syncro vans, seen in action above, which relied solely on a viscous coupler. We talked about viscous couplers above as a limited-slip adder for open differentials. Originally these devices were conceived as a standalone coupler to add AWD cheaply and easily, *without a center diff*, in a way that would require no user input and be economical to make and run.
 
@@ -275,8 +275,8 @@ These systems and technologies, while most commonly found on crossovers, aren’
 
 So to make it easier to understand these modern all-wheel drive systems, let’s break them down into two basic categories.
 
-- Transfer Case-based
-- PTU/RDM or “Hang-On” systems
+* Transfer Case-based
+* PTU/RDM or “Hang-On” systems
 
 #### On-Demand Active AWD — Transfer Case-Based
 
@@ -294,18 +294,16 @@ Active transfer cases are usually found in trucks that would normally have a“4
 
 The advantages are numerous.
 
-- Finely controlled torque biasing potential
-- Potential for dramatically reduced driveline losses
-- Tune-ability
-- Locking operation
+* Finely controlled torque biasing potential
+* Potential for dramatically reduced driveline losses
+* Tune-ability
+* Locking operation
 
 Many of these systems fall on the line between full-time AWD and on-demand AWD by having a preset secondary axle torque value programmed in. An example would be the RAM TRX, which never has less than 30% of torque sent to the front axle.
 
 Chip Fairbanks, an engineer who worked on various AWD systems for a major supplier, explained how this worked to me using the 1st Generation Jeep Grand Cherokee SRT8 he worked on as an example.
 
-> “More modern systems, or at least 10 year old modern, are proactive and try to have some amount of torque already available in the clutch at all times. In a way, the software is trying to use the clutch to mimic a mechanical differential. Allowing slip across the clutch when turning but having it partially closed based on other conditions. We would set a basic torque spit, say 40/60 on a Jeep Grand Cherokee. The software would look at available engine torque and multiply that by the current gear ratio then set the clutch to have a capacity of 40% of that number.
->
-> So for simplicity, say the engine was outputting 1000 Nm of torque and in a 1:1 gear the clutch would engage to what would be equivalent to 400 Nm of torque. Just because the clutch was closed to this amount wouldn’t mean it would be transferred to the front axle. But if the rear wheels happened to lose grip, the clutch could at that moment transfer 400 Nm of torque. At the time we were calculating this ideal torque valve every 10 milliseconds, and it varied based on wheel slip, steering angle, and a bunch of other signals. This was the “base” mode, turn the switch to sport mode and the basic split would change to 30/70 to liven up the rear end a bit. Go to Sand mode and the basic setting would go to 50/50 for better traction. So with an active clutch anything is possible, it really comes down to the tuning of the software.”
+> “More modern systems, or at least 10 year old modern, are proactive and try to have some amount of torque already available in the clutch at all times. In a way, the software is trying to use the clutch to mimic a mechanical differential. Allowing slip across the clutch when turning but having it partially closed based on other conditions. We would set a basic torque spit, say 40/60 on a Jeep Grand Cherokee. The software would look at available engine torque and multiply that by the current gear ratio then set the clutch to have a capacity of 40% of that number.So for simplicity, say the engine was outputting 1000 Nm of torque and in a 1:1 gear the clutch would engage to what would be equivalent to 400 Nm of torque. Just because the clutch was closed to this amount wouldn’t mean it would be transferred to the front axle. But if the rear wheels happened to lose grip, the clutch could at that moment transfer 400 Nm of torque. At the time we were calculating this ideal torque valve every 10 milliseconds, and it varied based on wheel slip, steering angle, and a bunch of other signals. This was the “base” mode, turn the switch to sport mode and the basic split would change to 30/70 to liven up the rear end a bit. Go to Sand mode and the basic setting would go to 50/50 for better traction. So with an active clutch anything is possible, it really comes down to the tuning of the software.”
 
 Mostly RWD, slightly RWD, or fully locked, with decisions made every 1/100th of a second—that’s something I think we can all be excited about.
 
@@ -337,8 +335,8 @@ Examples of this system are found on...pretty much anything with a transverse la
 
 The two differentiating factors of PTUs compared to transfer cases are:
 
-- Secondary axle power is turned 90 degrees
-- Final drive reduction happens in the transaxle and not in the front and rear differentials.
+* Secondary axle power is turned 90 degrees
+* Final drive reduction happens in the transaxle and not in the front and rear differentials.
 
 ![Typical Toyota PTU](/uploads/wordpress/2024/02/image-10-3.png)
 
@@ -356,18 +354,18 @@ Above is the RDM from the Toyota GR Yaris which shows an up-sized coupling and t
 
 Pros:
 
-- Fewer parts needed
-- Easy adaptation of current drive systems
-- Separation of transfer case and center coupling functions
-- No user intervention needed
-- Minimal drag from the secondary axle when disengaged
-- Torque bias ratios of greater than 1:1 possible
+* Fewer parts needed
+* Easy adaptation of current drive systems
+* Separation of transfer case and center coupling functions
+* No user intervention needed
+* Minimal drag from the secondary axle when disengaged
+* Torque bias ratios of greater than 1:1 possible
 
 Cons:
 
-- Limited or no nominal torque split.
-- External feedback required for operation requiring electronic components and programming
-- Some possibly delay in commanded torque and actual torque
+* Limited or no nominal torque split.
+* External feedback required for operation requiring electronic components and programming
+* Some possibly delay in commanded torque and actual torque
 
 Originally these systems were mostly reactive, looking at wheel speed sensor data to see slip, and engaging the clutch post-facto. Many people refer to these systems as “slip & grip,” and that description used to be pretty accurate. Systems today are far more proactive and look at a variety of sensor inputs like steering wheel angle, throttle position, accelerometers, even rain sensors for the wipers so they can engage the secondary axle before slip occurs.
 
@@ -399,7 +397,7 @@ So why aren’t there more vehicles like the Cherokee with FWD based hang-on sys
 
 Imagine a RAV4 TRD, or discovery sport or Bronco sport, or any number of off-road-focused crossovers but with a proper low range reduction and actual locking differentials.
 
-In most cases and for most people, the reality is that a center differential is overkill in normal driving for speed bias as the speed differences between axles while driving on the pavement** **are relatively small and infrequent, and expensive technology is needed to overcome geared differentials’ inherent disadvantages for torque distribution. With a clutched RDM, a computer can manage the small speed biases by allowing slip in the clutches but can also bias torque relatively easily.
+In most cases and for most people, the reality is that a center differential is overkill in normal driving for speed bias as the speed differences between axles while driving on the pavement\*\* \*\*are relatively small and infrequent, and expensive technology is needed to overcome geared differentials’ inherent disadvantages for torque distribution. With a clutched RDM, a computer can manage the small speed biases by allowing slip in the clutches but can also bias torque relatively easily.
 
 To find out more about these couplings I went to visit car guru, Weber State University Professor of Automotive Technology and YouTube godsend John Kelly.
 
@@ -433,7 +431,7 @@ This brings me to something of a personal sore spot with some on-demand AWD vehi
 
 *Locking buttons in the Ford Bronco Sport*
 
-“Most are just little more than a marketing gimmick,” says Chip. “They lock the coupling for a short time, usually only at low speeds. Some stay locked with steering input and others open the coupling \[as needed\].”
+“Most are just little more than a marketing gimmick,” says Chip. “They lock the coupling for a short time, usually only at low speeds. Some stay locked with steering input and others open the coupling \[as needed].”
 
 Just take a look at this great video from mine and your favorite Polish AWD roller testing YouTube channel, *4x4 tests on rollers - duszaniespokojna.*
 
@@ -501,20 +499,20 @@ Want a deep dive? John’s got you covered. YouTube. Legend.
 
 There are three basic modes of operation for Toyota’s MGR’s:
 
-- Constant torque. In this mode, the current is sent to the MGR based on events and regardless of feedback from sensors. Such as the case with starting from a stop.
-- Demand torque. This is when the computer would command additional current based on predictive or reactive external signals.
-- Regeneration. During regen, The motor is used to generate electricity and recover waste energy from braking.
+* Constant torque. In this mode, the current is sent to the MGR based on events and regardless of feedback from sensors. Such as the case with starting from a stop.
+* Demand torque. This is when the computer would command additional current based on predictive or reactive external signals.
+* Regeneration. During regen, The motor is used to generate electricity and recover waste energy from braking.
 
 Like I said earlier, these are fully electric drivetrains and can actually act independently as a full EV drivetrain in some cases.
 
 These systems are highly beneficial hang on systems for a variety of reasons:
 
-- Full electronic control of secondary axle torque and speed.
-- All-weather traction as needed
-- Regeneration
-- Easily adaptable to hybrid architectures
-- Very low drag loss
-- Easy way to add total system power
+* Full electronic control of secondary axle torque and speed.
+* All-weather traction as needed
+* Regeneration
+* Easily adaptable to hybrid architectures
+* Very low drag loss
+* Easy way to add total system power
 
 Now for the downsides. Since these are fully independent of the front power unit, you can’t bias torque from your primary power source through mechanical means, and you are limited by the physical properties of your secondary axle power source. What this means is that it’s possible that your secondary axle will provide far less torque than if it were mechanically linked.
 
