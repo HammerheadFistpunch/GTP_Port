@@ -2,12 +2,8 @@
 title: Bushcraft Camp Hacks
 description: An archived outdoor-writing sample covering practical bushcraft techniques, camp organization, and field-tested shortcuts.
 date: '2022-05-05'
-projectType: Writing
+projectType: Projects
 tags:
-- Writing
-- Overlander
-- Bushcraft
-- Camping
 technologies: []
 featured: false
 draft: false
