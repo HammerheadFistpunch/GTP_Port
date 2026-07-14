@@ -17,7 +17,7 @@ navigation:
   - label: Get in Touch
     href: /contact
   - label: Resume
-    href: /resume
+    href: /
 footerLinks:
   - label: Home
     href: /
