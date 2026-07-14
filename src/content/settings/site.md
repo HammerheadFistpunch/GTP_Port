@@ -4,7 +4,7 @@ logoText: TheAngrySquirrel
 siteDescription: 'Patrick Rich - HammerheadFistpunch. Two names, one legend'
 footerTitle: TheAngrySquirrel
 footerDescription: 'Patrick Rich - HammerheadFistpunch. Two names, one legend'
-copyrightName: AngrySquirrel.org
+copyrightName: Patrick Rich
 navigation:
   - label: Home
     href: /
