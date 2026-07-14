@@ -1,22 +1,22 @@
 ---
 title: A Beginner's Guide to the Deserts of the Southwest
-description: A practical field guide to traveling through the deserts of the American Southwest, including terrain, weather, navigation, and preparation.
-date: '2022-07-27'
+description: 'A practical field guide to traveling through the deserts of the American Southwest, including terrain, weather, navigation, and preparation.'
+date: 2022-07-27T00:00:00.000Z
 category: Cars
 tags:
-- Overlander
-- Travel
-- Desert
-- Camping
-- Hiking
-featured: false
-draft: true
+  - Overlander
+  - Travel
+  - Desert
+  - Camping
+  - Hiking
 coverImage: /uploads/wordpress/2024/02/image-12-2.png
+featured: true
+draft: false
 ---
 
 > Archived writing sample. Originally published by Overlander.com on July 27, 2022. Imported from the author's WordPress archive for review.
 
----
+***
 
 Originally published in 3 parts on Overlander.com August 2022 (now defunct)
 
@@ -38,7 +38,7 @@ Seeing a lot of first timers I often see people unfamiliar with the desert who -
 
 This guide series is aimed at imparting things that I’ve learned in the desert with people who want to come see the place I fall in love with over and over.  There will be 3 parts each aimed at a different aspect of general information, safety and travel. Even though I’ve lived in the desert for 40 years I am not the final word on it. Please comment with tips you’d want others to know about how to enjoy the desert safely and with respect and stewardship.
 
-**CLIMATE **
+\*\*CLIMATE \*\*
 
 This seems like an obvious place to start. In this section much of what I will address will be targeted towards people who may be new to the desert generally. Some of it may be fundamental, but there are some good tips in here too I promise.
 
@@ -46,25 +46,25 @@ This seems like an obvious place to start. In this section much of what I will a
 
 A desert is any place that is arid and normally sparsely vegetated. Yes, that means sand dunes, cactus, and slickrock, but it also means high altitude plains and forested mountain ranges. The climate of the “desert” varies greatly with elevation and latitude, with the only constant being low rainfall, and low humidity. This low humidity has a couple of unique effects you may not be used to.
 
-**TIP - Things dry fast in the desert. Wet clothes and towels dry in minutes and food left out will quickly desicate.  **
+\*\*TIP - Things dry fast in the desert. Wet clothes and towels dry in minutes and food left out will quickly desicate.  \*\*
 
 This lack of moisture means that the air and soil won't hold onto the heat. The upside of this is that 90 degrees in the desert feels a lot more tolerable than 90 degrees in, say, Florida. The downside is that you feel cooler because your sweat is evaporating and drying you out. More on that later.  Another effect, is that the the temperature changes quickly between day and night. Many people who come to the desert aren’t prepared for the wild temperature swings that are an everyday occurrence. Expect an average swing of about 30-40 degrees F from high to low with extremes of 70 or more degrees from day to day. That means it could be 95 during the day, and freezing in the morning. On that note, the coldest time of day in the desert is first thing in the morning. Plan your wardrobe and breakfast plans accordingly. The high desert particularly sees wild swings in temps.  Even in the summer, something warm for the mornings is advisable.
 
 ![](/uploads/wordpress/2024/02/image-12.png)
 
-**TIP - Do your most intense outdoor activities like biking or hiking early in the day and do your less intense or indoor activities (driving) during the heat of the day.   **
+\*\*TIP - Do your most intense outdoor activities like biking or hiking early in the day and do your less intense or indoor activities (driving) during the heat of the day.   \*\*
 
 In the high deserts, afternoon thunderstorms are common during the summer months.  Then tend not to rain a lot or last long but they can be intense.
 
-**NOTE - The old adage about counting seconds between lightning and thunder to determine your safety from lightning is inaccurate. Lightning can travel dozens of miles. If you can see lightning and hear thunder it can hit you, though obviously it's less likely the further away it is.** **You can take my word on this. **
+**NOTE - The old adage about counting seconds between lightning and thunder to determine your safety from lightning is inaccurate. Lightning can travel dozens of miles. If you can see lightning and hear thunder it can hit you, though obviously it's less likely the further away it is.** \*\*You can take my word on this. \*\*
 
 If there is one rule when it comes to desert weather, it's that almost anything can happen. Sunny and hot one day, snow the next morning. When it does rain, it typically rains for short bursts. The higher you go, the more extreme the change. Use weather forecasts as a broad guide and check for updates often as they are very likely to change last minute.
 
-**TIP - NOAA weather alert radios can be found in many off-the-shelf radios and even in some cars (Subaru used to have this a feature of their radios in the Outback). You can get these radio broadcasts almost anywhere with cheap handheld radio and they can give you updated forecasts and alerts. **
+\*\*TIP - NOAA weather alert radios can be found in many off-the-shelf radios and even in some cars (Subaru used to have this a feature of their radios in the Outback). You can get these radio broadcasts almost anywhere with cheap handheld radio and they can give you updated forecasts and alerts. \*\*
 
 Something you may or may not know about weather forecasts is that the percentage chance of precipitation isn’t how likely it will rain, it means what percentage of the forecast area is likely to get rain. The forecast may only say 20% chance of rain, but you may be in the lucky part of the forecast area that gets that rain, and it might be a lot of it. Because there is a lot of open space in the desert, forecast areas can be quite large. My encounter with lighting happened on a 20% chance of rain evening.
 
-**TIP -** **APRS.FI** **is a free amature radio interlink system that includes automated weather stations all over the world.  On the map there are blue circles with “WX”, which if you click on you can see real time weather data transmitted by VHF to the internet. After clicking on a station you can click on “show weather charts” for a historical trends for the day, week, month or year including barometric pressure, wind speed and gusts, rainfall and even solar output. These weather stations may give you a much more local idea of the weather. **
+**TIP -** **APRS.FI** \*\*is a free amature radio interlink system that includes automated weather stations all over the world.  On the map there are blue circles with “WX”, which if you click on you can see real time weather data transmitted by VHF to the internet. After clicking on a station you can click on “show weather charts” for a historical trends for the day, week, month or year including barometric pressure, wind speed and gusts, rainfall and even solar output. These weather stations may give you a much more local idea of the weather. \*\*
 
 When it does rain in the desert, the land almost always reacts dramatically. Rivers, washes and waterfalls may suddenly form or swell carrying a lot of material with them. Perfect dirt roads may become completely impassible to even the most well equipped traveler and/or the road may cease to exist. I will go into this more in the SAFETY section.
 
@@ -72,7 +72,7 @@ When it does rain in the desert, the land almost always reacts dramatically. Riv
 
 When choosing campsites always look to see where water would run.  Pitch your camp/tents away from any low spots or obvious washes. They might be dry now, but they could be feet deep in 30 minutes if it pours.  Never camp in a large drainage (you’d be surprised how often I see this)! Avoid camping in narrow canyons unless they are well established campgrounds with islands of safety.
 
-**TIP - Look around your campsite for signs of recent water activity. Banks of sand built up, weeds laid over, sticks in the weeds, sandy channels, etc.  This is a good indication of what the water did the last time it rained and where it’s likely to go again. **
+\*\*TIP - Look around your campsite for signs of recent water activity. Banks of sand built up, weeds laid over, sticks in the weeds, sandy channels, etc.  This is a good indication of what the water did the last time it rained and where it’s likely to go again. \*\*
 
 **PUBLIC LANDS**
 
@@ -108,7 +108,7 @@ The desert may appear barren and void of life, but there are very sensitive micr
 
 BLM land is multi-use land and the government can and does lease it to ranchers for grazing, or for timber, mineral or other resource extraction operations. These users have certain rights and you must obey posted signs from these users including no trespassing. This also means that you may go to bed one night and wake up to cows in the morning walking through your site. If driving through private land which has a public road running through it, an easement allows for road use to pass through, but no other use. Stay on the road and do not drive, hike or camp on private land! You will also likely encounter fences, cattle guards and gates on public land. Note: Cattle have right of way on grazing land.
 
-**TIP - If you encounter a gate on a public road its most likely to keep cattle in/out and not people. If your route takes you through gated public land, leave gates as you found them. If found open, leave it open. If found closed, open them to pass, then close them behind you (usually closed only with wire or rope or a stone). If the gate is posted as no trespassing, or is locked, do not attempt to bypass the gate or lock.  **
+\*\*TIP - If you encounter a gate on a public road its most likely to keep cattle in/out and not people. If your route takes you through gated public land, leave gates as you found them. If found open, leave it open. If found closed, open them to pass, then close them behind you (usually closed only with wire or rope or a stone). If the gate is posted as no trespassing, or is locked, do not attempt to bypass the gate or lock.  \*\*
 
 State parks, national parks, national monuments, state and national forests all have additional regulations depending on the area. The regulations change area to area so check the blm field office/ranger station for the area you are visiting to get up to date restrictions or special rules. Firearms and pets are prohibited in National Parks, so be advised that simply taking them in could cause problems.
 
@@ -138,13 +138,13 @@ As mentioned above, gathering firewood is generally frowned upon or outright pro
 
 ![](/uploads/wordpress/2024/02/image-14.png)
 
-**TIP - Portable propane powered fire rings are cleaner, safer alternatives to wood fires. In many places that prohibit wood fires, these are permitted (be sure to check with a ranger first). They also don’t leave you stinking like smoke. **
+\*\*TIP - Portable propane powered fire rings are cleaner, safer alternatives to wood fires. In many places that prohibit wood fires, these are permitted (be sure to check with a ranger first). They also don’t leave you stinking like smoke. \*\*
 
-**ETIQUETTE **
+\*\*ETIQUETTE \*\*
 
 When visiting the desert something you will notice is space, lots of space. People tend to enjoy the desert for its solitude and stark beauty. Remember this when choosing how close to camp to others, how late and loud your campfire chat goes, whether or not to fly that drone and whether or not to use your bluetooth speaker. Note: Drone flight is NOT permitted in National Parks and many state parks.
 
-**TIP - If you are close enough to others that they can hear your music, it's too loud or not the right time or place. Your neighbors will thank you for your consideration. While hiking or around people in general is not the time for external speakers as it is seen as extremely rude. Save it for the car or use headphones. **
+\*\*TIP - If you are close enough to others that they can hear your music, it's too loud or not the right time or place. Your neighbors will thank you for your consideration. While hiking or around people in general is not the time for external speakers as it is seen as extremely rude. Save it for the car or use headphones. \*\*
 
 If you are lucky enough to have a clear night in the desert you won’t want to miss stargazing.  Some of the best dark skies are here and the views don’t disappoint.  In the same vein as music, keep your light pollution to a minimum and respect early sleepers and late risers.
 
@@ -192,7 +192,7 @@ Water is life in the desert and here, especially in the hotter months, you will 
 
 8\. Lastly, alcohol, caffeine and even high amounts of sugar are diuretics and can cause you to lose more fluid than you get from the drink. Keep coffee, soda and alcohol consumption reasonable and remember that they DO NOT replace water.
 
-**TIP - Despite what you may have heard or seen, DO NOT attempt to get water from a cactus.  While some breeds have plenty of moisture, it is not water and is more likely to cause severe gastrointestinal distress and diarrhea and make your situation MUCH worse. **
+\*\*TIP - Despite what you may have heard or seen, DO NOT attempt to get water from a cactus.  While some breeds have plenty of moisture, it is not water and is more likely to cause severe gastrointestinal distress and diarrhea and make your situation MUCH worse. \*\*
 
 Stay on top of hydration, it can be very easy to ignore early warning signs and you could end up in real trouble if things get worse.
 
@@ -202,7 +202,7 @@ The nature of the desert means that you won't find abundant shade, which means a
 
 It may sound counterintuitive but one of the best things you can do is wear clothing with good sun coverage versus less.  A natural fabric that breathes well like cotton is better than synthetics unless you sweat heavily or are doing something highly active.  If you have any doubts, look around at what the locals and rangers are wearing. Wear light colors to avoid the sun absorbing into your clothing.  Wear a hat that covers your face but ideally your neck as well and use quality UV blocking sunglasses. You don’t want to end up having to hear the rope only.
 
-**TIP - Use sweatproof sunscreen, especially on your face unless you like the feel sunscreen in your eyes. Also consider a quality lip balm with sunscreen. **
+\*\*TIP - Use sweatproof sunscreen, especially on your face unless you like the feel sunscreen in your eyes. Also consider a quality lip balm with sunscreen. \*\*
 
 On the topic of clothing, wear appropriate footwear for the activity. Sandals and flip flops are NOT appropriate footwear for hiking around on rocks, cliffs and terrain filled with pointy things.
 
@@ -228,7 +228,7 @@ Even when the turn-by-turn is working understand that mapping services don't hav
 
 The most reliable option is learning to use paper maps with basic orienteering combined with GPS.  A good paper map will have terrain features, major dirt roads and grids with latitude  and longitude reference.
 
-**TIP - Most maps feature Lat./Long. but more recently a projection known as UTM, or Universal Transverse Mercator is finding its way onto maps. This system functions very differently to Lat./Long. but is very helpful at determining distances once you learn the basics and can be very helpful at quickly identifying rough position and distance to waypoints. **
+\*\*TIP - Most maps feature Lat./Long. but more recently a projection known as UTM, or Universal Transverse Mercator is finding its way onto maps. This system functions very differently to Lat./Long. but is very helpful at determining distances once you learn the basics and can be very helpful at quickly identifying rough position and distance to waypoints. \*\*
 
 On your map be sure to note what types of roads are and how they are marked. In some cases a "road" may look like an easy, scenic drive but it could be a trail that would challenge even a well equipped overlander.
 
@@ -244,9 +244,9 @@ very rough. The 2nd time I did this trail I ran into a couple in a rented Jeep a
 
 All this to say that in the desert, all roads are NOT equal on a map. If you are planning a route, make sure you understand what you are getting into before commiting.
 
-**TIP - Local field offices/ranger stations are your friend. They will usually have free maps and may have lots of good local and recent knowledge of the area and road conditions. The people are almost always very friendly and helpful. **
+\*\*TIP - Local field offices/ranger stations are your friend. They will usually have free maps and may have lots of good local and recent knowledge of the area and road conditions. The people are almost always very friendly and helpful. \*\*
 
-**DRIVING **
+\*\*DRIVING \*\*
 
 Don't be tempted to take shortcuts or scenic routes without being equipped with some research and preparedness. Some roads will be seasonal, some will have  requirements such as 4x4 only, or high clearance 4x4, and some may not exist at all anymore.
 
@@ -256,7 +256,7 @@ trouble so long as the conditions are right. If it says "4x4 and/or high clearan
 
 Some 4x4 roads may not be marked at all. Use your better judgement and don't press on if the trail starts to exceed your comfort zone. The chances are that the road will get worse, not better.
 
-**NOTE: AWD isn't necessarily 4WD. While I agree with the Society of Automotive Engineers (SAE) that the correct terminology for anything that drives all of its wheels is AWD (with categories that define each group), I respect that there is a universally accepted distinction between the two. The big distinction, for our purposes, is that AWD isn't meant to be used off-road continuously or strenuously.  **
+\*\*NOTE: AWD isn't necessarily 4WD. While I agree with the Society of Automotive Engineers (SAE) that the correct terminology for anything that drives all of its wheels is AWD (with categories that define each group), I respect that there is a universally accepted distinction between the two. The big distinction, for our purposes, is that AWD isn't meant to be used off-road continuously or strenuously.  \*\*
 
 There are 3 major driving hazards in the desert
 
@@ -264,7 +264,7 @@ There are 3 major driving hazards in the desert
 
 2\. Clay
 
-3. Water
+1. Water
 
 **SAND**
 
@@ -282,19 +282,19 @@ If you have a compressor, be sure to re-inflate when you are getting back on the
 
 Keep a steady pace in sand and avoid stopping, especially on hills. If you have to stop on sand, be sure to stop where getting going again won't be an uphill battle.
 
-**TIP -  Be advised that tire  "inflators" are not compressors. I've seen so many dead "inflators" trying to air up a car tire and dying before they get there. I even saw someone using a bicycle pump because it was working better than their cheap inflator. Inflators are for bikes and toys, not for car tires. They may be better than nothing...but not by much and even that's not a guarantee.  **
+\*\*TIP -  Be advised that tire  "inflators" are not compressors. I've seen so many dead "inflators" trying to air up a car tire and dying before they get there. I even saw someone using a bicycle pump because it was working better than their cheap inflator. Inflators are for bikes and toys, not for car tires. They may be better than nothing...but not by much and even that's not a guarantee.  \*\*
 
 If you feel your vehicle starting to lose a traction battle with sand, STOP before you dig in too deep. Simply get out, let out half the air in your tires, and try again. Traction boards are advisable for overland travel in the sand if possible.
 
-**CLAY **
+\*\*CLAY \*\*
 
 Some maps and signs may say "impassible when wet". You should take this warning seriously. Even the most well equipped trail rig will find out how true this is after a good rain.  The soil in the desert can be highly variable from loose sand to compacted clay. In the rain, some roads turn into a kind of sticky goo that quickly clogs tires (even mud terrains) and fills wheel wells and will 100% stop you dead in your tracks.  It's the kind of mud where you take a step and bring up about 8 lbs of earth with each step.
 
-**TIP - You can recognize clay roads as usually being a red tone and glossy in sheen when packed down into a road.  **
+\*\*TIP - You can recognize clay roads as usually being a red tone and glossy in sheen when packed down into a road.  \*\*
 
 ?If you find yourself on a wet clay road, find a safe place to stop and wait it out. Try and find a flat area off the road that doesn't require you to climb back up onto the road, make sure its not in a low spot or drainage. If you can, look for sand, which will appear rougher in texture or rock. I know it's tempting to try and power through it, but very experienced people with very good machines will get stuck or slide off these roads. Try to avoid getting close to the edge of crowned roads as you will slip sideways off. This clay will also affect your ability to walk around, but you won't be as stymied walking as you will driving.
 
-**WATER **
+\*\*WATER \*\*
 
 As briefly mentioned in part-1, any significant rain in the desert has the potential to rewrite the landscape pretty dramatically. You would be surprised how quickly and how much water will start to accumulate in drainages, low spots and especially narrow canyons.  The hazards range from having to cross new running water to flash flooding.  If it starts raining hard, and you are in a drainage (ravine, gorge, wash, etc) you need to consider how you are going to get out, and NOW.
 
@@ -316,13 +316,13 @@ Water coming down canyon walls or forming waterfalls.
 
 Keep an eye on the weather. If you recall part 1 I mentioned to know where water will flow. In the case of flash floods the head waters may be far away from where you are hiking. It doesn't have to be raining where you are to experience a flash flood. If you are going into a flash flood area check the forecast for the headwaters as well as for the area you will be. Field offices, ranger stations and backcountry offices will have flash flood warnings and weather forecasts for these area. Recalling what I said about the weather in the first part understand that forecasts are highly fluid and that you are responsible for your choices. Go in prepared, watch for signs and remember islands of safety.
 
-**TIP - June and July are monsoon season in the desert and sudden rain storms are more likely.  **
+\*\*TIP - June and July are monsoon season in the desert and sudden rain storms are more likely.  \*\*
 
 Learn to know the signs, act quickly and err on the side of caution. Know where you can escape to, and be prepared to run if you have to.
 
 Navigating in the desert can present challenges. Often times there is no "trail" and wayfinding can be difficult. There is a lot of open terrain and the weather can delete obvious paths. The cairn, a pile of rocks stacked by size, is the standard trail marker.  A properly marked route will have a cairn every 100 feet or so to keep you on path, more or less depending on how complicated the trail is.
 
-**NOTE: It's become popular to stack rocks outdoors and on trails. This "harmless" habit can be a real problem for navigation. Please do not stack rocks or create cairns casually, unless you knock them down when you are done.  **
+\*\*NOTE: It's become popular to stack rocks outdoors and on trails. This "harmless" habit can be a real problem for navigation. Please do not stack rocks or create cairns casually, unless you knock them down when you are done.  \*\*
 
 ![](/uploads/wordpress/2024/02/image-14-6.png)
 
@@ -340,7 +340,7 @@ There is a huge diversity of life in the desert and most of it is far more inter
 
 There are far too many species and habitats to be able to cover all potential scenarios, so be sure and do a little homework on the areas you will be visiting.
 
-**TIP - The two most dangerous animals you will probably come across are Bison and Moose.  These two animals are responsible for way more injury than bear or mountain lion. Moose are very aggressive, and Bison are shockingly good sprinters and jumpers. GIVE THEM SPACE. **
+\*\*TIP - The two most dangerous animals you will probably come across are Bison and Moose.  These two animals are responsible for way more injury than bear or mountain lion. Moose are very aggressive, and Bison are shockingly good sprinters and jumpers. GIVE THEM SPACE. \*\*
 
 The general takeaway here is that animal life in the desert really isn't that scary, you just have to make sure you don't accidentally ruin their day first.
 
@@ -356,15 +356,15 @@ I am going to cover more specifics in the last section for overlanders there are
 
 As you get into more advanced radio communication, many more options open up, as does your range. You can read more about your options in my overland trail comms writeup.
 
-**NOTE: Although Park Rangers have and monitor radios, they are not public frequencies and you cannot call them directly. **
+\*\*NOTE: Although Park Rangers have and monitor radios, they are not public frequencies and you cannot call them directly. \*\*
 
 One of the best communication methods you can use here is the simplest - pen and paper.  If you are going to take a hike in a remote area, leave a note on your car with your departure time, estimated return time (if you can guess) and the number of people in your party and even a contact number.  On well established hikes there is typically a logbook for this. Put down your car (plate), how many are in your party and when you left. Be sure to log a time out when you get done. This helps people find you if you become lost and to know to look for you if your car is still there long after it should be. You can also include a radio frequency or channel if you want to have a better chance of making contact - just be sure to also include any privacy channels you are using as well.
 
 ![](/uploads/wordpress/2024/02/image-14-3.png)
 
-**TIP - Consider adding pen and paper to your carry items.  A mini pencil with a roll of paper wrapped around it take up no space at all and costs next to nothing but can convey a lot of information. **
+\*\*TIP - Consider adding pen and paper to your carry items.  A mini pencil with a roll of paper wrapped around it take up no space at all and costs next to nothing but can convey a lot of information. \*\*
 
-**EDC **
+\*\*EDC \*\*
 
 While we are on the topic, I would recommend a few EDC (Every Day Carry) items to consider having with you on any outing.  At a minimum I would say a small knife, a small flashlight and a pencil and paper.
 
@@ -396,9 +396,9 @@ Aired down? Speeds down.
 
 Use 4WD high range and/or center differential locked on loose roads even if you don’t need 4WD traction. Tying axles together will give you a better balance for emergency maneuvers, reducing snap oversteer which will get you into more trouble more often than understeer. Doing this also reduces braking distances on loose surfaces as it forces the rear axle to stop with the front axle.  Don't speed around blind corners. Corners are fun taken sideways but it's a huge risk. There could be other vehicles or people or more often than not the road may go in a completely different direction or slope than you were expecting.
 
-**TIP: When coming to a blind corner, give the horn a few short little toots to alert anyone coming the other way that you are there. It won’t give you any more information than you had, but it gives the other driver enough to hopefully prevent an accident. **
+\*\*TIP: When coming to a blind corner, give the horn a few short little toots to alert anyone coming the other way that you are there. It won’t give you any more information than you had, but it gives the other driver enough to hopefully prevent an accident. \*\*
 
-Now let's talk about some of the hazards you will find in the desert and techniques to deal with them. **DEEP SAND **
+Now let's talk about some of the hazards you will find in the desert and techniques to deal with them. \*\*DEEP SAND \*\*
 
 ![](/uploads/wordpress/2024/02/image-12-1.png)
 
@@ -438,13 +438,13 @@ If you get stuck, hopefully, you stopped before you dug yourself in. From here y
 
 5\. If necessary a second vehicle with a dynamic recovery strap may provide the pop you need. Dynamic straps stretch and use elasticity for recovery. Start small and build up speed and distance as needed. Put a coat or recovery blanket over the strap in the center for safety.
 
-**IMPORTANT SAFETY TIP: A static towing strap is not a recovery strap; Avoid using these for recovery and never build up speed to use these. NEVER ATTACH A RECOVERY STRAP TO A HITCH BALL FOR RECOVERY! THIS CAN AND HAS KILLED. If you don’t have a rated recovery point on the recovering vehicle you can use the hitch receiver and the hitch pin. Put the loop of the strap into the receiver and the pin through the loop. This is less strong than a rated recovery point but far safer and stronger than a hitch ball. **
+\*\*IMPORTANT SAFETY TIP: A static towing strap is not a recovery strap; Avoid using these for recovery and never build up speed to use these. NEVER ATTACH A RECOVERY STRAP TO A HITCH BALL FOR RECOVERY! THIS CAN AND HAS KILLED. If you don’t have a rated recovery point on the recovering vehicle you can use the hitch receiver and the hitch pin. Put the loop of the strap into the receiver and the pin through the loop. This is less strong than a rated recovery point but far safer and stronger than a hitch ball. \*\*
 
 If you didn’t stop and you’ve dug yourself down to the chassis - you’ve got a long day of digging ahead of you. Dig out your tires enough to fit in traction boards before attempting any recovery techniques.
 
 And again, remember that airing down can be done with a key or stick, but you will need a compressor to air back up once off the sand. Get a good one.
 
-**CLAY **
+\*\*CLAY \*\*
 
 I covered clay in part 2 but as a reminder
 
@@ -456,13 +456,13 @@ I covered clay in part 2 but as a reminder
 
 4\. Don’t go around it off-trail. For one it ruins the trail, for another, many MANY people get stuck going around only to realize the off-trail is often worse.
 
-**WATER CROSSINGS **
+\*\*WATER CROSSINGS \*\*
 
 Crossing the dirty devil river
 
 For water crossings, the big threat as mentioned in part 2 is to check for water variability. Water flow rates and levels can change dramatically and very quickly. What was an easy crossing heading in one direction may have changed in flow and depth coming back. Don’t cross if you aren’t sure.
 
-**TIP: If the water is clear it's a good indication that the surface is hard or rocky. If the water is murky check the entrance and exit of the crossing visually. If it's wet compact dirt you might be okay, if it’s silty and sandy you will have to check the crossing to be certain. The sand banks may have been left over from a high water event and the bottom could be fine sand that compacts nicely and is relatively safe, or it could be silty and boggy all the way through if it hasn’t flooded in a while. If you can’t see the bottom, checking is best. **
+\*\*TIP: If the water is clear it's a good indication that the surface is hard or rocky. If the water is murky check the entrance and exit of the crossing visually. If it's wet compact dirt you might be okay, if it’s silty and sandy you will have to check the crossing to be certain. The sand banks may have been left over from a high water event and the bottom could be fine sand that compacts nicely and is relatively safe, or it could be silty and boggy all the way through if it hasn’t flooded in a while. If you can’t see the bottom, checking is best. \*\*
 
 **SLICKROCK**
 
@@ -484,7 +484,7 @@ A shelf road is any road cut into a mountain or cliffside and offers exposure to
 
 Getting comfortable with exposure
 
-1\. The road is probably safe. With exceptions for rarely traveled roads or roads damaged by rain, shelf roads are generally strong, sturdy and safe. Take some comfort knowing that the road is wide enough and strong enough to easily support any \[reasonable\] sized vehicle. A popular shelf road experience is the shafer trail in Canyonlands (above). While it appears daunting, it's actually a breeze to drive in most any vehicle and there are many possibilities to pass. It's a thrill, but it's a safe thrill so long as you remain in control.
+1\. The road is probably safe. With exceptions for rarely traveled roads or roads damaged by rain, shelf roads are generally strong, sturdy and safe. Take some comfort knowing that the road is wide enough and strong enough to easily support any \[reasonable] sized vehicle. A popular shelf road experience is the shafer trail in Canyonlands (above). While it appears daunting, it's actually a breeze to drive in most any vehicle and there are many possibilities to pass. It's a thrill, but it's a safe thrill so long as you remain in control.
 
 2\. You probably have more room than you think. Obviously if you are the only one on the road, drive slowly in the middle or on the inside if it makes you feel comfortable but most shelf roads are wide enough.
 
@@ -494,19 +494,19 @@ Getting comfortable with exposure
 
 Passing
 
-1\. Generally speaking uphill traffic has the right of way. However, do what is safest and makes the most sense for each given situation. If its practical, it’s nice to have the inside car pass the outside \[exposed\] car regardless of direction of travel but it will all be situation dependant. In most cases I’ve experienced, the inside car will have a better chance of making room for the outside car to pass. Try and get consensus with the other driver on where people are going to go and who is passing.
+1\. Generally speaking uphill traffic has the right of way. However, do what is safest and makes the most sense for each given situation. If its practical, it’s nice to have the inside car pass the outside \[exposed] car regardless of direction of travel but it will all be situation dependant. In most cases I’ve experienced, the inside car will have a better chance of making room for the outside car to pass. Try and get consensus with the other driver on where people are going to go and who is passing.
 
 2\. One rule that you will need to understand is that someone is going to have to pass and it may mean one of you backing up. When backing take your time and have a spotter if you don’t feel comfortable. 3. The inside can be more dangerous than the outside. A drop is scary but the inside tends to hide hazards that are more likely if not more obvious. Ditches, sharp puncture causing rocks, and most dangerously, riding up the inside wall. Keep your head when passing and be sure to look inside and out. There have been more than a few incidents where people, being overcautious, drove UP the inside line and flipped over. The is especially common where the road has a slight camber to the outside or a rock on the inside. You shouldn’t be hugging the inside unless you absolutely have no choice.
 
 Many of these hazards exist elsewhere and if you aren’t new to overlanding you’ve probably got some experience with them. Hopefully there some something in here that helps you feel more confident about desert terrain.
 
-**RECOVERY **
+\*\*RECOVERY \*\*
 
 So what happens when you get stuck? What kind of recovery gear should you bring? Im going to make an assumption that you are buying recovery gear for the first time, although you probably already have some of this gear if not all of it and more.
 
 At a minimum every overlanding coming to the desert should have
 
-1\. A good compressor. Tire pressure will be the \#1 extraction tool.
+1\. A good compressor. Tire pressure will be the #1 extraction tool.
 
 2\. Traction boards - 2 Minimum. 4 Better.
 
@@ -526,11 +526,11 @@ While a more comprehensive recovery kit is always better, understand that you wo
 
 Do you need a winch? If you have one, then you are certainly better prepared, and if you do a lot of solo travel I would strongly consider one. If you travel in a group and don’t do a lot of heavy rock crawling a winch is very unlikely to be used. For one, most of the recovery situations don’t require one and for another…there is nothing to winch off of. In most parts of the desert there wont be winch anchors handy. You can use a deadman or burry your spare tire in a pinch but in many of the places you might get stuck, you may have a hard time with anchor points.
 
-**WHAT TO PACK AND WHAT TO LEAVE **
+\*\*WHAT TO PACK AND WHAT TO LEAVE \*\*
 
 Some other things that may be common where you are but are unlikely to need in the desert. Again, don’t let me tell you NOT to take something, but my experience has taught me what you probably won't need.
 
-**LEAVE **
+\*\*LEAVE \*\*
 
 Limb risers
 
@@ -538,7 +538,7 @@ chainsaw/axe
 
 You just won't run into that much deadfall or overgrowth.
 
-**BRING **
+\*\*BRING \*\*
 
 A few things that you may need that you might not be carrying
 
@@ -548,7 +548,7 @@ A few things that you may need that you might not be carrying
 
 **Jump start pack.** You can find these lithium jump start packs for a song these days but do your homework, I’ve had bad luck with a few that work for a little while but stop short when I needed it. Buy a quality unit and be sure.
 
-**COMFORT **
+\*\*COMFORT \*\*
 
 **Awning.** Honestly, this will be your favorite thing in the world for trailside lunch stops. You will want shade. Its also been the only place of refuge to cook and eat during sudden rain storms which always seem to be my luck to get mid trip. I can get my ARB awning out and setup in about the time it takes for people to get out of their vehicles, and you can fit at least a few chairs under it to keep out of the sun for lunches.
 
@@ -556,7 +556,7 @@ A few things that you may need that you might not be carrying
 
 it pretty often. You don’t have to have a fridge but if you are planning on being remote more than a few nights, you should absolutely consider it. Remember to think about how you will power it. It doesn’t have to be fancy, most fridges will run fine off a car battery, even the start battery for quite a long time before their internal protections turn the fridge off to save your battery. I use a solar “generator” which charges as I drive and which I can top off with portable solar panels. But I ran for years running it off a single large start battery with no issues. Remember that you will need a constant supply of power for a fridge, an outlet that is only on when the car is running will not be sufficient to keep your food from spoiling.
 
-**TOOLS **
+\*\*TOOLS \*\*
 
 The tools you bring will depend on your level of skill, and the nature of your vehicle. For Asian vehicles like Toyota and Nissan I recommend a basic 6 point metric socket and box wrench set from 10mm to 19mm, a few socket extensions, a JIS (Japanese Industrial Standard) screwdriver set (philips head works fine, but the screws are most likely JIS, not philips), a few flathead screwdrivers, and an adjustable 10 inch crescent. Depending on how old your USDM vehicle is, it may be SAE or metric. Chances are if you aren’t sure your vehicle probably isn’t that old and it will be metric. Some makes, especially German makes, will require tools like an inverted star drive set. You will be surprised how much this covers. Also be sure to bring some basic electric diagnostic and repair tool. A multi-meter, fuses, spare wire, electrical tape, etc. Its less likely that your vehicle will have faults and more likely that your add-ons like radios, lights, fridge, etc will require some extra attention. I have a video where I go through the tools I bring with me and how I pack them if you want to know more. I’m always modifying this kit to bring more or fewer tools but this kit seems to work for everything I need it for. The tools aren’t really desert specific.
 
@@ -598,11 +598,11 @@ Finally, I want to leave you with a few things that I've learned that may increa
 
 While you are here for the wide open spaces, don't neglect the small towns you pass through. Some of them have amazing food, interesting history or just the right kind of vibe to help you slow down and take it in a little more. I've always found helpful people who are eager to share their local knowledge which has sometimes led me to places I would have never found otherwise.
 
-**Food **
+\*\*Food \*\*
 
 Remember you will have to consider the lack of humidity and altitude in your cooking and food prep. Food dries out fast so after you've made your sandwich, put the bread right back in the bag to keep it from going stale. Water boils at a lower temperature with altitude which may require longer boil times and you might have to alter your recipes for more temp, more dry or more wet ingredients.
 
-**Night driving **
+\*\*Night driving \*\*
 
 Take extra caution driving at night, road hypnosis is a real thing with long empty roads, especially at night. Night and early morning is also the most active time for wildlife.
 
@@ -614,7 +614,7 @@ Because these lights are so bright your eyes will actually adjust to it. Turning
 
 You are responsible for using non-road legal equipment.
 
-**Land **
+\*\*Land \*\*
 
 If you haven't picked up the theme yet, I want to reiterate that you need to respect the land. Life in the desert is rare and fragile and is easily destroyed. You will also likely travel through native lands and reservations which are sovereign nations of their respective tribes. Respect their rules and laws.
 
