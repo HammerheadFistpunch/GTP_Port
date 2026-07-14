@@ -1,7 +1,7 @@
 ---
 eyebrow: ''
 pageType: home
-description: 'A personal portfolio and editorial journal exploring technology, vehicles, photography, filmmaking, and the projects worth documenting.'
+description: 'A personal portfolio of Patrick Rich and editorial journal exploring technology, vehicles, photography, filmmaking, and the projects worth documenting.'
 hero:
   eyebrow: Video · Photography · Communication · Storyteller
   title: Translating nerd to consumer for over 20 years
