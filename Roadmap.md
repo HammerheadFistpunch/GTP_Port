@@ -1,11 +1,13 @@
 # GTP_Port Roadmap
 
-Last updated: 2026-07-11
+Last updated: 2026-07-14
 Working branch: `gpt-handoff`
 
 ## Vision
 
-Build AngrySquirrel.org as a fast, dark, editorial-first personal site combining long-form publishing with a professional portfolio of software, photography, video, writing, engineering, and case-study work.
+Build AngrySquirrel.org as a fast, dark, editorial-first personal site
+combining long-form publishing with a professional portfolio of software,
+photography, video, writing, engineering, and case-study work.
 
 The system remains:
 
@@ -14,10 +16,11 @@ The system remains:
 - content-focused
 - editable without routine template changes
 - designed and routed by Astro
-- managed through TinaCMS locally and through TinaCloud
+- managed through TinaCMS locally and TinaCloud in production
 - deployed through GitHub and Cloudflare Pages
+- portable through Markdown, YAML frontmatter, and locally owned media
 
-## Milestone 1 — Foundation
+## Milestone 1 - Foundation
 
 Status: **Complete**
 
@@ -28,132 +31,118 @@ Status: **Complete**
 - content collections
 - shared source organization
 
-## Milestone 2 — Functional content core
+## Milestone 2 - Functional content core
 
 Status: **Complete**
 
 - Journal and Portfolio detail routes
 - rendered Markdown bodies
-- expanded content schemas
-- dedicated detail layouts
+- content schemas and dedicated layouts
 - linked archive pages
-- collection-driven homepage
-- supporting pages
-- editable site settings and page content
-- valid static route set
+- collection-driven Homepage
+- supporting pages and editable site settings
 
-## Milestone 3 — TinaCMS local integration
+## Milestone 3 - TinaCMS integration
 
 Status: **Complete**
 
-Complete:
-
-- Tina CLI and Astro integration installed
-- Astro aligned to version 6.4.6
+- Tina CLI and Astro integration
+- Astro 6.4.6 compatibility
 - static output preserved
-- Tina admin running locally
-- existing Markdown mapped into seven Tina collections
-- homepage edit verified end to end
-- local multi-machine workflow defined
+- local editor workflow
+- seven focused Tina collections
+- authenticated TinaCloud editor at `/admin/`
+- GitHub Markdown retained as the source of truth
 
-Verified after the integration:
-
-- production build runs Astro directly
-- clean nine-page static build
-- focused Resume collection added
-- interrupted placeholder components restored or removed
-
-Exit condition: any machine with the repository can pull, run Tina locally, edit content, build successfully, and push changes.
-
-## Milestone 4 — GitHub and Cloudflare publishing
+## Milestone 4 - GitHub and Cloudflare publishing
 
 Status: **Complete**
 
 - Cloudflare watches `gpt-handoff`
-- Git pushes trigger deployments
-- set Cloudflare Node version to `22.22.0`
-- TinaCloud production admin integration in progress
-- production build restored to `tinacms build && astro build`
-- Cloudflare Tina environment variables pending
+- pushes trigger deployments
+- production Node version set to `22.22.0`
+- TinaCloud client, token, and branch variables configured
+- production build runs `tinacms build && astro build`
+- authenticated production editing verified
 
-Exit condition: a pushed content or code commit produces a successful Cloudflare Pages deployment with an authenticated `/admin/`.
-
-## Milestone 5 — Accessibility and shared shell completion
+## Milestone 5 - Accessibility and shared shell
 
 Status: **Complete**
 
-- skip link
-- visible focus states
+- skip link and visible focus states
 - current-page navigation state
-- deliberate keyboard-accessible mobile navigation
+- keyboard-accessible compact mobile navigation
 - reduced-motion handling
-- explicit SVG and ICO favicon links
-- canonical URL support
-- Open Graph and social-sharing metadata foundation
-- page descriptions verified across shared layouts
-- keyboard review completed
-- color contrast reviewed and steel-blue accent raised to a passing ratio
+- favicons and shared descriptions
+- canonical URLs and social metadata foundation
+- passing shared-shell color contrast
 
-## Milestone 6 — Page and component completion
+## Milestone 6 - Page and component completion
 
-Status: **In progress**
+Status: **Core complete; optional enhancements remain**
 
-- Journal filters or category routes
-- related articles - complete
-- project filters
-- galleries and lightbox - complete
-- live Journal and Portfolio Immich galleries - complete
-- inline narrative image lightbox - complete
-- video embeds - complete for project-level media
-- inline video blocks within project narrative content
-- reusable media components - complete
-- related projects - complete
-- resume timeline and structured editor - complete
-- resume print refinement - pending
+Complete:
 
-## Milestone 7 — Design completion
+- related Journal entries and Portfolio projects
+- project galleries and lightboxes
+- live Journal and Portfolio Immich galleries
+- inline narrative-image lightbox
+- native, YouTube, and Vimeo project media
+- reusable media components
+- structured Resume editor and timeline
 
-Status: **Not started**
+Remaining when justified by real content:
 
-- homepage hierarchy and rhythm
-- Journal archive polish
-- Portfolio archive polish
+- Journal category filters or routes
+- Portfolio project filters
+- inline narrative video blocks
+- Resume print refinement
+
+## Milestone 7 - Design refinement
+
+Status: **Incremental; not a publishing blocker**
+
+- Homepage hierarchy and rhythm
+- Journal and Portfolio archive polish
 - article reading experience
 - case-study presentation
 - responsive and cross-browser review
 
-## Milestone 8 — Real content
+Refinement should be driven by real content instead of delaying publication.
 
-Status: **Not started**
+## Milestone 8 - Real content and job-search readiness
 
-- replace placeholders
+Status: **In progress**
+
+- replace Resume, About, and Contact placeholders
 - publish representative Journal entries
-- publish portfolio projects and case studies
-- add photography, video, and writing work
-- complete biography, resume, and contact information
+- publish strong Portfolio projects and case studies
+- add photography, video, writing, and engineering work
+- revise Homepage positioning around the completed material
+- remove test content after replacements are verified
 
-## Milestone 9 — Launch quality
+## Milestone 9 - Launch quality
 
 Status: **Not started**
 
-- canonical URLs
-- Open Graph metadata
 - sitemap and robots.txt
 - RSS
+- final social-sharing images
 - image optimization
 - Lighthouse and performance work
-- Pagefind
+- Pagefind if content volume warrants it
 - Cloudflare Web Analytics
-- custom-domain launch checks
+- final responsive, browser, domain, and broken-link checks
 
 ## Later integrations
 
 - Giscus
-- inline narrative video blocks
-- resume PDF generation
+- Resume PDF generation
 - advanced related-content features
 
-## Current hosted editing decision
+## Content architecture decision
 
-TinaCloud is enabled so authenticated editors can use `/admin/` in production.
-GitHub Markdown remains the source of truth.
+Landing pages may use structured Tina sections or a limited block system.
+Journal and Portfolio bodies should remain semantic Markdown so redesigns change
+the renderer rather than requiring content rewrites. See
+`CONTENT_PORTABILITY.md`.

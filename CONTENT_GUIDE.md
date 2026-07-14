@@ -43,6 +43,20 @@ The homepage reads directly from these collections. Featured items appear
 first, followed by the newest available content. There are no separate
 hard-coded homepage article or project lists.
 
+### Publishing conventions
+
+- Use lowercase, kebab-case filenames and avoid renaming published entries
+  without adding a redirect.
+- Keep article and project narratives in semantic Markdown.
+- Use frontmatter for facts about the entry, not for font, color, spacing, or
+  other presentation instructions.
+- Use relative local paths such as `/uploads/example.jpg`; never publish a
+  `localhost` media URL.
+- Give meaningful images useful alt text.
+- Keep critical cover and narrative images in the repository even when an
+  expanded Immich gallery is also present.
+- Use `draft: true` until the deployed entry has been reviewed.
+
 ### Immich galleries
 
 Journal Entries and Portfolio Projects include an optional **Immich Gallery**
@@ -58,7 +72,7 @@ Revoking the Immich public link also removes the gallery's access.
 
 ## TinaCMS connection
 
-When TinaCMS is installed, map its collections to:
+TinaCMS and TinaCloud map their collections to:
 
 - `src/content/settings`
 - `src/content/pages`
@@ -67,3 +81,23 @@ When TinaCMS is installed, map its collections to:
 
 Tina should edit these content files. Astro should continue to own files under
 `src/pages`, `src/layouts`, `src/components`, and `src/styles`.
+
+Schema changes must remain aligned across:
+
+- `tina/config.ts` - fields exposed in Tina
+- `src/content.config.ts` - fields accepted and validated by Astro
+- the relevant Markdown frontmatter - stored values
+- the page, layout, or component that renders the values
+
+Regenerate `tina/tina-lock.json` after Tina schema changes; do not edit the
+lock file manually.
+
+## Redesign and migration safety
+
+Use structured editable sections for the small number of landing pages. Keep
+Journal and Portfolio bodies as ordinary Markdown and introduce custom body
+blocks only when Markdown cannot express the content.
+
+This preserves the ability to restyle the site by replacing Astro components
+and to migrate the content to another Markdown-capable system without rewriting
+each entry. See `CONTENT_PORTABILITY.md` for the concise policy.

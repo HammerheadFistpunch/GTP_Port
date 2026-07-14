@@ -1,5 +1,46 @@
 # GTP_Port Project Log
 
+## 2026-07-14 - Content publication phase opened
+
+Decision:
+
+- The site is ready to begin supporting a job search before every refinement
+  milestone is complete.
+- Real Resume, About, Contact, Portfolio, and Journal content is now the active
+  priority.
+- Remaining filters, print refinement, and design polish are non-blocking and
+  should be driven by real published material.
+- Journal and Portfolio bodies will remain semantic Markdown for redesign and
+  migration safety.
+- Structured or flexible Tina blocks should be concentrated on the small set
+  of landing pages instead of becoming the default article format.
+- Important cover and narrative images should remain locally owned; Immich is
+  the expanded gallery layer rather than the only durable project media.
+
+Documentation refreshed:
+
+- README and active workflow
+- next steps and build order
+- roadmap and repository audit
+- editable content guidance
+- new content portability and redesign recommendations
+
+## 2026-07-14 - Immich gallery presentation refined
+
+Completed:
+
+- Replaced low-resolution grid thumbnails with higher-quality Immich previews.
+- Removed the forced 4:3 crop so images retain their original proportions.
+- Replaced narrow auto-fit tiles with a balanced two-column layout and a
+  single-column layout on narrow phones.
+- Applied the shared component refinement to both Journal and Portfolio
+  galleries.
+
+Verified:
+
+- Astro generated all nine static pages.
+- `git diff --check` passed.
+
 ## 2026-07-14 - Immich galleries connected
 
 Completed:

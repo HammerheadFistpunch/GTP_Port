@@ -2,68 +2,79 @@
 
 Last updated: 2026-07-14
 Working branch: `gpt-handoff`
-Verified baseline: `gpt-handoff` after Milestones 1 through 5
+Verified baseline: commit `75791da` (`fixed immich gallery`)
 
 ## Current phase
 
-> Milestone 6 - Page and component completion
+> Real content and job-search readiness
 
-The functional content core is complete. TinaCloud is being connected for hosted editing, Markdown remains the source of truth, and the interrupted placeholder components have been restored or removed.
+The functional site, hosted editor, deployment path, and core presentation
+components are operational. Real content can now be published while remaining
+design and feature work continues incrementally.
 
 ## Verified complete
 
 - Static Astro 6.4.6 architecture
 - TinaCMS local workflow and authenticated TinaCloud production editor
 - Seven focused Tina collections
-- Nine generated static pages
-- Journal and Portfolio detail routes
-- Portfolio galleries, lightbox, native video, YouTube, and Vimeo
-- Live Journal and Portfolio Immich galleries with native accessible lightbox
-- Automatic lightbox for inline project-story images
+- Nine generated static pages with current placeholder content
+- Journal and Portfolio archive and detail routes
+- Project galleries, native video, YouTube, Vimeo, and lightboxes
+- Live Journal and Portfolio Immich galleries with proportion-preserving,
+  higher-quality previews and an accessible lightbox
 - Related Journal entries and Portfolio projects
 - Structured Resume editor and timeline
-- No zero-byte files under `src/`
-- Accessibility foundation and skip link
-- Keyboard-accessible compact mobile navigation
-- Current-page navigation states and reduced-motion handling
-- Explicit favicons, canonical URLs, and social metadata foundation
-- Passing shared-shell color contrast
-- `npm run build` and `git diff --check` pass
+- Responsive shared shell and keyboard-accessible mobile navigation
+- Skip link, visible focus states, current-page navigation, and reduced motion
+- Favicons, descriptions, canonical URLs, and social metadata foundation
+- Cloudflare production variables and automatic deployment from `gpt-handoff`
 
 ## Publishing workflow
 
+Hosted content edits can be made at `/admin/`. Tina writes those content
+changes to `gpt-handoff`, and Cloudflare rebuilds the site.
+
+Code, schema, and layout work follows the review-first workflow:
+
 ```text
 Pull gpt-handoff
--> npm run dev
--> edit through local Tina
--> review the site
--> npm run build
+-> make one focused chunk
+-> run the appropriate build and diff checks
+-> review changed files
 -> commit and push in VS Code
--> Cloudflare Pages rebuilds
+-> confirm the Cloudflare deployment
 ```
 
-TinaCloud and the hosted production `/admin/` are enabled. Cloudflare stores
-the Tina client ID and read-only token as environment variables.
+## Active build order
 
-## Next build order
+### Content first
 
-### Milestone 6 remaining work
+1. Replace Resume, About, and Contact placeholders.
+2. Publish two or three strong Portfolio projects.
+3. Publish one or two representative Journal entries.
+4. Revisit Homepage copy and featured selections using the real content.
+5. Remove test entries and placeholder media after replacements are verified.
 
-1. Add Journal category filters or category routes.
-2. Add Portfolio project filters.
-3. Add inline narrative video blocks.
-4. Complete Resume print refinement.
-5. Reconcile documentation and close Milestone 6.
+### Parallel refinement
 
-### Then
+1. Refine the pages that real content exposes as weak.
+2. Add Journal category filtering when the entry count makes it useful.
+3. Add Portfolio filtering when the project count makes it useful.
+4. Add inline narrative video only when a real story requires it.
+5. Complete Resume print styling.
 
-- Milestone 7 page-by-page design refinement
-- Milestone 8 real content replacement
-- Milestone 9 launch-quality SEO, RSS, sitemap, robots, image optimization, search, and launch checks
+### Launch quality
+
+1. Add sitemap, robots.txt, and RSS.
+2. Optimize images and final social cards.
+3. Run Lighthouse, responsive, cross-browser, and broken-link checks.
+4. Add analytics and search only if they provide clear value.
 
 ## Deferred integrations
 
-- Inline narrative video blocks
-- Pagefind
-- Giscus
+- Pagefind until the published content volume warrants search
+- Giscus until a comment workflow is desired
 - Resume PDF generation
+- advanced related-content ranking
+
+See `CONTENT_PORTABILITY.md` before adding new content-specific block systems.

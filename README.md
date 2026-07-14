@@ -1,21 +1,61 @@
 # GTP_Port
 
-Astro source for AngrySquirrel.org: a dark, editorial-first personal website combining long-form publishing with a professional portfolio of software, photography, video, writing, engineering, and case-study work.
+Astro source for AngrySquirrel.org: a dark, editorial-first personal website
+combining long-form publishing with a professional portfolio of software,
+photography, video, writing, engineering, and case-study work.
 
 ## Current status
 
-Milestones 1 through 5 are complete. The site has a functional Git-backed content core, TinaCMS editing, automatic Cloudflare Pages publishing, an accessible shared shell, compact mobile navigation, and a shared metadata foundation.
+The site is operational and ready for real content. It includes:
 
-Current work begins with Milestone 6 page and component completion.
+- a static Astro site deployed through Cloudflare Pages
+- Git-backed Markdown content
+- authenticated TinaCloud editing at `/admin/`
+- Journal and Portfolio detail pages
+- native media, video, lightboxes, and shared Immich galleries
+- structured Resume content
+- responsive navigation, accessibility, and social metadata foundations
+
+Real portfolio projects, Journal entries, biography, resume, and contact content
+are now the active priority. Remaining filters, print refinement, design polish,
+and launch tooling are improvements rather than publishing blockers.
+
+See `DOCUMENTATION.md` for the documentation index, `NEXT_STEPS.md` for the
+active work queue, and `Roadmap.md` for the broader sequence.
+
+## Source of truth
+
+- Repository branch: `gpt-handoff`
+- Content: Markdown under `src/content/`
+- Layout and presentation: Astro under `src/pages/`, `src/layouts/`,
+  `src/components/`, and `src/styles/`
+- CMS schema: `tina/config.ts`
+- Astro content validation: `src/content.config.ts`
+
+TinaCloud is an editing interface. GitHub Markdown remains the durable source
+of truth.
 
 ## Editing workflow
+
+### Hosted editing
+
+```text
+Open https://angrysquirrel.org/admin/
+-> edit content in TinaCloud
+-> save the entry
+-> Tina commits the content change to gpt-handoff
+-> Cloudflare Pages rebuilds
+-> review the deployed page
+```
+
+### Local code or schema work
 
 ```text
 Pull gpt-handoff
 -> copy .env.example to .env and add the TinaCloud read-only token
+-> npm install
 -> npm run dev
--> edit through Tina locally or at /admin/ on the deployed site
--> review the site
+-> make and review changes
 -> npm run build
 -> commit and push in VS Code
 -> Cloudflare Pages rebuilds
@@ -26,7 +66,7 @@ Cloudflare Pages must define `TINA_PUBLIC_CLIENT_ID`, `TINA_TOKEN`, and
 
 ## Verification
 
-Before committing, run:
+With TinaCloud credentials available:
 
 ```bash
 npm run build
@@ -34,4 +74,16 @@ git diff --check
 git status --short
 ```
 
-Test push to resync tina
+For an Astro-only local check without TinaCloud credentials:
+
+```bash
+npm run build:astro
+```
+
+## Content portability
+
+Journal and Portfolio bodies should remain semantic Markdown. Presentation
+belongs in Astro components, while frontmatter should describe the content
+rather than a specific visual layout.
+
+See `CONTENT_PORTABILITY.md` for the short redesign and migration guide.

@@ -1,66 +1,35 @@
 # GTP_Port Repository Audit
 
-Audit updated: 2026-07-11
+Audit updated: 2026-07-14
 Repository: `HammerheadFistpunch/GTP_Port`
 Working branch: `gpt-handoff`
-Baseline: `gpt-handoff` after Milestones 1 through 5
+Baseline: commit `75791da` (`fixed immich gallery`)
 
 ## Executive finding
 
-The repository now has a complete functional content core. The earlier audit findings about empty supporting pages, missing detail routes, and placeholder components no longer describe the project.
+The repository has a complete functional publishing core and is ready for real
+content. No framework change or architectural rebuild is recommended before
+using the site for a job search.
 
-No framework change or architectural rebuild is recommended. Accessibility and the shared navigation shell are complete; the next work is the remaining page and component functionality in Milestone 6.
+The current separation between Git-backed Markdown and Astro presentation is a
+strong base for later redesigns. TinaCloud does not own the content; it edits
+the repository files.
 
-## Verification performed
-
-- Built the current combined source with `npm run build`.
-- Confirmed nine static pages generate.
-- Started the local TinaCMS and Astro development servers after schema changes.
-- Verified inline project images and gallery media use separate intentional workflows.
-- Verified structured Resume test data renders, then removed the test data.
-- Ran `git diff --check`.
-- Scanned `src/` for zero-byte files.
-- Verified keyboard navigation, mobile-menu behavior, reduced-motion handling, and shared color contrast.
-- Verified description, canonical, favicon, Open Graph, and social-card output in generated pages.
-
-## Route status
+## Operational status
 
 | Area | Status |
 | --- | --- |
-| Homepage | Generated from managed content |
-| Journal archive | Generated and linked |
-| Journal details | Generated with related entries |
-| Portfolio archive | Generated and linked |
-| Portfolio details | Generated with media and related projects |
-| About | Generated from managed content |
-| Resume | Generated with structured Tina fields |
-| Contact | Generated from managed content |
+| GitHub source branch | Operational on `gpt-handoff` |
+| Cloudflare deployment | Operational |
+| TinaCloud `/admin/` | Authenticated and operational |
+| Homepage | Managed content and collection previews |
+| Journal archive and details | Operational |
+| Portfolio archive and details | Operational |
+| Immich galleries | Operational on Journal and Portfolio |
+| About and Contact | Operational; real content still needed |
+| Resume | Structured editor operational; real content still needed |
 
-Current test content produces nine pages in `dist/`.
-
-## Component status
-
-Implemented:
-
-- Journal and Portfolio metadata
-- Related articles and related projects
-- Reusable image and video components
-- Project gallery and CSS lightbox
-- Inline narrative-image lightbox
-- Native, YouTube, and Vimeo video rendering
-- Resume overview and timeline
-- Skip link and visible focus states
-- Current-page navigation state
-- Keyboard-accessible compact mobile navigation
-- Reduced-motion handling
-- Canonical and social metadata foundation
-
-Removed as unused:
-
-- `src/components/search/SearchBox.astro`
-- `src/layouts/[...slug].astro`
-
-There are no remaining zero-byte source files.
+Current placeholder content generates nine static pages.
 
 ## Content model status
 
@@ -74,16 +43,45 @@ Tina provides focused collections for:
 - Journal Entries
 - Portfolio Projects
 
-The Resume model includes summary, competencies, experience, education, and optional additional content.
+Journal and Project bodies are ordinary Markdown. Their primary metadata uses
+YAML frontmatter. This is portable to another Markdown-based system and can be
+imported into a database CMS if needed.
 
-## Remaining risks
+## Implemented presentation and behavior
 
-- Journal and Portfolio filtering remain incomplete.
-- Inline narrative video blocks are deferred to Milestone 6.
-- Resume print refinement remains incomplete.
-- Real content is incomplete.
-- Launch-specific sitemap, robots, RSS, search, analytics, image optimization, and final social-image content remain in Milestone 9.
+- Journal and Portfolio metadata
+- related Journal entries and Portfolio projects
+- project image and video media
+- native, YouTube, and Vimeo rendering
+- project gallery and lightbox
+- narrative-image lightbox
+- higher-quality, proportion-preserving Immich gallery and lightbox
+- Resume overview and timeline
+- responsive shared shell and mobile navigation
+- keyboard, focus, contrast, and reduced-motion foundations
+- descriptions, favicons, canonical URLs, and social metadata foundation
+
+## Current risks
+
+- Placeholder and test content remain visible.
+- The test project contains a localhost media URL that must not be copied into
+  real entries.
+- Important project storytelling should not depend exclusively on an external
+  Immich public share.
+- Journal and Portfolio filters remain incomplete, but are unnecessary at the
+  current content volume.
+- Resume printing needs refinement.
+- Sitemap, robots, RSS, image optimization, analytics, and final performance
+  checks remain launch-quality work.
+- A broad custom-block system inside articles would reduce portability and
+  should be avoided unless clearly required.
 
 ## Recommendation
 
-Commit the Milestone 5 checkpoint, confirm Cloudflare deployment, then begin Milestone 6 page and component completion.
+Begin replacing placeholders with strong real content immediately. Let actual
+projects and articles drive the next design refinements. Keep authored bodies
+in semantic Markdown, keep critical media locally owned, and reserve flexible
+Tina blocks primarily for the small set of landing pages.
+
+See `NEXT_STEPS.md` for the publishing order and `CONTENT_PORTABILITY.md` for
+the content architecture guardrails.
