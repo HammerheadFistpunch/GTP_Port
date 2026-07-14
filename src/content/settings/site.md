@@ -8,7 +8,7 @@ copyrightName: AngrySquirrel.org
 navigation:
   - label: Home
     href: /
-  - label: Corpus
+  - label: Work
     href: /portfolio
   - label: The AngrySquirrel Journal
     href: /journal
