@@ -102,6 +102,7 @@ Status: **In progress**
 - related articles - complete
 - project filters
 - galleries and lightbox - complete
+- live Journal and Portfolio Immich galleries - complete
 - inline narrative image lightbox - complete
 - video embeds - complete for project-level media
 - inline video blocks within project narrative content
@@ -148,7 +149,6 @@ Status: **Not started**
 ## Later integrations
 
 - Giscus
-- Immich
 - inline narrative video blocks
 - resume PDF generation
 - advanced related-content features

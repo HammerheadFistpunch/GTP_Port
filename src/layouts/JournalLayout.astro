@@ -2,6 +2,7 @@
 import BaseLayout from "./BaseLayout.astro";
 import ArticleMeta from "../components/journal/ArticleMeta.astro";
 import RelatedArticles from "../components/journal/RelatedArticles.astro";
+import ImmichGallery from "../components/portfolio/ImmichGallery.astro";
 import Container from "../components/ui/Container.astro";
 
 interface Props {
@@ -12,6 +13,11 @@ interface Props {
   category: string;
   tags?: string[];
   coverImage?: string;
+  immichGallery?: {
+    shareUrl: string;
+    title?: string;
+    imageAltPrefix?: string;
+  };
   relatedArticles?: Array<{
     title: string;
     excerpt: string;
@@ -30,6 +36,7 @@ const {
   category,
   tags = [],
   coverImage,
+  immichGallery,
   relatedArticles = [],
 } = Astro.props;
 ---
@@ -65,6 +72,14 @@ const {
       <div class="article-content">
         <slot />
       </div>
+
+      {immichGallery && (
+        <ImmichGallery
+          shareUrl={immichGallery.shareUrl}
+          title={immichGallery.title}
+          imageAltPrefix={immichGallery.imageAltPrefix}
+        />
+      )}
 
       <RelatedArticles articles={relatedArticles} />
     </Container>

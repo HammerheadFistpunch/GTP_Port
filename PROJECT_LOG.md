@@ -1,5 +1,38 @@
 # GTP_Port Project Log
 
+## 2026-07-14 - Immich galleries connected
+
+Completed:
+
+- Added an optional Immich Gallery group to Journal Entries and Portfolio
+  Projects in Tina.
+- Connected public `share.angrysquirrel.org` albums without an API key.
+- Added a live client-side gallery so album changes appear without rebuilding
+  the Astro site.
+- Added lazy thumbnails, an accessible native dialog lightbox, previous/next
+  controls, arrow-key navigation, Escape-to-close, and outside-click closing.
+- Added loading, empty, no-JavaScript, and unavailable-service fallbacks.
+- Connected the supplied 11-image public album to the placeholder Journal entry
+  and Portfolio project for end-to-end verification.
+
+Verified:
+
+- Public share proxy responds successfully and exposes 11 image assets.
+- Astro production build generates all nine pages.
+- TinaCMS starts and regenerates the schema lock successfully.
+- `git diff --check` passes.
+
+## 2026-07-14 - TinaCloud connection completed
+
+Completed:
+
+- Added Cloudflare environment variables for the Tina client, token, and
+  `gpt-handoff` branch.
+- Made `gpt-handoff` the repository default branch so TinaCloud can load the
+  existing schema.
+- Reindexed the Tina schema and verified all seven collections.
+- Verified authenticated production editing at `https://angrysquirrel.org/admin/`.
+
 ## 2026-07-14 - TinaCloud connection started
 
 Changed:

@@ -43,6 +43,19 @@ The homepage reads directly from these collections. Featured items appear
 first, followed by the newest available content. There are no separate
 hard-coded homepage article or project lists.
 
+### Immich galleries
+
+Journal Entries and Portfolio Projects include an optional **Immich Gallery**
+group. Paste a non-password-protected public link from
+`https://share.angrysquirrel.org`, then set the visible gallery title and a
+short image-description prefix. Journal galleries appear after the article;
+inline images remain available for narrative placement within the story.
+
+The gallery reads the current public album when a visitor opens the page, so
+adding or removing Immich photos does not require a site rebuild. If the share
+server is unavailable, the project displays a direct link to the public album.
+Revoking the Immich public link also removes the gallery's access.
+
 ## TinaCMS connection
 
 When TinaCMS is installed, map its collections to:

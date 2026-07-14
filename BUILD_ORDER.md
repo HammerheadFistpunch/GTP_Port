@@ -1,6 +1,6 @@
 # GTP_Port Build Order
 
-Last updated: 2026-07-11
+Last updated: 2026-07-14
 Working branch: `gpt-handoff`
 Verified baseline: `gpt-handoff` after Milestones 1 through 5
 
@@ -13,11 +13,12 @@ The functional content core is complete. TinaCloud is being connected for hosted
 ## Verified complete
 
 - Static Astro 6.4.6 architecture
-- TinaCMS local workflow, with TinaCloud hosted editing in progress
+- TinaCMS local workflow and authenticated TinaCloud production editor
 - Seven focused Tina collections
 - Nine generated static pages
 - Journal and Portfolio detail routes
 - Portfolio galleries, lightbox, native video, YouTube, and Vimeo
+- Live Journal and Portfolio Immich galleries with native accessible lightbox
 - Automatic lightbox for inline project-story images
 - Related Journal entries and Portfolio projects
 - Structured Resume editor and timeline
@@ -41,8 +42,8 @@ Pull gpt-handoff
 -> Cloudflare Pages rebuilds
 ```
 
-TinaCloud and the hosted production `/admin/` are now being enabled. Cloudflare
-stores the Tina client ID and read-only token as environment variables.
+TinaCloud and the hosted production `/admin/` are enabled. Cloudflare stores
+the Tina client ID and read-only token as environment variables.
 
 ## Next build order
 
@@ -59,10 +60,6 @@ stores the Tina client ID and read-only token as environment variables.
 - Milestone 7 page-by-page design refinement
 - Milestone 8 real content replacement
 - Milestone 9 launch-quality SEO, RSS, sitemap, robots, image optimization, search, and launch checks
-
-## Current integration work
-
-- Immich albums
 
 ## Deferred integrations
 

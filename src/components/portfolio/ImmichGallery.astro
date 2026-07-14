@@ -1,0 +1,314 @@
+---
+interface Props {
+  shareUrl: string;
+  title?: string;
+  imageAltPrefix?: string;
+}
+
+const {
+  shareUrl,
+  title = "Photo gallery",
+  imageAltPrefix = "Gallery image",
+} = Astro.props;
+
+const galleryId = "immich-gallery";
+---
+
+<section
+  id={galleryId}
+  class="immich-gallery"
+  data-immich-gallery
+  data-share-url={shareUrl}
+  data-alt-prefix={imageAltPrefix}
+  aria-labelledby={`${galleryId}-heading`}
+>
+  <div class="immich-gallery__header">
+    <h2 id={`${galleryId}-heading`}>{title}</h2>
+    <p class="immich-gallery__status" data-gallery-status aria-live="polite">
+      Loading gallery…
+    </p>
+  </div>
+
+  <div class="immich-gallery__grid" data-gallery-grid></div>
+
+  <p class="immich-gallery__fallback" data-gallery-fallback hidden>
+    The gallery could not be loaded here.
+    <a href={shareUrl}>Open it on the photo server →</a>
+  </p>
+
+  <noscript>
+    <p><a href={shareUrl}>Open this gallery on the photo server →</a></p>
+  </noscript>
+
+  <dialog class="immich-gallery__dialog" data-gallery-dialog>
+    <div class="immich-gallery__toolbar">
+      <p data-gallery-counter></p>
+      <button type="button" class="immich-gallery__control" data-gallery-close aria-label="Close image viewer">
+        &times;
+      </button>
+    </div>
+
+    <div class="immich-gallery__viewer">
+      <button type="button" class="immich-gallery__control" data-gallery-previous aria-label="Previous image">
+        &lsaquo;
+      </button>
+      <img data-gallery-active-image alt="" />
+      <button type="button" class="immich-gallery__control" data-gallery-next aria-label="Next image">
+        &rsaquo;
+      </button>
+    </div>
+  </dialog>
+</section>
+
+<script>
+  interface ImmichProxyItem {
+    id: string;
+    type: string;
+    previewUrl: string;
+    thumbnailUrl: string;
+    width?: number;
+    height?: number;
+  }
+
+  interface ImmichProxyInit {
+    items?: ImmichProxyItem[];
+  }
+
+  const resolveAssetUrl = (path: string, shareUrl: URL) =>
+    new URL(path, shareUrl.origin).toString();
+
+  const initializeGallery = async (root: HTMLElement) => {
+    const shareUrlValue = root.dataset.shareUrl;
+    const altPrefix = root.dataset.altPrefix || "Gallery image";
+    const status = root.querySelector<HTMLElement>("[data-gallery-status]");
+    const grid = root.querySelector<HTMLElement>("[data-gallery-grid]");
+    const fallback = root.querySelector<HTMLElement>("[data-gallery-fallback]");
+    const dialog = root.querySelector<HTMLDialogElement>("[data-gallery-dialog]");
+    const activeImage = root.querySelector<HTMLImageElement>("[data-gallery-active-image]");
+    const counter = root.querySelector<HTMLElement>("[data-gallery-counter]");
+    const previous = root.querySelector<HTMLButtonElement>("[data-gallery-previous]");
+    const next = root.querySelector<HTMLButtonElement>("[data-gallery-next]");
+    const close = root.querySelector<HTMLButtonElement>("[data-gallery-close]");
+
+    if (!shareUrlValue || !status || !grid || !fallback || !dialog ||
+        !activeImage || !counter || !previous || !next || !close) {
+      return;
+    }
+
+    try {
+      const shareUrl = new URL(shareUrlValue);
+      const response = await fetch(shareUrl, { mode: "cors" });
+
+      if (!response.ok) {
+        throw new Error(`Gallery request failed with ${response.status}`);
+      }
+
+      const html = await response.text();
+      const shareDocument = new DOMParser().parseFromString(html, "text/html");
+      const initElement = shareDocument.querySelector<HTMLScriptElement>("#ipp-init");
+
+      if (!initElement?.textContent) {
+        throw new Error("Gallery data was not found");
+      }
+
+      const init = JSON.parse(initElement.textContent) as ImmichProxyInit;
+      const images = (init.items || []).filter((item) => item.type === "IMAGE");
+
+      if (images.length === 0) {
+        status.textContent = "No photos are currently published in this gallery.";
+        return;
+      }
+
+      let activeIndex = 0;
+
+      const showImage = (index: number) => {
+        activeIndex = (index + images.length) % images.length;
+        const image = images[activeIndex];
+        activeImage.src = resolveAssetUrl(image.previewUrl, shareUrl);
+        activeImage.alt = `${altPrefix} ${activeIndex + 1}`;
+        counter.textContent = `Image ${activeIndex + 1} of ${images.length}`;
+      };
+
+      images.forEach((image, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "immich-gallery__thumbnail";
+        button.setAttribute("aria-label", `Open ${altPrefix.toLowerCase()} ${index + 1}`);
+
+        const thumbnail = document.createElement("img");
+        thumbnail.src = resolveAssetUrl(image.thumbnailUrl, shareUrl);
+        thumbnail.alt = `${altPrefix} ${index + 1}`;
+        thumbnail.loading = "lazy";
+        thumbnail.decoding = "async";
+        if (image.width) thumbnail.width = image.width;
+        if (image.height) thumbnail.height = image.height;
+
+        button.append(thumbnail);
+        button.addEventListener("click", () => {
+          showImage(index);
+          dialog.showModal();
+        });
+        grid.append(button);
+      });
+
+      previous.addEventListener("click", () => showImage(activeIndex - 1));
+      next.addEventListener("click", () => showImage(activeIndex + 1));
+      close.addEventListener("click", () => dialog.close());
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+      dialog.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") showImage(activeIndex - 1);
+        if (event.key === "ArrowRight") showImage(activeIndex + 1);
+      });
+
+      status.textContent = `${images.length} ${images.length === 1 ? "photo" : "photos"}`;
+    } catch (error) {
+      console.error("Unable to load Immich gallery", error);
+      status.textContent = "Gallery unavailable";
+      fallback.hidden = false;
+    }
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-immich-gallery]").forEach((gallery) => {
+    void initializeGallery(gallery);
+  });
+</script>
+
+<style>
+  .immich-gallery {
+    padding: var(--space-lg) 0 0;
+  }
+
+  .immich-gallery__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .immich-gallery__header h2,
+  .immich-gallery__status {
+    margin: 0;
+  }
+
+  .immich-gallery__status {
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+  }
+
+  .immich-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+    gap: var(--space-sm);
+  }
+
+  :global(.immich-gallery__thumbnail) {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: zoom-in;
+  }
+
+  :global(.immich-gallery__thumbnail img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+  }
+
+  :global(.immich-gallery__thumbnail:hover img),
+  :global(.immich-gallery__thumbnail:focus-visible img) {
+    transform: scale(1.025);
+  }
+
+  .immich-gallery__fallback {
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+  }
+
+  .immich-gallery__dialog {
+    width: min(94vw, 1200px);
+    max-width: none;
+    max-height: 94vh;
+    padding: var(--space-sm);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+  }
+
+  .immich-gallery__dialog::backdrop {
+    background: rgba(0, 0, 0, 0.88);
+  }
+
+  .immich-gallery__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .immich-gallery__toolbar p {
+    margin: 0;
+  }
+
+  .immich-gallery__viewer {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .immich-gallery__viewer img {
+    width: 100%;
+    max-height: 78vh;
+    object-fit: contain;
+  }
+
+  .immich-gallery__control {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: 0 0 auto;
+    padding: 0;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    color: var(--text-primary);
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  @media (max-width: 640px) {
+    .immich-gallery__header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .immich-gallery__viewer {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .immich-gallery__viewer img {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+
+    .immich-gallery__control {
+      justify-self: center;
+    }
+  }
+</style>

@@ -833,6 +833,33 @@ export default defineConfig({
                         label: "Draft",
                     },
                     {
+                        type: "object",
+                        name: "immichGallery",
+                        label: "Immich Gallery",
+                        description:
+                            "Display a live gallery from a public share.angrysquirrel.org album link after the article.",
+                        fields: [
+                            {
+                                type: "string",
+                                name: "shareUrl",
+                                label: "Public Share URL",
+                                required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "title",
+                                label: "Gallery Title",
+                            },
+                            {
+                                type: "string",
+                                name: "imageAltPrefix",
+                                label: "Image Description Prefix",
+                                description:
+                                    "Used for accessible labels, for example: Land Cruiser trail photo.",
+                            },
+                        ],
+                    },
+                    {
                         type: "rich-text",
                         name: "body",
                         label: "Article Content",
@@ -963,6 +990,33 @@ export default defineConfig({
                                 type: "string",
                                 name: "external",
                                 label: "External URL",
+                            },
+                        ],
+                    },
+                    {
+                        type: "object",
+                        name: "immichGallery",
+                        label: "Immich Gallery",
+                        description:
+                            "Display a live gallery from a public share.angrysquirrel.org album link.",
+                        fields: [
+                            {
+                                type: "string",
+                                name: "shareUrl",
+                                label: "Public Share URL",
+                                required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "title",
+                                label: "Gallery Title",
+                            },
+                            {
+                                type: "string",
+                                name: "imageAltPrefix",
+                                label: "Image Description Prefix",
+                                description:
+                                    "Used for accessible labels, for example: Land Cruiser trail photo.",
                             },
                         ],
                     },

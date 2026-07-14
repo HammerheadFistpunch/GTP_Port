@@ -18,6 +18,12 @@ const mediaItem = z.object({
     caption: z.string().optional(),
 });
 
+const immichGallery = z.object({
+    shareUrl: z.url(),
+    title: z.string().optional(),
+    imageAltPrefix: z.string().optional(),
+});
+
 const link = z.object({
     label: z.string(),
     href: z.string(),
@@ -62,6 +68,7 @@ const journal = defineCollection({
             "Projects",
             "Personal",
         ]),
+        immichGallery: immichGallery.optional(),
     }),
 });
 
@@ -88,6 +95,7 @@ const projects = defineCollection({
             demo: z.url().optional(),
             external: z.url().optional(),
         }).optional(),
+        immichGallery: immichGallery.optional(),
         media: z.array(mediaItem).default([]),
     }),
 });

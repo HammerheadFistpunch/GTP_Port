@@ -8,6 +8,10 @@ technologies:
   - Astro
 featured: false
 draft: false
+immichGallery:
+  shareUrl: 'https://share.angrysquirrel.org/share/RKwHvVksU174DCfZ9x4vyIJfXGBqglJCVV25MCb5OwPXM8A-nR2qh8VF9z66xgVWRHI'
+  title: Immich Test Gallery
+  imageAltPrefix: Test gallery photo
 media:
   - type: video
     src: 'https://www.youtube.com/watch?v=AnheyFcB2o0'
