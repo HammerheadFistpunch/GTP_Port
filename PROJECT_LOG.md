@@ -1,5 +1,30 @@
 # GTP_Port Project Log
 
+## 2026-07-14 - WordPress writing archive staged for review
+
+Imported from the owner's WordPress.com content and media exports:
+
+- Parsed 177 WordPress records, including 9 published posts and 128 media
+  attachments.
+- Converted all 9 published posts to portable Markdown drafts.
+- Routed 5 editorial articles to Journal and 4 writing or strategy samples to
+  Portfolio.
+- Preserved original publication attribution, links, dates, headings, tables,
+  captions, and article links where available.
+- Copied the 65 WordPress-hosted media files referenced by the imported posts
+  into `public/uploads/wordpress/`.
+- Preserved externally hosted publisher images for review and documented every
+  affected entry in `WORDPRESS_IMPORT_REVIEW.md`.
+- Kept every imported entry at `draft: true` so nothing publishes before
+  copyright, formatting, image, and collection-placement review.
+
+Verified:
+
+- Every referenced WordPress-hosted media file was found in the media export.
+- Astro accepted all imported content and generated all 18 routes when the
+  drafts were temporarily enabled in a test checkout.
+- The delivered entries remain drafts.
+
 ## 2026-07-14 - Content publication phase opened
 
 Decision:
