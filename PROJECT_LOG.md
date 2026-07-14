@@ -1,5 +1,23 @@
 # GTP_Port Project Log
 
+## 2026-07-14 - TinaCloud connection started
+
+Changed:
+
+- Reversed the earlier local-only Tina decision at the owner's request.
+- Restored the production build to `tinacms build && astro build`.
+- Added an Astro-only diagnostic build as `npm run build:astro`.
+- Added a safe environment-variable template with the TinaCloud Client ID and
+  `gpt-handoff` branch.
+- Updated the active workflow documentation for a hosted `/admin/`.
+
+Pending:
+
+- Add `TINA_PUBLIC_CLIENT_ID`, `TINA_TOKEN`, and `GITHUB_BRANCH` to Cloudflare
+  Pages for Preview and Production.
+- Deploy and verify authenticated editing at `/admin/`.
+- Connect a public Immich shared album to the native gallery/lightbox.
+
 ## 2026-07-11 - Milestone 5 accessibility and shared shell completed
 
 Completed:

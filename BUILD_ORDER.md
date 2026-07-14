@@ -8,12 +8,12 @@ Verified baseline: `gpt-handoff` after Milestones 1 through 5
 
 > Milestone 6 - Page and component completion
 
-The functional content core is complete. Astro builds the site directly, TinaCMS runs locally, Markdown remains the source of truth, and the interrupted placeholder components have been restored or removed.
+The functional content core is complete. TinaCloud is being connected for hosted editing, Markdown remains the source of truth, and the interrupted placeholder components have been restored or removed.
 
 ## Verified complete
 
 - Static Astro 6.4.6 architecture
-- Subscription-free local TinaCMS workflow
+- TinaCMS local workflow, with TinaCloud hosted editing in progress
 - Seven focused Tina collections
 - Nine generated static pages
 - Journal and Portfolio detail routes
@@ -41,7 +41,8 @@ Pull gpt-handoff
 -> Cloudflare Pages rebuilds
 ```
 
-TinaCloud and a hosted production `/admin/` are intentionally excluded.
+TinaCloud and the hosted production `/admin/` are now being enabled. Cloudflare
+stores the Tina client ID and read-only token as environment variables.
 
 ## Next build order
 
@@ -59,10 +60,13 @@ TinaCloud and a hosted production `/admin/` are intentionally excluded.
 - Milestone 8 real content replacement
 - Milestone 9 launch-quality SEO, RSS, sitemap, robots, image optimization, search, and launch checks
 
+## Current integration work
+
+- Immich albums
+
 ## Deferred integrations
 
 - Inline narrative video blocks
-- Immich albums
 - Pagefind
 - Giscus
 - Resume PDF generation

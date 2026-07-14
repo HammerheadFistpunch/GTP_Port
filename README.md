@@ -4,7 +4,7 @@ Astro source for AngrySquirrel.org: a dark, editorial-first personal website com
 
 ## Current status
 
-Milestones 1 through 5 are complete. The site has a functional Git-backed content core, local TinaCMS editing, automatic Cloudflare Pages publishing, an accessible shared shell, compact mobile navigation, and a shared metadata foundation.
+Milestones 1 through 5 are complete. The site has a functional Git-backed content core, TinaCMS editing, automatic Cloudflare Pages publishing, an accessible shared shell, compact mobile navigation, and a shared metadata foundation.
 
 Current work begins with Milestone 6 page and component completion.
 
@@ -12,15 +12,17 @@ Current work begins with Milestone 6 page and component completion.
 
 ```text
 Pull gpt-handoff
+-> copy .env.example to .env and add the TinaCloud read-only token
 -> npm run dev
--> edit through local Tina
+-> edit through Tina locally or at /admin/ on the deployed site
 -> review the site
 -> npm run build
 -> commit and push in VS Code
 -> Cloudflare Pages rebuilds
 ```
 
-TinaCloud and a hosted production `/admin/` are intentionally excluded.
+Cloudflare Pages must define `TINA_PUBLIC_CLIENT_ID`, `TINA_TOKEN`, and
+`GITHUB_BRANCH`. The token is secret and must never be committed.
 
 ## Verification
 

@@ -11,11 +11,10 @@ The system remains:
 
 - static-first
 - Git-backed
-- subscription-free
 - content-focused
 - editable without routine template changes
 - designed and routed by Astro
-- locally managed through TinaCMS
+- managed through TinaCMS locally and through TinaCloud
 - deployed through GitHub and Cloudflare Pages
 
 ## Milestone 1 — Foundation
@@ -73,11 +72,11 @@ Status: **Complete**
 - Cloudflare watches `gpt-handoff`
 - Git pushes trigger deployments
 - set Cloudflare Node version to `22.22.0`
-- change production build to `astro build`
-- remove TinaCloud credential requirements
-- successful automatic deployment confirmed on 2026-07-11
+- TinaCloud production admin integration in progress
+- production build restored to `tinacms build && astro build`
+- Cloudflare Tina environment variables pending
 
-Exit condition: a pushed content or code commit produces a successful Cloudflare Pages deployment without TinaCloud.
+Exit condition: a pushed content or code commit produces a successful Cloudflare Pages deployment with an authenticated `/admin/`.
 
 ## Milestone 5 — Accessibility and shared shell completion
 
@@ -154,8 +153,7 @@ Status: **Not started**
 - resume PDF generation
 - advanced related-content features
 
-## Explicitly excluded
+## Current hosted editing decision
 
-- TinaCloud dependency
-- subscription-based CMS publishing
-- hosted production `/admin/`
+TinaCloud is enabled so authenticated editors can use `/admin/` in production.
+GitHub Markdown remains the source of truth.
