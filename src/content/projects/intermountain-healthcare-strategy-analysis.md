@@ -1,23 +1,23 @@
 ---
 title: Intermountain Healthcare Consumer Experience Strategy Analysis
-description: An analysis of Intermountain Healthcare's marketing and communications consumer experience, with recommendations for continuous improvement.
-date: '2024-06-25'
+description: 'An analysis of Intermountain Healthcare''s marketing and communications consumer experience, with recommendations for continuous improvement.'
+date: 2024-06-25T00:00:00.000Z
 projectType: Case Study
 tags:
-- MBA
-- Healthcare
-- Strategy
-- Marketing
-- Leadership
+  - MBA
+  - Healthcare
+  - Strategy
+  - Marketing
+  - Leadership
 technologies: []
-featured: false
-draft: true
+featured: true
+draft: false
 media: []
 ---
 
 > Archived writing sample. Originally published by Utah State University MBA coursework on June 25, 2024. Imported from the author's WordPress archive for review.
 
----
+***
 
 **Intermountain Healthcare**
 
@@ -49,12 +49,12 @@ The basic function of the MACX team is to drive consumer choice using differenti
 
 There are several structural and cultural problems that prevent the team from executing on activities that drive value in these areas.
 
-- Lack of data driven decisions
-- Lack of information sythtethis
-- Functional silos
-- No feedback loop
-- Burnout
-- Attrition
+* Lack of data driven decisions
+* Lack of information sythtethis
+* Functional silos
+* No feedback loop
+* Burnout
+* Attrition
 
 When using Porter's (Porter 71) activity mapping from *What is Strategy* to compare activities with strategic goals we see inconsistencies with activities and functional units as they are currently organized, and areas with little to no cross-collaboration.
 
@@ -78,10 +78,10 @@ Intermountain Healthcare CEO Dr. Marc Harrison is fond of telling people that pu
 
 Good examples would be the creation of companies like Tellica, a generic outpatient imaging service, Castell, a population health firm and Civica, a generic drug manufacturer. Ideas that grew out of leaders' desire to solve problems and the use of Intermountain resources to seed. Top level leadership encourages and trains its leaders to act in a polyarchy within their spheres, but in a highly integrated way, using shared resources and information. Intermountain leadership principles are:
 
-- Be mission obsessed
-- Empower one another
-- Act with courage
-- Drive results
+* Be mission obsessed
+* Empower one another
+* Act with courage
+* Drive results
 
 These principles are taught in an extensive leadership development program meant to replace old thinking with ideologies that are consistent with the organization. The company is investing heavily in programs and education such as a leadership development course and leadership path that clinical program VP, Ralph Gene-Mary is a recent graduate of.
 
