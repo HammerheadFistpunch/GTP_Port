@@ -9,6 +9,7 @@ tags:
   - LX 700h
   - Toyota
   - The Drive
+coverImage: /uploads/wordpress/2025/PXL_20250131_172244698.RAW-01.COVER.jpg
 featured: true
 draft: false
 ---
