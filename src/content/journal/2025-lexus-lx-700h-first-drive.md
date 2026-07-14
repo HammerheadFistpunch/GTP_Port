@@ -1,21 +1,21 @@
 ---
 title: '2025 Lexus LX 700h First Drive Review: A Perfect SUV for a Very Specific Buyer'
-description: A first-drive review of the hybrid Lexus LX 700h and the narrow audience for its unusual combination of luxury, engineering, and off-road capability.
-date: '2025-02-05'
+description: 'A first-drive review of the hybrid Lexus LX 700h and the narrow audience for its unusual combination of luxury, engineering, and off-road capability.'
+date: 2025-02-05T00:00:00.000Z
 category: Cars
 tags:
-- Automotive
-- Lexus
-- LX 700h
-- Toyota
-- The Drive
-featured: false
-draft: true
+  - Automotive
+  - Lexus
+  - LX 700h
+  - Toyota
+  - The Drive
+featured: true
+draft: false
 ---
 
 > Archived writing sample. Originally published by [The Drive](https://www.thedrive.com/car-reviews/2025-lexus-lx700h-first-drive-review) on February 5, 2025. Imported from the author's WordPress archive for review.
 
----
+***
 
 ![](https://www.thedrive.com/wp-content/uploads/2025/02/2025-lexus-lx700h-off-road.jpeg?quality=85)
 
@@ -25,7 +25,7 @@ Really, really, ridiculously good-looking person Derek Zoolander once asked this
 
 While I understand the *used* LX buyer—the LX has always been just fancy [Land Cruisers](https://www.thedrive.com/car-reviews/2024-toyota-land-cruiser-review) after all—the person who buys a new LX has always been a bit of a mystery to me. Who are these affluent adventurists who need Land Cruiser toughness but [LS](https://www.thedrive.com/car-reviews/2023-lexus-ls-500-review-this-flagship-sedan-still-believes-in-buttons) luxury and serenity? Lexus understood this called for some soul searching and so they brought me out to wine country for a tasting of their latest fruit of the vine: The 2025 [Lexus](https://www.thedrive.com/category/lexus-reviews) LX 700h.
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/2025_Lexus_LX_700h_FSPORT_Handling_ManganeseLuster_009.jpg?strip=all&quality=85)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/2025_Lexus_LX_700h_FSPORT_Handling_ManganeseLuster_009.jpg?strip=all\&quality=85)
 
 *Lexus*
 
@@ -35,7 +35,7 @@ Let’s start at the top and see if we can figure this out together. The Lexus L
 
 Toyota/Lexus have said that this system is more for power rather than efficiency, but mileage figures do improve slightly to 19/22/20 mpg city/highway/combined, up from 17/22/19 in the LX 600. I can’t confirm consumption data but I can confirm the power part. An informal launch to 60 in the mid-to-high six seconds feels more than adequately quick for something that weighs the better part of three tons. The internal combustion engine is a 3.4-liter twin-turbo V6 while an electric motor sandwiched between the engine and transmission fills in the rest.
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00357.jpg?strip=all&quality=85&w=1920)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00357.jpg?strip=all\&quality=85\&w=1920)
 
 ### **6,200 Pounds of F-Sport**
 
@@ -43,7 +43,7 @@ Though quick, the LX 700h is not a sporting machine. The most street-focused F-S
 
 This definitely isn’t what the LX is about, but it doesn’t embarrass itself driven hard like I imagined it might. On a particularly rough and narrow section of road where I was expecting the rear solid axle and prodigious mass to show its uglier traits, the LX just… hooked up. There was no tramming, there was no traction control intervention, and the LX handled it just as easily as any smooth bit of road I tried. Benefits of an advanced, long-travel suspension I suppose—more on that later.
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/2025_Lexus_LX_700h_FSPORT_038.jpg?strip=all&quality=85)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/2025_Lexus_LX_700h_FSPORT_038.jpg?strip=all\&quality=85)
 
 *Lexus*
 
@@ -57,7 +57,7 @@ On that topic, I suppose I should touch on the looks of the LX. Like the Land Cr
 
 Off-road, the Overtrail does feature a little more approach angle, but not by much, and it doesn’t change the departure angle at all. What does help dramatically is a new version of a novel suspension system that the LX has used for years called Automatic Height Control/Adaptive Variable Suspension (AHC/AVS). I could write another story entirely on it, but the short version is that it’s a hydraulic damper assembly that handles ride height, a portion of the spring rate, load leveling, compression, rebound, and roll stiffness.
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00374.jpg?strip=all&quality=85)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00374.jpg?strip=all\&quality=85)
 
 *Patrick Rich*
 
@@ -65,9 +65,9 @@ Adjustable suspension tech is nothing new in vehicles with even a slight off-roa
 
 Most interesting to me is how it affects ride height without sacrificing ride quality or suspension down travel the way air does. The system does affect spring rate, but it doesn’t seem to affect performance adversely. Off-road, in the highest setting there is no sense that you are on “tip toes” like with other systems and the body control and suspension movement are still present.
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/AHC.gif?strip=all&quality=85&w=1200)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/AHC.gif?strip=all\&quality=85\&w=1200)
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PXL_20250131_172001297.RAW-01.COVER_.jpg?strip=all&quality=85)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PXL_20250131_172001297.RAW-01.COVER_.jpg?strip=all\&quality=85)
 
 *Patrick Rich*
 
@@ -75,9 +75,9 @@ Most of the articulation is gained from the solid five-link rear axle having no 
 
 As expected of an off-roader in this price range, the LX will automatically control off-road parameters based on mode selection, but thankfully, all important off-road settings can also be manually controlled. The LX 700h Overtrail is that rare off-roader that is both “point-and-shoot” and “choose your own adventure.” If you leave it alone, it will figure things out for you, but it lets you do it yourself if you want. Most off-road controls are well labeled and fall easily to hand on the tall center console. Everything is a physical dial or button and nothing is buried in an on-screen menu. It’s a bold move to dedicate so much real estate to controls that—let’s be real—will likely never get used, but I appreciate it.
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PXL_20250130_224512720.RAW-01.COVER_.jpg?strip=all&quality=85&w=1920)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PXL_20250130_224512720.RAW-01.COVER_.jpg?strip=all\&quality=85\&w=1920)
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00348.jpg?strip=all&quality=85)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00348.jpg?strip=all\&quality=85)
 
 *Patrick Rich*
 
@@ -85,11 +85,11 @@ Oh, and I haven’t even gotten to the best part yet: Standard on the LX 700h Ov
 
 Whether or not they end up being used or even understood, luxury buyers want all the features and alphabet soup, and if acronyms printed money, the LX would be a mint: AHC, AHS, MTS, DAC, CRAWL, OTA, CDL, it’s all here. “Triple locked” also has a nice [G-Wagen](https://www.thedrive.com/car-reviews/2025-mercedes-benz-g580-eq-first-drive-review)-esque ring to it, although it certainly has a strong whiff of “space pen” or “10,000-foot rated dive watch.”
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/2025_Lexus_LX_700h_Overtrail_StoneBrown_006.jpg?strip=all&quality=85)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/2025_Lexus_LX_700h_Overtrail_StoneBrown_006.jpg?strip=all\&quality=85)
 
 *Lexus*
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00465.jpg?strip=all&quality=85)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00465.jpg?strip=all\&quality=85)
 
 *Patrick Rich*
 
@@ -97,7 +97,7 @@ Whether or not they end up being used or even understood, luxury buyers want all
 
 While slogging through mud and testing axle articulation and locker engagement, I was also being tended to by a “climate concierge” that managed the heating and cooling of my various body parts. The thick, extremely comfortable front buckets massaged me gently while I bathed in 2,400 watts of reference audio Synthwave. All doors soft close and there is no surface you can see or touch that doesn’t feel premium.
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00392.jpg?strip=all&quality=85&w=1920)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00392.jpg?strip=all\&quality=85\&w=1920)
 
 *Patrick Rich*
 
@@ -105,9 +105,9 @@ The ride quality is controlled and supple, the sound isolation is top-tier, and,
 
 ### **The Early Verdict**
 
-This car’s marketing materials use words and phrases such as “paradigm,” “incomparable indulgence,” and “dignified sophistication.” This type of \$20 word salad is what I would expect from a luxury good. Yet the LX somehow makes the pretension feel earned. I know how seriously Toyota takes the Land Cruiser mission and yes, the LX experience was undeniably indulgent.
+This car’s marketing materials use words and phrases such as “paradigm,” “incomparable indulgence,” and “dignified sophistication.” This type of $20 word salad is what I would expect from a luxury good. Yet the LX somehow makes the pretension feel earned. I know how seriously Toyota takes the Land Cruiser mission and yes, the LX experience was undeniably indulgent.
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00444.jpg?strip=all&quality=85&w=1920)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00444.jpg?strip=all\&quality=85\&w=1920)
 
 *Patrick Rich*
 
@@ -115,17 +115,17 @@ The LX 700h’s chief engineer, who was formerly the chief engineer of the Land 
 
 So, is the 2025 Lexus LX 700h a master of all trades? No. It’s clearly compromised by trying to do it all. So what is it? I think I get it now. The LX is a niche product for a niche buyer. In fact, Lexus only expects to sell around 7,500 a year in the U.S., its second-largest market behind Saudi Arabia, and production capacity is apparently the limiting factor. If you are one of these 7,500 buyers, chances are you already know the LX since more than 50% of sales are to repeat buyers.
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00414-Edit.jpg?strip=all&quality=85&w=1920)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00414-Edit.jpg?strip=all\&quality=85\&w=1920)
 
 *Patrick Rich*
 
-The LX simply isn’t for everyone. Partly because of its eye-watering price—the 700h starts at \$106,850 and can climb to nearly \$150,000—and partly because of who it targets. It doesn’t dazzle with tech, it’s not the latest fashion statement, nor is it the fastest or most economical or even the best at any one thing.
+The LX simply isn’t for everyone. Partly because of its eye-watering price—the 700h starts at $106,850 and can climb to nearly $150,000—and partly because of who it targets. It doesn’t dazzle with tech, it’s not the latest fashion statement, nor is it the fastest or most economical or even the best at any one thing.
 
 What is the LX? It’s the current peak of automotive engineering, for a very small niche.
 
 |                         | **2025 Lexus LX 700h Specs**                                                                             |
-|-------------------------|----------------------------------------------------------------------------------------------------------|
-| **Base Price**          | \$106,850                                                                                                |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Base Price**          | $106,850                                                                                                 |
 | **Powertrain**          | 3.4-liter twin-turbo V6 hybrid \| 10-speed automatic \| all-wheel drive                                  |
 | **Horsepower**          | 457 @ 5,200 rpm                                                                                          |
 | **Torque**              | 583 lb-ft @ 2,400 rpm                                                                                    |
@@ -143,8 +143,8 @@ What is the LX? It’s the current peak of automotive engineering, for a very sm
 
 A luxuriously rugged jack of many trades, the LX 700h is the perfect vehicle for a very, very specific buyer.
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00459.jpg?strip=all&quality=85&w=1920)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PR_00459.jpg?strip=all\&quality=85\&w=1920)
 
-![](https://www.thedrive.com/wp-content/uploads/2025/02/PXL_20250131_185136838.RAW-01.COVER_.jpg?strip=all&quality=85)
+![](https://www.thedrive.com/wp-content/uploads/2025/02/PXL_20250131_185136838.RAW-01.COVER_.jpg?strip=all\&quality=85)
 
 *Patrick Rich*
