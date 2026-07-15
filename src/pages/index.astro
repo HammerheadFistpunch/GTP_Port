@@ -71,6 +71,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
       <SectionTitle
         title={page.featuredWork.title}
         subtitle={page.featuredWork.subtitle}
+        href={page.featuredWork.titleHref}
       />
 
       {projects.length > 0 ? (
@@ -96,6 +97,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
       <SectionTitle
         title={page.journalPreview.title}
         subtitle={page.journalPreview.subtitle}
+        href={page.journalPreview.titleHref}
       />
 
       {featuredArticle ? (

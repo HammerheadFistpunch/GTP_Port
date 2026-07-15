@@ -110,12 +110,14 @@ const pages = defineCollection({
             }),
             featuredWork: z.object({
                 title: z.string(),
+                titleHref: z.string(),
                 subtitle: z.string(),
                 limit: z.number().int().positive().default(3),
                 emptyMessage: z.string(),
             }),
             journalPreview: z.object({
                 title: z.string(),
+                titleHref: z.string(),
                 subtitle: z.string(),
                 limit: z.number().int().positive().default(3),
                 emptyMessage: z.string(),

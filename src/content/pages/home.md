@@ -15,11 +15,13 @@ hero:
     href: /journal
 featuredWork:
   title: Featured Work
+  titleHref: /portfolio
   subtitle: 'Selected projects across software, photography, video, and creative technology.'
   limit: 3
   emptyMessage: Featured projects are coming soon.
 journalPreview:
   title: The AngrySquirrel Journal
+  titleHref: /journal
   subtitle: 'Long-form writing, field notes, technology, cars, and personal projects.'
   limit: 3
   emptyMessage: Journal entries are coming soon.
@@ -30,4 +32,3 @@ aboutCallout:
     label: Learn More
     href: /about
 ---
-
