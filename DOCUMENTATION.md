@@ -13,6 +13,7 @@ Last reviewed: 2026-07-15 after unified-content and Homepage-link work
 | `Audit.md` | Current operational assessment, risks, and recommendation |
 | `CONTENT_GUIDE.md` | Where editable content lives and how to publish it |
 | `CONTENT_PORTABILITY.md` | Short redesign and migration guardrails |
+| `SITE_MAINTENANCE_GUIDE.md` | Owner's guide to visual, Astro, Tina, schema, and dependency changes |
 | `PROJECT_LOG.md` | Chronological decisions, completed work, and verification |
 
 ## Project instructions

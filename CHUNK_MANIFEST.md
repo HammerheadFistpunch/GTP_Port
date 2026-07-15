@@ -1,18 +1,15 @@
-# Documentation Checkpoint — 2026-07-15
+# Owner Maintenance Documentation
 
-This package updates the active project documentation after the unified Content
-Entries migration, Portfolio bento work, Tina archive controls, legacy cleanup,
-React runtime hotfix, and Chunk 5 Homepage section-link work.
+This consolidated documentation package adds a repository-specific maintenance
+manual and includes the latest active project documents. It supersedes the
+earlier `GTP_Port_Documentation_Checkpoint_2026-07-15.zip`; you do not need to
+apply both documentation packages.
 
-It also records the current pause point:
+## Added
 
-- The site is operational and ready for real content.
-- Journal topic chips are display-only today.
-- Static Astro topic routes derived from `primaryTopic` are the recommended
-  next feature when development resumes.
-- No backend or database is required for that feature.
+- `SITE_MAINTENANCE_GUIDE.md`
 
-## Replace these files
+## Replaced
 
 - `README.md`
 - `NEXT_STEPS.md`
@@ -23,7 +20,18 @@ It also records the current pause point:
 - `DOCUMENTATION.md`
 - `PROJECT_LOG.md`
 
-No files need to be deleted and no source code is included.
+## What the new guide covers
 
-Apply this package after Chunk 5 so the documentation matches the intended code
-state.
+- Safe GitHub Desktop, VS Code, Tina, and Cloudflare workflow
+- Exact repository and route map
+- Visual changes by file
+- Component props and shared-layout dependencies
+- Adding, requiring, changing, and removing Tina fields
+- Tina/Astro/Markdown/rendering schema coordination
+- Custom Tina TSX controls
+- Routes, slugs, media, packages, and generated files
+- Verification commands and common failure diagnosis
+- High-risk changes and a pre-push checklist
+
+No source code, package changes, or deletions are included. Apply this package
+after Chunk 5 so the documentation describes the intended current state.

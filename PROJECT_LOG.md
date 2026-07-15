@@ -1,5 +1,20 @@
 # GTP_Port Project Log
 
+## 2026-07-15 - Owner maintenance documentation added
+
+Completed:
+
+- Added `SITE_MAINTENANCE_GUIDE.md` as a repository-specific manual for making
+  visual, component, page, Tina, content-schema, route, media, and dependency
+  changes safely.
+- Documented the required contract between Tina fields, Astro validation,
+  Markdown frontmatter, renderers, and the generated Tina lock.
+- Added safe recipes for optional fields, required fields, field removal,
+  palette and typography changes, custom Tina controls, and package updates.
+- Added verification guidance, common failure diagnosis, high-risk change
+  warnings, and a final pre-push checklist.
+- Linked the guide from the README and documentation index.
+
 ## 2026-07-15 - Architecture stabilization and Homepage editing refined
 
 Completed:

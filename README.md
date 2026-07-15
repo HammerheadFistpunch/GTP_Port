@@ -25,7 +25,8 @@ functional topic routes remain planned. Filters, print refinement, design
 polish, and launch tooling are improvements rather than publishing blockers.
 
 See `DOCUMENTATION.md` for the documentation index, `NEXT_STEPS.md` for the
-active work queue, and `Roadmap.md` for the broader sequence.
+active work queue, `Roadmap.md` for the broader sequence, and
+`SITE_MAINTENANCE_GUIDE.md` for owner-directed code and Tina changes.
 
 ## Source of truth
 
