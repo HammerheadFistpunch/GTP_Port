@@ -100,6 +100,45 @@ const projects = defineCollection({
     }),
 });
 
+const entries = defineCollection({
+    loader: glob({
+        pattern: "**/*.md",
+        base: "./src/content/entries",
+    }),
+    schema: z.object({
+        ...sharedFields,
+        entryType: z.enum([
+            "Article",
+            "Project",
+            "Case Study",
+            "Gallery",
+        ]),
+        placement: z.enum([
+            "portfolio",
+            "both",
+            "journal",
+        ]),
+        date: z.coerce.date().optional(),
+        updatedDate: z.coerce.date().optional(),
+        primaryTopic: z.string(),
+        portfolioOrder: z.number().int().default(0),
+        tileSize: z.enum([
+            "standard",
+            "wide",
+            "tall",
+            "large",
+        ]).default("standard"),
+        technologies: z.array(z.string()).default([]),
+        links: z.object({
+            repository: z.url().optional(),
+            demo: z.url().optional(),
+            external: z.url().optional(),
+        }).optional(),
+        immichGallery: immichGallery.optional(),
+        media: z.array(mediaItem).default([]),
+    }),
+});
+
 const pages = defineCollection({
     loader: glob({
         pattern: "**/*.md",
@@ -180,6 +219,7 @@ const settings = defineCollection({
 });
 
 export const collections = {
+    entries,
     journal,
     projects,
     pages,

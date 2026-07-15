@@ -741,6 +741,233 @@ export default defineConfig({
             },
 
             /*
+             * UNIFIED CONTENT ENTRIES
+             *
+             * Maps to:
+             * src/content/entries/*.md
+             *
+             * Portfolio and Journal are placements, not separate content types.
+             * The legacy collections below remain during the staged migration.
+             */
+            {
+                name: "entries",
+                label: "Content Entries",
+                path: "src/content/entries",
+                format: "md",
+
+                fields: [
+                    {
+                        type: "string",
+                        name: "title",
+                        label: "Title",
+                        required: true,
+                        isTitle: true,
+                    },
+                    {
+                        type: "string",
+                        name: "description",
+                        label: "Description",
+                        required: true,
+                        ui: {
+                            component: "textarea",
+                        },
+                    },
+                    {
+                        type: "string",
+                        name: "entryType",
+                        label: "Entry Type",
+                        required: true,
+                        options: [
+                            { value: "Article", label: "Article" },
+                            { value: "Project", label: "Project" },
+                            { value: "Case Study", label: "Case Study" },
+                            { value: "Gallery", label: "Gallery" },
+                        ],
+                    },
+                    {
+                        type: "string",
+                        name: "placement",
+                        label: "Placement",
+                        required: true,
+                        description:
+                            "Controls where this entry appears without moving or converting the file.",
+                        options: [
+                            {
+                                value: "portfolio",
+                                label: "Portfolio Only",
+                            },
+                            {
+                                value: "both",
+                                label: "Portfolio + Journal",
+                            },
+                            {
+                                value: "journal",
+                                label: "Journal Only (Archived from Portfolio)",
+                            },
+                        ],
+                    },
+                    {
+                        type: "datetime",
+                        name: "date",
+                        label: "Publication Date",
+                        description:
+                            "Used for Journal chronology. Portfolio ordering is controlled separately.",
+                    },
+                    {
+                        type: "datetime",
+                        name: "updatedDate",
+                        label: "Updated Date",
+                    },
+                    {
+                        type: "string",
+                        name: "primaryTopic",
+                        label: "Primary Topic",
+                        required: true,
+                        description:
+                            "A broad label such as Cars, Photography, Software, Writing, or Case Study.",
+                    },
+                    {
+                        type: "string",
+                        name: "tags",
+                        label: "Tags",
+                        list: true,
+                        ui: {
+                            component: "tags",
+                        },
+                    },
+                    {
+                        type: "image",
+                        name: "coverImage",
+                        label: "Cover Image",
+                    },
+                    {
+                        type: "boolean",
+                        name: "featured",
+                        label: "Featured Entry",
+                    },
+                    {
+                        type: "boolean",
+                        name: "draft",
+                        label: "Draft",
+                    },
+                    {
+                        type: "number",
+                        name: "portfolioOrder",
+                        label: "Portfolio Order",
+                        description:
+                            "Lower numbers appear first. Journal placement ignores this value.",
+                    },
+                    {
+                        type: "string",
+                        name: "tileSize",
+                        label: "Portfolio Tile Size",
+                        options: [
+                            { value: "standard", label: "Standard" },
+                            { value: "wide", label: "Wide" },
+                            { value: "tall", label: "Tall" },
+                            { value: "large", label: "Large" },
+                        ],
+                    },
+                    {
+                        type: "string",
+                        name: "technologies",
+                        label: "Technologies",
+                        list: true,
+                        ui: {
+                            component: "tags",
+                        },
+                    },
+                    {
+                        type: "object",
+                        name: "links",
+                        label: "Entry Links",
+                        fields: [
+                            {
+                                type: "string",
+                                name: "repository",
+                                label: "Repository URL",
+                            },
+                            {
+                                type: "string",
+                                name: "demo",
+                                label: "Demo URL",
+                            },
+                            {
+                                type: "string",
+                                name: "external",
+                                label: "External URL",
+                            },
+                        ],
+                    },
+                    {
+                        type: "object",
+                        name: "immichGallery",
+                        label: "Immich Gallery",
+                        description:
+                            "Display a live gallery from a public share.angrysquirrel.org album link.",
+                        fields: [
+                            {
+                                type: "string",
+                                name: "shareUrl",
+                                label: "Public Share URL",
+                                required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "title",
+                                label: "Gallery Title",
+                            },
+                            {
+                                type: "string",
+                                name: "imageAltPrefix",
+                                label: "Image Description Prefix",
+                            },
+                        ],
+                    },
+                    {
+                        type: "object",
+                        name: "media",
+                        label: "Entry Media",
+                        list: true,
+                        fields: [
+                            {
+                                type: "string",
+                                name: "type",
+                                label: "Media Type",
+                                required: true,
+                                options: [
+                                    { value: "image", label: "Image" },
+                                    { value: "video", label: "Video" },
+                                ],
+                            },
+                            {
+                                type: "string",
+                                name: "src",
+                                label: "Source",
+                                required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "alt",
+                                label: "Alternative Text",
+                            },
+                            {
+                                type: "string",
+                                name: "caption",
+                                label: "Caption",
+                            },
+                        ],
+                    },
+                    {
+                        type: "rich-text",
+                        name: "body",
+                        label: "Entry Content",
+                        isBody: true,
+                    },
+                ],
+            },
+
+            /*
              * JOURNAL ENTRIES
              *
              * Maps to:
