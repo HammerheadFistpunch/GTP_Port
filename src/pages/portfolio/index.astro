@@ -1,7 +1,7 @@
 ---
 import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import PortfolioCard from "../../components/portfolio/PortfolioCard.astro";
+import PortfolioBentoCard from "../../components/portfolio/PortfolioBentoCard.astro";
 import Container from "../../components/ui/Container.astro";
 
 const projects = (await getCollection("entries", ({ data }) =>
@@ -47,11 +47,13 @@ const page = portfolioPage.data;
       {projects.length > 0 ? (
         <div class="project-grid">
           {projects.map((project) => (
-            <PortfolioCard
+            <PortfolioBentoCard
               title={project.data.title}
               description={project.data.description}
               image={project.data.coverImage}
               category={project.data.primaryTopic}
+              entryType={project.data.entryType}
+              tileSize={project.data.tileSize}
               href={`/archive/${project.id}/`}
             />
           ))}
@@ -108,7 +110,9 @@ const page = portfolioPage.data;
 
   .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    grid-auto-rows: minmax(10rem, auto);
     gap: var(--space-md);
   }
 </style>

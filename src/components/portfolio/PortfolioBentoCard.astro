@@ -1,0 +1,209 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  category: string;
+  entryType: string;
+  href: string;
+  tileSize?: "standard" | "wide" | "tall" | "large";
+}
+
+const {
+  title,
+  description,
+  image,
+  category,
+  entryType,
+  href,
+  tileSize = "standard",
+} = Astro.props;
+---
+
+<a
+  class:list={["bento-card", `bento-card--${tileSize}`, { "bento-card--image": image }]}
+  href={href}
+>
+  {image && <img src={image} alt="" loading="lazy" />}
+
+  <div class="scrim" aria-hidden="true"></div>
+
+  <div class="content">
+    <div class="meta">
+      <span>{entryType}</span>
+      <span aria-hidden="true">·</span>
+      <span>{category}</span>
+    </div>
+
+    <h3>{title}</h3>
+    <p>{description}</p>
+    <span class="open-entry" aria-hidden="true">View entry →</span>
+  </div>
+</a>
+
+<style>
+  .bento-card {
+    position: relative;
+    display: flex;
+    grid-column: span 4;
+    min-height: 22rem;
+    overflow: hidden;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    text-decoration: none;
+    isolation: isolate;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .bento-card--wide {
+    grid-column: span 8;
+  }
+
+  .bento-card--tall {
+    grid-row: span 2;
+    min-height: 46rem;
+  }
+
+  .bento-card--large {
+    grid-column: span 8;
+    grid-row: span 2;
+    min-height: 46rem;
+  }
+
+  .bento-card:hover,
+  .bento-card:focus-visible {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .bento-card:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .bento-card img,
+  .scrim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bento-card img {
+    z-index: -2;
+    object-fit: cover;
+    transition: transform 320ms ease;
+  }
+
+  .bento-card:hover img,
+  .bento-card:focus-visible img {
+    transform: scale(1.025);
+  }
+
+  .scrim {
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(18, 20, 23, 0.08) 15%, rgba(18, 20, 23, 0.94) 100%),
+      linear-gradient(90deg, rgba(18, 20, 23, 0.5), transparent 65%);
+  }
+
+  .bento-card:not(.bento-card--image) .scrim {
+    background:
+      radial-gradient(circle at 85% 15%, rgba(76, 136, 181, 0.2), transparent 38%),
+      linear-gradient(145deg, var(--bg-elevated), var(--bg-surface));
+  }
+
+  .content {
+    align-self: flex-end;
+    width: 100%;
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: var(--space-sm);
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    max-width: 22ch;
+    margin-bottom: var(--space-sm);
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    line-height: 1.08;
+  }
+
+  .bento-card--standard h3,
+  .bento-card--tall h3 {
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+  }
+
+  p {
+    max-width: 52ch;
+    margin: 0;
+    color: var(--text-secondary);
+  }
+
+  .bento-card--image p {
+    color: rgba(245, 247, 250, 0.86);
+  }
+
+  .open-entry {
+    display: inline-block;
+    margin-top: var(--space-md);
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-weight: 700;
+  }
+
+  @media (max-width: 960px) {
+    .bento-card,
+    .bento-card--tall {
+      grid-column: span 6;
+      grid-row: span 1;
+      min-height: 24rem;
+    }
+
+    .bento-card--wide,
+    .bento-card--large {
+      grid-column: span 12;
+      grid-row: span 1;
+      min-height: 28rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .bento-card,
+    .bento-card--wide,
+    .bento-card--tall,
+    .bento-card--large {
+      grid-column: 1 / -1;
+      min-height: 22rem;
+    }
+
+    h3,
+    .bento-card--standard h3,
+    .bento-card--tall h3 {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bento-card,
+    .bento-card img {
+      transition: none;
+    }
+  }
+</style>
