@@ -52,54 +52,6 @@ const educationItem = z.object({
     period: z.string().optional(),
 });
 
-const journal = defineCollection({
-    loader: glob({
-        pattern: "**/*.md",
-        base: "./src/content/journal",
-    }),
-    schema: z.object({
-        ...sharedFields,
-        date: z.coerce.date(),
-        updatedDate: z.coerce.date().optional(),
-        category: z.enum([
-            "Technology",
-            "Cars",
-            "Photography",
-            "Projects",
-            "Personal",
-        ]),
-        immichGallery: immichGallery.optional(),
-    }),
-});
-
-const projects = defineCollection({
-    loader: glob({
-        pattern: "**/*.md",
-        base: "./src/content/projects",
-    }),
-    schema: z.object({
-        ...sharedFields,
-        date: z.coerce.date().optional(),
-        projectType: z.enum([
-            "Software",
-            "Photography",
-            "Video",
-            "Writing",
-            "Case Study",
-            "Electronics",
-            "Other",
-        ]),
-        technologies: z.array(z.string()).default([]),
-        links: z.object({
-            repository: z.url().optional(),
-            demo: z.url().optional(),
-            external: z.url().optional(),
-        }).optional(),
-        immichGallery: immichGallery.optional(),
-        media: z.array(mediaItem).default([]),
-    }),
-});
-
 const entries = defineCollection({
     loader: glob({
         pattern: "**/*.md",
@@ -220,8 +172,6 @@ const settings = defineCollection({
 
 export const collections = {
     entries,
-    journal,
-    projects,
     pages,
     settings,
 };

@@ -17,5 +17,9 @@
     "@tinacms/cli": "^2.5.3",
     "astro": "^6.4.6",
     "tinacms": "^3.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.2.17"
   }
 }

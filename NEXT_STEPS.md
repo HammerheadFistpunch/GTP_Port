@@ -1,4 +1,4 @@
-# Next Steps - 2026-07-14
+# Next Steps - 2026-07-15
 
 ## Current checkpoint
 
@@ -9,10 +9,12 @@ Operational now:
 - Cloudflare Pages deployment from `gpt-handoff`
 - authenticated TinaCloud editor at `/admin/`
 - Homepage, Journal, Portfolio, About, Resume, and Contact routes
-- Journal and Portfolio detail pages
+- unified Content Entries with Portfolio and Journal placement
+- shared `/archive/[slug]/` detail pages
+- curated Portfolio bento grid with Tina ordering and tile sizing
 - project media, video embeds, and narrative-image lightboxes
 - live Immich galleries on Journal and Portfolio entries
-- related Journal entries and Portfolio projects
+- cross-type related Content Entries
 - structured Resume editing
 - responsive navigation, accessibility, canonical URLs, and social metadata
 
@@ -42,6 +44,9 @@ Before marking an entry published:
 - include useful alt text for meaningful images
 - remove localhost URLs and placeholder language
 - verify every external and Immich link
+- choose Portfolio, Portfolio + Journal, or Archive to Journal placement
+- set a publication date before placing an entry in Journal
+- assign Portfolio order and tile size when it appears in Portfolio
 - set `draft: false` only after reviewing the deployed page
 
 ## Non-blocking refinement queue

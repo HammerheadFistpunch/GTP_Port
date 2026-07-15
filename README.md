@@ -11,7 +11,9 @@ The site is operational and ready for real content. It includes:
 - a static Astro site deployed through Cloudflare Pages
 - Git-backed Markdown content
 - authenticated TinaCloud editing at `/admin/`
-- Journal and Portfolio detail pages
+- one unified Content Entries collection with Portfolio and Journal placement
+- neutral `/archive/[slug]/` detail pages shared by every entry type
+- a curated, Tina-controlled Portfolio bento grid
 - native media, video, lightboxes, and shared Immich galleries
 - structured Resume content
 - responsive navigation, accessibility, and social metadata foundations
@@ -80,9 +82,20 @@ For an Astro-only local check without TinaCloud credentials:
 npm run build:astro
 ```
 
+## Unified content workflow
+
+All published articles, projects, galleries, and case studies live under
+`src/content/entries/`. The `placement` control in Tina determines whether an
+entry appears in Portfolio, Journal, or both. **Archive to Journal** removes an
+entry from Portfolio without moving its Markdown file or changing its detail
+URL.
+
+Portfolio order and tile size are presentation metadata. Journal order remains
+chronological by publication date.
+
 ## Content portability
 
-Journal and Portfolio bodies should remain semantic Markdown. Presentation
+Content Entry bodies should remain semantic Markdown. Presentation
 belongs in Astro components, while frontmatter should describe the content
 rather than a specific visual layout.
 

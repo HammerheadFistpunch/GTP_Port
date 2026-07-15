@@ -1,5 +1,31 @@
 # GTP_Port Project Log
 
+## 2026-07-15 - Unified Content Entries architecture completed
+
+Completed:
+
+- Replaced separate Journal and Portfolio storage schemas with one `entries`
+  collection for articles, projects, galleries, and case studies.
+- Added Tina placement actions for Portfolio only, Portfolio + Journal, and
+  Archive to Journal; Journal placement clearly exposes the publication-date
+  field used for chronological sorting.
+- Moved all active content to `src/content/entries/`.
+- Cut Homepage, Journal, and Portfolio queries over to the unified collection.
+- Added stable neutral detail routes at `/archive/[slug]/` and one shared entry
+  layout preserving inline lightboxes, media, video, Immich, links, and related
+  content.
+- Replaced the chronological Portfolio grid with a responsive bento layout
+  controlled by manual order and tile size in Tina.
+- Removed legacy collections, duplicate detail routes, layouts, related-content
+  components, and duplicate Markdown files.
+
+Verified:
+
+- Astro production build succeeds with 14 static pages.
+- `git diff --check` passes.
+- Journal and Portfolio now present the same underlying entries differently
+  without moving or converting content.
+
 ## 2026-07-14 - WordPress writing archive staged for review
 
 Imported from the owner's WordPress.com content and media exports:

@@ -1,6 +1,6 @@
 # GTP_Port Roadmap
 
-Last updated: 2026-07-14
+Last updated: 2026-07-15
 Working branch: `gpt-handoff`
 
 ## Vision
@@ -35,9 +35,9 @@ Status: **Complete**
 
 Status: **Complete**
 
-- Journal and Portfolio detail routes
+- shared `/archive/[slug]/` detail routes
 - rendered Markdown bodies
-- content schemas and dedicated layouts
+- unified Content Entries schema and shared detail layout
 - linked archive pages
 - collection-driven Homepage
 - supporting pages and editable site settings
@@ -50,7 +50,8 @@ Status: **Complete**
 - Astro 6.4.6 compatibility
 - static output preserved
 - local editor workflow
-- seven focused Tina collections
+- six focused Tina collections
+- one-click Portfolio, dual-placement, and Archive-to-Journal controls
 - authenticated TinaCloud editor at `/admin/`
 - GitHub Markdown retained as the source of truth
 
@@ -84,6 +85,7 @@ Status: **Core complete; optional enhancements remain**
 Complete:
 
 - related Journal entries and Portfolio projects
+- curated Portfolio bento grid with manual ordering and tile sizing
 - project galleries and lightboxes
 - live Journal and Portfolio Immich galleries
 - inline narrative-image lightbox

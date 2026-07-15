@@ -1,6 +1,6 @@
 # GTP_Port Build Order
 
-Last updated: 2026-07-14
+Last updated: 2026-07-15
 Working branch: `gpt-handoff`
 Verified baseline: commit `75791da` (`fixed immich gallery`)
 
@@ -16,13 +16,14 @@ design and feature work continues incrementally.
 
 - Static Astro 6.4.6 architecture
 - TinaCMS local workflow and authenticated TinaCloud production editor
-- Seven focused Tina collections
-- Nine generated static pages with current placeholder content
-- Journal and Portfolio archive and detail routes
+- Six focused Tina collections
+- Unified Content Entries schema and Tina editing workflow
+- Portfolio, Journal, and shared `/archive/[slug]/` routes
+- Tina-controlled Portfolio bento grid and manual ordering
 - Project galleries, native video, YouTube, Vimeo, and lightboxes
 - Live Journal and Portfolio Immich galleries with proportion-preserving,
   higher-quality previews and an accessible lightbox
-- Related Journal entries and Portfolio projects
+- Cross-type related Content Entries
 - Structured Resume editor and timeline
 - Responsive shared shell and keyboard-accessible mobile navigation
 - Skip link, visible focus states, current-page navigation, and reduced motion

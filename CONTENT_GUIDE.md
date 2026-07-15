@@ -36,12 +36,20 @@ responsiveness, and component structure.
 
 ## Published content
 
-- `src/content/journal/*.md` — Journal entries
-- `src/content/projects/*.md` — Portfolio projects
+`src/content/entries/*.md` is the single source for articles, projects,
+galleries, case studies, and other published work.
 
-The homepage reads directly from these collections. Featured items appear
-first, followed by the newest available content. There are no separate
-hard-coded homepage article or project lists.
+The Tina **Placement** control determines where an entry appears:
+
+- **Portfolio only** — persistent curated work
+- **Portfolio + Journal** — visible in both presentations
+- **Archive to Journal** — removed from Portfolio and retained chronologically
+
+Archiving changes metadata rather than moving or converting the Markdown file.
+Every entry keeps the same `/archive/[slug]/` detail URL.
+
+Portfolio order is controlled by `portfolioOrder`, and `tileSize` accepts
+Standard, Wide, Tall, or Large. Journal order uses `date`.
 
 ### Publishing conventions
 
@@ -59,7 +67,7 @@ hard-coded homepage article or project lists.
 
 ### Immich galleries
 
-Journal Entries and Portfolio Projects include an optional **Immich Gallery**
+Content Entries include an optional **Immich Gallery**
 group. Paste a non-password-protected public link from
 `https://share.angrysquirrel.org`, then set the visible gallery title and a
 short image-description prefix. Journal galleries appear after the article;
@@ -76,8 +84,7 @@ TinaCMS and TinaCloud map their collections to:
 
 - `src/content/settings`
 - `src/content/pages`
-- `src/content/journal`
-- `src/content/projects`
+- `src/content/entries`
 
 Tina should edit these content files. Astro should continue to own files under
 `src/pages`, `src/layouts`, `src/components`, and `src/styles`.

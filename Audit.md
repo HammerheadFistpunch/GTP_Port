@@ -1,6 +1,6 @@
 # GTP_Port Repository Audit
 
-Audit updated: 2026-07-14
+Audit updated: 2026-07-15
 Repository: `HammerheadFistpunch/GTP_Port`
 Working branch: `gpt-handoff`
 Baseline: commit `75791da` (`fixed immich gallery`)
@@ -23,13 +23,13 @@ the repository files.
 | Cloudflare deployment | Operational |
 | TinaCloud `/admin/` | Authenticated and operational |
 | Homepage | Managed content and collection previews |
-| Journal archive and details | Operational |
-| Portfolio archive and details | Operational |
+| Journal archive and shared details | Operational |
+| Portfolio bento archive and shared details | Operational |
 | Immich galleries | Operational on Journal and Portfolio |
 | About and Contact | Operational; real content still needed |
 | Resume | Structured editor operational; real content still needed |
 
-Current placeholder content generates nine static pages.
+The current content set generates 14 static pages after legacy-route cleanup.
 
 ## Content model status
 
@@ -40,17 +40,16 @@ Tina provides focused collections for:
 - Archive Pages
 - Standard Pages
 - Resume
-- Journal Entries
-- Portfolio Projects
+- Content Entries
 
-Journal and Project bodies are ordinary Markdown. Their primary metadata uses
+Content Entry bodies are ordinary Markdown. Their primary metadata uses
 YAML frontmatter. This is portable to another Markdown-based system and can be
 imported into a database CMS if needed.
 
 ## Implemented presentation and behavior
 
 - Journal and Portfolio metadata
-- related Journal entries and Portfolio projects
+- cross-type related Content Entries
 - project image and video media
 - native, YouTube, and Vimeo rendering
 - project gallery and lightbox
