@@ -16,27 +16,32 @@ if (!homeEntry || homeEntry.data.pageType !== "home") {
 
 const page = homeEntry.data;
 
-const allProjects = (await getCollection("projects", ({ data }) => !data.draft))
+const allProjects = (await getCollection("entries", ({ data }) =>
+  !data.draft && (data.placement === "portfolio" || data.placement === "both")
+))
   .sort((a, b) => {
+    if (a.data.portfolioOrder !== b.data.portfolioOrder) {
+      return a.data.portfolioOrder - b.data.portfolioOrder;
+    }
+
     if (a.data.featured !== b.data.featured) {
       return Number(b.data.featured) - Number(a.data.featured);
     }
 
-    const dateDifference = (b.data.date?.getTime() ?? 0)
-      - (a.data.date?.getTime() ?? 0);
-
-    return dateDifference || a.data.title.localeCompare(b.data.title);
+    return a.data.title.localeCompare(b.data.title);
   });
 
 const projects = allProjects.slice(0, page.featuredWork.limit);
 
-const allPosts = (await getCollection("journal", ({ data }) => !data.draft))
+const allPosts = (await getCollection("entries", ({ data }) =>
+  !data.draft && (data.placement === "journal" || data.placement === "both")
+))
   .sort((a, b) => {
     if (a.data.featured !== b.data.featured) {
       return Number(b.data.featured) - Number(a.data.featured);
     }
 
-    return b.data.date.getTime() - a.data.date.getTime();
+    return (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0);
   });
 
 const articles = allPosts.slice(0, page.journalPreview.limit);
@@ -45,6 +50,7 @@ const remainingArticles = articles.slice(1);
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   dateStyle: "long",
+  timeZone: "UTC",
 });
 ---
 
@@ -74,8 +80,8 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
               title={project.data.title}
               description={project.data.description}
               image={project.data.coverImage}
-              category={project.data.projectType}
-              href={`/portfolio/${project.id}/`}
+              category={project.data.primaryTopic}
+              href={`/archive/${project.id}/`}
             />
           ))}
         </div>
@@ -97,9 +103,9 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
           title={featuredArticle.data.title}
           excerpt={featuredArticle.data.description}
           image={featuredArticle.data.coverImage}
-          category={featuredArticle.data.category}
-          date={dateFormatter.format(featuredArticle.data.date)}
-          href={`/journal/${featuredArticle.id}/`}
+          category={featuredArticle.data.primaryTopic}
+          date={featuredArticle.data.date ? dateFormatter.format(featuredArticle.data.date) : "Date pending"}
+          href={`/archive/${featuredArticle.id}/`}
         />
       ) : (
         <p>{page.journalPreview.emptyMessage}</p>
@@ -112,9 +118,9 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
               title={article.data.title}
               excerpt={article.data.description}
               image={article.data.coverImage}
-              category={article.data.category}
-              date={dateFormatter.format(article.data.date)}
-              href={`/journal/${article.id}/`}
+              category={article.data.primaryTopic}
+              date={article.data.date ? dateFormatter.format(article.data.date) : "Date pending"}
+              href={`/archive/${article.id}/`}
             />
           ))}
         </div>

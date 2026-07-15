@@ -5,17 +5,20 @@ import CategoryNav from "../../components/journal/CategoryNav.astro";
 import JournalCard from "../../components/journal/JournalCard.astro";
 import Container from "../../components/ui/Container.astro";
 
-const posts = (await getCollection("journal", ({ data }) => !data.draft))
+const posts = (await getCollection("entries", ({ data }) =>
+  !data.draft && (data.placement === "journal" || data.placement === "both")
+))
   .sort((a, b) => {
     if (a.data.featured !== b.data.featured) {
       return Number(b.data.featured) - Number(a.data.featured);
     }
 
-    return b.data.date.getTime() - a.data.date.getTime();
+    return (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0);
   });
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   dateStyle: "long",
+  timeZone: "UTC",
 });
 
 const journalPage = await getEntry("pages", "journal");
@@ -53,9 +56,9 @@ const page = journalPage.data;
             title={post.data.title}
             excerpt={post.data.description}
             image={post.data.coverImage}
-            date={dateFormatter.format(post.data.date)}
-            category={post.data.category}
-            href={`/journal/${post.id}/`}
+            date={post.data.date ? dateFormatter.format(post.data.date) : "Date pending"}
+            category={post.data.primaryTopic}
+            href={`/archive/${post.id}/`}
           />
         ))
       ) : (

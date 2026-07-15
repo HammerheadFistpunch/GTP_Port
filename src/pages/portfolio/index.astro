@@ -4,16 +4,19 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PortfolioCard from "../../components/portfolio/PortfolioCard.astro";
 import Container from "../../components/ui/Container.astro";
 
-const projects = (await getCollection("projects", ({ data }) => !data.draft))
+const projects = (await getCollection("entries", ({ data }) =>
+  !data.draft && (data.placement === "portfolio" || data.placement === "both")
+))
   .sort((a, b) => {
+    if (a.data.portfolioOrder !== b.data.portfolioOrder) {
+      return a.data.portfolioOrder - b.data.portfolioOrder;
+    }
+
     if (a.data.featured !== b.data.featured) {
       return Number(b.data.featured) - Number(a.data.featured);
     }
 
-    const dateDifference = (b.data.date?.getTime() ?? 0)
-      - (a.data.date?.getTime() ?? 0);
-
-    return dateDifference || a.data.title.localeCompare(b.data.title);
+    return a.data.title.localeCompare(b.data.title);
   });
 
 const portfolioPage = await getEntry("pages", "portfolio");
@@ -48,8 +51,8 @@ const page = portfolioPage.data;
               title={project.data.title}
               description={project.data.description}
               image={project.data.coverImage}
-              category={project.data.projectType}
-              href={`/portfolio/${project.id}/`}
+              category={project.data.primaryTopic}
+              href={`/archive/${project.id}/`}
             />
           ))}
         </div>

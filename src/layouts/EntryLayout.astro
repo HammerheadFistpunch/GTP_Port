@@ -1,0 +1,254 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import ArticleMeta from "../components/journal/ArticleMeta.astro";
+import ProjectMeta from "../components/portfolio/ProjectMeta.astro";
+import Gallery from "../components/portfolio/Gallery.astro";
+import ImmichGallery from "../components/portfolio/ImmichGallery.astro";
+import VideoEmbed from "../components/portfolio/VideoEmbed.astro";
+import InlineImageLightbox from "../components/portfolio/InlineImageLightbox.astro";
+import RelatedEntries from "../components/content/RelatedEntries.astro";
+import Container from "../components/ui/Container.astro";
+
+interface EntryLinks {
+  repository?: string;
+  demo?: string;
+  external?: string;
+}
+
+interface EntryMedia {
+  type: "image" | "video";
+  src: string;
+  alt?: string;
+  caption?: string;
+}
+
+interface RelatedEntry {
+  title: string;
+  description: string;
+  image?: string;
+  primaryTopic: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  entryType: "Article" | "Project" | "Case Study" | "Gallery";
+  placement: "portfolio" | "both" | "journal";
+  primaryTopic: string;
+  date?: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  technologies?: string[];
+  links?: EntryLinks;
+  coverImage?: string;
+  media?: EntryMedia[];
+  immichGallery?: {
+    shareUrl: string;
+    title?: string;
+    imageAltPrefix?: string;
+  };
+  relatedEntries?: RelatedEntry[];
+}
+
+const {
+  title,
+  description,
+  entryType,
+  placement,
+  primaryTopic,
+  date,
+  updatedDate,
+  tags = [],
+  technologies = [],
+  links,
+  coverImage,
+  media = [],
+  immichGallery,
+  relatedEntries = [],
+} = Astro.props;
+
+const isArticle = entryType === "Article";
+
+const galleryImages = media
+  .filter((item) => item.type === "image")
+  .map((item) => ({
+    src: item.src,
+    alt: item.alt || title,
+    caption: item.caption,
+  }));
+
+const videos = media.filter((item) => item.type === "video");
+
+const entryLinks = [
+  links?.demo && { label: "View Project", href: links.demo },
+  links?.repository && { label: "View Repository", href: links.repository },
+  links?.external && { label: "Visit Website", href: links.external },
+].filter(Boolean) as { label: string; href: string }[];
+
+const backLinks = [
+  placement !== "journal" && { label: "Portfolio", href: "/portfolio" },
+  placement !== "portfolio" && { label: "Journal", href: "/journal" },
+].filter(Boolean) as { label: string; href: string }[];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  image={coverImage}
+  type="article"
+>
+  <article class:list={["entry", { "entry--article": isArticle }]} aria-labelledby="entry-title">
+    <Container width="reading">
+      <nav class="back-links" aria-label="Back to collection">
+        {backLinks.map((link) => (
+          <a href={link.href}>← Back to {link.label}</a>
+        ))}
+      </nav>
+
+      <header class="entry-header">
+        {isArticle && date ? (
+          <ArticleMeta
+            category={primaryTopic}
+            {date}
+            {updatedDate}
+            {tags}
+          />
+        ) : (
+          <ProjectMeta
+            projectType={`${entryType} · ${primaryTopic}`}
+            {date}
+            {technologies}
+            {tags}
+          />
+        )}
+
+        <h1 id="entry-title">{title}</h1>
+        <p class="entry-description">{description}</p>
+
+        {entryLinks.length > 0 && (
+          <nav class="entry-links" aria-label="Entry links">
+            {entryLinks.map((link) => (
+              <a href={link.href}>{link.label} →</a>
+            ))}
+          </nav>
+        )}
+      </header>
+
+      {coverImage && (
+        <figure class="entry-hero">
+          <img src={coverImage} alt={title} />
+        </figure>
+      )}
+
+      <div class="entry-content project-content">
+        <slot />
+      </div>
+
+      <InlineImageLightbox />
+
+      <Gallery id="entry-gallery" images={galleryImages} />
+
+      {immichGallery && (
+        <ImmichGallery
+          shareUrl={immichGallery.shareUrl}
+          title={immichGallery.title}
+          imageAltPrefix={immichGallery.imageAltPrefix}
+        />
+      )}
+
+      {videos.length > 0 && (
+        <section class="entry-videos" aria-labelledby="entry-videos-heading">
+          <h2 id="entry-videos-heading">Videos</h2>
+          <div class="video-list">
+            {videos.map((video, index) => (
+              <VideoEmbed
+                src={video.src}
+                title={video.alt || `${title} video ${index + 1}`}
+                caption={video.caption}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <RelatedEntries entries={relatedEntries} />
+    </Container>
+  </article>
+</BaseLayout>
+
+<style>
+  .entry {
+    padding: var(--space-lg) 0 var(--space-xl);
+  }
+
+  .back-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+    font-family: var(--font-ui);
+    font-weight: 700;
+  }
+
+  .entry-header {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+  }
+
+  .entry--article .entry-header {
+    padding: 0 0 var(--space-md);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+  }
+
+  .entry-description {
+    max-width: 42rem;
+    margin-bottom: 0;
+    font-size: 1.2rem;
+  }
+
+  .entry--article .entry-description,
+  .entry-content {
+    font-family: var(--font-editorial);
+  }
+
+  .entry-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .entry-links a {
+    font-weight: 700;
+  }
+
+  .entry-hero {
+    margin: 0 0 var(--space-lg);
+  }
+
+  .entry-hero img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .entry-videos {
+    padding-top: var(--space-lg);
+  }
+
+  .entry-videos h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .video-list {
+    display: grid;
+    gap: var(--space-md);
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+import {
+  getCollection,
+  render,
+  type CollectionEntry,
+} from "astro:content";
+import EntryLayout from "../../layouts/EntryLayout.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("entries");
+  const publishedEntries = entries.filter((entry) => !entry.data.draft);
+
+  return publishedEntries.map((entry) => {
+    const relatedEntries = publishedEntries
+      .filter((candidate) => candidate.id !== entry.id)
+      .map((candidate) => ({
+        candidate,
+        score:
+          (candidate.data.primaryTopic === entry.data.primaryTopic ? 3 : 0) +
+          (candidate.data.entryType === entry.data.entryType ? 2 : 0) +
+          candidate.data.tags.filter((tag) => entry.data.tags.includes(tag)).length,
+      }))
+      .sort((a, b) =>
+        b.score - a.score ||
+        (b.candidate.data.date?.getTime() ?? 0) -
+          (a.candidate.data.date?.getTime() ?? 0)
+      )
+      .slice(0, 3)
+      .map(({ candidate }) => ({
+        title: candidate.data.title,
+        description: candidate.data.description,
+        image: candidate.data.coverImage,
+        primaryTopic: candidate.data.primaryTopic,
+        href: `/archive/${candidate.id}/`,
+      }));
+
+    return {
+      params: { slug: entry.id },
+      props: { entry, relatedEntries },
+    };
+  });
+}
+
+interface Props {
+  entry: CollectionEntry<"entries">;
+  relatedEntries: Array<{
+    title: string;
+    description: string;
+    image?: string;
+    primaryTopic: string;
+    href: string;
+  }>;
+}
+
+const { entry, relatedEntries } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<EntryLayout {...entry.data} {relatedEntries}>
+  <Content />
+</EntryLayout>
