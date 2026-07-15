@@ -1,3 +1,4 @@
+import React from "react";
 import type { ChangeEvent, CSSProperties } from "react";
 
 type Placement = "portfolio" | "both" | "journal";
