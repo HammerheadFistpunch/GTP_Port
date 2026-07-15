@@ -12,6 +12,7 @@ Operational now:
 - unified Content Entries with Portfolio and Journal placement
 - shared `/archive/[slug]/` detail pages
 - curated Portfolio bento grid with Tina ordering and tile sizing
+- editable Homepage preview headings linked to Portfolio and Journal
 - project media, video embeds, and narrative-image lightboxes
 - live Immich galleries on Journal and Portfolio entries
 - cross-type related Content Entries
@@ -20,6 +21,17 @@ Operational now:
 
 The active goal is no longer to wait for every roadmap refinement. The active
 goal is to publish enough strong, accurate material to support a job search.
+
+The latest stable checkpoint also includes the Tina custom-field React runtime
+fix. Content Entries can be opened and edited successfully in the hosted CMS.
+
+## Return point
+
+The clean next development chunk is Journal topic navigation. The existing
+topic chips are visual labels only: they do not yet link to routes or filter
+entries. The recommended implementation is static Astro topic routes derived
+from published Content Entry `primaryTopic` values, with an **All** link back to
+`/journal/`. No database backend is required.
 
 ## Immediate content order
 
@@ -53,7 +65,7 @@ Before marking an entry published:
 
 These remain useful, but they should not delay publishing:
 
-- Journal category filters or category routes
+- Journal topic routes; current topic chips are display-only
 - Portfolio project filters
 - inline narrative video blocks
 - Resume print refinement

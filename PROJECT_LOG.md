@@ -1,5 +1,31 @@
 # GTP_Port Project Log
 
+## 2026-07-15 - Architecture stabilization and Homepage editing refined
+
+Completed:
+
+- Confirmed the unified Content Entries migration, shared archive routes,
+  Portfolio bento grid, Tina placement actions, and legacy cleanup in the
+  deployed workflow.
+- Fixed the custom Tina Placement field's hosted runtime error by importing the
+  React runtime explicitly. Content Entries, including Photography Samples,
+  can now be opened and edited in TinaCloud.
+- Added editable **Section Title Link** fields to the Homepage Featured Work and
+  Journal Preview sections.
+- Linked those Homepage headings to `/portfolio` and `/journal` by default
+  while preserving direct links on the individual preview cards.
+- Reviewed Journal topic navigation and documented that the current chips are
+  display-only labels rather than functional filters.
+- Identified static Astro topic routes derived from `primaryTopic` as the next
+  recommended feature; no database backend is required.
+
+Verified:
+
+- Tina local schema indexing succeeds and regenerates `tina/tina-lock.json`.
+- Strict TypeScript checking passes.
+- Astro production build succeeds with 14 static pages.
+- The Tina React runtime hotfix was verified in the hosted editor.
+
 ## 2026-07-15 - Unified Content Entries architecture completed
 
 Completed:

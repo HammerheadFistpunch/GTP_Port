@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-07-15
+Last reviewed: 2026-07-15 after unified-content and Homepage-link work
 
 ## Active project documents
 

@@ -92,10 +92,11 @@ Complete:
 - native, YouTube, and Vimeo project media
 - reusable media components
 - structured Resume editor and timeline
+- editable Homepage preview headings linked to their full archives
 
 Remaining when justified by real content:
 
-- Journal category filters or routes
+- functional Journal topic routes; current topic chips are display-only
 - Portfolio project filters
 - inline narrative video blocks
 - Resume print refinement

@@ -2,7 +2,7 @@
 
 Last updated: 2026-07-15
 Working branch: `gpt-handoff`
-Verified baseline: commit `75791da` (`fixed immich gallery`)
+Verified baseline: unified architecture through Chunk 5
 
 ## Current phase
 
@@ -20,6 +20,7 @@ design and feature work continues incrementally.
 - Unified Content Entries schema and Tina editing workflow
 - Portfolio, Journal, and shared `/archive/[slug]/` routes
 - Tina-controlled Portfolio bento grid and manual ordering
+- Editable Homepage preview headings linked to Portfolio and Journal
 - Project galleries, native video, YouTube, Vimeo, and lightboxes
 - Live Journal and Portfolio Immich galleries with proportion-preserving,
   higher-quality previews and an accessible lightbox
@@ -59,7 +60,8 @@ Pull gpt-handoff
 ### Parallel refinement
 
 1. Refine the pages that real content exposes as weak.
-2. Add Journal category filtering when the entry count makes it useful.
+2. Convert the display-only Journal topic chips into static topic routes when
+   the entry count makes them useful.
 3. Add Portfolio filtering when the project count makes it useful.
 4. Add inline narrative video only when a real story requires it.
 5. Complete Resume print styling.

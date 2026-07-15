@@ -14,13 +14,15 @@ The site is operational and ready for real content. It includes:
 - one unified Content Entries collection with Portfolio and Journal placement
 - neutral `/archive/[slug]/` detail pages shared by every entry type
 - a curated, Tina-controlled Portfolio bento grid
+- editable Homepage preview headings that link to Portfolio and Journal
 - native media, video, lightboxes, and shared Immich galleries
 - structured Resume content
 - responsive navigation, accessibility, and social metadata foundations
 
 Real portfolio projects, Journal entries, biography, resume, and contact content
-are now the active priority. Remaining filters, print refinement, design polish,
-and launch tooling are improvements rather than publishing blockers.
+are now the active priority. Journal topic chips are currently display-only;
+functional topic routes remain planned. Filters, print refinement, design
+polish, and launch tooling are improvements rather than publishing blockers.
 
 See `DOCUMENTATION.md` for the documentation index, `NEXT_STEPS.md` for the
 active work queue, and `Roadmap.md` for the broader sequence.

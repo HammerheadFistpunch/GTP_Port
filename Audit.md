@@ -3,7 +3,7 @@
 Audit updated: 2026-07-15
 Repository: `HammerheadFistpunch/GTP_Port`
 Working branch: `gpt-handoff`
-Baseline: commit `75791da` (`fixed immich gallery`)
+Baseline: unified architecture through Chunk 5
 
 ## Executive finding
 
@@ -22,7 +22,7 @@ the repository files.
 | GitHub source branch | Operational on `gpt-handoff` |
 | Cloudflare deployment | Operational |
 | TinaCloud `/admin/` | Authenticated and operational |
-| Homepage | Managed content and collection previews |
+| Homepage | Managed content, collection previews, and editable archive links |
 | Journal archive and shared details | Operational |
 | Portfolio bento archive and shared details | Operational |
 | Immich galleries | Operational on Journal and Portfolio |
@@ -56,6 +56,7 @@ imported into a database CMS if needed.
 - narrative-image lightbox
 - higher-quality, proportion-preserving Immich gallery and lightbox
 - Resume overview and timeline
+- editable Homepage preview headings linked to Portfolio and Journal
 - responsive shared shell and mobile navigation
 - keyboard, focus, contrast, and reduced-motion foundations
 - descriptions, favicons, canonical URLs, and social metadata foundation
@@ -67,8 +68,9 @@ imported into a database CMS if needed.
   real entries.
 - Important project storytelling should not depend exclusively on an external
   Immich public share.
-- Journal and Portfolio filters remain incomplete, but are unnecessary at the
-  current content volume.
+- Journal topic chips are currently display-only. Static topic routes and
+  Portfolio filters remain incomplete, but are unnecessary at the current
+  content volume.
 - Resume printing needs refinement.
 - Sitemap, robots, RSS, image optimization, analytics, and final performance
   checks remain launch-quality work.

@@ -19,7 +19,8 @@ Controls:
 
 `src/content/pages/`
 
-- `home.md` — hero, calls to action, section headings, preview limits, and About callout
+- `home.md` — hero, calls to action, linked section headings, preview limits,
+  and About callout
 - `journal.md` — Journal archive header, topics, section title, and empty state
 - `portfolio.md` — Corpus archive header, section title, and empty state
 - `about.md` — About header and Markdown body
@@ -33,6 +34,18 @@ Page headers support two predefined styles:
 
 The CMS may select a variant, but Astro owns the actual typography, spacing,
 responsiveness, and component structure.
+
+### Homepage preview links
+
+The Homepage **Featured Work Section** and **Journal Preview Section** each
+include a **Section Title Link** field in Tina. The current destinations are
+`/portfolio` and `/journal`. These fields control the linked section headings;
+individual preview cards continue to link directly to their Content Entries.
+
+The topic list in `journal.md` currently controls visible topic chips only.
+Those chips are not yet filters or links. The planned topic-route work should
+derive navigation from published Content Entry `primaryTopic` values to avoid
+maintaining two conflicting topic lists.
 
 ## Published content
 
