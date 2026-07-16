@@ -24,6 +24,8 @@ competencies:
     description: |
       Utah PRSA award recipient: Excellent communication during a crisis 2020
       over 200 live events and hybrid events with a reach of millions during the COVID-19 pandemic
+  - title: Cross-Function Collaboration
+    description: 'Experienced with Cross-functional team management, project management and complex stakeholder relationships.'
 experience: []
 education: []
 ---
