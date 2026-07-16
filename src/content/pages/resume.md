@@ -20,6 +20,10 @@ professionalSummary: |
 competencies:
   - title: Internal communication
     description: 'Town halls, leadership messaging, enterprise-wide updates, and corporate narratives.'
+  - title: Change & crisis communication
+    description: |
+      Utah PRSA award recipient: Excellent communication during a crisis 2020
+      over 200 live events and hybrid events with a reach of millions during the COVID-19 pandemic
 experience: []
 education: []
 ---
