@@ -29,6 +29,7 @@ const site = siteEntry.data;
 const documentTitle = title ? `${title} | ${site.siteName}` : site.siteName;
 const documentDescription = description ?? site.siteDescription;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+
 const socialImage = image
   ? new URL(image, Astro.site ?? Astro.url.origin).toString()
   : undefined;
@@ -37,57 +38,83 @@ const socialImage = image
 <!doctype html>
 
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
 
-  <meta charset="UTF-8" />
+    <title>{documentTitle}</title>
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+    <meta name="description" content={documentDescription} />
 
-  <title>{documentTitle}</title>
+    <link rel="canonical" href={canonicalUrl} />
 
-  <meta name="description" content={documentDescription} />
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon-16x16.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
 
-  <link rel="canonical" href={canonicalUrl} />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="alternate icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#121417" />
+    <meta name="apple-mobile-web-app-title" content={site.siteName} />
 
-  <meta name="theme-color" content="#121417" />
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.siteName} />
+    <meta property="og:title" content={documentTitle} />
+    <meta property="og:description" content={documentDescription} />
+    <meta property="og:url" content={canonicalUrl} />
 
-  <meta property="og:type" content={type} />
-  <meta property="og:site_name" content={site.siteName} />
-  <meta property="og:title" content={documentTitle} />
-  <meta property="og:description" content={documentDescription} />
-  <meta property="og:url" content={canonicalUrl} />
-  {socialImage && <meta property="og:image" content={socialImage} />}
+    {
+      socialImage && (
+        <meta property="og:image" content={socialImage} />
+      )
+    }
 
-  <meta
-    name="twitter:card"
-    content={socialImage ? "summary_large_image" : "summary"}
-  />
-  <meta name="twitter:title" content={documentTitle} />
-  <meta name="twitter:description" content={documentDescription} />
-  {socialImage && <meta name="twitter:image" content={socialImage} />}
+    <!-- Twitter/X -->
+    <meta
+      name="twitter:card"
+      content={socialImage ? "summary_large_image" : "summary"}
+    />
+    <meta name="twitter:title" content={documentTitle} />
+    <meta name="twitter:description" content={documentDescription} />
 
-</head>
+    {
+      socialImage && (
+        <meta name="twitter:image" content={socialImage} />
+      )
+    }
+  </head>
 
-<body>
+  <body>
+    <a class="skip-link" href="#main-content">
+      Skip to main content
+    </a>
 
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+    <Navigation />
 
-  <Navigation />
+    <main id="main-content">
+      <slot />
+    </main>
 
-  <main id="main-content">
-
-    <slot />
-
-  </main>
-
-  <Footer />
-
-</body>
-
+    <Footer />
+  </body>
 </html>
