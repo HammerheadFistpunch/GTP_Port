@@ -229,6 +229,14 @@ export default defineConfig({
                             },
                             {
                                 type: "string",
+                                name: "titleHref",
+                                label: "Title Link",
+                                required: true,
+                                description:
+                                    "Site path linked from the section title, such as /portfolio or /journal.",
+                            },
+                            {
+                                type: "string",
                                 name: "subtitle",
                                 label: "Section Description",
                                 required: true,
@@ -261,6 +269,14 @@ export default defineConfig({
                                 name: "title",
                                 label: "Section Title",
                                 required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "titleHref",
+                                label: "Title Link",
+                                required: true,
+                                description:
+                                    "Site path linked from the section title, such as /portfolio or /journal.",
                             },
                             {
                                 type: "string",
