@@ -1,9 +1,9 @@
 ---
 title: '2025 Lexus LX 700h First Drive Review: A Perfect SUV for a Very Specific Buyer'
 description: 'A first-drive review of the hybrid Lexus LX 700h and the narrow audience for its unusual combination of luxury, engineering, and off-road capability.'
-date: 2025-02-05T00:00:00.000Z
 entryType: Article
 placement: journal
+date: 2025-02-05T00:00:00.000Z
 primaryTopic: Cars
 tags:
   - Automotive
@@ -12,7 +12,7 @@ tags:
   - Toyota
   - The Drive
 coverImage: /uploads/wordpress/2025/PXL_20250131_172244698.RAW-01.COVER.jpg
-featured: true
+featured: false
 draft: false
 ---
 
