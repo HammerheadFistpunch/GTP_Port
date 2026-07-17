@@ -16,7 +16,7 @@ featured: false
 draft: false
 ---
 
-> Archived writing sample. Originally published by [The Drive](https://www.thedrive.com/car-reviews/2025-lexus-lx700h-first-drive-review) on February 5, 2025. Imported from the author's WordPress archive for review.
+> Archived writing sample. Originally published by [The Drive](https://www.thedrive.com/car-reviews/2025-lexus-lx700h-first-drive-review) on February 5, 2025. 
 
 ***
 
