@@ -1,9 +1,9 @@
 ---
 title: Fuel Economy Tips for the Overlander
 description: Practical ways to improve fuel economy in modified overland vehicles without abandoning capability or the trips they were built for.
-date: 2022-04-20T00:00:00.000Z
 entryType: Article
 placement: journal
+date: 2022-04-20T00:00:00.000Z
 primaryTopic: Cars
 tags:
   - Overlander
@@ -16,7 +16,7 @@ featured: false
 draft: false
 ---
 
-> Archived writing sample. Originally published by Overlander.com on April 20, 2022. Imported from the author's WordPress archive for review.
+> Archived writing sample. Originally published by Overlander.com on April 20, 2022. 
 
 ***
 
