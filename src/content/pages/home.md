@@ -1,11 +1,11 @@
 ---
 eyebrow: ''
 pageType: home
-description: 'A personal portfolio of Patrick Rich and editorial journal exploring technology, vehicles, photography, filmmaking, and the projects worth documenting.'
+description: 'A personal portfolio of Patrick Rich and editorial journal exploring technology, vehicles, photography, filmmaking, and the projects worth documenting. '
 hero:
   eyebrow: Video · Photography · Communication · Storyteller
   title: Translating complex topics for over 20 years
-  description: Patrick Rich. Personal and professional blog and portfolio
+  description: Patrick Rich. Personal and professional blog and portfolio. This site is a work in progress and in a "soft open" state. Content and features are being added daily.
   image: /uploads/ground-squirrel-line-art-transparent.png
   primaryCta:
     label: View Work
