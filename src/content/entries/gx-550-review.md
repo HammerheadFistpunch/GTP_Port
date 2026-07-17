@@ -1,9 +1,9 @@
 ---
 title: I Drove the 2024 Lexus GX 550 to See If It Is Really the Ultimate Overlanding Platform
 description: 'A first-drive assessment of the 2024 Lexus GX 550, from its new platform and powertrain to its on-road manners and genuine overlanding capability.'
-date: 2024-02-01T00:00:00.000Z
 entryType: Article
 placement: journal
+date: 2024-02-01T00:00:00.000Z
 primaryTopic: Cars
 tags:
   - Automotive
@@ -16,7 +16,7 @@ featured: true
 draft: false
 ---
 
-> Archived writing sample. Originally published by [The Autopian](https://www.theautopian.com/i-drove-the-2024-lexus-gx550-to-see-if-its-really-the-ultimate-overlanding-platform/) on February 1, 2024. Imported from the author's WordPress archive for review.
+> Archived writing sample. Originally published by [The Autopian](https://www.theautopian.com/i-drove-the-2024-lexus-gx550-to-see-if-its-really-the-ultimate-overlanding-platform/) on February 1, 2024. 
 
 ***
 
