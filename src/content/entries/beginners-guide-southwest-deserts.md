@@ -1,9 +1,9 @@
 ---
 title: A Beginner's Guide to the Deserts of the Southwest
 description: 'A practical field guide to traveling through the deserts of the American Southwest, including terrain, weather, navigation, and preparation.'
-date: 2022-07-27T00:00:00.000Z
 entryType: Article
 placement: journal
+date: 2022-07-27T00:00:00.000Z
 primaryTopic: Cars
 tags:
   - Overlander
@@ -16,7 +16,7 @@ featured: true
 draft: false
 ---
 
-> Archived writing sample. Originally published by Overlander.com on July 27, 2022. Imported from the author's WordPress archive for review.
+> Archived writing sample. Originally published by Overlander.com on July 27, 2022. 
 
 ***
 
