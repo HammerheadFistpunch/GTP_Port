@@ -1,9 +1,9 @@
 ---
 title: 'How All-Wheel Drive Works: A Detailed Technical Explainer'
 description: 'A detailed guide to the mechanical, electronic, and practical differences among all-wheel-drive and four-wheel-drive systems.'
-date: 2021-03-03T00:00:00.000Z
 entryType: Article
 placement: journal
+date: 2021-03-03T00:00:00.000Z
 primaryTopic: Cars
 tags:
   - Automotive
@@ -16,7 +16,7 @@ featured: true
 draft: false
 ---
 
-> Archived writing sample. Originally published by [Jalopnik](https://jalopnik.com/how-all-wheel-drive-works-a-ridiculously-detailed-tech-1846233533) on March 3, 2021. Imported from the author's WordPress archive for review.
+> Archived writing sample. Originally published by [Jalopnik](https://jalopnik.com/how-all-wheel-drive-works-a-ridiculously-detailed-tech-1846233533) on March 3, 2021.
 
 ***
 
