@@ -6,6 +6,7 @@ placement: journal
 primaryTopic: Field notes
 coverImage: /uploads/PXL_20260716_202414906-(Large).jpg
 media:
-  - {}
+  - type: video
+    src: 'https://www.youtube.com/watch?v=8rckrqsaZjk'
 ---
 
