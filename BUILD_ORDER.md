@@ -25,6 +25,12 @@ homepage while preserving the current content and routes.
 
 Full scope and acceptance criteria are in `Roadmap.md`.
 
+## Locked design constraints
+
+- Preserve the existing typography and color choices.
+- Use the approved homepage mockup for layout, hierarchy, density, and spacing.
+- Do not treat the redesign as a new visual system.
+
 ## Next executable chunk - Sprint 1
 
 ### Chunk 1A - Schema and route proof
@@ -81,6 +87,10 @@ Stop and verify:
   together when a schema changes
 - require a successful local production build and Cloudflare preview before
   starting the next chunk
+- finish every sprint by reviewing `PROJECT_LOG.md`, `BUILD_ORDER.md`,
+  `Roadmap.md`, and `SITE_MAINTENANCE_GUIDE.md`
+- update `README.md`, content guidance, portability guidance, or another
+  feature-specific document whenever that sprint changes its subject
 
 ## Parallel content work
 
