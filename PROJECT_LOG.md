@@ -1,5 +1,28 @@
 # GTP_Port Project Log
 
+## 2026-08-03 - Documentation audit and cleanup completed
+
+Completed:
+
+- Consolidated active planning around `BUILD_ORDER.md` and `Roadmap.md`.
+- Retired stale `NEXT_STEPS.md`, `Audit.md`, and `CHUNK_MANIFEST.md` files
+  that duplicated or contradicted the current sprint plan.
+- Refreshed the README, documentation index, maintenance guide, build order,
+  roadmap, content guide, and repository agent instructions.
+- Recorded documentation maintenance as part of every sprint's completion
+  criteria.
+- Corrected the local development instruction to use the Tina-aware
+  `npm run dev` workflow.
+
+Decisions:
+
+- Preserve the site's existing typography and color choices during the
+  redesign.
+- Use the approved homepage mockup as the reference for layout, hierarchy,
+  density, and spacing only.
+- Sprint 1A remains the next application-code work; this cleanup changed
+  documentation only.
+
 ## 2026-08-03 - Tina site-builder expansion roadmap approved
 
 Planned:
