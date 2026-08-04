@@ -1,22 +1,50 @@
+# Repository instructions
+
 ## Development
 
-When starting the dev server, use background mode:
+Use the repository scripts so Astro and TinaCMS run with the project's intended
+configuration.
 
-```
-astro dev --background
+```bash
+npm install
+npm run dev
 ```
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+The Tina-aware development server exposes the local site and the editor at
+`/admin/`. Do not start Astro directly when testing Tina schemas or editor
+controls.
+
+Use the smallest relevant verification set:
+
+```bash
+npm run build:astro
+npx tsc --noEmit
+npm run build
+git diff --check
+```
+
+The full build requires the TinaCloud environment variables. Never commit
+`.env` or a real `TINA_TOKEN`.
 
 ## Documentation
 
-Full documentation: https://docs.astro.build
+Read `DOCUMENTATION.md` for document ownership and source priority. Every
+completed sprint must review and update, as applicable:
 
-Consult these guides before working on related tasks:
+- `PROJECT_LOG.md`
+- `BUILD_ORDER.md`
+- `Roadmap.md`
+- `SITE_MAINTENANCE_GUIDE.md`
+- any content, portability, README, or feature-specific guide affected by the
+  change
 
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+Preserve the site's existing typography and color system. The approved homepage
+mockup guides layout, hierarchy, density, and spacing only.
+
+## Reference documentation
+
+- [Astro routing](https://docs.astro.build/en/guides/routing/)
+- [Astro components](https://docs.astro.build/en/basics/astro-components/)
+- [Framework components](https://docs.astro.build/en/guides/framework-components/)
+- [Content collections](https://docs.astro.build/en/guides/content-collections/)
+- [Styling](https://docs.astro.build/en/guides/styling/)
