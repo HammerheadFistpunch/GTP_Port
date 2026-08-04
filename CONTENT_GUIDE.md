@@ -19,8 +19,8 @@ Controls:
 
 `src/content/pages/`
 
-- `home.md` — hero, calls to action, linked section headings, preview limits,
-  and About callout
+- `home.md` — Homepage section order; Hero; Journal feature and recent count;
+  About Me; What I Do; Technology Stack; and Featured Portfolio selections
 - `journal.md` — Journal archive header, explicit featured story, legacy topic
   list, section title, and empty state
 - `portfolio.md` — Portfolio archive header, section title, and empty state
@@ -36,12 +36,28 @@ Page headers support two predefined styles:
 The CMS may select a variant, but Astro owns the actual typography, spacing,
 responsiveness, and component structure.
 
-### Homepage preview links
+### Homepage sections and selections
 
-The Homepage **Featured Portfolio Section** and **Journal Preview Section** each
-include a **Section Title Link** field in Tina. The current destinations are
-`/portfolio` and `/journal`. These fields control the linked section headings;
-individual preview cards continue to link directly to their Content Entries.
+The Tina **Homepage** collection contains one drag-reorderable **Homepage
+Section Order** list. Use each option once. Removing or duplicating an option
+does not delete content; Astro normalizes the list and restores omitted blocks.
+Use each section's **Show** switch to hide it intentionally.
+
+The **Hero + Journal** item is one responsive top block. Hero and Journal have
+independent visibility controls; when both are visible they sit side by side on
+desktop and stack Hero-first on mobile. The Journal feature is an explicit
+Content Entry reference. A missing, drafted, or non-Journal selection falls
+back to the newest published Journal entry, and the feature is excluded from
+the configured recent-story count.
+
+The Homepage **Featured Portfolio Section** continues to use the shared
+reference-based tile list. Its default selections are the five Portfolio
+category Flexible Pages. Removing a tile changes Homepage placement only and
+never deletes the selected page or Content Entry.
+
+Section titles, descriptions, links, capability items, technology items,
+visibility, and the Portfolio and Journal selections are all editable in Tina.
+The expanded `/about/` page remains separate.
 
 Journal navigation uses the controlled Automotive, Projects, Field Notes, and
 Off-topic section registry. Latest links to the complete `/journal/` feed and

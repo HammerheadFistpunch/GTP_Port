@@ -1,5 +1,41 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 6 compact Homepage implemented
+
+Completed locally:
+
+- Implemented the approved compact Homepage without changing the established
+  typography or color system.
+- Paired a reduced Hero with an independently editable Journal panel on desktop
+  and a logical Hero-first stack on narrower screens.
+- Added an explicit Tina reference for the Homepage Journal feature plus a
+  compact chronological recent-story list that never duplicates the feature.
+- Added safe newest-story fallback behavior when the selected feature is
+  missing, drafted, or no longer placed in Journal.
+- Added editable About Me, What I Do, Technology Stack, and Featured Portfolio
+  sections with copy, links, visibility controls, and drag-reorderable block order.
+- Migrated Featured Portfolio to the five published Portfolio category pages:
+  Video, Photography, Case Studies, Writing Samples, and Software Projects.
+- Preserved the standalone About page, every existing route, and the shared
+  Portfolio reference model.
+- Regenerated `tina/tina-lock.json` from Tina's generated schema artifacts.
+
+Verified locally:
+
+- Tina audits all 54 settings, page, Flexible Page, Tag, and Content Entry documents.
+- Strict TypeScript checking and `git diff --check` pass.
+- Astro builds all 58 existing routes.
+- Generated Homepage HTML follows the stored five-block order, links to all five
+  Portfolio categories, and renders the selected feature separately from three
+  recent Journal stories.
+
+Pending after push:
+
+- Confirm Cloudflare deploys the redesigned Homepage.
+- Review desktop, tablet, phone, and keyboard behavior on the hosted site.
+- Reindex TinaCloud and verify section order, visibility, copy, link, Journal
+  feature, recent count, and Portfolio selection edits.
+
 ## 2026-08-04 - Sprint 5 controlled tags and subject archives implemented
 
 Completed locally:

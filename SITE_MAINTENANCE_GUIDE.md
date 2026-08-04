@@ -325,13 +325,11 @@ Common targets:
 | --- | --- |
 | Header and mobile menu | `src/components/ui/Navigation.astro` |
 | Footer | `src/components/ui/Footer.astro` |
-| Homepage hero | `src/components/ui/Hero.astro` |
+| Homepage layout, Hero, Journal panel, and sections | `src/pages/index.astro` |
 | Buttons | `src/components/ui/Button.astro` |
-| Homepage section headings | `src/components/ui/SectionTitle.astro` |
-| Homepage Portfolio cards | `src/components/portfolio/PortfolioCard.astro` |
 | Portfolio bento cards | `src/components/portfolio/PortfolioBentoCard.astro` |
 | Journal cards | `src/components/journal/JournalCard.astro` |
-| Journal and Homepage featured article | `src/components/journal/FeaturedArticle.astro` |
+| Journal featured article | `src/components/journal/FeaturedArticle.astro` |
 | Entry headers and body shell | `src/layouts/EntryLayout.astro` |
 | About, Contact, and Resume header shell | `src/layouts/StandardPageLayout.astro` |
 | Gallery and lightbox | `Gallery.astro`, `Lightbox.astro`, and `ImmichGallery.astro` |
@@ -352,7 +350,9 @@ is shared by multiple routes.
 
 Examples:
 
-- Change Homepage section order in `src/pages/index.astro`.
+- Change Homepage section order in Tina or `src/content/pages/home.md`; change
+  its allowed block keys and fallback order in `src/content.config.ts` and
+  `src/pages/index.astro` together.
 - Change Portfolio grid composition in `src/pages/portfolio/index.astro`.
 - Change Journal archive composition in `src/pages/journal/index.astro`.
 - Change every Content Entry detail page in `src/layouts/EntryLayout.astro`.
@@ -377,7 +377,8 @@ rules must agree.
 
 Use Tina for ordinary changes to:
 
-- Homepage wording, buttons, preview headings, preview links, and limits
+- Homepage wording, buttons, section order, visibility, links, capability and
+  technology lists, Journal feature/count, and Portfolio selections
 - Journal and Portfolio archive headings
 - Site navigation and footer text
 - About, Contact, and Resume content
@@ -574,10 +575,23 @@ Homepage fields span:
 - the `pageType: "home"` schema in `src/content.config.ts`
 - `src/content/pages/home.md`
 - `src/pages/index.astro`
-- the visual component receiving the value
 
-The Featured Portfolio and Journal Preview title links also pass through
-`SectionTitle.astro`.
+The stored `sectionOrder` list uses `intro`, `about`, `capabilities`,
+`technology`, and `portfolio`. Tina provides the labels and drag controls;
+Astro removes duplicates and appends any omitted valid block so accidental list
+damage does not silently delete a section. Use each section's `visible` switch
+to hide it intentionally.
+
+The `intro` block contains the independently visible Hero and Journal panel.
+The Homepage Journal `featuredEntry` must reference a published entry placed in
+Journal or Both. A missing, drafted, or non-Journal selection falls back to the
+newest eligible entry. The recent list is chronological and excludes whichever
+entry actually becomes the feature.
+
+Featured Portfolio uses the shared resolver documented above. Its initial five
+tiles reference the Portfolio category Flexible Pages; removing a Homepage tile
+never deletes the source. The expanded About page remains independent from the
+short Homepage About section.
 
 ### Journal sections and featured story
 

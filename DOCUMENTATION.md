@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-04 after the Sprint 2B media and narrative-video implementation
+Last reviewed: 2026-08-04 after the Sprint 6 compact Homepage implementation
 
 ## Active project documents
 

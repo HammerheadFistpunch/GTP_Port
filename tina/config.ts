@@ -527,11 +527,32 @@ export default defineConfig({
                         },
                     },
                     {
+                        type: "string",
+                        name: "sectionOrder",
+                        label: "Homepage Section Order",
+                        list: true,
+                        required: true,
+                        description:
+                            "Drag to reorder the homepage blocks. Use each option once; visibility is controlled inside each section.",
+                        options: [
+                            { value: "intro", label: "Hero + Journal" },
+                            { value: "about", label: "About Me" },
+                            { value: "capabilities", label: "What I Do" },
+                            { value: "technology", label: "Technology Stack" },
+                            { value: "portfolio", label: "Featured Portfolio" },
+                        ],
+                    },
+                    {
                         type: "object",
                         name: "hero",
                         label: "Homepage Hero",
                         required: true,
                         fields: [
+                            {
+                                type: "boolean",
+                                name: "visible",
+                                label: "Show Hero",
+                            },
                             {
                                 type: "string",
                                 name: "eyebrow",
@@ -579,6 +600,11 @@ export default defineConfig({
                         label: "Featured Portfolio Section",
                         required: true,
                         fields: [
+                            {
+                                type: "boolean",
+                                name: "visible",
+                                label: "Show Featured Portfolio",
+                            },
                             {
                                 type: "string",
                                 name: "title",
@@ -647,6 +673,11 @@ export default defineConfig({
                         required: true,
                         fields: [
                             {
+                                type: "boolean",
+                                name: "visible",
+                                label: "Show Journal Preview",
+                            },
+                            {
                                 type: "string",
                                 name: "title",
                                 label: "Section Title",
@@ -670,10 +701,20 @@ export default defineConfig({
                                 },
                             },
                             {
+                                type: "reference",
+                                name: "featuredEntry",
+                                label: "Featured Journal Story",
+                                collections: ["entries"],
+                                description:
+                                    "Choose the homepage feature. Draft or non-Journal entries fall back safely to the newest published story.",
+                            },
+                            {
                                 type: "number",
-                                name: "limit",
-                                label: "Number of Articles",
+                                name: "recentLimit",
+                                label: "Recent Story Count",
                                 required: true,
+                                description:
+                                    "Number of compact recent stories shown below the feature. The feature is excluded automatically.",
                             },
                             {
                                 type: "string",
@@ -685,10 +726,20 @@ export default defineConfig({
                     },
                     {
                         type: "object",
-                        name: "aboutCallout",
-                        label: "About Callout",
+                        name: "aboutSection",
+                        label: "About Me Section",
                         required: true,
                         fields: [
+                            {
+                                type: "boolean",
+                                name: "visible",
+                                label: "Show About Me",
+                            },
+                            {
+                                type: "string",
+                                name: "eyebrow",
+                                label: "Eyebrow",
+                            },
                             {
                                 type: "string",
                                 name: "title",
@@ -708,6 +759,130 @@ export default defineConfig({
                                 type: "object",
                                 name: "link",
                                 label: "Link",
+                                required: true,
+                                fields: linkFields,
+                            },
+                        ],
+                    },
+                    {
+                        type: "object",
+                        name: "capabilitiesSection",
+                        label: "What I Do Section",
+                        required: true,
+                        fields: [
+                            {
+                                type: "boolean",
+                                name: "visible",
+                                label: "Show What I Do",
+                            },
+                            {
+                                type: "string",
+                                name: "eyebrow",
+                                label: "Eyebrow",
+                            },
+                            {
+                                type: "string",
+                                name: "title",
+                                label: "Title",
+                                required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "description",
+                                label: "Description",
+                                required: true,
+                                ui: {
+                                    component: "textarea",
+                                },
+                            },
+                            {
+                                type: "object",
+                                name: "items",
+                                label: "Capabilities",
+                                list: true,
+                                required: true,
+                                ui: {
+                                    itemProps: (item) => ({
+                                        label: item?.title || "Capability",
+                                    }),
+                                },
+                                fields: [
+                                    {
+                                        type: "string",
+                                        name: "title",
+                                        label: "Title",
+                                        required: true,
+                                    },
+                                    {
+                                        type: "string",
+                                        name: "description",
+                                        label: "Description",
+                                        required: true,
+                                        ui: {
+                                            component: "textarea",
+                                        },
+                                    },
+                                    {
+                                        type: "string",
+                                        name: "href",
+                                        label: "Optional Link",
+                                    },
+                                ],
+                            },
+                            {
+                                type: "object",
+                                name: "link",
+                                label: "Section Link",
+                                required: true,
+                                fields: linkFields,
+                            },
+                        ],
+                    },
+                    {
+                        type: "object",
+                        name: "technologySection",
+                        label: "Technology Stack Section",
+                        required: true,
+                        fields: [
+                            {
+                                type: "boolean",
+                                name: "visible",
+                                label: "Show Technology Stack",
+                            },
+                            {
+                                type: "string",
+                                name: "eyebrow",
+                                label: "Eyebrow",
+                            },
+                            {
+                                type: "string",
+                                name: "title",
+                                label: "Title",
+                                required: true,
+                            },
+                            {
+                                type: "string",
+                                name: "description",
+                                label: "Description",
+                                required: true,
+                                ui: {
+                                    component: "textarea",
+                                },
+                            },
+                            {
+                                type: "string",
+                                name: "items",
+                                label: "Tools and Platforms",
+                                list: true,
+                                required: true,
+                                ui: {
+                                    component: "tags",
+                                },
+                            },
+                            {
+                                type: "object",
+                                name: "link",
+                                label: "Section Link",
                                 required: true,
                                 fields: linkFields,
                             },

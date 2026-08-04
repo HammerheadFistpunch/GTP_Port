@@ -59,6 +59,27 @@ const link = z.object({
 
 const headerStyle = z.enum(["compact", "featured"]).default("compact");
 
+const homepageSectionKeys = [
+    "intro",
+    "about",
+    "capabilities",
+    "technology",
+    "portfolio",
+] as const;
+
+const homepageSectionOrder = z.array(z.enum(homepageSectionKeys)).default([
+    "intro",
+    "about",
+    "capabilities",
+    "technology",
+    "portfolio",
+]);
+
+const homepageLink = z.object({
+    label: z.string(),
+    href: z.string(),
+});
+
 const portfolioTile = z.object({
     source: z.string(),
     tileSize: z.enum(portfolioTileSizeValues).default("standard"),
@@ -150,7 +171,9 @@ const pages = defineCollection({
         z.object({
             pageType: z.literal("home"),
             description: z.string(),
+            sectionOrder: homepageSectionOrder,
             hero: z.object({
+                visible: z.boolean().default(true),
                 eyebrow: z.string().optional(),
                 title: z.string(),
                 description: z.string(),
@@ -159,6 +182,7 @@ const pages = defineCollection({
                 secondaryCta: link,
             }),
             featuredPortfolio: z.object({
+                visible: z.boolean().default(true),
                 title: z.string(),
                 titleHref: z.string(),
                 subtitle: z.string(),
@@ -167,16 +191,40 @@ const pages = defineCollection({
                 tiles: z.array(portfolioTile).default([]),
             }),
             journalPreview: z.object({
+                visible: z.boolean().default(true),
                 title: z.string(),
                 titleHref: z.string(),
                 subtitle: z.string(),
-                limit: z.number().int().positive().default(3),
+                featuredEntry: z.string().optional(),
+                recentLimit: z.number().int().positive().default(3),
                 emptyMessage: z.string(),
             }),
-            aboutCallout: z.object({
+            aboutSection: z.object({
+                visible: z.boolean().default(true),
+                eyebrow: z.string().optional(),
                 title: z.string(),
                 description: z.string(),
-                link: link,
+                link: homepageLink,
+            }),
+            capabilitiesSection: z.object({
+                visible: z.boolean().default(true),
+                eyebrow: z.string().optional(),
+                title: z.string(),
+                description: z.string(),
+                items: z.array(z.object({
+                    title: z.string(),
+                    description: z.string(),
+                    href: z.string().optional(),
+                })).default([]),
+                link: homepageLink,
+            }),
+            technologySection: z.object({
+                visible: z.boolean().default(true),
+                eyebrow: z.string().optional(),
+                title: z.string(),
+                description: z.string(),
+                items: z.array(z.string()).default([]),
+                link: homepageLink,
             }),
         }),
         z.object({

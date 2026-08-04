@@ -159,7 +159,7 @@ The public Journal design and scrollbar follow-up are owner-accepted. The
 remaining hosted editor check will be completed with the Sprint 5 schema
 reindex rather than blocking the approved taxonomy sprint.
 
-## Active sprint - Sprint 5 hosted verification
+## Completed sprint - Sprint 5
 
 - [x] choose a controlled Tina Tags collection rather than free-text tags
 - [x] migrate all 29 existing tag labels to registry documents
@@ -177,9 +177,37 @@ Stop and verify:
 - [x] Astro generates 58 routes, including all 29 tag archives
 - [x] drafts are excluded and mixed Journal/Portfolio matches render together
 - [x] duplicate, renamed, empty, and orphaned tag behavior is explicit
-- [ ] Cloudflare deploys every tag archive successfully
+- [x] Cloudflare deploys every tag archive successfully
 - [ ] hosted Tina can create a tag and select it on a Content Entry
 - [ ] an old tag URL remains valid after its slug is added as an alias
+
+The public tag archive workflow is owner-accepted. The two remaining hosted
+editor edge-case checks will be completed during the final schema reindex and
+QA sprint rather than blocking the approved Homepage sprint.
+
+## Active sprint - Sprint 6 hosted verification
+
+- [x] implement the approved compact Homepage layout
+- [x] reduce the Hero height and pair it with the Journal panel on desktop
+- [x] add a Tina-selected Journal feature and compact recent-story list
+- [x] exclude the selected feature from the recent-story list
+- [x] add editable About Me, What I Do, and Technology Stack sections
+- [x] add visibility controls, editable links, and drag-reorderable section order
+- [x] use reference-based Featured Portfolio tiles for all five Portfolio categories
+- [x] preserve the expanded About page and all existing public routes
+- [x] add safe fallbacks for drafted, deleted, and invalid featured references
+
+Stop and verify:
+
+- [x] Tina audits all 54 content documents and Homepage references
+- [x] strict TypeScript checking and `git diff --check` pass
+- [x] Astro generates all 58 existing routes
+- [x] generated Homepage HTML follows the stored section order
+- [x] the selected Journal feature is absent from the three-story recent list
+- [x] all five Featured Portfolio category links resolve to generated routes
+- [ ] Cloudflare deploys the redesigned Homepage successfully
+- [ ] desktop, tablet, phone, and keyboard review pass on the hosted site
+- [ ] hosted Tina can reorder, hide, edit, and change Homepage selections
 
 ## Decision gates
 

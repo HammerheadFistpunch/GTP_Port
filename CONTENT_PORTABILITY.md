@@ -22,6 +22,9 @@ remains separate from presentation.
 
 Structured or reorderable Tina blocks are reasonable for the small number of
 landing pages, including the Homepage, Journal archive, and Portfolio archive.
+Homepage section order, visibility, capabilities, technology items, and curated
+references are presentation metadata; the referenced Journal entries,
+Portfolio entries, and Flexible Pages remain independent Markdown/MDX sources.
 A future redesign only needs to remap those few pages.
 
 Portfolio tile lists store references and optional presentation overrides,

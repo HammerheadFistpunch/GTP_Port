@@ -20,7 +20,10 @@ The site is operational and ready for real content. It includes:
   feed, and four static section routes
 - a controlled Tina tag registry with 29 static subject archives shared by
   Journal and Portfolio entries
-- explicit Homepage Portfolio selections plus linked Portfolio and Journal headings
+- a compact Homepage with side-by-side Hero and Journal panels, editable About,
+  capabilities, technology, and category-based Featured Portfolio sections
+- Tina-controlled Homepage visibility, section order, copy, links, Journal
+  feature, recent-story count, and Portfolio selections
 - native media, video, lightboxes, and shared Immich galleries
 - structured Resume content
 - guarded Flexible Pages with top-level and nested static routes
@@ -28,10 +31,10 @@ The site is operational and ready for real content. It includes:
   galleries, child-page tiles, and calls to action
 - responsive navigation, accessibility, and social metadata foundations
 
-Sprints 1 through 4 are deployed and owner-verified visually. Sprint 5 adds the
-controlled tag registry and subject archives; its local checks pass and its
-Cloudflare/TinaCloud workflow awaits verification after push. Content
-publishing can continue in parallel.
+Sprints 1 through 5 are deployed and owner-accepted. Sprint 6 implements the
+approved compact Homepage; its local checks pass and its Cloudflare/TinaCloud
+workflow awaits verification after push. Content publishing can continue in
+parallel.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and
@@ -108,6 +111,12 @@ a migration fallback. Journal entries use one controlled primary section;
 `/journal/` remains chronological and excludes its explicitly selected feature
 from the remaining feed. Descriptive subjects come from referenced Tag
 documents and publish separately at `/tags/[slug]/`.
+
+The Homepage has a separate drag-order list for its five major blocks. Each
+block has an explicit visibility switch. Its Journal feature is selected in
+Tina and falls back to the newest published Journal entry when the selection is
+missing, drafted, or no longer Journal-placed; that feature is always excluded
+from the compact recent-story list.
 
 ## Content portability
 

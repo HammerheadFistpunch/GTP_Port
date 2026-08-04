@@ -181,8 +181,8 @@ Depends on: completed foundation; may run after Sprint 2 without Sprint 3
 
 ## Sprint 5 - Tags and subject archives
 
-Status: Implemented and locally verified. Cloudflare deployment and hosted
-Tina tag editing remain to be verified after push.
+Status: Complete, deployed, and owner-accepted. Hosted Tina create/select and
+alias-editing checks remain grouped with the final schema QA sprint.
 
 Goal: make descriptive tags useful while keeping them separate from the one
 primary editorial section.
@@ -206,6 +206,9 @@ Acceptance:
 Depends on: Sprint 4 taxonomy conventions
 
 ## Sprint 6 - Homepage redesign
+
+Status: Implemented and locally verified. Cloudflare deployment, responsive
+visual review, and hosted Tina editing remain to be verified after push.
 
 Goal: make the homepage a compact overview of Patrick's positioning, recent
 writing, capabilities, tools, and selected portfolio projects.

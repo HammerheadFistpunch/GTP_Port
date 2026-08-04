@@ -1,14 +1,9 @@
 ---
 import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../components/ui/Hero.astro";
+import Button from "../components/ui/Button.astro";
 import Container from "../components/ui/Container.astro";
-import SectionTitle from "../components/ui/SectionTitle.astro";
-import PortfolioCard from "../components/portfolio/PortfolioCard.astro";
-import FeaturedArticle from "../components/journal/FeaturedArticle.astro";
-import JournalCard from "../components/journal/JournalCard.astro";
 import { resolvePortfolioTiles } from "../lib/portfolio-tiles";
-import { createTagRegistry, resolveTagReferences } from "../lib/tags";
 
 const homeEntry = await getEntry("pages", "home");
 
@@ -17,22 +12,28 @@ if (!homeEntry || homeEntry.data.pageType !== "home") {
 }
 
 const page = homeEntry.data;
-const tagRegistry = createTagRegistry(await getCollection("tags"));
+const defaultSectionOrder = [
+  "intro",
+  "about",
+  "capabilities",
+  "technology",
+  "portfolio",
+] as const;
+const orderedSections = [...new Set([...page.sectionOrder, ...defaultSectionOrder])];
 
 const allProjects = (await getCollection("entries", ({ data }) =>
   !data.draft && (data.placement === "portfolio" || data.placement === "both")
-))
-  .sort((a, b) => {
-    if (a.data.portfolioOrder !== b.data.portfolioOrder) {
-      return a.data.portfolioOrder - b.data.portfolioOrder;
-    }
+)).sort((a, b) => {
+  if (a.data.portfolioOrder !== b.data.portfolioOrder) {
+    return a.data.portfolioOrder - b.data.portfolioOrder;
+  }
 
-    if (a.data.featured !== b.data.featured) {
-      return Number(b.data.featured) - Number(a.data.featured);
-    }
+  if (a.data.featured !== b.data.featured) {
+    return Number(b.data.featured) - Number(a.data.featured);
+  }
 
-    return a.data.title.localeCompare(b.data.title);
-  });
+  return a.data.title.localeCompare(b.data.title);
+});
 
 const flexiblePages = await getCollection("flexiblePages");
 const selectedPortfolioTiles = resolvePortfolioTiles(
@@ -47,156 +48,721 @@ const projects = page.featuredPortfolio.tiles.length > 0
       description: entry.data.description,
       image: entry.data.coverImage,
       category: entry.data.primaryTopic,
+      entryType: entry.data.entryType,
       href: `/archive/${entry.id}/`,
+      tileSize: entry.data.tileSize,
+      emphasis: entry.data.featured,
     }));
 
-const allPosts = (await getCollection("entries", ({ data }) =>
+const journalEntries = (await getCollection("entries", ({ data }) =>
   !data.draft && (data.placement === "journal" || data.placement === "both")
-))
-  .sort((a, b) => {
-    if (a.data.featured !== b.data.featured) {
-      return Number(b.data.featured) - Number(a.data.featured);
-    }
+)).sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
+);
 
-    return (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0);
-  });
+function referencedEntryId(reference?: string) {
+  return reference
+    ?.replaceAll("\\", "/")
+    .replace(/^src\/content\/entries\//, "")
+    .replace(/\.mdx$/, "")
+    .toLowerCase();
+}
 
-const articles = allPosts.slice(0, page.journalPreview.limit);
-const featuredArticle = articles[0];
-const remainingArticles = articles.slice(1);
+const selectedJournalId = referencedEntryId(page.journalPreview.featuredEntry);
+const featuredArticle =
+  journalEntries.find((entry) => entry.id.toLowerCase() === selectedJournalId) ??
+  journalEntries[0];
+const recentArticles = journalEntries
+  .filter((entry) => entry.id !== featuredArticle?.id)
+  .slice(0, page.journalPreview.recentLimit);
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  dateStyle: "long",
+  month: "short",
+  day: "numeric",
+  year: "numeric",
   timeZone: "UTC",
 });
+const formatDate = (date?: Date) =>
+  date ? dateFormatter.format(date) : "Date pending";
 ---
 
 <BaseLayout description={page.description} image={page.hero.image}>
-  <Hero
-    eyebrow={page.hero.eyebrow}
-    title={page.hero.title}
-    description={page.hero.description}
-    image={page.hero.image}
-    primaryText={page.hero.primaryCta.label}
-    primaryLink={page.hero.primaryCta.href}
-    secondaryText={page.hero.secondaryCta.label}
-    secondaryLink={page.hero.secondaryCta.href}
-  />
-
-  <section>
-    <Container>
-      <SectionTitle
-        title={page.featuredPortfolio.title}
-        subtitle={page.featuredPortfolio.subtitle}
-        href={page.featuredPortfolio.titleHref}
-      />
-
-      {projects.length > 0 ? (
-        <div class="project-grid">
-          {projects.map((project) => (
-            <PortfolioCard
-              title={project.title}
-              description={project.description}
-              image={project.image}
-              category={project.category || "Portfolio"}
-              href={project.href}
-            />
-          ))}
-        </div>
-      ) : (
-        <p>{page.featuredPortfolio.emptyMessage}</p>
-      )}
-    </Container>
-  </section>
-
-  <section>
-    <Container>
-      <SectionTitle
-        title={page.journalPreview.title}
-        subtitle={page.journalPreview.subtitle}
-        href={page.journalPreview.titleHref}
-      />
-
-      {featuredArticle ? (
-        <FeaturedArticle
-          title={featuredArticle.data.title}
-          excerpt={featuredArticle.data.description}
-          image={featuredArticle.data.coverImage}
-          category={featuredArticle.data.primaryTopic}
-          date={featuredArticle.data.date ? dateFormatter.format(featuredArticle.data.date) : "Date pending"}
-          href={`/archive/${featuredArticle.id}/`}
-          tags={resolveTagReferences(
-            featuredArticle.data.tags,
-            tagRegistry,
-            featuredArticle.data.title,
-          )}
-        />
-      ) : (
-        <p>{page.journalPreview.emptyMessage}</p>
-      )}
-
-      {remainingArticles.length > 0 && (
-        <div class="journal-list">
-          {remainingArticles.map((article) => (
-            <JournalCard
-              title={article.data.title}
-              excerpt={article.data.description}
-              image={article.data.coverImage}
-              category={article.data.primaryTopic}
-              date={article.data.date ? dateFormatter.format(article.data.date) : "Date pending"}
-              href={`/archive/${article.id}/`}
-              tags={resolveTagReferences(
-                article.data.tags,
-                tagRegistry,
-                article.data.title,
+  {orderedSections.map((section) => (
+    <>
+      {section === "intro" && (page.hero.visible || page.journalPreview.visible) && (
+        <section class="home-intro" aria-label="Introduction and recent writing">
+          <Container>
+            <div class:list={[
+              "intro-grid",
+              { "intro-grid--single": !page.hero.visible || !page.journalPreview.visible },
+            ]}>
+              {page.hero.visible && (
+                <div class="compact-hero">
+                  <div class="hero-copy">
+                    {page.hero.eyebrow && <p class="eyebrow">{page.hero.eyebrow}</p>}
+                    <h1>{page.hero.title}</h1>
+                    <p class="hero-description">{page.hero.description}</p>
+                    <div class="hero-buttons">
+                      <Button href={page.hero.primaryCta.href}>
+                        {page.hero.primaryCta.label}
+                      </Button>
+                      <Button href={page.hero.secondaryCta.href} variant="secondary">
+                        {page.hero.secondaryCta.label}
+                      </Button>
+                    </div>
+                  </div>
+                  {page.hero.image && (
+                    <div class="hero-mark" aria-hidden="true">
+                      <img src={page.hero.image} alt="" />
+                    </div>
+                  )}
+                </div>
               )}
-            />
-          ))}
-        </div>
-      )}
-    </Container>
-  </section>
 
-  <section class="about">
-    <Container>
-      <div class="about-box">
-        <h2>{page.aboutCallout.title}</h2>
-        <p>{page.aboutCallout.description}</p>
-        <a href={page.aboutCallout.link.href}>
-          {page.aboutCallout.link.label} →
-        </a>
-      </div>
-    </Container>
-  </section>
+              {page.journalPreview.visible && (
+                <aside class="journal-panel" aria-labelledby="home-journal-title">
+                  <div class="section-heading section-heading--compact">
+                    <div>
+                      <p class="eyebrow">Latest writing</p>
+                      {page.hero.visible ? (
+                        <h2 id="home-journal-title">{page.journalPreview.title}</h2>
+                      ) : (
+                        <h1 id="home-journal-title">{page.journalPreview.title}</h1>
+                      )}
+                    </div>
+                    <a href={page.journalPreview.titleHref}>View all →</a>
+                  </div>
+                  <p class="journal-intro">{page.journalPreview.subtitle}</p>
+
+                  {featuredArticle ? (
+                    <article class="journal-feature">
+                      <a href={`/archive/${featuredArticle.id}/`} class="feature-image" aria-label={`Read ${featuredArticle.data.title}`}>
+                        {featuredArticle.data.coverImage ? (
+                          <img src={featuredArticle.data.coverImage} alt="" />
+                        ) : (
+                          <span aria-hidden="true">Featured story</span>
+                        )}
+                      </a>
+                      <div>
+                        <p class="story-meta">
+                          {featuredArticle.data.journalSection ?? featuredArticle.data.primaryTopic}
+                          <span>·</span>
+                          {formatDate(featuredArticle.data.date)}
+                        </p>
+                        <h3><a href={`/archive/${featuredArticle.id}/`}>{featuredArticle.data.title}</a></h3>
+                        <p>{featuredArticle.data.description}</p>
+                      </div>
+                    </article>
+                  ) : (
+                    <p class="empty-state">{page.journalPreview.emptyMessage}</p>
+                  )}
+
+                  {recentArticles.length > 0 && (
+                    <ol class="recent-stories" aria-label="Recent Journal stories">
+                      {recentArticles.map((article) => (
+                        <li>
+                          <a href={`/archive/${article.id}/`}>
+                            <span>{article.data.title}</span>
+                            <small>{formatDate(article.data.date)}</small>
+                          </a>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                </aside>
+              )}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {section === "about" && page.aboutSection.visible && (
+        <section class="home-section home-about" aria-labelledby="home-about-title">
+          <Container>
+            <div class="about-grid">
+              <div>
+                {page.aboutSection.eyebrow && <p class="eyebrow">{page.aboutSection.eyebrow}</p>}
+                <h2 id="home-about-title">{page.aboutSection.title}</h2>
+              </div>
+              <div class="section-copy">
+                <p>{page.aboutSection.description}</p>
+                <a class="text-link" href={page.aboutSection.link.href}>
+                  {page.aboutSection.link.label} →
+                </a>
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {section === "capabilities" && page.capabilitiesSection.visible && (
+        <section class="home-section" aria-labelledby="home-capabilities-title">
+          <Container>
+            <div class="section-heading">
+              <div>
+                {page.capabilitiesSection.eyebrow && <p class="eyebrow">{page.capabilitiesSection.eyebrow}</p>}
+                <h2 id="home-capabilities-title">{page.capabilitiesSection.title}</h2>
+                <p>{page.capabilitiesSection.description}</p>
+              </div>
+              <a href={page.capabilitiesSection.link.href}>{page.capabilitiesSection.link.label} →</a>
+            </div>
+            <div class="capability-grid">
+              {page.capabilitiesSection.items.map((item, index) => (
+                <article class="capability-card">
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  <h3>
+                    {item.href ? <a href={item.href}>{item.title}</a> : item.title}
+                  </h3>
+                  <p>{item.description}</p>
+                </article>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {section === "technology" && page.technologySection.visible && (
+        <section class="home-section technology" aria-labelledby="home-technology-title">
+          <Container>
+            <div class="technology-grid">
+              <div>
+                {page.technologySection.eyebrow && <p class="eyebrow">{page.technologySection.eyebrow}</p>}
+                <h2 id="home-technology-title">{page.technologySection.title}</h2>
+                <p>{page.technologySection.description}</p>
+                <a class="text-link" href={page.technologySection.link.href}>
+                  {page.technologySection.link.label} →
+                </a>
+              </div>
+              <ul class="technology-list" aria-label="Tools and platforms">
+                {page.technologySection.items.map((item) => <li>{item}</li>)}
+              </ul>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {section === "portfolio" && page.featuredPortfolio.visible && (
+        <section class="home-section home-portfolio" aria-labelledby="home-portfolio-title">
+          <Container>
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Selected paths</p>
+                <h2 id="home-portfolio-title">{page.featuredPortfolio.title}</h2>
+                <p>{page.featuredPortfolio.subtitle}</p>
+              </div>
+              <a href={page.featuredPortfolio.titleHref}>View all Portfolio →</a>
+            </div>
+
+            {projects.length > 0 ? (
+              <div class="portfolio-grid">
+                {projects.map((project) => (
+                  <a
+                    class:list={[
+                      "portfolio-tile",
+                      `portfolio-tile--${project.tileSize}`,
+                      { "portfolio-tile--emphasis": project.emphasis },
+                    ]}
+                    href={project.href}
+                  >
+                    {project.image ? (
+                      <img src={project.image} alt="" loading="lazy" />
+                    ) : (
+                      <div class="portfolio-placeholder" aria-hidden="true">
+                        <span>{project.entryType}</span>
+                      </div>
+                    )}
+                    <div class="portfolio-copy">
+                      <p>{project.category ?? project.entryType}</p>
+                      <h3>{project.title}</h3>
+                      <span>{project.description}</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <p class="empty-state">{page.featuredPortfolio.emptyMessage}</p>
+            )}
+          </Container>
+        </section>
+      )}
+    </>
+  ))}
 </BaseLayout>
 
 <style>
-  .project-grid {
+  .home-intro {
+    padding: clamp(2rem, 5vw, 4.5rem) 0;
+  }
+
+  .intro-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: minmax(0, 1.02fr) minmax(380px, .98fr);
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    align-items: stretch;
   }
 
-  .journal-list {
-    margin-top: 3rem;
+  .intro-grid--single {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .about {
-    padding-bottom: 6rem;
-  }
-
-  .about-box {
-    padding: 3rem;
-    background: var(--bg-surface);
+  .compact-hero,
+  .journal-panel {
+    min-width: 0;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
+    background: var(--bg-surface);
   }
 
-  .about-box h2 {
-    margin-bottom: 1rem;
+  .compact-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, .34fr);
+    overflow: hidden;
+    padding: clamp(1.75rem, 4vw, 3.5rem);
   }
 
-  .about-box a {
+  .hero-copy {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+  }
+
+  .hero-copy h1 {
+    max-width: 13ch;
+    margin: 0 0 1rem;
+    font-size: clamp(2.35rem, 5vw, 4.7rem);
+    line-height: .98;
+  }
+
+  .hero-description {
+    max-width: 58ch;
+    margin: 0 0 1.5rem;
+    color: var(--text-secondary);
+    font-size: clamp(1rem, 1.5vw, 1.12rem);
+  }
+
+  .hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+  }
+
+  .hero-mark {
+    align-self: end;
+    opacity: .52;
+    transform: translate(18%, 12%);
+  }
+
+  .hero-mark img {
+    width: min(100%, 240px);
+    margin-left: auto;
+  }
+
+  .eyebrow,
+  .story-meta,
+  .portfolio-copy > p {
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: .76rem;
     font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    margin: 0 0 .65rem;
+  }
+
+  .journal-panel {
+    padding: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .journal-intro {
+    margin: -.25rem 0 1.15rem;
+    color: var(--text-secondary);
+    font-size: .92rem;
+  }
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .section-heading--compact {
+    align-items: center;
+    margin-bottom: .75rem;
+  }
+
+  .section-heading h1,
+  .section-heading h2 {
+    margin: 0;
+  }
+
+  .section-heading > div > p:last-child {
+    max-width: 70ch;
+    margin: .75rem 0 0;
+    color: var(--text-secondary);
+  }
+
+  .section-heading > a,
+  .text-link {
+    flex: 0 0 auto;
+    font-weight: 700;
+  }
+
+  .journal-feature {
+    display: grid;
+    grid-template-columns: minmax(120px, .72fr) minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1rem 0;
+    border-block: 1px solid var(--border-color);
+  }
+
+  .feature-image {
+    display: block;
+    min-height: 116px;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+  }
+
+  .feature-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .feature-image span {
+    display: grid;
+    height: 100%;
+    place-items: center;
+    padding: 1rem;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .story-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin: 0 0 .35rem;
+  }
+
+  .journal-feature h3 {
+    margin: 0 0 .4rem;
+    font-size: clamp(1.15rem, 2.1vw, 1.55rem);
+    line-height: 1.12;
+  }
+
+  .journal-feature h3 a,
+  .recent-stories a,
+  .capability-card h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .journal-feature h3 a:hover,
+  .journal-feature h3 a:focus-visible,
+  .recent-stories a:hover span,
+  .recent-stories a:focus-visible span,
+  .capability-card h3 a:hover,
+  .capability-card h3 a:focus-visible {
+    color: var(--accent);
+  }
+
+  .journal-feature > div > p:last-child {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: .9rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .recent-stories {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .recent-stories li + li {
+    border-top: 1px solid var(--border-color);
+  }
+
+  .recent-stories a {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .8rem 0;
+  }
+
+  .recent-stories span {
+    font-weight: 700;
+  }
+
+  .recent-stories small {
+    flex: 0 0 auto;
+    color: var(--text-secondary);
+    font-size: .72rem;
+  }
+
+  .home-section {
+    padding: clamp(3rem, 7vw, 6rem) 0;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .about-grid,
+  .technology-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: start;
+  }
+
+  .about-grid h2,
+  .technology-grid h2 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.08;
+  }
+
+  .section-copy > p,
+  .technology-grid > div > p {
+    margin-top: 0;
+    color: var(--text-secondary);
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+  }
+
+  .capability-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .capability-card {
+    padding: 1.35rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+  }
+
+  .capability-card > span {
+    color: var(--accent);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+  }
+
+  .capability-card h3 {
+    margin: 1.2rem 0 .65rem;
+    font-size: 1.15rem;
+  }
+
+  .capability-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: .92rem;
+  }
+
+  .technology {
+    background: var(--bg-surface);
+  }
+
+  .technology-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .technology-list li {
+    padding: .62rem .85rem;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: var(--bg-primary);
+    font-size: .86rem;
+    font-weight: 700;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    grid-auto-rows: minmax(250px, auto);
+    gap: 1rem;
+  }
+
+  .portfolio-tile {
+    position: relative;
+    display: flex;
+    min-height: 250px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .portfolio-tile--wide {
+    grid-column: span 2;
+  }
+
+  .portfolio-tile--tall {
+    grid-row: span 2;
+  }
+
+  .portfolio-tile--large {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .portfolio-tile img,
+  .portfolio-placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .portfolio-tile img {
+    object-fit: cover;
+    opacity: .72;
+    transition: opacity .25s ease, transform .25s ease;
+  }
+
+  .portfolio-placeholder {
+    display: grid;
+    place-items: center;
+    color: var(--accent);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-copy {
+    position: relative;
+    z-index: 1;
+    align-self: end;
+    width: 100%;
+    padding: 1.35rem;
+    background: linear-gradient(transparent, rgba(8, 11, 14, .96));
+  }
+
+  .portfolio-copy > p,
+  .portfolio-copy h3,
+  .portfolio-copy > span {
+    margin: 0;
+  }
+
+  .portfolio-copy h3 {
+    margin: .3rem 0 .4rem;
+    font-size: 1.35rem;
+  }
+
+  .portfolio-copy > span {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--text-secondary);
+    font-size: .88rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .portfolio-tile--emphasis {
+    border-color: var(--accent);
+  }
+
+  .portfolio-tile:hover,
+  .portfolio-tile:focus-visible {
+    text-decoration: none;
+  }
+
+  .portfolio-tile:hover img,
+  .portfolio-tile:focus-visible img {
+    opacity: .9;
+    transform: scale(1.025);
+  }
+
+  .empty-state {
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 1050px) {
+    .intro-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .capability-grid,
+    .portfolio-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .compact-hero {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero-mark {
+      position: absolute;
+      right: -1.5rem;
+      bottom: -1.5rem;
+      width: 42%;
+      opacity: .16;
+    }
+
+    .journal-feature,
+    .about-grid,
+    .technology-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-image {
+      aspect-ratio: 16 / 8;
+    }
+
+    .section-heading {
+      display: block;
+    }
+
+    .section-heading > a {
+      display: inline-block;
+      margin-top: 1rem;
+    }
+
+    .capability-grid,
+    .portfolio-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .portfolio-tile--wide,
+    .portfolio-tile--large {
+      grid-column: auto;
+    }
+
+    .portfolio-tile--tall,
+    .portfolio-tile--large {
+      grid-row: auto;
+    }
+
+    .recent-stories a {
+      display: block;
+    }
+
+    .recent-stories small {
+      display: block;
+      margin-top: .25rem;
+    }
   }
 </style>
