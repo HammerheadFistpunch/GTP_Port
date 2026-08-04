@@ -2,6 +2,7 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { validateFlexiblePagePath } from "./lib/flexible-pages";
+import { flexiblePageBlockSchema } from "./lib/page-blocks";
 
 const sharedFields = {
     title: z.string(),
@@ -183,6 +184,7 @@ const flexiblePages = defineCollection({
         seoTitle: z.string().optional(),
         seoDescription: z.string().optional(),
         seoImage: z.string().optional(),
+        blocks: z.array(flexiblePageBlockSchema).default([]),
     }),
 });
 

@@ -1,0 +1,181 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { marked } from "marked";
+import ImmichGallery from "../portfolio/ImmichGallery.astro";
+import VideoEmbed from "../portfolio/VideoEmbed.astro";
+import Button from "../ui/Button.astro";
+import type { FlexiblePageBlock } from "../../lib/page-blocks";
+import { normalizeFlexiblePagePath } from "../../lib/flexible-pages";
+
+interface Props {
+  blocks?: FlexiblePageBlock[];
+  flexiblePages?: CollectionEntry<"flexiblePages">[];
+}
+
+const { blocks = [], flexiblePages = [] } = Astro.props;
+const publishedPages = new Map(
+  flexiblePages
+    .filter((page) => !page.data.draft)
+    .map((page) => [normalizeFlexiblePagePath(page.data.path), page]),
+);
+
+const renderMarkdown = (markdown: string) =>
+  marked.parse(markdown, { async: false, gfm: true }) as string;
+---
+
+{blocks.length > 0 && (
+  <div class="page-blocks" data-page-blocks>
+    {blocks.map((block) => (
+      <section class={`page-block page-block--${block._template}`}>
+        {block._template === "richText" && block.markdown.trim() && (
+          <>
+            {block.heading && <h2>{block.heading}</h2>}
+            <div class="page-block__rich-text" set:html={renderMarkdown(block.markdown)} />
+          </>
+        )}
+
+        {block._template === "image" && block.src && (
+          <>
+            {block.heading && <h2>{block.heading}</h2>}
+            <figure>
+              <img src={block.src} alt={block.alt || ""} loading="lazy" decoding="async" />
+              {block.caption && <figcaption>{block.caption}</figcaption>}
+            </figure>
+          </>
+        )}
+
+        {block._template === "youtube" && block.url && block.title && (
+          <>
+            {block.heading && <h2>{block.heading}</h2>}
+            <VideoEmbed src={block.url} title={block.title} provider="youtube" caption={block.caption} />
+          </>
+        )}
+
+        {block._template === "immichGallery" && block.shareUrl && (
+          <ImmichGallery
+            shareUrl={block.shareUrl}
+            title={block.heading || "Photo gallery"}
+            imageAltPrefix={block.imageAltPrefix}
+          />
+        )}
+
+        {block._template === "childPages" && (
+          <>
+            {block.heading && <h2>{block.heading}</h2>}
+            {block.introduction && <p>{block.introduction}</p>}
+            <div class="page-block__tiles">
+              {block.paths.flatMap((path) => {
+                const normalizedPath = normalizeFlexiblePagePath(path);
+                const page = publishedPages.get(normalizedPath);
+
+                if (!page) return [];
+
+                return [
+                  <a class="page-block__tile" href={`/${normalizedPath}/`}>
+                    <h3>{page.data.navigationLabel || page.data.title}</h3>
+                    <p>{page.data.description}</p>
+                  </a>,
+                ];
+              })}
+            </div>
+          </>
+        )}
+
+        {block._template === "callToAction" && block.label && block.href && (
+          <div class="page-block__cta">
+            <div>
+              {block.heading && <h2>{block.heading}</h2>}
+              {block.text && <p>{block.text}</p>}
+            </div>
+            <Button href={block.href} variant={block.style}>{block.label}</Button>
+          </div>
+        )}
+      </section>
+    ))}
+  </div>
+)}
+
+<style>
+  .page-blocks {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .page-block {
+    padding: 0;
+  }
+
+  .page-block h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .page-block figure {
+    margin: 0;
+  }
+
+  .page-block figure img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .page-block figcaption {
+    margin-top: 0.75rem;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+  }
+
+  .page-block__tiles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .page-block__tile {
+    display: block;
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+  }
+
+  .page-block__tile h3,
+  .page-block__tile p,
+  .page-block__cta p {
+    margin: 0;
+  }
+
+  .page-block__tile p {
+    margin-top: var(--space-xs);
+    color: var(--text-secondary);
+  }
+
+  .page-block__cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+  }
+
+  .page-block__cta h2 {
+    margin-bottom: var(--space-xs);
+  }
+
+  @media (max-width: 640px) {
+    .page-block__tiles {
+      grid-template-columns: 1fr;
+    }
+
+    .page-block__cta {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

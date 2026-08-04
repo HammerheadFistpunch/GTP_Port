@@ -1,5 +1,38 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 2A reorderable block foundation implemented
+
+Completed locally:
+
+- Added one ordered `blocks` list to Flexible Pages with Tina drag ordering.
+- Added constrained templates for Markdown text, images, YouTube video, Immich
+  galleries, selected child-page tiles, and calls to action.
+- Added shared Astro validation and types in `src/lib/page-blocks.ts` plus a
+  shared block renderer that resolves published Flexible Page tiles.
+- Reused the existing responsive YouTube, Immich gallery, and button
+  components while keeping block-specific presentation centralized.
+- Preserved every existing Flexible Page Markdown body and rendered it after the
+  ordered blocks; no content migration is required.
+- Added all six block types to `/services/` as an end-to-end verification page.
+- Recorded the decision to use a rich-text YouTube embed for Content Entries in
+  Sprint 2B instead of converting entry bodies into page-builder blocks.
+- Added `marked` as a direct dependency for portable Markdown text blocks and
+  regenerated `tina/tina-lock.json`.
+
+Verified locally:
+
+- Tina indexes all six templates and regenerates its schema lock.
+- Strict TypeScript checking and `git diff --check` pass.
+- Astro generates all 20 current routes.
+- The generated `/services/` HTML contains all six block types in stored order,
+  followed by the original Markdown body.
+
+Pending after push:
+
+- Confirm the Cloudflare deployment and reindex TinaCloud if requested.
+- Add, remove, and drag-reorder blocks through hosted Tina, then verify the
+  deployed order before beginning Sprint 2B.
+
 ## 2026-08-04 - Sprint 1B Flexible Page shell implemented
 
 Completed locally:

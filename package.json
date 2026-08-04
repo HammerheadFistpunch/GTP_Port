@@ -16,6 +16,7 @@
     "@tinacms/astro": "^0.5.1",
     "@tinacms/cli": "^2.5.3",
     "astro": "^6.4.6",
+    "marked": "16.4.2",
     "tinacms": "^3.10.0"
   },
   "devDependencies": {

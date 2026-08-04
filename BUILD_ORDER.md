@@ -31,7 +31,7 @@ Full scope and acceptance criteria are in `Roadmap.md`.
 - Use the approved homepage mockup for layout, hierarchy, density, and spacing.
 - Do not treat the redesign as a new visual system.
 
-## Active chunk - Sprint 1
+## Completed sprint - Sprint 1
 
 ### Chunk 1A - Schema and route proof
 
@@ -60,24 +60,55 @@ also deployed.
 - [x] refine the flexible-page layout responsively
 - [x] document page creation, nesting, renaming, and deletion
 - [x] regenerate the Tina lock and verify local indexing
-- [ ] reindex TinaCloud and test create/edit/delete in the hosted editor
+- [x] reindex TinaCloud and test create/edit/delete in the hosted editor
 
 Stop and verify:
 
-- [ ] a page can be created and nested entirely through hosted Tina
+- [x] a page can be created and nested entirely through hosted Tina
 - [x] reserved, malformed, and duplicate paths fail the build safely
-- [ ] deleting a hosted test child removes its generated route on the next build
+- [x] deleting a hosted test child removes its generated route on the next build
 - [x] existing About, Contact, Resume, Journal, Portfolio, and archive routes remain
   unchanged
 
-Chunk 1B is implemented and verified locally. After it is pushed, confirm the
-Cloudflare deployment, reindex TinaCloud, and complete the hosted create,
-rename, draft, and delete checks before beginning Sprint 2.
+Chunk 1B is deployed and the hosted create, nest, rename, draft, publish,
+delete, and 404 workflows are verified.
+
+## Active sprint - Sprint 2
+
+### Chunk 2A - Block schema and renderer foundation
+
+- [x] approve the initial six-block list
+- [x] choose rich-text YouTube embeds for Content Entry bodies
+- [x] add an ordered, drag-reorderable block list to Flexible Pages
+- [x] add Markdown text, image, YouTube, Immich gallery, child-page tile, and
+  call-to-action templates
+- [x] add shared Astro validation, types, and block renderer
+- [x] preserve existing Flexible Page Markdown below the new block list
+- [x] add all six block types to the `/services/` verification page
+- [x] regenerate the Tina lock and verify local indexing
+
+Stop and verify:
+
+- [x] Tina accepts all six templates and their stored YAML shapes
+- [x] strict TypeScript checking passes
+- [x] Astro generates all 20 current routes
+- [x] generated `/services/` HTML follows the saved block order
+- [ ] Cloudflare deploys the schema and proof page successfully
+- [ ] hosted Tina can add, remove, and drag-reorder the proof blocks
+
+### Chunk 2B - Media behavior and Content Entry video
+
+- [ ] finish responsive block spacing and media presentation
+- [ ] add image lightbox and keyboard behavior to Flexible Page image blocks
+- [ ] harden invalid and incomplete block fallbacks
+- [ ] add the approved rich-text YouTube embed to Content Entry bodies
+- [ ] verify existing Content Entry Markdown remains unchanged and valid
+- [ ] finish the owner workflow and hosted accessibility checks
 
 ## Decision gates
 
-- Before Sprint 2: approve the initial block list and determine whether Content
-  Entry video uses the same structured block or a rich-text template.
+- [x] Before Sprint 2: use the six documented Flexible Page blocks and a
+  rich-text YouTube embed for Content Entry bodies.
 - Before Sprint 3: decide whether the public name and URL remain Portfolio or
   change to Work.
 - Before Sprint 4: approve final Journal section names and migration mapping.

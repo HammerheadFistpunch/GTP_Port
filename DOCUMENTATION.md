@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-04 after the Sprint 1B Flexible Page shell and editorial controls
+Last reviewed: 2026-08-04 after the Sprint 2A reorderable page-block foundation
 
 ## Active project documents
 

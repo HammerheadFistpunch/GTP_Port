@@ -47,8 +47,8 @@ homepage without becoming an unrestricted Wix-style layout system.
 
 ## Sprint 1 - Flexible page foundation
 
-Status: Chunks 1A and 1B are implemented and verified locally. The remaining
-Sprint 1 gate is the deployed Tina create, rename, draft, and delete workflow.
+Status: Complete and deployed. The hosted Tina create, nest, rename, draft,
+publish, delete, and missing-page workflows are verified.
 
 Goal: allow a normal page or nested subpage to be created and deleted in Tina
 and receive a working static URL.
@@ -77,6 +77,10 @@ Depends on: completed foundation
 
 ## Sprint 2 - Reorderable page blocks and media
 
+Status: Chunk 2A is implemented and locally verified. Chunk 2B will finish
+media behavior, graceful fallbacks, and the approved Content Entry rich-text
+YouTube embed after the hosted 2A block-order test.
+
 Goal: let an editor assemble a flexible page from a constrained set of
 reusable blocks and rearrange them in Tina.
 
@@ -100,6 +104,19 @@ Acceptance:
 - existing Content Entry Markdown remains valid
 
 Depends on: Sprint 1
+
+Implementation split:
+
+- **2A — schema and renderer foundation:** ordered Flexible Page block list,
+  six Tina templates, shared Astro schema/types/renderer, portable Markdown
+  text, legacy-body compatibility, and a complete `/services/` proof page.
+- **2B — presentation and narrative video:** responsive refinement, image
+  lightbox behavior, incomplete-block fallbacks, Content Entry rich-text
+  YouTube embeds, and final owner/accessibility verification.
+
+Decision: Content Entries remain narrative-first. YouTube will be inserted as
+an explicit rich-text embed rather than converting Journal and Portfolio
+bodies into structured page-builder blocks.
 
 ## Sprint 3 - Work hierarchy and tile board
 

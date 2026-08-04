@@ -18,13 +18,15 @@ The site is operational and ready for real content. It includes:
 - native media, video, lightboxes, and shared Immich galleries
 - structured Resume content
 - guarded Flexible Pages with top-level and nested static routes
+- reorderable Flexible Page blocks for Markdown text, images, YouTube, Immich
+  galleries, child-page tiles, and calls to action
 - responsive navigation, accessibility, and social metadata foundations
 
-Sprint 1 now provides Tina-managed Flexible Pages with nested static URLs,
-draft safety, SEO fields, eyebrow and header-image controls, generated
-breadcrumbs, and a responsive shared page shell. The final gate is the hosted
-Tina create, rename, draft, and delete test after Sprint 1B deploys. Content
-publishing can continue in parallel.
+Sprint 1 is deployed and verified. Sprint 2A adds the ordered Flexible Page
+block schema and shared renderer while preserving all existing Markdown. The
+next gate is a hosted Tina add/remove/drag-order test on `/services/`; Sprint
+2B then finishes media behavior and adds the approved rich-text YouTube embed
+to Content Entry bodies. Content publishing can continue in parallel.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and

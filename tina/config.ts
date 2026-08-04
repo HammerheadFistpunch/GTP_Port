@@ -22,6 +22,227 @@ const linkFields = [
     },
 ];
 
+const flexiblePageBlockTemplates = [
+    {
+        name: "richText",
+        label: "Rich Text",
+        ui: {
+            itemProps: (item: Record<string, unknown>) => ({
+                label: (item?.heading as string) || "Rich Text",
+            }),
+            defaultItem: {
+                markdown: "",
+            },
+        },
+        fields: [
+            {
+                type: "string" as const,
+                name: "heading",
+                label: "Optional Heading",
+            },
+            {
+                type: "string" as const,
+                name: "markdown",
+                label: "Text (Markdown)",
+                description:
+                    "Portable Markdown text. Use blank lines between paragraphs.",
+                required: true,
+                ui: {
+                    component: "textarea",
+                },
+            },
+        ],
+    },
+    {
+        name: "image",
+        label: "Image",
+        ui: {
+            itemProps: (item: Record<string, unknown>) => ({
+                label: (item?.heading as string) || (item?.caption as string) || "Image",
+            }),
+        },
+        fields: [
+            {
+                type: "string" as const,
+                name: "heading",
+                label: "Optional Heading",
+            },
+            {
+                type: "image" as const,
+                name: "src",
+                label: "Image",
+                required: true,
+            },
+            {
+                type: "string" as const,
+                name: "alt",
+                label: "Alt Text",
+                description:
+                    "Describe meaningful images. Leave blank only when the image is decorative.",
+            },
+            {
+                type: "string" as const,
+                name: "caption",
+                label: "Caption",
+                ui: {
+                    component: "textarea",
+                },
+            },
+        ],
+    },
+    {
+        name: "youtube",
+        label: "YouTube Video",
+        ui: {
+            itemProps: (item: Record<string, unknown>) => ({
+                label: (item?.title as string) || "YouTube Video",
+            }),
+        },
+        fields: [
+            {
+                type: "string" as const,
+                name: "heading",
+                label: "Optional Heading",
+            },
+            {
+                type: "string" as const,
+                name: "url",
+                label: "YouTube URL",
+                required: true,
+                description:
+                    "Paste a standard youtube.com, youtu.be, or YouTube embed URL.",
+            },
+            {
+                type: "string" as const,
+                name: "title",
+                label: "Accessible Video Title",
+                required: true,
+            },
+            {
+                type: "string" as const,
+                name: "caption",
+                label: "Caption",
+                ui: {
+                    component: "textarea",
+                },
+            },
+        ],
+    },
+    {
+        name: "immichGallery",
+        label: "Immich Gallery",
+        ui: {
+            itemProps: (item: Record<string, unknown>) => ({
+                label: (item?.heading as string) || "Immich Gallery",
+            }),
+        },
+        fields: [
+            {
+                type: "string" as const,
+                name: "heading",
+                label: "Gallery Heading",
+            },
+            {
+                type: "string" as const,
+                name: "shareUrl",
+                label: "Public Immich Share URL",
+                required: true,
+            },
+            {
+                type: "string" as const,
+                name: "imageAltPrefix",
+                label: "Image Alt Prefix",
+                description:
+                    "Short description used before each image number, such as Event photo.",
+            },
+        ],
+    },
+    {
+        name: "childPages",
+        label: "Child Page Tiles",
+        ui: {
+            itemProps: (item: Record<string, unknown>) => ({
+                label: (item?.heading as string) || "Child Page Tiles",
+            }),
+            defaultItem: {
+                paths: [],
+            },
+        },
+        fields: [
+            {
+                type: "string" as const,
+                name: "heading",
+                label: "Section Heading",
+            },
+            {
+                type: "string" as const,
+                name: "introduction",
+                label: "Introduction",
+                ui: {
+                    component: "textarea",
+                },
+            },
+            {
+                type: "string" as const,
+                name: "paths",
+                label: "Page Paths",
+                list: true,
+                description:
+                    "Add complete Flexible Page paths without leading slashes, in the order the tiles should appear.",
+            },
+        ],
+    },
+    {
+        name: "callToAction",
+        label: "Call to Action",
+        ui: {
+            itemProps: (item: Record<string, unknown>) => ({
+                label: (item?.heading as string) || (item?.label as string) || "Call to Action",
+            }),
+            defaultItem: {
+                style: "primary",
+            },
+        },
+        fields: [
+            {
+                type: "string" as const,
+                name: "heading",
+                label: "Heading",
+            },
+            {
+                type: "string" as const,
+                name: "text",
+                label: "Supporting Text",
+                ui: {
+                    component: "textarea",
+                },
+            },
+            {
+                type: "string" as const,
+                name: "label",
+                label: "Button Label",
+                required: true,
+            },
+            {
+                type: "string" as const,
+                name: "href",
+                label: "Button Link",
+                required: true,
+            },
+            {
+                type: "string" as const,
+                name: "style",
+                label: "Button Style",
+                required: true,
+                options: [
+                    { value: "primary", label: "Primary" },
+                    { value: "secondary", label: "Secondary" },
+                ],
+            },
+        ],
+    },
+];
+
 export default defineConfig({
     branch,
 
@@ -882,9 +1103,21 @@ export default defineConfig({
                         label: "Social Sharing Image",
                     },
                     {
+                        type: "object",
+                        name: "blocks",
+                        label: "Page Blocks",
+                        list: true,
+                        templates: flexiblePageBlockTemplates,
+                        description:
+                            "Add, remove, and drag blocks to control the page order. Existing Page Content remains below these blocks.",
+                        openFormOnCreate: true,
+                    },
+                    {
                         type: "rich-text",
                         name: "body",
-                        label: "Page Content",
+                        label: "Legacy Page Content",
+                        description:
+                            "Existing Markdown remains supported and renders after Page Blocks. New modular page sections should use Page Blocks.",
                         isBody: true,
                     },
                 ],

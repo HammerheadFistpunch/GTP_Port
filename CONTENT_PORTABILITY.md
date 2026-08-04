@@ -28,6 +28,15 @@ For articles and case studies, prefer ordinary Markdown plus a small set of
 durable metadata fields. Add a custom content block only when standard Markdown
 cannot represent the required material.
 
+Flexible Page blocks are stored as readable YAML frontmatter. Their ordered
+template envelope is Tina-specific, but the values remain ordinary strings,
+paths, URLs, and lists. The Rich Text block deliberately stores Markdown as a
+string so its narrative content can be extracted without Tina.
+
+Content Entries do not use the Flexible Page block list. Inline YouTube support
+will use a constrained rich-text embed so Journal and Portfolio narratives
+remain Markdown-first and do not become page-builder documents.
+
 ## Media policy
 
 Keep each job-critical cover image and important narrative image in the

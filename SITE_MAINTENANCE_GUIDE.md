@@ -76,6 +76,8 @@ Never commit `.env` or a real `TINA_TOKEN`.
 | `src/pages/` | Route behavior, collection queries, sorting, and page composition |
 | `src/layouts/` | Shared page shells and Content Entry rendering |
 | `src/components/` | Reusable visual and interactive pieces |
+| `src/components/flexible/PageBlockRenderer.astro` | Ordered Flexible Page block rendering and block-level styles |
+| `src/lib/page-blocks.ts` | Astro validation and TypeScript contract for Flexible Page blocks |
 | `src/styles/` | Global colors, typography, spacing, utilities, and base behavior |
 | `public/uploads/` | Repository-owned images and media available at `/uploads/...` |
 | `astro.config.mjs` | Site URL, static-output mode, and Tina/Astro integration |
@@ -179,6 +181,38 @@ Delete safely:
   deleted automatically.
 - After deployment, confirm the removed path displays the custom 404 page and
   that any child pages still have intentional routes and links.
+
+### Owner workflow for Flexible Page blocks
+
+1. Open a Flexible Page and find **Page Blocks**.
+2. Add one of the six approved block types.
+3. Complete the fields inside the new block, then save.
+4. Drag blocks by their list handles to set the page order and save again.
+5. Wait for Cloudflare and verify both desktop and phone layouts.
+
+The block contract spans:
+
+- `tina/config.ts` — templates and editor fields
+- `src/lib/page-blocks.ts` — stored-data validation and shared TypeScript type
+- `src/components/flexible/PageBlockRenderer.astro` — block rendering
+- `src/pages/[...path].astro` — collection data supplied to the renderer
+- Flexible Page `blocks` frontmatter — stored order and values
+- `tina/tina-lock.json` — generated Tina schema
+
+Do not add a template to only one of these layers. Keep block fields tolerant
+in Astro so a newly inserted, partly completed block cannot take down the whole
+site during editing. Tina may still mark the fields required to guide the
+editor before saving finished content.
+
+Child Page Tiles are explicit selections, not an automatic folder listing.
+Use full Flexible Page paths without leading slashes. Missing and draft paths
+are skipped safely. Reordering the paths changes tile order inside the block;
+reordering the block moves the entire tile section.
+
+The Rich Text block stores Markdown in frontmatter and is rendered with the
+direct `marked` dependency. This is intentionally different from the legacy
+Markdown body, which Astro renders through the content collection. Keep raw
+layout HTML and inline CSS out of both locations.
 
 ## Changing the visuals
 

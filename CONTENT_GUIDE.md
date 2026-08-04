@@ -83,6 +83,34 @@ duplicate, and reserved paths before deployment.
 - The SEO fields override the title, description, and social image only when
   populated.
 
+### Flexible Page blocks
+
+The **Page Blocks** list is the modular page-builder area. Add a block with the
+plus control, open it to edit its fields, and drag the list handle to change
+the public order. Existing **Legacy Page Content** remains supported and always
+renders after the ordered blocks.
+
+Available blocks:
+
+| Block | Stored content |
+| --- | --- |
+| Rich Text | Optional heading plus portable Markdown text |
+| Image | Optional heading, repository image path, alt text, and caption |
+| YouTube Video | Optional heading, YouTube URL, accessible title, and caption |
+| Immich Gallery | Heading, public share URL, and image-alt prefix |
+| Child Page Tiles | Heading, introduction, and an ordered list of Flexible Page paths |
+| Call to Action | Heading, supporting text, button label/link, and button style |
+
+Child-page paths use the same format as the page's **URL Path**, without a
+leading slash. Drafted, deleted, missing, or mistyped page paths are omitted
+from the public tile list. The paths inside the block determine tile order;
+`navigationOrder` is reserved for later generated navigation.
+
+The `/services/` page contains a verification instance of every block. Until
+Sprint 2B is complete, use that page for testing rather than migrating an
+important public page. Sprint 2B will finish image-lightbox behavior, harden
+incomplete-block fallbacks, and add Content Entry rich-text YouTube embeds.
+
 Published nested pages automatically show breadcrumbs for each published
 Flexible Page ancestor. If an ancestor path has no corresponding published
 page, the child route still works and the missing ancestor is omitted from the
