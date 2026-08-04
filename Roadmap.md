@@ -207,8 +207,9 @@ Depends on: Sprint 4 taxonomy conventions
 
 ## Sprint 6 - Homepage redesign
 
-Status: Implemented and locally verified. Cloudflare deployment, responsive
-visual review, and hosted Tina editing remain to be verified after push.
+Status: Complete, deployed, and owner-accepted. Full cross-device, keyboard,
+and hosted Tina editing edge-case checks remain grouped with Sprint 8's final
+schema reindex and QA pass.
 
 Goal: make the homepage a compact overview of Patrick's positioning, recent
 writing, capabilities, tools, and selected portfolio projects.

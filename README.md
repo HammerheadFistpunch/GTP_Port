@@ -31,10 +31,10 @@ The site is operational and ready for real content. It includes:
   galleries, child-page tiles, and calls to action
 - responsive navigation, accessibility, and social metadata foundations
 
-Sprints 1 through 5 are deployed and owner-accepted. Sprint 6 implements the
-approved compact Homepage; its local checks pass and its Cloudflare/TinaCloud
-workflow awaits verification after push. Content publishing can continue in
-parallel.
+Sprints 1 through 6 are deployed and owner-accepted. Sprint 7, nested
+navigation and information-architecture cleanup, is next. Remaining hosted
+Tina and cross-device edge-case checks are tracked for Sprint 8's final QA
+pass. Content publishing can continue in parallel.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and

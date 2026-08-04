@@ -29,12 +29,12 @@ Verified locally:
   Portfolio categories, and renders the selected feature separately from three
   recent Journal stories.
 
-Pending after push:
+Hosted verification:
 
-- Confirm Cloudflare deploys the redesigned Homepage.
-- Review desktop, tablet, phone, and keyboard behavior on the hosted site.
-- Reindex TinaCloud and verify section order, visibility, copy, link, Journal
-  feature, recent count, and Portfolio selection edits.
+- Cloudflare deployed the redesigned Homepage successfully.
+- The owner reviewed and accepted the public Homepage design.
+- Full cross-device, keyboard, and hosted Tina editing edge-case checks remain
+  grouped with Sprint 8's final schema reindex and QA pass.
 
 ## 2026-08-04 - Sprint 5 controlled tags and subject archives implemented
 

@@ -185,7 +185,7 @@ The public tag archive workflow is owner-accepted. The two remaining hosted
 editor edge-case checks will be completed during the final schema reindex and
 QA sprint rather than blocking the approved Homepage sprint.
 
-## Active sprint - Sprint 6 hosted verification
+## Completed sprint - Sprint 6
 
 - [x] implement the approved compact Homepage layout
 - [x] reduce the Hero height and pair it with the Journal panel on desktop
@@ -205,9 +205,23 @@ Stop and verify:
 - [x] generated Homepage HTML follows the stored section order
 - [x] the selected Journal feature is absent from the three-story recent list
 - [x] all five Featured Portfolio category links resolve to generated routes
-- [ ] Cloudflare deploys the redesigned Homepage successfully
-- [ ] desktop, tablet, phone, and keyboard review pass on the hosted site
+- [x] Cloudflare deploys the redesigned Homepage successfully
+- [x] owner accepts the hosted Homepage layout
+- [ ] full desktop, tablet, phone, and keyboard edge-case review passes
 - [ ] hosted Tina can reorder, hide, edit, and change Homepage selections
+
+Sprint 6 is deployed and owner-accepted. The remaining cross-device, keyboard,
+and hosted-editor edge-case checks will be completed during Sprint 8's final
+schema reindex and QA pass rather than blocking navigation work.
+
+## Next sprint - Sprint 7
+
+- [ ] decide whether About remains a standalone navigation item
+- [ ] add ordered navigation items with optional child links
+- [ ] support internal page references and explicit external URLs
+- [ ] add accessible desktop and mobile nested-navigation behavior
+- [ ] connect selected Flexible Pages, Portfolio, and Journal destinations
+- [ ] preserve or redirect every existing public route
 
 ## Decision gates
 
