@@ -1,0 +1,80 @@
+---
+import type { ResolvedTag } from "../../lib/tags";
+
+interface Props {
+  tags: ResolvedTag[];
+  label?: string;
+  compact?: boolean;
+}
+
+const {
+  tags,
+  label = "Subjects",
+  compact = false,
+} = Astro.props;
+---
+
+{tags.length > 0 && (
+  <nav class:list={["tag-links", { "tag-links--compact": compact }]} aria-label={label}>
+    {!compact && <h2>{label}</h2>}
+    <ul>
+      {tags.map((tag) => (
+        <li><a href={tag.href}>{tag.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<style>
+  .tag-links {
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-color);
+  }
+
+  .tag-links h2 {
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-ui);
+    font-size: .85rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .tag-links ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tag-links li {
+    margin: 0;
+  }
+
+  .tag-links a {
+    display: inline-block;
+    padding: .28rem .65rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .tag-links a:hover,
+  .tag-links a:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .tag-links--compact {
+    padding-top: 0;
+    border-top: 0;
+  }
+</style>

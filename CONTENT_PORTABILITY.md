@@ -35,6 +35,12 @@ optional landing-page reference to the featured entry. Both are portable
 frontmatter: a future platform can map the four section slugs directly and
 resolve the feature reference once without changing any article body.
 
+Descriptive tags are small Markdown registry documents under
+`src/content/tags/`. Content Entries store references to those documents
+instead of repeating labels. A migration should join each reference to its
+tag's stable `slug` and current `label`; optional aliases preserve old public
+URLs but can be discarded after redirects are installed on the destination.
+
 For articles and case studies, prefer ordinary Markdown plus a small set of
 durable metadata fields. Add a custom content block only when standard Markdown
 cannot represent the required material.

@@ -4,6 +4,7 @@ import JournalLanding, {
   type JournalPostSummary,
 } from "../../components/journal/JournalLanding.astro";
 import { journalSections } from "../../lib/journal-sections";
+import { createTagRegistry, resolveTagReferences } from "../../lib/tags";
 
 export function getStaticPaths() {
   return journalSections.map((section) => ({
@@ -20,6 +21,7 @@ if (!journalPage || journalPage.data.pageType !== "archive") {
 }
 
 const page = journalPage.data;
+const tagRegistry = createTagRegistry(await getCollection("tags"));
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   dateStyle: "long",
   timeZone: "UTC",
@@ -39,6 +41,7 @@ const posts: JournalPostSummary[] = entries.map((entry) => ({
   date: entry.data.date ? dateFormatter.format(entry.data.date) : "Date pending",
   section: section.label,
   href: `/archive/${entry.id}/`,
+  tags: resolveTagReferences(entry.data.tags, tagRegistry, entry.data.title),
 }));
 ---
 

@@ -6,10 +6,19 @@ import {
 } from "astro:content";
 import EntryLayout from "../../layouts/EntryLayout.astro";
 import YouTubeEmbed from "../../components/content/YouTubeEmbed.astro";
+import { createTagRegistry, resolveTagReferences, tagReferenceId } from "../../lib/tags";
 
 export async function getStaticPaths() {
   const entries = await getCollection("entries");
   const publishedEntries = entries.filter((entry) => !entry.data.draft);
+  const tagRegistry = createTagRegistry(await getCollection("tags"));
+
+  const resolvedEntryTags = new Map(
+    publishedEntries.map((entry) => [
+      entry.id,
+      resolveTagReferences(entry.data.tags, tagRegistry, entry.data.title),
+    ]),
+  );
 
   return publishedEntries.map((entry) => {
     const relatedEntries = publishedEntries
@@ -19,7 +28,11 @@ export async function getStaticPaths() {
         score:
           (candidate.data.primaryTopic === entry.data.primaryTopic ? 3 : 0) +
           (candidate.data.entryType === entry.data.entryType ? 2 : 0) +
-          candidate.data.tags.filter((tag) => entry.data.tags.includes(tag)).length,
+          candidate.data.tags.filter((tag) =>
+            entry.data.tags.some(
+              (entryTag) => tagReferenceId(entryTag) === tagReferenceId(tag),
+            )
+          ).length,
       }))
       .sort((a, b) =>
         b.score - a.score ||
@@ -37,7 +50,11 @@ export async function getStaticPaths() {
 
     return {
       params: { slug: entry.id },
-      props: { entry, relatedEntries },
+      props: {
+        entry,
+        relatedEntries,
+        tags: resolvedEntryTags.get(entry.id) ?? [],
+      },
     };
   });
 }
@@ -51,12 +68,13 @@ interface Props {
     primaryTopic: string;
     href: string;
   }>;
+  tags: ReturnType<typeof resolveTagReferences>;
 }
 
-const { entry, relatedEntries } = Astro.props;
+const { entry, relatedEntries, tags } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<EntryLayout {...entry.data} {relatedEntries}>
+<EntryLayout {...entry.data} {tags} {relatedEntries}>
   <Content components={{ YouTube: YouTubeEmbed }} />
 </EntryLayout>

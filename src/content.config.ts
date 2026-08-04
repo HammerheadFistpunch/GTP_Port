@@ -9,11 +9,35 @@ import { journalSectionSlugs } from "./lib/journal-sections";
 const sharedFields = {
     title: z.string(),
     description: z.string(),
-    tags: z.array(z.string()).default([]),
+    tags: z.array(z.object({
+        tag: z.string().regex(
+            /^src\/content\/tags\/[a-z0-9]+(?:-[a-z0-9]+)*\.md$/,
+            "Tags must reference a document in src/content/tags.",
+        ),
+    })).default([]),
     coverImage: z.string().optional(),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
 };
+
+const tags = defineCollection({
+    loader: glob({
+        pattern: "**/*.md",
+        base: "./src/content/tags",
+    }),
+    schema: z.object({
+        label: z.string().min(1),
+        slug: z.string().regex(
+            /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+            "Tag slugs must use lowercase letters, numbers, and single hyphens.",
+        ),
+        description: z.string().optional(),
+        aliases: z.array(z.string().regex(
+            /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+            "Tag aliases must use lowercase letters, numbers, and single hyphens.",
+        )).default([]),
+    }),
+});
 
 const mediaItem = z.object({
     type: z.enum(["image", "video"]),
@@ -238,4 +262,5 @@ export const collections = {
     flexiblePages,
     pages,
     settings,
+    tags,
 };

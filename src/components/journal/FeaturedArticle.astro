@@ -1,4 +1,7 @@
 ---
+import TagLinks from "../content/TagLinks.astro";
+import type { ResolvedTag } from "../../lib/tags";
+
 interface Props {
   title: string;
   excerpt: string;
@@ -7,6 +10,7 @@ interface Props {
   date: string;
   href: string;
   variant?: "overlay" | "split";
+  tags?: ResolvedTag[];
 }
 
 const {
@@ -17,6 +21,7 @@ const {
   date,
   href,
   variant = "overlay",
+  tags = [],
 } = Astro.props;
 ---
 
@@ -52,6 +57,8 @@ const {
       <a href={href}>
         Read Article →
       </a>
+
+      <TagLinks {tags} label={`${title} tags`} compact />
 
     </div>
 
@@ -164,6 +171,10 @@ const {
 
 .featured--split .content a {
   color: var(--accent);
+}
+
+.content :global(.tag-links) {
+  margin-top: var(--space-sm);
 }
 
 

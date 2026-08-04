@@ -352,6 +352,55 @@ export default defineConfig({
     schema: {
         collections: [
             /*
+             * CONTROLLED TAG REGISTRY
+             *
+             * Maps to:
+             * src/content/tags/*.md
+             */
+            {
+                name: "tags",
+                label: "Tags",
+                path: "src/content/tags",
+                format: "md",
+
+                fields: [
+                    {
+                        type: "string",
+                        name: "label",
+                        label: "Public Label",
+                        required: true,
+                        isTitle: true,
+                        description:
+                            "Visible name. This can change without changing the tag URL.",
+                    },
+                    {
+                        type: "string",
+                        name: "slug",
+                        label: "Permanent URL Slug",
+                        required: true,
+                        description:
+                            "Lowercase kebab-case. Do not change a published slug unless the old value is added as an alias.",
+                    },
+                    {
+                        type: "string",
+                        name: "description",
+                        label: "Archive Description",
+                        ui: {
+                            component: "textarea",
+                        },
+                    },
+                    {
+                        type: "string",
+                        name: "aliases",
+                        label: "Previous URL Slugs",
+                        list: true,
+                        description:
+                            "Optional old slugs that must continue resolving after a rename.",
+                    },
+                ],
+            },
+
+            /*
              * SITE SETTINGS
              *
              * Maps to:
@@ -1375,13 +1424,26 @@ export default defineConfig({
                             "Required when Placement includes Journal. Choose one controlled editorial section.",
                     },
                     {
-                        type: "string",
+                        type: "object",
                         name: "tags",
                         label: "Tags",
                         list: true,
+                        description:
+                            "Select controlled subject tags. Add a missing subject in the Tags collection first.",
                         ui: {
-                            component: "tags",
+                            itemProps: (item) => ({
+                                label: item?.tag || "Select a tag",
+                            }),
                         },
+                        fields: [
+                            {
+                                type: "reference",
+                                name: "tag",
+                                label: "Tag",
+                                required: true,
+                                collections: ["tags"],
+                            },
+                        ],
                     },
                     {
                         type: "image",

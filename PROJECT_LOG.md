@@ -1,5 +1,40 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 5 controlled tags and subject archives implemented
+
+Completed locally:
+
+- Added a dedicated Tina **Tags** collection with stable slugs, editable public
+  labels, optional archive descriptions, and previous-slug aliases.
+- Migrated all 29 existing free-text tags into controlled tag documents and
+  replaced seven tagged Content Entry lists with Tina references.
+- Added 29 static `/tags/[slug]/` subject archives spanning published Journal,
+  Portfolio, and dual-placement entries while excluding drafts.
+- Added clickable tag chips to Journal cards, the featured story, and the
+  bottom of Content Entry detail pages.
+- Added canonical handling for alias routes and build-stopping validation for
+  duplicate slugs, duplicate aliases, and references to missing tag documents.
+- Kept Journal sections and descriptive tags as separate routing systems and
+  preserved every existing `/archive/[slug]/` detail URL.
+- Regenerated `tina/tina-lock.json` from Tina's generated schema artifacts.
+
+Verified locally:
+
+- Tina audits all 54 settings, page, Flexible Page, Tag, and Content Entry
+  documents.
+- Strict TypeScript checking and `git diff --check` pass.
+- Astro builds 58 pages: the existing 29 routes plus all 29 tag archives.
+- Generated Journal and entry HTML contains clickable tag URLs; Automotive
+  and MBA archives contain their expected Journal and Portfolio entries.
+- Duplicate canonical slugs, duplicate aliases, and orphaned tag references
+  each produce an explicit validation failure.
+
+Pending after push:
+
+- Confirm Cloudflare deploys the 29 subject archives.
+- Reindex TinaCloud and verify creating a tag, selecting it on an entry, and
+  preserving an old slug through the alias field.
+
 ## 2026-08-04 - Sprint 4 Journal sections and landing page implemented
 
 Completed locally:
@@ -31,11 +66,12 @@ Verified locally:
 - The full TinaCloud build remains credential-gated as documented; no token was
   added to the repository.
 
-Pending after push:
+Hosted verification:
 
-- Confirm the Cloudflare deployment and responsive Journal layout.
-- Reindex TinaCloud and verify section selection plus featured-story selection
-  in the hosted editor.
+- Cloudflare deployed the Journal landing and section routes; the owner
+  accepted the layout and the scrollbar follow-up.
+- Changing an entry section and featured-story selection in hosted Tina remains
+  an owner verification item alongside the Sprint 5 schema reindex.
 
 ## 2026-08-04 - Sprint 3 Portfolio hierarchy and tile board implemented
 

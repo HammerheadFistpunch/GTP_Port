@@ -150,8 +150,8 @@ Depends on: Sprints 1-2
 
 ## Sprint 4 - Journal sections and landing page
 
-Status: Implemented and locally verified. Cloudflare deployment and hosted
-Tina section/feature editing remain to be verified after push.
+Status: Complete, deployed, and owner-verified visually. Hosted Tina
+section/feature editing remains grouped with the next schema reindex check.
 
 Goal: create a compact editorial landing page with a deliberate featured
 story, chronological feed, and working section navigation.
@@ -181,6 +181,9 @@ Depends on: completed foundation; may run after Sprint 2 without Sprint 3
 
 ## Sprint 5 - Tags and subject archives
 
+Status: Implemented and locally verified. Cloudflare deployment and hosted
+Tina tag editing remain to be verified after push.
+
 Goal: make descriptive tags useful while keeping them separate from the one
 primary editorial section.
 
@@ -190,8 +193,7 @@ Scope:
 - make tags clickable on cards and at the bottom of entries
 - generate static tag archive routes
 - list all matching published entries on each tag page
-- choose either a generated tag workflow or a controlled Site Settings list
-  after testing Tina editor usability
+- use a controlled Tina Tags collection with references from Content Entries
 - add empty, renamed, and orphaned-tag handling
 
 Acceptance:

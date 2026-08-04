@@ -66,6 +66,7 @@ Never commit `.env` or a real `TINA_TOKEN`.
 | Location | Responsibility |
 | --- | --- |
 | `src/content/entries/` | MDX bodies and metadata for every article, project, case study, and gallery |
+| `src/content/tags/` | Controlled subject labels, permanent slugs, descriptions, and old-slug aliases |
 | `src/content/pages/` | Editable Homepage, archive-page, About, Contact, and Resume content |
 | `src/content/flexible-pages/` | Tina-created standalone and nested pages with explicit URL paths |
 | `src/content/settings/site.md` | Navigation, footer, site name, and shared descriptions |
@@ -109,6 +110,7 @@ The main routes are:
 | `/portfolio/` | `src/pages/portfolio/index.astro` | `PortfolioBentoCard.astro` |
 | `/journal/` | `src/pages/journal/index.astro` | `JournalLanding.astro` and Journal components |
 | `/journal/[section]/` | `src/pages/journal/[section].astro` | Filtered `JournalLanding.astro` |
+| `/tags/[slug]/` | `src/pages/tags/[tag].astro` | Mixed Journal and Portfolio subject archive |
 | `/archive/[slug]/` | `src/pages/archive/[...slug].astro` | `EntryLayout.astro` |
 | `/about/` | `src/pages/about.astro` | `StandardPageLayout.astro` |
 | `/contact/` | `src/pages/contact.astro` | `StandardPageLayout.astro` and `ContactMethods.astro` |
@@ -117,6 +119,36 @@ The main routes are:
 
 `BaseLayout.astro` wraps every page with metadata, navigation, footer, global
 styles, and the accessibility skip link.
+
+## Controlled tags and subject archives
+
+Journal sections answer "which editorial desk owns this entry?" Tags describe
+its reusable subjects. Keep those concepts separate. The tag contract spans:
+
+- `src/content/tags/*.md` — one controlled tag document per subject
+- Content Entry `tags` frontmatter — Tina references, not copied labels
+- `tina/config.ts` — Tags collection and Content Entry reference picker
+- `src/content.config.ts` — stored shape and slug validation
+- `src/lib/tags.ts` — reference resolution, stable URLs, and duplicate checks
+- `src/pages/tags/[tag].astro` — static archives and draft filtering
+- `TagLinks.astro` and `TagArchive.astro` — shared presentation
+- `tina/tina-lock.json` — generated schema contract
+
+Owner workflow:
+
+1. Open **Tags** in Tina and create a lowercase kebab-case document filename.
+2. Enter the public label and use the same value, normalized to kebab-case, for
+   the permanent slug.
+3. Save the tag, then open a Content Entry and add it through the controlled
+   **Tags** reference list.
+4. Publish and verify both the entry and `/tags/[slug]/` archive.
+
+Changing a label is safe. Do not change a published slug casually. When a slug
+must change, add the old slug to **Previous URL Slugs** during the same edit;
+the old route remains available and points search metadata to the canonical
+new route. Before deleting a Tag document, remove its reference from every
+Content Entry. Missing references and duplicate canonical or alias routes stop
+the build intentionally.
 
 ## Flexible Page route safety
 

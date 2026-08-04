@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import TagArchive from "../../components/content/TagArchive.astro";
+import type { JournalPostSummary } from "../../components/journal/JournalLanding.astro";
+import {
+  createTagRegistry,
+  resolveTagReferences,
+  tagHref,
+  tagReferenceId,
+} from "../../lib/tags";
+
+export async function getStaticPaths() {
+  const tagDocuments = await getCollection("tags");
+  const entries = await getCollection("entries", ({ data }) => !data.draft);
+  const registry = createTagRegistry(tagDocuments);
+  const dateFormatter = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "long",
+    timeZone: "UTC",
+  });
+
+  const summaries = entries.map((entry) => {
+    const tags = resolveTagReferences(entry.data.tags, registry, entry.data.title);
+    const placement = entry.data.placement === "both"
+      ? "Journal + Portfolio"
+      : entry.data.placement === "journal"
+        ? "Journal"
+        : "Portfolio";
+
+    return {
+      entry,
+      tagIds: new Set(entry.data.tags.map(tagReferenceId)),
+      summary: {
+        title: entry.data.title,
+        excerpt: entry.data.description,
+        image: entry.data.coverImage,
+        date: entry.data.date
+          ? dateFormatter.format(entry.data.date)
+          : entry.data.entryType,
+        section: placement,
+        href: `/archive/${entry.id}/`,
+        tags,
+      } satisfies JournalPostSummary,
+    };
+  });
+
+  return [...registry.byRoute.entries()].map(([route, tag]) => ({
+    params: { tag: route },
+    props: {
+      tag,
+      posts: summaries
+        .filter(({ tagIds }) => tagIds.has(tag.id))
+        .sort((a, b) =>
+          (b.entry.data.date?.getTime() ?? 0) -
+          (a.entry.data.date?.getTime() ?? 0) ||
+          a.entry.data.title.localeCompare(b.entry.data.title)
+        )
+        .map(({ summary }) => summary),
+      canonicalPath: route === tag.slug ? undefined : tagHref(tag.slug),
+    },
+  }));
+}
+
+const { tag, posts, canonicalPath } = Astro.props;
+---
+
+<TagArchive {tag} {posts} {canonicalPath} />

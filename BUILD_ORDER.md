@@ -131,7 +131,7 @@ Stop and verify:
 - [x] hosted Tina can add, remove, and drag-reorder tiles; the owner accepted
   the public tile layout
 
-## Active sprint - Sprint 4 hosted verification
+## Completed sprint - Sprint 4
 
 - [x] approve Automotive, Projects, Field Notes, and Off-topic as the assignable
   sections; Latest is the complete feed
@@ -152,8 +152,34 @@ Stop and verify:
 - [x] Astro generates all four section routes and every archive detail URL
 - [x] generated Journal HTML contains working section links and one copy of the
   selected feature
-- [ ] Cloudflare deploys the Journal landing and section routes successfully
+- [x] Cloudflare deploys the Journal landing and section routes successfully
 - [ ] hosted Tina can change an entry section and select a different feature
+
+The public Journal design and scrollbar follow-up are owner-accepted. The
+remaining hosted editor check will be completed with the Sprint 5 schema
+reindex rather than blocking the approved taxonomy sprint.
+
+## Active sprint - Sprint 5 hosted verification
+
+- [x] choose a controlled Tina Tags collection rather than free-text tags
+- [x] migrate all 29 existing tag labels to registry documents
+- [x] replace free-text Content Entry tags with controlled references
+- [x] add static `/tags/[slug]/` archives for Journal and Portfolio entries
+- [x] add clickable tag links to Journal cards and entry-page footers
+- [x] add stable labels, permanent slugs, and previous-slug aliases
+- [x] reject duplicate tag routes and orphaned entry references
+- [x] preserve all existing `/archive/[slug]/` detail routes
+
+Stop and verify:
+
+- [x] Tina audits all 54 content documents and references
+- [x] strict TypeScript checking passes
+- [x] Astro generates 58 routes, including all 29 tag archives
+- [x] drafts are excluded and mixed Journal/Portfolio matches render together
+- [x] duplicate, renamed, empty, and orphaned tag behavior is explicit
+- [ ] Cloudflare deploys every tag archive successfully
+- [ ] hosted Tina can create a tag and select it on a Content Entry
+- [ ] an old tag URL remains valid after its slug is added as an alias
 
 ## Decision gates
 
@@ -163,8 +189,8 @@ Stop and verify:
   the canonical URL; do not introduce a Work section or `/work/` route.
 - [x] Before Sprint 4: use Automotive, Projects, Field Notes, and Off-topic;
   Latest is navigation for the complete feed, not an entry section.
-- Before Sprint 5: choose generated tags or a controlled tag registry after a
-  Tina usability test.
+- [x] Before Sprint 5: use a controlled Tina Tags collection with Content Entry
+  references, stable slugs, and optional previous-slug aliases.
 - Before Sprint 7: decide whether About remains a standalone navigation item.
 
 ## Chunk rules

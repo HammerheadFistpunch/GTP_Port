@@ -201,6 +201,30 @@ The static section routes are `/journal/automotive/`, `/journal/projects/`,
 field remains available as a broad descriptive label and is separate from the
 controlled section used for routing.
 
+### Tags and subject archives
+
+Tags are controlled references, not free-text labels. In Tina, open **Tags**
+to create a reusable subject, then select it from the **Tags** list on any
+Content Entry. Published Journal and Portfolio entries are collected together
+at `/tags/[slug]/`; drafts never appear.
+
+Each Tag document has:
+
+- **Public Label** — visible text; safe to revise without changing the URL
+- **Permanent URL Slug** — lowercase kebab-case routing key
+- **Archive Description** — optional introduction on the subject page
+- **Previous URL Slugs** — old slugs that must continue resolving
+
+For a new tag, keep the Tina document filename aligned with its slug. To rename
+only the visible text, change **Public Label** and leave the slug alone. To
+intentionally change a published slug, add the old slug to **Previous URL
+Slugs** in the same save. Duplicate slugs or aliases stop the build. Deleting a
+tag still referenced by an entry also stops the build with the affected entry
+name, so remove or replace every reference first.
+
+An unused Tag document still publishes a readable empty archive. This makes a
+new subject safe to create before its first entry is ready.
+
 The five primary category pages are Flexible Pages at:
 
 - `/portfolio/video/`

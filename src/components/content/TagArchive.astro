@@ -1,0 +1,100 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../ui/Container.astro";
+import JournalCard from "../journal/JournalCard.astro";
+import type { JournalPostSummary } from "../journal/JournalLanding.astro";
+import type { ResolvedTag } from "../../lib/tags";
+
+interface Props {
+  tag: ResolvedTag;
+  posts: JournalPostSummary[];
+  canonicalPath?: string;
+}
+
+const { tag, posts, canonicalPath } = Astro.props;
+const description = tag.description || `Published Journal and Portfolio entries tagged ${tag.label}.`;
+---
+
+<BaseLayout title={`${tag.label} | Subjects`} {description} {canonicalPath}>
+  <section class="tag-archive">
+    <Container>
+      <header>
+        <p class="eyebrow">Subject archive</p>
+        <h1>{tag.label}</h1>
+        <p class="introduction">{description}</p>
+      </header>
+
+      <nav class="archive-links" aria-label="Archive navigation">
+        <a href="/journal/">Journal</a>
+        <a href="/portfolio/">Portfolio</a>
+      </nav>
+
+      <section class="entries" aria-labelledby="tag-entries">
+        <h2 id="tag-entries">Tagged entries</h2>
+        {posts.length > 0 ? (
+          <div class="story-list">
+            {posts.map((post) => (
+              <JournalCard {...post} category={post.section} variant="editorial" />
+            ))}
+          </div>
+        ) : (
+          <p>No published entries use this tag yet.</p>
+        )}
+      </section>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .tag-archive {
+    padding: clamp(2.5rem, 6vw, 5rem) 0 var(--space-xl);
+  }
+
+  header {
+    max-width: 52rem;
+  }
+
+  .eyebrow {
+    margin-bottom: var(--space-sm);
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: clamp(2.15rem, 5vw, 3.8rem);
+  }
+
+  .introduction {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+  }
+
+  .archive-links {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--border-color);
+    font-family: var(--font-ui);
+    font-weight: 700;
+  }
+
+  .entries {
+    padding-top: var(--space-md);
+  }
+
+  .entries > h2 {
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-ui);
+    font-size: .95rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .story-list {
+    max-width: 68rem;
+  }
+</style>

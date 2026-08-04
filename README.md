@@ -18,6 +18,8 @@ The site is operational and ready for real content. It includes:
   Writing Samples, and Software Projects
 - a compact Journal landing page with an explicit featured story, chronological
   feed, and four static section routes
+- a controlled Tina tag registry with 29 static subject archives shared by
+  Journal and Portfolio entries
 - explicit Homepage Portfolio selections plus linked Portfolio and Journal headings
 - native media, video, lightboxes, and shared Immich galleries
 - structured Resume content
@@ -26,10 +28,10 @@ The site is operational and ready for real content. It includes:
   galleries, child-page tiles, and calls to action
 - responsive navigation, accessibility, and social metadata foundations
 
-Sprints 1 through 3 are deployed and owner-verified. Sprint 4 implements the
-Journal section model and editorial landing page; its local checks pass and its
-Cloudflare/TinaCloud workflow awaits verification after push. Content publishing
-can continue in parallel.
+Sprints 1 through 4 are deployed and owner-verified visually. Sprint 5 adds the
+controlled tag registry and subject archives; its local checks pass and its
+Cloudflare/TinaCloud workflow awaits verification after push. Content
+publishing can continue in parallel.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and
@@ -104,7 +106,8 @@ Portfolio and Homepage ordering now come from explicit Tina tile lists that
 reference existing content without owning it. Numeric `portfolioOrder` remains
 a migration fallback. Journal entries use one controlled primary section;
 `/journal/` remains chronological and excludes its explicitly selected feature
-from the remaining feed.
+from the remaining feed. Descriptive subjects come from referenced Tag
+documents and publish separately at `/tags/[slug]/`.
 
 ## Content portability
 

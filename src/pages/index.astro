@@ -8,6 +8,7 @@ import PortfolioCard from "../components/portfolio/PortfolioCard.astro";
 import FeaturedArticle from "../components/journal/FeaturedArticle.astro";
 import JournalCard from "../components/journal/JournalCard.astro";
 import { resolvePortfolioTiles } from "../lib/portfolio-tiles";
+import { createTagRegistry, resolveTagReferences } from "../lib/tags";
 
 const homeEntry = await getEntry("pages", "home");
 
@@ -16,6 +17,7 @@ if (!homeEntry || homeEntry.data.pageType !== "home") {
 }
 
 const page = homeEntry.data;
+const tagRegistry = createTagRegistry(await getCollection("tags"));
 
 const allProjects = (await getCollection("entries", ({ data }) =>
   !data.draft && (data.placement === "portfolio" || data.placement === "both")
@@ -123,6 +125,11 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
           category={featuredArticle.data.primaryTopic}
           date={featuredArticle.data.date ? dateFormatter.format(featuredArticle.data.date) : "Date pending"}
           href={`/archive/${featuredArticle.id}/`}
+          tags={resolveTagReferences(
+            featuredArticle.data.tags,
+            tagRegistry,
+            featuredArticle.data.title,
+          )}
         />
       ) : (
         <p>{page.journalPreview.emptyMessage}</p>
@@ -138,6 +145,11 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
               category={article.data.primaryTopic}
               date={article.data.date ? dateFormatter.format(article.data.date) : "Date pending"}
               href={`/archive/${article.id}/`}
+              tags={resolveTagReferences(
+                article.data.tags,
+                tagRegistry,
+                article.data.title,
+              )}
             />
           ))}
         </div>

@@ -3,18 +3,16 @@ interface Props {
   projectType: string;
   date?: Date;
   technologies?: string[];
-  tags?: string[];
 }
 
 const {
   projectType,
   date,
   technologies = [],
-  tags = [],
 } = Astro.props;
 
 const year = date?.getFullYear();
-const labels = [...new Set([...technologies, ...tags])];
+const labels = [...new Set(technologies)];
 ---
 
 <div class="project-meta" aria-label="Project information">

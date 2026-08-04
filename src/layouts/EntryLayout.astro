@@ -8,6 +8,8 @@ import VideoEmbed from "../components/portfolio/VideoEmbed.astro";
 import InlineImageLightbox from "../components/portfolio/InlineImageLightbox.astro";
 import RelatedEntries from "../components/content/RelatedEntries.astro";
 import Container from "../components/ui/Container.astro";
+import TagLinks from "../components/content/TagLinks.astro";
+import type { ResolvedTag } from "../lib/tags";
 
 interface EntryLinks {
   repository?: string;
@@ -38,7 +40,7 @@ interface Props {
   primaryTopic: string;
   date?: Date;
   updatedDate?: Date;
-  tags?: string[];
+  tags?: ResolvedTag[];
   technologies?: string[];
   links?: EntryLinks;
   coverImage?: string;
@@ -112,14 +114,12 @@ const backLinks = [
             category={primaryTopic}
             {date}
             {updatedDate}
-            {tags}
           />
         ) : (
           <ProjectMeta
             projectType={`${entryType} · ${primaryTopic}`}
             {date}
             {technologies}
-            {tags}
           />
         )}
 
@@ -171,6 +171,8 @@ const backLinks = [
           </div>
         </section>
       )}
+
+      <TagLinks {tags} label="Explore these subjects" />
 
       <RelatedEntries entries={relatedEntries} />
     </Container>

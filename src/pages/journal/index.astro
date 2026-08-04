@@ -4,6 +4,7 @@ import JournalLanding, {
   type JournalPostSummary,
 } from "../../components/journal/JournalLanding.astro";
 import { getJournalSection } from "../../lib/journal-sections";
+import { createTagRegistry, resolveTagReferences } from "../../lib/tags";
 
 const entries = (await getCollection("entries", ({ data }) =>
   !data.draft && (data.placement === "journal" || data.placement === "both")
@@ -22,6 +23,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   dateStyle: "long",
   timeZone: "UTC",
 });
+const tagRegistry = createTagRegistry(await getCollection("tags"));
 
 const summarize = (entry: (typeof entries)[number]): JournalPostSummary => ({
   title: entry.data.title,
@@ -30,6 +32,7 @@ const summarize = (entry: (typeof entries)[number]): JournalPostSummary => ({
   date: entry.data.date ? dateFormatter.format(entry.data.date) : "Date pending",
   section: getJournalSection(entry.data.journalSection)?.label ?? "Journal",
   href: `/archive/${entry.id}/`,
+  tags: resolveTagReferences(entry.data.tags, tagRegistry, entry.data.title),
 });
 
 const featuredEntry = entries.find(

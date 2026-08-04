@@ -9,6 +9,7 @@ import {
   journalSectionHref,
   type JournalSectionSlug,
 } from "../../lib/journal-sections";
+import type { ResolvedTag } from "../../lib/tags";
 
 export interface JournalPostSummary {
   title: string;
@@ -17,6 +18,7 @@ export interface JournalPostSummary {
   date: string;
   section: string;
   href: string;
+  tags: ResolvedTag[];
 }
 
 interface Props {
@@ -78,6 +80,7 @@ const sectionLinks = [
             date={featuredPost.date}
             href={featuredPost.href}
             variant="split"
+            tags={featuredPost.tags}
           />
         </section>
       )}
@@ -96,6 +99,7 @@ const sectionLinks = [
                 category={post.section}
                 href={post.href}
                 variant="editorial"
+                tags={post.tags}
               />
             ))}
           </div>
