@@ -20,11 +20,10 @@ The site is operational and ready for real content. It includes:
 - guarded Flexible Pages with top-level and nested static routes
 - responsive navigation, accessibility, and social metadata foundations
 
-Sprint 1A now proves Tina-managed Flexible Pages at `/services/` and
-`/services/video-production/` without changing existing public URLs. Its local
-checks pass; Cloudflare preview verification is the remaining gate before
-Sprint 1B adds the finished page shell and editorial controls. Content
-publishing can continue in parallel.
+The current development priority is Sprint 1A: prove Tina-created Flexible
+Pages and nested static routes without changing existing public URLs. Content
+publishing can continue in parallel while the controlled site-builder expansion
+is implemented.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and
