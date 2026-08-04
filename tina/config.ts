@@ -758,6 +758,96 @@ export default defineConfig({
             },
 
             /*
+             * FLEXIBLE PAGES
+             *
+             * Maps to:
+             * Markdown files under src/content/flexible-pages/
+             */
+            {
+                name: "flexiblePages",
+                label: "Flexible Pages",
+                path: "src/content/flexible-pages",
+                format: "md",
+
+                ui: {
+                    allowedActions: {
+                        create: true,
+                        delete: true,
+                    },
+                    filename: {
+                        slugify: (values) =>
+                            values?.title
+                                ?.toLowerCase()
+                                .trim()
+                                .replace(/[^a-z0-9]+/g, "-")
+                                .replace(/^-+|-+$/g, "") || "untitled-page",
+                    },
+                },
+
+                fields: [
+                    {
+                        type: "string",
+                        name: "title",
+                        label: "Page Title",
+                        required: true,
+                        isTitle: true,
+                    },
+                    {
+                        type: "string",
+                        name: "path",
+                        label: "URL Path",
+                        required: true,
+                        description:
+                            "Lowercase path without a leading slash, such as services or services/video-production.",
+                    },
+                    {
+                        type: "string",
+                        name: "description",
+                        label: "Page Description",
+                        required: true,
+                        ui: {
+                            component: "textarea",
+                        },
+                    },
+                    {
+                        type: "boolean",
+                        name: "draft",
+                        label: "Draft",
+                        description:
+                            "Draft pages are saved in Git but do not receive a public route.",
+                    },
+                    {
+                        type: "string",
+                        name: "seoTitle",
+                        label: "SEO Title",
+                        description:
+                            "Optional search and sharing title. The page title is used when blank.",
+                    },
+                    {
+                        type: "string",
+                        name: "seoDescription",
+                        label: "SEO Description",
+                        description:
+                            "Optional search and sharing description. The page description is used when blank.",
+                        ui: {
+                            component: "textarea",
+                        },
+                    },
+                    {
+                        type: "image",
+                        name: "seoImage",
+                        label: "Social Sharing Image",
+                    },
+                    {
+                        type: "rich-text",
+                        name: "body",
+                        label: "Page Content",
+                        isBody: true,
+                    },
+                ],
+            },
+
+            /*
              * UNIFIED CONTENT ENTRIES
              *
              * Maps to:

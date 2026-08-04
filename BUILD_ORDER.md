@@ -1,6 +1,6 @@
 # GTP_Port Build Order
 
-Last updated: 2026-08-03
+Last updated: 2026-08-04
 Working branch: `gpt-handoff`
 Verified baseline: unified Content Entries architecture and TinaCloud editor
 
@@ -31,24 +31,27 @@ Full scope and acceptance criteria are in `Roadmap.md`.
 - Use the approved homepage mockup for layout, hierarchy, density, and spacing.
 - Do not treat the redesign as a new visual system.
 
-## Next executable chunk - Sprint 1
+## Active chunk - Sprint 1
 
 ### Chunk 1A - Schema and route proof
 
-- add the Flexible Pages content definition in Astro
-- add the Tina collection with creation and deletion enabled
-- add title, path, description, draft, and basic SEO fields
-- add a catch-all route and minimal shared renderer
-- protect reserved top-level paths
-- create one parent and one nested test page
+- [x] add the Flexible Pages content definition in Astro
+- [x] add the Tina collection with creation and deletion enabled
+- [x] add title, path, description, draft, and basic SEO fields
+- [x] add a catch-all route and minimal shared renderer
+- [x] protect reserved top-level paths and reject duplicate published paths
+- [x] create one parent and one nested test page
 
 Stop and verify:
 
-- Tina local indexing succeeds
-- strict TypeScript checking passes
-- the production build generates both test URLs
-- all existing routes still build
-- Cloudflare preview deploys successfully
+- [x] Tina local indexing succeeds
+- [x] strict TypeScript checking passes
+- [x] the Astro production build generates both test URLs
+- [x] all existing routes still build
+- [ ] Cloudflare preview deploys successfully
+
+Chunk 1A is implemented and verified locally. Do not begin Chunk 1B until the
+changes are pushed to `gpt-handoff` and the Cloudflare preview gate passes.
 
 ### Chunk 1B - Page shell and editorial controls
 

@@ -1,7 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-03 after the documentation consolidation and Tina
-site-builder roadmap approval
+Last reviewed: 2026-08-04 after the Sprint 1A Flexible Page route proof
 
 ## Active project documents
 
