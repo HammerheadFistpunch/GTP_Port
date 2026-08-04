@@ -33,9 +33,11 @@ template envelope is Tina-specific, but the values remain ordinary strings,
 paths, URLs, and lists. The Rich Text block deliberately stores Markdown as a
 string so its narrative content can be extracted without Tina.
 
-Content Entries do not use the Flexible Page block list. Inline YouTube support
-will use a constrained rich-text embed so Journal and Portfolio narratives
-remain Markdown-first and do not become page-builder documents.
+Content Entries do not use the Flexible Page block list. They use `.mdx`, a
+Markdown-compatible format, solely to permit the constrained `<YouTube />`
+rich-text embed. Journal and Portfolio narratives remain Markdown-first and do
+not become page-builder documents. A future migration can replace each embed
+with the stored URL or map that single component to the destination system.
 
 ## Media policy
 
@@ -55,7 +57,7 @@ A style redesign should primarily replace files under:
 - `src/pages/`
 - `src/styles/`
 
-The Markdown under `src/content/` should normally remain unchanged.
+The Markdown and MDX under `src/content/` should normally remain unchanged.
 
 ## What a future migration requires
 

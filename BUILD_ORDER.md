@@ -73,7 +73,7 @@ Stop and verify:
 Chunk 1B is deployed and the hosted create, nest, rename, draft, publish,
 delete, and 404 workflows are verified.
 
-## Active sprint - Sprint 2
+## Active sprint - Sprint 2 hosted verification
 
 ### Chunk 2A - Block schema and renderer foundation
 
@@ -93,16 +93,17 @@ Stop and verify:
 - [x] strict TypeScript checking passes
 - [x] Astro generates all 20 current routes
 - [x] generated `/services/` HTML follows the saved block order
-- [ ] Cloudflare deploys the schema and proof page successfully
-- [ ] hosted Tina can add, remove, and drag-reorder the proof blocks
+- [x] Cloudflare deploys the schema and proof page successfully
+- [x] hosted Tina can add, remove, and drag-reorder the proof blocks
 
 ### Chunk 2B - Media behavior and Content Entry video
 
-- [ ] finish responsive block spacing and media presentation
-- [ ] add image lightbox and keyboard behavior to Flexible Page image blocks
-- [ ] harden invalid and incomplete block fallbacks
-- [ ] add the approved rich-text YouTube embed to Content Entry bodies
-- [ ] verify existing Content Entry Markdown remains unchanged and valid
+- [x] finish responsive block spacing and media presentation
+- [x] add image lightbox and keyboard behavior to Flexible Page image blocks
+- [x] harden invalid and incomplete block fallbacks
+- [x] add the approved rich-text YouTube embed to Content Entry bodies
+- [x] verify existing Content Entry Markdown remains unchanged and valid after
+  the `.mdx` extension migration
 - [ ] finish the owner workflow and hosted accessibility checks
 
 ## Decision gates

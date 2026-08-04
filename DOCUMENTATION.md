@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-04 after the Sprint 2A reorderable page-block foundation
+Last reviewed: 2026-08-04 after the Sprint 2B media and narrative-video implementation
 
 ## Active project documents
 

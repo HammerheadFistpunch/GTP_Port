@@ -4,6 +4,7 @@ import { marked } from "marked";
 import ImmichGallery from "../portfolio/ImmichGallery.astro";
 import VideoEmbed from "../portfolio/VideoEmbed.astro";
 import Button from "../ui/Button.astro";
+import { sanitizeHref, sanitizeImageSrc } from "@tinacms/astro/sanitize";
 import type { FlexiblePageBlock } from "../../lib/page-blocks";
 import { normalizeFlexiblePagePath } from "../../lib/flexible-pages";
 
@@ -21,39 +22,71 @@ const publishedPages = new Map(
 
 const renderMarkdown = (markdown: string) =>
   marked.parse(markdown, { async: false, gfm: true }) as string;
+
+const hasText = (value?: string) => Boolean(value?.trim());
+const safeHref = (value?: string) => sanitizeHref(value, "");
+const safeImage = (value?: string) => sanitizeImageSrc(value);
+const safeExternalUrl = (value?: string) => {
+  const sanitized = safeHref(value, "");
+  return /^https?:\/\//i.test(sanitized) ? sanitized : "";
+};
+
+const renderableBlocks = blocks.filter((block) => {
+  switch (block._template) {
+    case "richText":
+      return hasText(block.markdown);
+    case "image":
+      return Boolean(safeImage(block.src));
+    case "youtube":
+      return hasText(block.url) && hasText(block.title);
+    case "immichGallery":
+      return Boolean(safeExternalUrl(block.shareUrl));
+    case "childPages":
+      return hasText(block.heading) || hasText(block.introduction) ||
+        block.paths.some((path) => publishedPages.has(normalizeFlexiblePagePath(path)));
+    case "callToAction":
+      return hasText(block.label) && Boolean(safeHref(block.href));
+  }
+});
 ---
 
-{blocks.length > 0 && (
+{renderableBlocks.length > 0 && (
   <div class="page-blocks" data-page-blocks>
-    {blocks.map((block) => (
+    {renderableBlocks.map((block) => (
       <section class={`page-block page-block--${block._template}`}>
-        {block._template === "richText" && block.markdown.trim() && (
+        {block._template === "richText" && hasText(block.markdown) && (
           <>
             {block.heading && <h2>{block.heading}</h2>}
             <div class="page-block__rich-text" set:html={renderMarkdown(block.markdown)} />
           </>
         )}
 
-        {block._template === "image" && block.src && (
+        {block._template === "image" && safeImage(block.src) && (
           <>
             {block.heading && <h2>{block.heading}</h2>}
-            <figure>
-              <img src={block.src} alt={block.alt || ""} loading="lazy" decoding="async" />
+            <figure data-inline-lightbox-target>
+              <img
+                src={safeImage(block.src)}
+                alt={block.alt || ""}
+                data-lightbox-caption={block.caption}
+                loading="lazy"
+                decoding="async"
+              />
               {block.caption && <figcaption>{block.caption}</figcaption>}
             </figure>
           </>
         )}
 
-        {block._template === "youtube" && block.url && block.title && (
+        {block._template === "youtube" && hasText(block.url) && hasText(block.title) && (
           <>
             {block.heading && <h2>{block.heading}</h2>}
             <VideoEmbed src={block.url} title={block.title} provider="youtube" caption={block.caption} />
           </>
         )}
 
-        {block._template === "immichGallery" && block.shareUrl && (
+        {block._template === "immichGallery" && safeExternalUrl(block.shareUrl) && (
           <ImmichGallery
-            shareUrl={block.shareUrl}
+            shareUrl={safeExternalUrl(block.shareUrl)}
             title={block.heading || "Photo gallery"}
             imageAltPrefix={block.imageAltPrefix}
           />
@@ -81,13 +114,13 @@ const renderMarkdown = (markdown: string) =>
           </>
         )}
 
-        {block._template === "callToAction" && block.label && block.href && (
+        {block._template === "callToAction" && hasText(block.label) && safeHref(block.href) && (
           <div class="page-block__cta">
             <div>
               {block.heading && <h2>{block.heading}</h2>}
               {block.text && <p>{block.text}</p>}
             </div>
-            <Button href={block.href} variant={block.style}>{block.label}</Button>
+            <Button href={safeHref(block.href)} variant={block.style}>{block.label}</Button>
           </div>
         )}
       </section>
@@ -114,10 +147,15 @@ const renderMarkdown = (markdown: string) =>
   }
 
   .page-block figure img {
+    display: block;
     width: 100%;
+    max-height: 42rem;
     height: auto;
+    object-fit: contain;
+    background: var(--bg-surface);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-soft);
+    cursor: zoom-in;
   }
 
   .page-block figcaption {
@@ -166,6 +204,16 @@ const renderMarkdown = (markdown: string) =>
 
   .page-block__cta h2 {
     margin-bottom: var(--space-xs);
+  }
+
+  @media (max-width: 760px) {
+    .page-blocks {
+      gap: var(--space-md);
+    }
+
+    .page-block figure img {
+      max-height: 70vh;
+    }
   }
 
   @media (max-width: 640px) {

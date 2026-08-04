@@ -1,5 +1,6 @@
 ---
 import VideoPlayer from "../media/VideoPlayer.astro";
+import { sanitizeHref, sanitizeImageSrc } from "@tinacms/astro/sanitize";
 
 interface Props {
   src: string;
@@ -18,27 +19,52 @@ function detectProvider(url: string): "native" | "youtube" | "vimeo" {
 }
 
 function getEmbedUrl(url: string, videoProvider: "youtube" | "vimeo") {
-  if (videoProvider === "youtube") {
-    const shortMatch = url.match(/youtu\.be\/([^?&/]+)/);
-    const queryMatch = url.match(/[?&]v=([^?&/]+)/);
-    const embedMatch = url.match(/youtube\.com\/embed\/([^?&/]+)/);
-    const id = shortMatch?.[1] ?? queryMatch?.[1] ?? embedMatch?.[1];
-    return id ? `https://www.youtube-nocookie.com/embed/${id}` : url;
-  }
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase().replace(/^(www\.|m\.)/, "");
 
-  const match = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-  return match?.[1] ? `https://player.vimeo.com/video/${match[1]}` : url;
+    if (videoProvider === "youtube") {
+      const youtubeHosts = new Set([
+        "youtube.com",
+        "youtube-nocookie.com",
+        "youtu.be",
+      ]);
+
+      if (!youtubeHosts.has(host)) return undefined;
+
+      const pathParts = parsed.pathname.split("/").filter(Boolean);
+      const id = host === "youtu.be"
+        ? pathParts[0]
+        : parsed.searchParams.get("v") ||
+          (["embed", "shorts", "live"].includes(pathParts[0]) ? pathParts[1] : undefined);
+
+      return id && /^[A-Za-z0-9_-]{6,20}$/.test(id)
+        ? `https://www.youtube-nocookie.com/embed/${id}`
+        : undefined;
+    }
+
+    if (host !== "vimeo.com" && host !== "player.vimeo.com") return undefined;
+    const id = parsed.pathname.split("/").filter(Boolean).find((part) => /^\d+$/.test(part));
+    return id ? `https://player.vimeo.com/video/${id}` : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 const resolvedProvider = provider ?? detectProvider(src);
 const embedUrl = resolvedProvider === "native"
   ? undefined
   : getEmbedUrl(src, resolvedProvider);
+const nativeUrl = sanitizeImageSrc(src);
+const sanitizedFallbackUrl = sanitizeHref(src, "");
+const fallbackUrl = /^https?:\/\//i.test(sanitizedFallbackUrl)
+  ? sanitizedFallbackUrl
+  : "";
 ---
 
-{resolvedProvider === "native" ? (
-  <VideoPlayer {src} {title} {poster} {caption} />
-) : (
+{resolvedProvider === "native" && nativeUrl ? (
+  <VideoPlayer src={nativeUrl} {title} {poster} {caption} />
+) : embedUrl ? (
   <figure class="video-embed">
     <div class="frame">
       <iframe
@@ -51,6 +77,15 @@ const embedUrl = resolvedProvider === "native"
     </div>
     {caption && <figcaption>{caption}</figcaption>}
   </figure>
+) : (
+  <div class="video-fallback" role="note">
+    <p><strong>{title}</strong></p>
+    <p>
+      This video could not be embedded.
+      {fallbackUrl && <a href={fallbackUrl}>Open it on the video site →</a>}
+    </p>
+    {caption && <p class="fallback-caption">{caption}</p>}
+  </div>
 )}
 
 <style>
@@ -81,5 +116,30 @@ const embedUrl = resolvedProvider === "native"
     font-family: var(--font-ui);
     font-size: 0.9rem;
     text-align: center;
+  }
+
+  .video-fallback {
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+  }
+
+  .video-fallback p {
+    margin: 0;
+  }
+
+  .video-fallback p + p {
+    margin-top: var(--space-xs);
+  }
+
+  .video-fallback a {
+    display: inline-block;
+    margin-left: 0.35rem;
+  }
+
+  .fallback-caption {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
   }
 </style>

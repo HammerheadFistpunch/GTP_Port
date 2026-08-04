@@ -1,5 +1,39 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 2B media and narrative video implemented
+
+Completed locally:
+
+- Added responsive, keyboard-accessible lightbox behavior to Flexible Page
+  image blocks by sharing the existing narrative-image dialog.
+- Hardened image, gallery, call-to-action, native-video, YouTube, and Vimeo
+  values so incomplete or unsafe media does not break the route.
+- Added an explicit Tina rich-text YouTube embed for Content Entries while
+  keeping their bodies narrative-first rather than converting them to blocks.
+- Migrated the nine Content Entry files from `.md` to Markdown-compatible
+  `.mdx` without changing their existing narrative text or public slugs.
+- Moved the Ferrari/IKEA proof video from end-of-entry media into the body as
+  the first end-to-end rich-text embed example.
+- Added the Astro 6-compatible `@astrojs/mdx` integration and regenerated the
+  Tina schema lock.
+
+Verified locally:
+
+- Tina audits all 20 content documents, including all nine MDX entries.
+- Strict TypeScript checking and `git diff --check` pass.
+- Astro generates all 20 routes.
+- The Ferrari/IKEA route renders a responsive privacy-enhanced
+  `youtube-nocookie.com` iframe at the stored body position.
+- Existing Content Entry filenames retain their stems, so every
+  `/archive/[slug]/` URL remains unchanged.
+
+Pending after push:
+
+- Confirm Cloudflare and TinaCloud finish deploying the new MDX schema.
+- Insert, move, edit, and remove a YouTube embed in hosted Tina.
+- Verify image-block mouse, Enter/Space, Escape, and focus-return behavior on
+  desktop and phone before closing Sprint 2.
+
 ## 2026-08-04 - Sprint 2A gallery density refined
 
 - Limited the initial Immich gallery grid to four photos to keep page blocks
@@ -37,11 +71,11 @@ Verified locally:
 - The generated `/services/` HTML contains all six block types in stored order,
   followed by the original Markdown body.
 
-Pending after push:
+Hosted verification completed before Sprint 2B:
 
-- Confirm the Cloudflare deployment and reindex TinaCloud if requested.
-- Add, remove, and drag-reorder blocks through hosted Tina, then verify the
-  deployed order before beginning Sprint 2B.
+- Cloudflare deployed the block schema and proof page.
+- Hosted Tina add/remove/drag ordering and the refined four-image gallery
+  preview were owner-verified.
 
 ## 2026-08-04 - Sprint 1B Flexible Page shell implemented
 

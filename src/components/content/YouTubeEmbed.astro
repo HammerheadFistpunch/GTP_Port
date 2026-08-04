@@ -1,0 +1,26 @@
+---
+import VideoEmbed from "../portfolio/VideoEmbed.astro";
+
+interface Props {
+  url?: string;
+  title?: string;
+  caption?: string;
+}
+
+const {
+  url = "",
+  title = "Embedded YouTube video",
+  caption,
+} = Astro.props;
+---
+
+<div class="entry-youtube">
+  <VideoEmbed src={url} {title} provider="youtube" {caption} />
+</div>
+
+<style>
+  .entry-youtube {
+    margin: var(--space-lg) 0;
+    font-family: var(--font-ui);
+  }
+</style>

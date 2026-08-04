@@ -243,6 +243,44 @@ const flexiblePageBlockTemplates = [
     },
 ];
 
+const entryRichTextTemplates = [
+    {
+        name: "YouTube",
+        label: "YouTube Video",
+        ui: {
+            defaultItem: {
+                title: "Embedded YouTube video",
+            },
+        },
+        fields: [
+            {
+                type: "string" as const,
+                name: "url",
+                label: "YouTube URL",
+                required: true,
+                description:
+                    "Paste a standard youtube.com, youtu.be, or YouTube embed URL.",
+            },
+            {
+                type: "string" as const,
+                name: "title",
+                label: "Accessible Video Title",
+                required: true,
+                description:
+                    "Describe the video for screen readers and when the embed cannot load.",
+            },
+            {
+                type: "string" as const,
+                name: "caption",
+                label: "Optional Caption",
+                ui: {
+                    component: "textarea",
+                },
+            },
+        ],
+    },
+];
+
 export default defineConfig({
     branch,
 
@@ -1127,7 +1165,7 @@ export default defineConfig({
              * UNIFIED CONTENT ENTRIES
              *
              * Maps to:
-             * src/content/entries/*.md
+             * src/content/entries/*.mdx
              *
              * Portfolio and Journal are placements, not separate content types.
              * The legacy collections below remain during the staged migration.
@@ -1136,7 +1174,7 @@ export default defineConfig({
                 name: "entries",
                 label: "Content Entries",
                 path: "src/content/entries",
-                format: "md",
+                format: "mdx",
 
                 fields: [
                     {
@@ -1349,6 +1387,7 @@ export default defineConfig({
                         name: "body",
                         label: "Entry Content",
                         isBody: true,
+                        templates: entryRichTextTemplates,
                     },
                 ],
             },

@@ -21,10 +21,12 @@
 
 <script>
   const dialog = document.querySelector("[data-inline-lightbox]");
-  const content = document.querySelector(".project-content");
+  const targets = document.querySelectorAll("[data-inline-lightbox-target]");
 
-  if (dialog instanceof HTMLDialogElement && content instanceof HTMLElement) {
-    const images = [...content.querySelectorAll("img")];
+  if (dialog instanceof HTMLDialogElement && targets.length > 0) {
+    const images = [...targets].flatMap((target) =>
+      [...target.querySelectorAll("img")],
+    );
     const activeImage = dialog.querySelector("[data-inline-lightbox-image]");
     const caption = dialog.querySelector("[data-inline-lightbox-caption]");
     const count = dialog.querySelector("[data-inline-lightbox-count]");
@@ -40,14 +42,15 @@
 
       activeIndex = (index + images.length) % images.length;
       const sourceImage = images[activeIndex];
-      const alt = sourceImage.alt || `Project image ${activeIndex + 1}`;
+      const alt = sourceImage.alt || `Page image ${activeIndex + 1}`;
 
       activeImage.src = sourceImage.currentSrc || sourceImage.src;
       activeImage.alt = alt;
 
       if (caption instanceof HTMLElement) {
-        caption.textContent = sourceImage.alt;
-        caption.hidden = !sourceImage.alt;
+        const captionText = sourceImage.dataset.lightboxCaption || sourceImage.alt;
+        caption.textContent = captionText;
+        caption.hidden = !captionText;
       }
 
       if (count instanceof HTMLElement) {
@@ -67,7 +70,7 @@
     images.forEach((image, index) => {
       image.tabIndex = 0;
       image.setAttribute("role", "button");
-      image.setAttribute("aria-label", `Open image: ${image.alt || `Project image ${index + 1}`}`);
+      image.setAttribute("aria-label", `Open image: ${image.alt || `Page image ${index + 1}`}`);
 
       image.addEventListener("click", () => openImage(image, index));
       image.addEventListener("keydown", (event) => {
@@ -86,16 +89,21 @@
       if (event.target === dialog) dialog.close();
     });
 
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") showImage(activeIndex - 1);
+      if (event.key === "ArrowRight") showImage(activeIndex + 1);
+    });
+
     dialog.addEventListener("close", () => returnFocus?.focus());
   }
 </script>
 
 <style>
-  :global(.project-content img) {
+  :global([data-inline-lightbox-target] img) {
     cursor: zoom-in;
   }
 
-  :global(.project-content img:focus-visible) {
+  :global([data-inline-lightbox-target] img:focus-visible) {
     outline: 3px solid var(--accent);
     outline-offset: 3px;
   }

@@ -5,6 +5,7 @@ import {
   type CollectionEntry,
 } from "astro:content";
 import EntryLayout from "../../layouts/EntryLayout.astro";
+import YouTubeEmbed from "../../components/content/YouTubeEmbed.astro";
 
 export async function getStaticPaths() {
   const entries = await getCollection("entries");
@@ -57,5 +58,5 @@ const { Content } = await render(entry);
 ---
 
 <EntryLayout {...entry.data} {relatedEntries}>
-  <Content />
+  <Content components={{ YouTube: YouTubeEmbed }} />
 </EntryLayout>

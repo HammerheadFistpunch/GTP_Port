@@ -77,9 +77,9 @@ Depends on: completed foundation
 
 ## Sprint 2 - Reorderable page blocks and media
 
-Status: Chunk 2A is implemented and locally verified. Chunk 2B will finish
-media behavior, graceful fallbacks, and the approved Content Entry rich-text
-YouTube embed after the hosted 2A block-order test.
+Status: Chunk 2A is deployed and owner-verified. Chunk 2B is implemented and
+locally verified; its responsive media, graceful fallbacks, image lightbox,
+and Content Entry rich-text YouTube workflow await hosted verification.
 
 Goal: let an editor assemble a flexible page from a constrained set of
 reusable blocks and rearrange them in Tina.

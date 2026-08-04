@@ -65,7 +65,7 @@ Never commit `.env` or a real `TINA_TOKEN`.
 
 | Location | Responsibility |
 | --- | --- |
-| `src/content/entries/` | Markdown bodies and metadata for every article, project, case study, and gallery |
+| `src/content/entries/` | MDX bodies and metadata for every article, project, case study, and gallery |
 | `src/content/pages/` | Editable Homepage, archive-page, About, Contact, and Resume content |
 | `src/content/flexible-pages/` | Tina-created standalone and nested pages with explicit URL paths |
 | `src/content/settings/site.md` | Navigation, footer, site name, and shared descriptions |
@@ -77,6 +77,7 @@ Never commit `.env` or a real `TINA_TOKEN`.
 | `src/layouts/` | Shared page shells and Content Entry rendering |
 | `src/components/` | Reusable visual and interactive pieces |
 | `src/components/flexible/PageBlockRenderer.astro` | Ordered Flexible Page block rendering and block-level styles |
+| `src/components/content/YouTubeEmbed.astro` | Approved inline Content Entry YouTube wrapper |
 | `src/lib/page-blocks.ts` | Astro validation and TypeScript contract for Flexible Page blocks |
 | `src/styles/` | Global colors, typography, spacing, utilities, and base behavior |
 | `public/uploads/` | Repository-owned images and media available at `/uploads/...` |
@@ -213,6 +214,11 @@ The Rich Text block stores Markdown in frontmatter and is rendered with the
 direct `marked` dependency. This is intentionally different from the legacy
 Markdown body, which Astro renders through the content collection. Keep raw
 layout HTML and inline CSS out of both locations.
+
+Flexible Page image blocks opt into `InlineImageLightbox.astro` through the
+`data-inline-lightbox-target` marker. The same component also serves images in
+Content Entry bodies. Preserve click, Enter/Space activation, Escape-to-close,
+Previous/Next controls, and focus return when changing that shared behavior.
 
 ## Changing the visuals
 
@@ -539,10 +545,10 @@ mobile is a component-code edit.
 Astro creates static pages during the build. There is no database handling
 unknown routes at request time.
 
-Content Entry detail URLs use the Markdown filename:
+Content Entry detail URLs use the MDX filename:
 
 ```text
-src/content/entries/my-project.md
+src/content/entries/my-project.mdx
 -> /archive/my-project/
 ```
 
@@ -580,6 +586,22 @@ same Entry Layout is shared.
 `ImmichGallery.astro` deliberately previews four thumbnails before its
 expand/collapse control. The complete album remains available to the lightbox;
 test both grid visibility and Previous/Next navigation after gallery changes.
+
+### Content Entry YouTube embeds
+
+Tina exposes **YouTube Video** through the Embed control in the Content Entry
+rich-text body. The implementation spans:
+
+- `tina/config.ts` — the `YouTube` rich-text template and MDX collection format
+- `astro.config.mjs` — the Astro MDX integration
+- `src/pages/archive/[...slug].astro` — the MDX component mapping
+- `src/components/content/YouTubeEmbed.astro` — the body-level wrapper
+- `src/components/portfolio/VideoEmbed.astro` — URL parsing, iframe, and fallback
+- `src/content/entries/*.mdx` — stored Markdown and `<YouTube />` elements
+
+Keep those names and fields aligned. Do not expose general-purpose MDX
+components in Tina. The narrow component list is what keeps entries readable,
+portable, and safe to edit.
 
 ## Package and dependency changes
 
@@ -639,7 +661,7 @@ runtime. Add `import React from "react";` and retest the hosted editor.
 
 ### Missing or invalid content error
 
-The Markdown value and `src/content.config.ts` disagree, a required field is
+The Markdown/MDX value and `src/content.config.ts` disagree, a required field is
 missing, or an enum contains an unsupported value. Read the error for the
 filename and field name first.
 

@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
 import tina from '@tinacms/astro/integration';
 import { tinaAdminDevRedirect } from '@tinacms/astro/vite';
 
@@ -7,7 +8,7 @@ export default defineConfig({
     site: 'https://angrysquirrel.org',
     output: 'static',
 
-    integrations: [tina()],
+    integrations: [mdx(), tina()],
 
     vite: {
         plugins: [tinaAdminDevRedirect()],

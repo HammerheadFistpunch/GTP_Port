@@ -106,10 +106,10 @@ leading slash. Drafted, deleted, missing, or mistyped page paths are omitted
 from the public tile list. The paths inside the block determine tile order;
 `navigationOrder` is reserved for later generated navigation.
 
-The `/services/` page contains a verification instance of every block. Until
-Sprint 2B is complete, use that page for testing rather than migrating an
-important public page. Sprint 2B will finish image-lightbox behavior, harden
-incomplete-block fallbacks, and add Content Entry rich-text YouTube embeds.
+The `/services/` page contains a verification instance of every block. Image
+blocks open in the shared keyboard-accessible lightbox. Missing or invalid
+image, gallery, video, tile, and link values are skipped or replaced with a
+readable fallback rather than breaking the page.
 
 Published nested pages automatically show breadcrumbs for each published
 Flexible Page ancestor. If an ancestor path has no corresponding published
@@ -155,7 +155,7 @@ page rather than the Homepage.
 
 ## Published content
 
-`src/content/entries/*.md` is the single source for articles, projects,
+`src/content/entries/*.mdx` is the single source for articles, projects,
 galleries, case studies, and other published work.
 
 The Tina **Placement** control determines where an entry appears:
@@ -183,6 +183,23 @@ Standard, Wide, Tall, or Large. Journal order uses `date`.
 - Keep critical cover and narrative images in the repository even when an
   expanded Immich gallery is also present.
 - Use `draft: true` until the deployed entry has been reviewed.
+
+### Inline YouTube video
+
+Content Entry files use MDX, which preserves ordinary Markdown and adds one
+approved rich-text element for inline YouTube video. In Tina:
+
+1. Open **Content Entries** and place the cursor where the video belongs.
+2. Use the rich-text **Embed** control and choose **YouTube Video**.
+3. Paste a `youtube.com`, `youtu.be`, or YouTube embed URL.
+4. Add a descriptive **Accessible Video Title** and optional caption.
+5. Save, wait for deployment, and verify the video at desktop and phone width.
+
+The stored source is a readable `<YouTube ... />` element surrounded by normal
+Markdown. A valid URL renders through YouTube's privacy-enhanced
+`youtube-nocookie.com` domain. An invalid or incomplete URL shows a safe text
+fallback instead of breaking the entry. Do not add arbitrary React or Astro
+components to entry bodies.
 
 ### Immich galleries
 
@@ -217,7 +234,7 @@ Schema changes must remain aligned across:
 
 - `tina/config.ts` - fields exposed in Tina
 - `src/content.config.ts` - fields accepted and validated by Astro
-- the relevant Markdown frontmatter - stored values
+- the relevant Markdown or MDX frontmatter - stored values
 - the page, layout, or component that renders the values
 
 Regenerate `tina/tina-lock.json` after Tina schema changes; do not edit the
@@ -226,8 +243,9 @@ lock file manually.
 ## Redesign and migration safety
 
 Use structured editable sections for the small number of landing pages. Keep
-Journal and Portfolio bodies as ordinary Markdown and introduce custom body
-blocks only when Markdown cannot express the content.
+Journal and Portfolio bodies as ordinary Markdown inside MDX and limit custom
+body elements to the approved YouTube embed. Use structured page blocks only
+when narrative Markdown cannot express the content.
 
 This preserves the ability to restyle the site by replacing Astro components
 and to migrate the content to another Markdown-capable system without rewriting

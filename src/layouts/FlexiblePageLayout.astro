@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import Container from "../components/ui/Container.astro";
+import InlineImageLightbox from "../components/portfolio/InlineImageLightbox.astro";
 
 interface Props {
   title: string;
@@ -67,6 +68,7 @@ const {
       <div class="article-content page-content">
         <slot />
       </div>
+      <InlineImageLightbox />
     </Container>
   </article>
 </BaseLayout>

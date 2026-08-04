@@ -56,7 +56,7 @@ const educationItem = z.object({
 
 const entries = defineCollection({
     loader: glob({
-        pattern: "**/*.md",
+        pattern: "**/*.mdx",
         base: "./src/content/entries",
     }),
     schema: z.object({

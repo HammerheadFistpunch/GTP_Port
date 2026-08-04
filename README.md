@@ -9,7 +9,7 @@ photography, video, writing, engineering, and case-study work.
 The site is operational and ready for real content. It includes:
 
 - a static Astro site deployed through Cloudflare Pages
-- Git-backed Markdown content
+- Git-backed Markdown and MDX content
 - authenticated TinaCloud editing at `/admin/`
 - one unified Content Entries collection with Portfolio and Journal placement
 - neutral `/archive/[slug]/` detail pages shared by every entry type
@@ -22,11 +22,11 @@ The site is operational and ready for real content. It includes:
   galleries, child-page tiles, and calls to action
 - responsive navigation, accessibility, and social metadata foundations
 
-Sprint 1 is deployed and verified. Sprint 2A adds the ordered Flexible Page
-block schema and shared renderer while preserving all existing Markdown. The
-next gate is a hosted Tina add/remove/drag-order test on `/services/`; Sprint
-2B then finishes media behavior and adds the approved rich-text YouTube embed
-to Content Entry bodies. Content publishing can continue in parallel.
+Sprint 1 and Sprint 2A are deployed and verified. Sprint 2B completes the
+responsive media layer, adds keyboard-accessible Flexible Page image
+lightboxes and resilient media fallbacks, and lets editors insert YouTube
+videos directly inside Content Entry narratives. Content publishing can
+continue in parallel while the hosted 2B workflow is reviewed.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and
@@ -35,14 +35,14 @@ active work queue, `Roadmap.md` for the full sprint sequence, and
 ## Source of truth
 
 - Repository branch: `gpt-handoff`
-- Content: Markdown under `src/content/`
+- Content: Markdown and MDX under `src/content/`
 - Layout and presentation: Astro under `src/pages/`, `src/layouts/`,
   `src/components/`, and `src/styles/`
 - CMS schema: `tina/config.ts`
 - Astro content validation: `src/content.config.ts`
 
-TinaCloud is an editing interface. GitHub Markdown remains the durable source
-of truth.
+TinaCloud is an editing interface. GitHub Markdown/MDX remains the durable
+source of truth.
 
 ## Editing workflow
 
@@ -102,7 +102,8 @@ chronological by publication date.
 
 ## Content portability
 
-Content Entry bodies should remain semantic Markdown. Presentation
+Content Entry bodies remain semantic Markdown inside `.mdx` files. The only
+approved custom body element is the constrained YouTube embed. Presentation
 belongs in Astro components, while frontmatter should describe the content
 rather than a specific visual layout.
 
