@@ -17,6 +17,8 @@ Completed locally:
 - Preserved the legacy `primaryTopic`, `featured`, and archive-page `topics`
   values as documented compatibility fields during the staged migration.
 - Preserved every existing `/archive/[slug]/` detail URL.
+- Hid the browser scrollbar on the horizontal Journal section index while
+  preserving touch, wheel, and trackpad scrolling on narrow screens.
 
 Verified locally:
 

@@ -142,6 +142,8 @@ Stop and verify:
 - [x] add a Tina-selected featured story
 - [x] keep the remaining feed chronological without duplicating the feature
 - [x] implement the approved compact editorial landing-page layout
+- [x] remove the visible scrollbar from the section index without disabling
+  narrow-screen horizontal scrolling
 
 Stop and verify:
 

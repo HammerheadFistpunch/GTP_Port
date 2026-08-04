@@ -29,7 +29,12 @@ const { categories } = Astro.props;
     gap: clamp(1.5rem, 4vw, 3rem);
     overflow-x: auto;
     border-bottom: 1px solid var(--border-color);
-    scrollbar-width: thin;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .categories::-webkit-scrollbar {
+    display: none;
   }
 
   .categories a {
