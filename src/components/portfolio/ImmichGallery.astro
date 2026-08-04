@@ -31,6 +31,16 @@ const galleryId = "immich-gallery";
 
   <div class="immich-gallery__grid" data-gallery-grid></div>
 
+  <button
+    type="button"
+    class="immich-gallery__toggle"
+    data-gallery-toggle
+    aria-expanded="false"
+    hidden
+  >
+    Show all photos
+  </button>
+
   <p class="immich-gallery__fallback" data-gallery-fallback hidden>
     The gallery could not be loaded here.
     <a href={shareUrl}>Open it on the photo server →</a>
@@ -82,6 +92,7 @@ const galleryId = "immich-gallery";
     const altPrefix = root.dataset.altPrefix || "Gallery image";
     const status = root.querySelector<HTMLElement>("[data-gallery-status]");
     const grid = root.querySelector<HTMLElement>("[data-gallery-grid]");
+    const toggle = root.querySelector<HTMLButtonElement>("[data-gallery-toggle]");
     const fallback = root.querySelector<HTMLElement>("[data-gallery-fallback]");
     const dialog = root.querySelector<HTMLDialogElement>("[data-gallery-dialog]");
     const activeImage = root.querySelector<HTMLImageElement>("[data-gallery-active-image]");
@@ -90,7 +101,7 @@ const galleryId = "immich-gallery";
     const next = root.querySelector<HTMLButtonElement>("[data-gallery-next]");
     const close = root.querySelector<HTMLButtonElement>("[data-gallery-close]");
 
-    if (!shareUrlValue || !status || !grid || !fallback || !dialog ||
+    if (!shareUrlValue || !status || !grid || !toggle || !fallback || !dialog ||
         !activeImage || !counter || !previous || !next || !close) {
       return;
     }
@@ -120,6 +131,7 @@ const galleryId = "immich-gallery";
       }
 
       let activeIndex = 0;
+      const previewCount = 4;
 
       const showImage = (index: number) => {
         activeIndex = (index + images.length) % images.length;
@@ -134,6 +146,7 @@ const galleryId = "immich-gallery";
         button.type = "button";
         button.className = "immich-gallery__thumbnail";
         button.setAttribute("aria-label", `Open ${altPrefix.toLowerCase()} ${index + 1}`);
+        button.hidden = index >= previewCount;
 
         const thumbnail = document.createElement("img");
         // Immich's thumbnail is intentionally small and looks soft in a
@@ -153,6 +166,30 @@ const galleryId = "immich-gallery";
         });
         grid.append(button);
       });
+
+      if (images.length > previewCount) {
+        let expanded = false;
+        const thumbnails = Array.from(
+          grid.querySelectorAll<HTMLButtonElement>(".immich-gallery__thumbnail"),
+        );
+
+        const updateGalleryVisibility = () => {
+          thumbnails.forEach((thumbnail, index) => {
+            thumbnail.hidden = !expanded && index >= previewCount;
+          });
+          toggle.setAttribute("aria-expanded", String(expanded));
+          toggle.textContent = expanded
+            ? `Show first ${previewCount} photos`
+            : `Show all ${images.length} photos`;
+        };
+
+        toggle.hidden = false;
+        toggle.addEventListener("click", () => {
+          expanded = !expanded;
+          updateGalleryVisibility();
+        });
+        updateGalleryVisibility();
+      }
 
       previous.addEventListener("click", () => showImage(activeIndex - 1));
       next.addEventListener("click", () => showImage(activeIndex + 1));
@@ -220,6 +257,10 @@ const galleryId = "immich-gallery";
     cursor: zoom-in;
   }
 
+  :global(.immich-gallery__thumbnail[hidden]) {
+    display: none;
+  }
+
   :global(.immich-gallery__thumbnail img) {
     display: block;
     width: 100%;
@@ -230,6 +271,29 @@ const galleryId = "immich-gallery";
   :global(.immich-gallery__thumbnail:hover img),
   :global(.immich-gallery__thumbnail:focus-visible img) {
     transform: scale(1.025);
+  }
+
+  .immich-gallery__toggle {
+    display: block;
+    margin: var(--space-sm) auto 0;
+    padding: 0.7rem 1rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font: inherit;
+    font-family: var(--font-ui);
+    cursor: pointer;
+  }
+
+  .immich-gallery__toggle:hover,
+  .immich-gallery__toggle:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .immich-gallery__toggle[hidden] {
+    display: none;
   }
 
   .immich-gallery__fallback {

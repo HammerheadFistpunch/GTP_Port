@@ -577,6 +577,10 @@ Changing gallery or lightbox behavior can affect keyboard controls, focus,
 captions, mobile layout, and both Journal and Portfolio entries because the
 same Entry Layout is shared.
 
+`ImmichGallery.astro` deliberately previews four thumbnails before its
+expand/collapse control. The complete album remains available to the lightbox;
+test both grid visibility and Previous/Next navigation after gallery changes.
+
 ## Package and dependency changes
 
 Avoid updating packages merely because a newer version exists. Astro and Tina

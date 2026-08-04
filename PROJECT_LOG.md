@@ -1,5 +1,15 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 2A gallery density refined
+
+- Limited the initial Immich gallery grid to four photos to keep page blocks
+  compact.
+- Added an accessible expand/collapse control that reveals the full grid and
+  returns it to the four-photo preview.
+- Preserved full-album lightbox navigation while the thumbnail grid is
+  collapsed.
+- Updated the content and maintenance guides with the shared gallery behavior.
+
 ## 2026-08-04 - Sprint 2A reorderable block foundation implemented
 
 Completed locally:

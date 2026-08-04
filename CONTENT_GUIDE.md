@@ -197,6 +197,10 @@ adding or removing Immich photos does not require a site rebuild. If the share
 server is unavailable, the project displays a direct link to the public album.
 Revoking the Immich public link also removes the gallery's access.
 
+To keep long albums compact, the gallery initially displays four photos. A
+visitor can expand the complete grid and collapse it back to four. The
+lightbox always includes the full album, even while the grid is collapsed.
+
 ## TinaCMS connection
 
 TinaCMS and TinaCloud map their collections to:
