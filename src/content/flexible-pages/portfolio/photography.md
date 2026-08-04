@@ -12,5 +12,9 @@ blocks:
     shareUrl: 'https://share.angrysquirrel.org/share/vqdqHdel4XXYPSWf6JHtTh-y1-0BviVRGr6mmhDBzSFR-DVE8Jb9M4RQYH0ey1LLBD8'
     imageAltPrefix: Landscapes
     _template: immichGallery
+  - heading: Product
+    shareUrl: 'https://share.angrysquirrel.org/share/b36wVdEMAi1esFI1pi0rFc5Znb73qjyPwAlZ1e8aR1-aMpZmL_lChiNk9u2CQQeqpGo'
+    imageAltPrefix: Product
+    _template: immichGallery
 ---
 
