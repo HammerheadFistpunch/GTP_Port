@@ -19,13 +19,13 @@ The site is operational and ready for real content. It includes:
 - structured Resume content
 - responsive navigation, accessibility, and social metadata foundations
 
-Real portfolio projects, Journal entries, biography, resume, and contact content
-are now the active priority. Journal topic chips are currently display-only;
-functional topic routes remain planned. Filters, print refinement, design
-polish, and launch tooling are improvements rather than publishing blockers.
+The current development priority is Sprint 1A: prove Tina-created Flexible
+Pages and nested static routes without changing existing public URLs. Content
+publishing can continue in parallel while the controlled site-builder expansion
+is implemented.
 
-See `DOCUMENTATION.md` for the documentation index, `NEXT_STEPS.md` for the
-active work queue, `Roadmap.md` for the broader sequence, and
+See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
+active work queue, `Roadmap.md` for the full sprint sequence, and
 `SITE_MAINTENANCE_GUIDE.md` for owner-directed code and Tina changes.
 
 ## Source of truth
