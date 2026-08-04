@@ -15,6 +15,13 @@ export async function getStaticPaths() {
   const publishedPages = pages.filter((page) => !page.data.draft);
   const routes = new Map<string, string>();
 
+  const pageByPath = new Map(
+    publishedPages.map((page) => [
+      normalizeFlexiblePagePath(page.data.path),
+      page,
+    ]),
+  );
+
   return publishedPages.map((page) => {
     const error = validateFlexiblePagePath(page.data.path);
 
@@ -33,21 +40,35 @@ export async function getStaticPaths() {
 
     routes.set(path, page.id);
 
+    const segments = path.split("/");
+    const breadcrumbs = segments.slice(0, -1).flatMap((_, index) => {
+      const ancestorPath = segments.slice(0, index + 1).join("/");
+      const ancestor = pageByPath.get(ancestorPath);
+
+      if (!ancestor) return [];
+
+      return [{
+        label: ancestor.data.navigationLabel || ancestor.data.title,
+        href: `/${ancestorPath}/`,
+      }];
+    });
+
     return {
       params: { path },
-      props: { page },
+      props: { page, breadcrumbs },
     };
   });
 }
 
 interface Props {
   page: CollectionEntry<"flexiblePages">;
+  breadcrumbs: Array<{ label: string; href: string }>;
 }
 
-const { page } = Astro.props;
+const { page, breadcrumbs } = Astro.props;
 const { Content } = await render(page);
 ---
 
-<FlexiblePageLayout {...page.data}>
+<FlexiblePageLayout {...page.data} {breadcrumbs}>
   <Content />
 </FlexiblePageLayout>

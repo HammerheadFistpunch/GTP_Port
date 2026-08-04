@@ -48,26 +48,31 @@ Stop and verify:
 - [x] strict TypeScript checking passes
 - [x] the Astro production build generates both test URLs
 - [x] all existing routes still build
-- [ ] Cloudflare preview deploys successfully
+- [x] Cloudflare preview deploys successfully
 
-Chunk 1A is implemented and verified locally. Do not begin Chunk 1B until the
-changes are pushed to `gpt-handoff` and the Cloudflare preview gate passes.
+Chunk 1A is deployed and verified. The Tina draft-default publishing fix is
+also deployed.
 
 ### Chunk 1B - Page shell and editorial controls
 
-- add eyebrow, header image, navigation metadata, and safe defaults
-- add missing-page and draft filtering behavior
-- refine the flexible-page layout responsively
-- document page creation, nesting, renaming, and deletion
-- reindex TinaCloud and test create/edit/delete in the hosted editor
+- [x] add eyebrow, header image, navigation metadata, and safe defaults
+- [x] add missing-page and draft filtering behavior
+- [x] refine the flexible-page layout responsively
+- [x] document page creation, nesting, renaming, and deletion
+- [x] regenerate the Tina lock and verify local indexing
+- [ ] reindex TinaCloud and test create/edit/delete in the hosted editor
 
 Stop and verify:
 
-- a page can be created and nested entirely through Tina
-- renaming does not collide with a reserved or existing route
-- deleting the test child removes its generated route on the next build
-- existing About, Contact, Resume, Journal, Portfolio, and archive routes remain
+- [ ] a page can be created and nested entirely through hosted Tina
+- [x] reserved, malformed, and duplicate paths fail the build safely
+- [ ] deleting a hosted test child removes its generated route on the next build
+- [x] existing About, Contact, Resume, Journal, Portfolio, and archive routes remain
   unchanged
+
+Chunk 1B is implemented and verified locally. After it is pushed, confirm the
+Cloudflare deployment, reindex TinaCloud, and complete the hosted create,
+rename, draft, and delete checks before beginning Sprint 2.
 
 ## Decision gates
 

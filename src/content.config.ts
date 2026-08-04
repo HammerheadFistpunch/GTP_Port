@@ -174,6 +174,11 @@ const flexiblePages = defineCollection({
             }
         }),
         description: z.string(),
+        eyebrow: z.string().optional(),
+        headerImage: z.string().optional(),
+        headerImageAlt: z.string().optional(),
+        navigationLabel: z.string().optional(),
+        navigationOrder: z.number().int().default(0),
         draft: z.boolean().default(false),
         seoTitle: z.string().optional(),
         seoDescription: z.string().optional(),

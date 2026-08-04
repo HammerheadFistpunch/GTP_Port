@@ -47,8 +47,8 @@ homepage without becoming an unrestricted Wix-style layout system.
 
 ## Sprint 1 - Flexible page foundation
 
-Status: Chunk 1A is implemented and verified locally. Cloudflare preview
-verification remains before Chunk 1B begins.
+Status: Chunks 1A and 1B are implemented and verified locally. The remaining
+Sprint 1 gate is the deployed Tina create, rename, draft, and delete workflow.
 
 Goal: allow a normal page or nested subpage to be created and deleted in Tina
 and receive a working static URL.

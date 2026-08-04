@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/ui/Container.astro";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The page you requested could not be found."
+>
+  <section class="not-found" aria-labelledby="not-found-title">
+    <Container width="reading">
+      <p class="eyebrow">404</p>
+      <h1 id="not-found-title">Page not found</h1>
+      <p>
+        This page may be unpublished, renamed, or no longer available.
+      </p>
+      <a class="home-link" href="/">Return home →</a>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding: var(--space-xl) 0;
+  }
+
+  .eyebrow {
+    margin-bottom: var(--space-sm);
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .not-found p:not(.eyebrow) {
+    max-width: 38rem;
+    font-size: 1.15rem;
+  }
+
+  .home-link {
+    display: inline-block;
+    margin-top: var(--space-sm);
+    font-weight: 700;
+  }
+</style>

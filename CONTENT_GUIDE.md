@@ -65,9 +65,65 @@ Use lowercase, kebab-case path segments without a leading slash. Draft pages
 remain in Git but do not receive a public route. The build rejects malformed,
 duplicate, and reserved paths before deployment.
 
-Sprint 1A provides the route proof and a minimal Markdown body. The expanded
-page shell, navigation metadata, header controls, and owner-facing create,
-rename, nesting, and deletion workflow belong to Sprint 1B.
+### Flexible Page fields
+
+- **Page Title** is the public heading and the fallback browser/SEO title.
+- **URL Path** is the public route and may contain nested segments.
+- **Page Description** is the visible introduction and fallback SEO
+  description.
+- **Eyebrow** is an optional short label above the page title.
+- **Header Image** is an optional responsive image between the header and body.
+- **Header Image Alt Text** describes a meaningful image; leave it blank only
+  when the image is decorative.
+- **Navigation Label** is an optional shorter breadcrumb label. The page title
+  is the fallback.
+- **Navigation Order** records sibling order for later generated menus. Lower
+  numbers come first; the current flat primary navigation is unchanged.
+- **Draft** removes the route at the next deployment while retaining the file.
+- The SEO fields override the title, description, and social image only when
+  populated.
+
+Published nested pages automatically show breadcrumbs for each published
+Flexible Page ancestor. If an ancestor path has no corresponding published
+page, the child route still works and the missing ancestor is omitted from the
+breadcrumb.
+
+### Create and publish
+
+1. Open **Flexible Pages** in Tina and choose **Create New**.
+2. Enter the title, description, and a lowercase URL path without leading or
+   trailing slashes.
+3. Keep **Draft** enabled while editing. New pages default to draft.
+4. Add optional presentation, navigation, and SEO fields, then save.
+5. Clear **Draft** and save when ready to publish.
+6. Wait for Cloudflare to deploy, then open the exact public path and refresh
+   it directly.
+
+For a nested page, use the complete path. For example,
+`services/audio-production` publishes at `/services/audio-production/`.
+Creating a nested page does not require a matching parent, but creating and
+publishing the parent gives visitors a complete breadcrumb trail.
+
+### Rename or move
+
+Changing **Page Title** changes the heading but does not change the URL.
+Changing **URL Path** renames or moves the public route on the next deployment.
+Before saving a new path:
+
+1. Check that it is not reserved and does not duplicate another Flexible Page.
+2. Update links in parent pages, navigation settings, and other content.
+3. Add a redirect before changing an established public URL; otherwise the old
+   address will show the 404 page.
+4. Keep the Markdown filename/folder aligned with the route when practical,
+   but remember that `path`—not the filename—is the routing contract.
+
+### Unpublish or delete
+
+Enable **Draft** to temporarily remove a route while keeping its content.
+Use Tina's document menu to delete a page permanently. Deleting a parent does
+not delete its children; review and separately move, draft, or delete every
+descendant. After the deployment, the removed route should show the site's 404
+page rather than the Homepage.
 
 ## Published content
 

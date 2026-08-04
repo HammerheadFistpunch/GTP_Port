@@ -136,6 +136,50 @@ Tina document filenames may contain folders, but the `path` frontmatter is the
 public routing contract. Keep the nested filename and URL path aligned where
 practical so repository browsing remains understandable.
 
+Flexible Pages now use the following optional editorial controls:
+
+| Field | Behavior |
+| --- | --- |
+| `eyebrow` | Short accent label above the page title |
+| `headerImage` | Wide responsive image above the Markdown body |
+| `headerImageAlt` | Accessible description; blank means decorative |
+| `navigationLabel` | Short breadcrumb label; falls back to `title` |
+| `navigationOrder` | Stored sibling order for future generated menus |
+
+Published parent paths generate breadcrumbs automatically. The global primary
+navigation remains controlled by `src/content/settings/site.md`; nested global
+menus are intentionally deferred to Sprint 7.
+
+### Owner workflow for Flexible Pages
+
+Create and publish:
+
+1. In Tina, open **Flexible Pages** and create a document.
+2. Enter required content and a lowercase kebab-case **URL Path**.
+3. Leave **Draft** enabled until the page is ready.
+4. Clear **Draft**, save, wait for Cloudflare, and test the URL directly.
+
+Nest a page by entering its full path, such as
+`services/video-production`. A published Flexible Page at `services` is not
+required for routing, but it supplies the parent breadcrumb.
+
+Rename safely:
+
+- Changing the title does not move the route.
+- Changing `path` moves the route and makes the old URL return 404 unless a
+  redirect is added.
+- Search the repository for links to the old path before publishing the move.
+- Reserved, malformed, and duplicate paths stop the production build instead
+  of overwriting another page.
+
+Delete safely:
+
+- Use **Draft** for a reversible unpublish.
+- Tina deletion removes only the selected document; descendants are not
+  deleted automatically.
+- After deployment, confirm the removed path displays the custom 404 page and
+  that any child pages still have intentional routes and links.
+
 ## Changing the visuals
 
 ### Change the global color palette

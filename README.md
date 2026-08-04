@@ -20,10 +20,10 @@ The site is operational and ready for real content. It includes:
 - guarded Flexible Pages with top-level and nested static routes
 - responsive navigation, accessibility, and social metadata foundations
 
-Sprint 1A now proves Tina-managed Flexible Pages at `/services/` and
-`/services/video-production/` without changing existing public URLs. Its local
-checks pass; Cloudflare preview verification is the remaining gate before
-Sprint 1B adds the finished page shell and editorial controls. Content
+Sprint 1 now provides Tina-managed Flexible Pages with nested static URLs,
+draft safety, SEO fields, eyebrow and header-image controls, generated
+breadcrumbs, and a responsive shared page shell. The final gate is the hosted
+Tina create, rename, draft, and delete test after Sprint 1B deploys. Content
 publishing can continue in parallel.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the

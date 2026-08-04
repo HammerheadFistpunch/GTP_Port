@@ -1,5 +1,37 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 1B Flexible Page shell implemented
+
+Completed locally:
+
+- Added Flexible Page eyebrow, header image, header-image alt text,
+  navigation label, and navigation order controls in Tina and Astro.
+- Added safe defaults for new-page draft state, navigation order, missing
+  optional presentation fields, and breadcrumb labels.
+- Added generated breadcrumbs from published ancestor pages without changing
+  the flat primary navigation.
+- Finished the shared Flexible Page shell with responsive heading, spacing,
+  body, and header-image behavior using the existing typography and colors.
+- Added a custom static 404 page so missing, drafted, renamed, and deleted
+  routes no longer fall back to the Homepage on Cloudflare.
+- Regenerated `tina/tina-lock.json` and expanded the content and maintenance
+  guides with create, nest, rename, draft, and delete workflows.
+
+Verified locally:
+
+- Tina local indexing and schema generation pass.
+- Strict TypeScript checking passes.
+- Astro generates 20 pages, including the 404 page and all four current
+  Flexible Page routes.
+- Existing About, Contact, Resume, Journal, Portfolio, and archive routes still
+  generate.
+
+Pending after push:
+
+- Confirm the Cloudflare deployment and custom missing-page response.
+- Reindex TinaCloud, then test create, rename, draft, and delete in the hosted
+  editor before beginning Sprint 2.
+
 ## 2026-08-04 - Sprint 1A Flexible Page route proof implemented
 
 Completed locally:

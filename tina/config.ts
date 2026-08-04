@@ -771,6 +771,7 @@ export default defineConfig({
 
                 defaultItem: () => ({
                     draft: true,
+                    navigationOrder: 0,
                 }),
 
                 ui: {
@@ -811,6 +812,44 @@ export default defineConfig({
                         required: true,
                         ui: {
                             component: "textarea",
+                        },
+                    },
+                    {
+                        type: "string",
+                        name: "eyebrow",
+                        label: "Eyebrow",
+                        description:
+                            "Optional short label shown above the page title.",
+                    },
+                    {
+                        type: "image",
+                        name: "headerImage",
+                        label: "Header Image",
+                        description:
+                            "Optional wide image shown between the page header and body.",
+                    },
+                    {
+                        type: "string",
+                        name: "headerImageAlt",
+                        label: "Header Image Alt Text",
+                        description:
+                            "Describe meaningful header images. Leave blank only when the image is decorative.",
+                    },
+                    {
+                        type: "string",
+                        name: "navigationLabel",
+                        label: "Navigation Label",
+                        description:
+                            "Optional shorter title for breadcrumbs and future menus. The page title is used when blank.",
+                    },
+                    {
+                        type: "number",
+                        name: "navigationOrder",
+                        label: "Navigation Order",
+                        description:
+                            "Lower numbers will appear first among sibling pages in future generated menus.",
+                        ui: {
+                            component: "number",
                         },
                     },
                     {

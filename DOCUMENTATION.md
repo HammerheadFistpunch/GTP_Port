@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-04 after the Sprint 1A Flexible Page route proof
+Last reviewed: 2026-08-04 after the Sprint 1B Flexible Page shell and editorial controls
 
 ## Active project documents
 

@@ -5,17 +5,25 @@ import Container from "../components/ui/Container.astro";
 interface Props {
   title: string;
   description: string;
+  eyebrow?: string;
+  headerImage?: string;
+  headerImageAlt?: string;
   seoTitle?: string;
   seoDescription?: string;
   seoImage?: string;
+  breadcrumbs?: Array<{ label: string; href: string }>;
 }
 
 const {
   title,
   description,
+  eyebrow,
+  headerImage,
+  headerImageAlt,
   seoTitle,
   seoDescription,
   seoImage,
+  breadcrumbs = [],
 } = Astro.props;
 ---
 
@@ -25,12 +33,35 @@ const {
   image={seoImage}
 >
   <article class="flexible-page">
+    <Container width="reading">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        {breadcrumbs.map((item) => (
+          <>
+            <span aria-hidden="true">/</span>
+            <a href={item.href}>{item.label}</a>
+          </>
+        ))}
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{title}</span>
+      </nav>
+    </Container>
+
     <header class="page-header">
       <Container width="reading">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
         <h1>{title}</h1>
         <p class="introduction">{description}</p>
       </Container>
     </header>
+
+    {headerImage && (
+      <Container>
+        <figure class="page-hero">
+          <img src={headerImage} alt={headerImageAlt || ""} />
+        </figure>
+      </Container>
+    )}
 
     <Container width="reading">
       <div class="article-content page-content">
@@ -41,9 +72,40 @@ const {
 </BaseLayout>
 
 <style>
+  .flexible-page {
+    padding-top: var(--space-md);
+  }
+
+  .breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+  }
+
+  .breadcrumbs a {
+    color: inherit;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--accent);
+  }
+
   .page-header {
-    padding: var(--space-lg) 0;
+    padding: var(--space-md) 0 var(--space-lg);
     border-bottom: 1px solid var(--border-color);
+  }
+
+  .eyebrow {
+    margin-bottom: var(--space-sm);
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .page-header h1 {
@@ -56,7 +118,50 @@ const {
     font-size: 1.2rem;
   }
 
+  .page-hero {
+    margin: var(--space-lg) 0 0;
+  }
+
+  .page-hero img {
+    display: block;
+    width: 100%;
+    max-height: 34rem;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+  }
+
   .page-content {
     padding: var(--space-lg) 0 var(--space-xl);
+  }
+
+  @media (max-width: 600px) {
+    .flexible-page {
+      padding-top: var(--space-sm);
+    }
+
+    .page-header {
+      padding: var(--space-md) 0;
+    }
+
+    .page-header h1 {
+      font-size: clamp(2.25rem, 12vw, 3.25rem);
+    }
+
+    .introduction {
+      font-size: 1.05rem;
+    }
+
+    .page-hero {
+      margin-top: var(--space-md);
+    }
+
+    .page-hero img {
+      min-height: 12rem;
+    }
+
+    .page-content {
+      padding: var(--space-md) 0 var(--space-lg);
+    }
   }
 </style>
