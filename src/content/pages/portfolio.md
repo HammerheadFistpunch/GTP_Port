@@ -8,11 +8,13 @@ headerStyle: compact
 sectionTitle: Explore the portfolio
 emptyMessage: No published Portfolio projects yet.
 topics: []
+featuredEntry: ''
 portfolioPacking: dense
 portfolioTiles:
   - source: src/content/flexible-pages/portfolio/video.md
-    tileSize: wide
+    tileSize: tall
     emphasis: true
+    imageOverride: /uploads/PXL_20260716_202414906-(Large).jpg
   - source: src/content/flexible-pages/portfolio/photography.md
     tileSize: large
     emphasis: true
@@ -26,3 +28,4 @@ portfolioTiles:
     tileSize: standard
     emphasis: false
 ---
+
