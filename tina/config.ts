@@ -769,6 +769,10 @@ export default defineConfig({
                 path: "src/content/flexible-pages",
                 format: "md",
 
+                defaultItem: () => ({
+                    draft: true,
+                }),
+
                 ui: {
                     allowedActions: {
                         create: true,

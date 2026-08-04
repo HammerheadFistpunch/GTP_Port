@@ -174,7 +174,7 @@ const flexiblePages = defineCollection({
             }
         }),
         description: z.string(),
-        draft: z.boolean().default(true),
+        draft: z.boolean().default(false),
         seoTitle: z.string().optional(),
         seoDescription: z.string().optional(),
         seoImage: z.string().optional(),
