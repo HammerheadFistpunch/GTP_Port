@@ -22,7 +22,7 @@ Controls:
 - `home.md` — hero, calls to action, linked section headings, preview limits,
   and About callout
 - `journal.md` — Journal archive header, topics, section title, and empty state
-- `portfolio.md` — Corpus archive header, section title, and empty state
+- `portfolio.md` — Portfolio archive header, section title, and empty state
 - `about.md` — About header and Markdown body
 - `resume.md` — Resume header, links, and Markdown body
 - `contact.md` — Contact header, links, and Markdown body
