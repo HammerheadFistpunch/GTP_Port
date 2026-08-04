@@ -214,14 +214,29 @@ Sprint 6 is deployed and owner-accepted. The remaining cross-device, keyboard,
 and hosted-editor edge-case checks will be completed during Sprint 8's final
 schema reindex and QA pass rather than blocking navigation work.
 
-## Next sprint - Sprint 7
+## Active sprint - Sprint 7
 
-- [ ] decide whether About remains a standalone navigation item
-- [ ] add ordered navigation items with optional child links
-- [ ] support internal page references and explicit external URLs
-- [ ] add accessible desktop and mobile nested-navigation behavior
-- [ ] connect selected Flexible Pages, Portfolio, and Journal destinations
-- [ ] preserve or redirect every existing public route
+- [x] remove About from the primary navigation while preserving its page,
+  Homepage link, and footer link
+- [x] add ordered navigation items with optional child links
+- [x] support internal page references and explicit external URLs
+- [x] add accessible desktop and mobile nested-navigation behavior
+- [x] connect Portfolio to Video, Photography, Case Studies, and Software Projects
+- [x] keep Journal section navigation on the Journal archive rather than in the
+  site-wide header
+- [x] remove Writing Samples from the primary hierarchy and Homepage category
+  tiles while preserving its existing route
+- [x] correct the Resume primary-navigation destination
+- [x] preserve every existing public route
+
+Stop and verify:
+
+- [x] Tina audits all 54 content documents and navigation references
+- [x] strict TypeScript checking and `git diff --check` pass
+- [x] the saved header hierarchy contains only the approved destinations
+- [ ] Cloudflare deploys the revised schema and navigation successfully
+- [ ] hosted Tina can reorder top-level and child links and select internal pages
+- [ ] deployed desktop keyboard/pointer and mobile touch behavior pass owner review
 
 ## Decision gates
 
@@ -233,7 +248,9 @@ schema reindex and QA pass rather than blocking navigation work.
   Latest is navigation for the complete feed, not an entry section.
 - [x] Before Sprint 5: use a controlled Tina Tags collection with Content Entry
   references, stable slugs, and optional previous-slug aliases.
-- Before Sprint 7: decide whether About remains a standalone navigation item.
+- [x] Before Sprint 7: remove About from the primary navigation, preserve the
+  page through Homepage/footer links, omit Writing Samples from the Portfolio
+  hierarchy, and keep Journal section navigation on the Journal archive.
 
 ## Chunk rules
 

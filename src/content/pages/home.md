@@ -75,8 +75,8 @@ featuredPortfolio:
   visible: true
   title: Featured Portfolio
   titleHref: /portfolio/
-  subtitle: Selected paths into video, photography, case studies, writing, and software projects.
-  limit: 5
+  subtitle: Selected paths into video, photography, case studies, and software projects.
+  limit: 4
   emptyMessage: Featured Portfolio selections are coming soon.
   tiles:
     - source: src/content/flexible-pages/portfolio/video.md
@@ -86,9 +86,6 @@ featuredPortfolio:
       tileSize: wide
       emphasis: false
     - source: src/content/flexible-pages/portfolio/case-studies.md
-      tileSize: standard
-      emphasis: false
-    - source: src/content/flexible-pages/portfolio/writing-samples.md
       tileSize: standard
       emphasis: false
     - source: src/content/flexible-pages/portfolio/software-projects.md

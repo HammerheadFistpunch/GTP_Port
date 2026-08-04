@@ -9,15 +9,22 @@ navigation:
   - label: Home
     href: /
   - label: Portfolio
-    href: /portfolio
-  - label: The AngrySquirrel Journal
-    href: /journal
-  - label: About
-    href: /about
-  - label: Get in Touch
-    href: /contact
+    href: /portfolio/
+    children:
+      - label: Video
+        page: src/content/flexible-pages/portfolio/video.md
+      - label: Photography
+        page: src/content/flexible-pages/portfolio/photography.md
+      - label: Case Studies
+        page: src/content/flexible-pages/portfolio/case-studies.md
+      - label: Software Projects
+        page: src/content/flexible-pages/portfolio/software-projects.md
+  - label: Journal
+    href: /journal/
   - label: Resume
-    href: /
+    href: /resume/
+  - label: Get in Touch
+    href: /contact/
 footerLinks:
   - label: Home
     href: /

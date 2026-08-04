@@ -1,5 +1,48 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 7 navigation and information architecture implemented
+
+Completed locally:
+
+- Replaced the flat primary-navigation schema with a drag-reorderable Tina list
+  supporting optional child links.
+- Added Tina internal-page references for fixed, archive, Resume, and Flexible
+  Pages while preserving custom site paths and explicit external URLs.
+- Implemented a directly clickable Portfolio parent link with a separate,
+  accessible submenu control for Video, Photography, Case Studies, and Software
+  Projects.
+- Kept Journal as a single primary-navigation destination. Latest, Automotive,
+  Projects, Field Notes, and Off-topic remain local to the Journal archive.
+- Removed About from the primary navigation while preserving `/about/`, the
+  Homepage **More about Patrick** link, and the footer link.
+- Corrected the primary Resume destination from `/` to `/resume/`.
+- Removed Writing Samples from the Homepage category tiles and primary
+  hierarchy. Published writing remains discoverable through Journal sections
+  and tags; `/portfolio/writing-samples/` remains available as an unlinked
+  compatibility route.
+- Added desktop disclosure and mobile nested-menu behavior with independent
+  parent links, touch-sized controls, Escape handling, outside-click closing,
+  focus return, current-page state, and a no-JavaScript fallback.
+- Added safe omission of missing or drafted internal page references.
+
+Verified locally:
+
+- Tina audits all 54 settings, page, Flexible Page, Tag, and Content Entry
+  documents.
+- Strict TypeScript checking, Astro component compilation, navigation-reference
+  checks, and `git diff --check` pass.
+- The saved primary order is Home, Portfolio, Journal, Resume, and Get in Touch;
+  only Portfolio contains child links.
+- The normal Astro build command is blocked by this workspace's network guard
+  before Astro reports build diagnostics; Cloudflare remains the production
+  build verification for this push.
+
+Pending after push:
+
+- Confirm Cloudflare builds and deploys the revised schema and navigation.
+- Verify Tina drag ordering and internal-page selection in the hosted editor.
+- Review desktop pointer/keyboard and phone touch behavior on the deployed site.
+
 ## 2026-08-04 - Sprint 6 compact Homepage implemented
 
 Completed locally:

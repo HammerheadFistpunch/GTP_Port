@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-04 after the Sprint 6 compact Homepage implementation
+Last reviewed: 2026-08-04 after the Sprint 7 navigation implementation
 
 ## Active project documents
 

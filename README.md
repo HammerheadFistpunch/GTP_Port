@@ -14,8 +14,9 @@ The site is operational and ready for real content. It includes:
 - one unified Content Entries collection with Portfolio and Journal placement
 - neutral `/archive/[slug]/` detail pages shared by every entry type
 - a curated, drag-reorderable Tina Portfolio tile board
-- five Portfolio category routes for Video, Photography, Case Studies,
-  Writing Samples, and Software Projects
+- four primary Portfolio category routes for Video, Photography, Case Studies,
+  and Software Projects, with the former Writing Samples route retained for
+  compatibility
 - a compact Journal landing page with an explicit featured story, chronological
   feed, and four static section routes
 - a controlled Tina tag registry with 29 static subject archives shared by
@@ -29,12 +30,14 @@ The site is operational and ready for real content. It includes:
 - guarded Flexible Pages with top-level and nested static routes
 - reorderable Flexible Page blocks for Markdown text, images, YouTube, Immich
   galleries, child-page tiles, and calls to action
-- responsive navigation, accessibility, and social metadata foundations
+- Tina-controlled nested primary navigation with accessible desktop disclosure,
+  mobile expansion, internal page references, and custom/external URLs
 
-Sprints 1 through 6 are deployed and owner-accepted. Sprint 7, nested
-navigation and information-architecture cleanup, is next. Remaining hosted
-Tina and cross-device edge-case checks are tracked for Sprint 8's final QA
-pass. Content publishing can continue in parallel.
+Sprints 1 through 6 are deployed and owner-accepted. Sprint 7 navigation and
+information-architecture work is implemented and awaiting Cloudflare, hosted
+Tina, and owner interaction verification. Remaining broader hosted Tina and
+cross-device edge-case checks are tracked for Sprint 8's final QA pass. Content
+publishing can continue in parallel.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and

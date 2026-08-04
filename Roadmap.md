@@ -238,6 +238,13 @@ Depends on: Sprints 3-4
 
 ## Sprint 7 - Navigation and information-architecture cleanup
 
+Status: Implemented locally and awaiting Cloudflare, hosted Tina, and owner
+interaction verification. About is removed from the primary header but remains
+published and linked from the Homepage and footer. Portfolio exposes Video,
+Photography, Case Studies, and Software Projects; Journal owns its section
+navigation. The former Writing Samples page remains as an unlinked compatibility
+route while writing is surfaced through the Journal and tags.
+
 Goal: make Tina-created pages discoverable and remove obsolete navigation only
 after replacement routes are proven.
 
@@ -246,8 +253,9 @@ Scope:
 - convert flat navigation items into an ordered list with optional children
 - allow internal page selection while preserving explicit external URLs
 - add accessible desktop submenus and a clear mobile nested-navigation pattern
-- connect Portfolio, Journal sections, and selected Flexible Pages
-- decide whether About remains a standalone page
+- connect Portfolio and its four selected Flexible Page categories while
+  keeping Journal section navigation local to the Journal archive
+- remove About from the primary header while preserving the standalone page
 - remove or redirect obsolete routes only after link and analytics review
 
 Acceptance:

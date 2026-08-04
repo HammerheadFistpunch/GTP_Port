@@ -183,8 +183,8 @@ Flexible Pages now use the following optional editorial controls:
 | `navigationOrder` | Stored sibling order for future generated menus |
 
 Published parent paths generate breadcrumbs automatically. The global primary
-navigation remains controlled by `src/content/settings/site.md`; nested global
-menus are intentionally deferred to Sprint 7.
+navigation remains controlled by `src/content/settings/site.md`; its ordered
+top-level items and optional child lists are edited in Tina Site Settings.
 
 ### Owner workflow for Flexible Pages
 
@@ -624,8 +624,21 @@ Editable values live in `src/content/settings/site.md` and the `Site Settings`
 collection in Tina. Their presentation lives in `Navigation.astro`,
 `Footer.astro`, and `BaseLayout.astro`.
 
-Adding a navigation link is a content edit. Changing how navigation behaves on
-mobile is a component-code edit.
+Each primary-navigation destination can use either an **Internal Page**
+reference or a **Custom or External URL**. Internal references take priority
+when both fields are populated. Missing and drafted internal references are
+omitted from the rendered header. Child links use the same destination fields
+and can be drag-reordered beneath their parent.
+
+The approved primary hierarchy is Home; Portfolio with Video, Photography,
+Case Studies, and Software Projects children; Journal; Resume; and Get in
+Touch. Journal section links remain inside the Journal archive. About remains
+published and linked from the Homepage and footer. The former Writing Samples
+page remains an unlinked compatibility route.
+
+Adding or reordering a navigation link is a content edit. Changing disclosure,
+keyboard, focus, or mobile behavior is a component-code edit and requires
+desktop keyboard/pointer plus phone touch testing.
 
 ## Routes, slugs, and links
 

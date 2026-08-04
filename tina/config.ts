@@ -23,6 +23,55 @@ const linkFields = [
     },
 ];
 
+const navigationDestinationFields = [
+    {
+        type: "string" as const,
+        name: "label",
+        label: "Label",
+        required: true,
+    },
+    {
+        type: "reference" as const,
+        name: "page",
+        label: "Internal Page",
+        collections: [
+            "homepage",
+            "archivePage",
+            "standardPage",
+            "resumePage",
+            "flexiblePages",
+        ],
+        description:
+            "Choose a Tina-managed page. Leave blank when using a custom or external URL.",
+    },
+    {
+        type: "string" as const,
+        name: "href",
+        label: "Custom or External URL",
+        description:
+            "Use for fixed site routes or full external URLs. An internal-page selection takes priority when both are present.",
+    },
+];
+
+const navigationChildFields = [...navigationDestinationFields];
+
+const navigationItemFields = [
+    ...navigationDestinationFields,
+    {
+        type: "object" as const,
+        name: "children",
+        label: "Child Links",
+        list: true,
+        description: "Optional links shown in this item's submenu.",
+        ui: {
+            itemProps: (item: Record<string, unknown>) => ({
+                label: (item?.label as string) || "Child link",
+            }),
+        },
+        fields: navigationChildFields,
+    },
+];
+
 const portfolioTileFields = [
     {
         type: "reference" as const,
@@ -467,7 +516,14 @@ export default defineConfig({
                         name: "navigation",
                         label: "Main Navigation",
                         list: true,
-                        fields: linkFields,
+                        description:
+                            "Drag to reorder. Add child links only when a top-level destination needs a submenu.",
+                        ui: {
+                            itemProps: (item) => ({
+                                label: item?.label || "Navigation item",
+                            }),
+                        },
+                        fields: navigationItemFields,
                     },
                     {
                         type: "object",

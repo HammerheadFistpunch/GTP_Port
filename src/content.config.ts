@@ -57,6 +57,16 @@ const link = z.object({
     href: z.string(),
 });
 
+const navigationDestination = z.object({
+    label: z.string(),
+    page: z.string().optional(),
+    href: z.string().optional(),
+});
+
+const navigationItem = navigationDestination.extend({
+    children: z.array(navigationDestination).default([]),
+});
+
 const headerStyle = z.enum(["compact", "featured"]).default("compact");
 
 const homepageSectionKeys = [
@@ -300,7 +310,7 @@ const settings = defineCollection({
         footerTitle: z.string(),
         footerDescription: z.string(),
         copyrightName: z.string(),
-        navigation: z.array(link),
+        navigation: z.array(navigationItem),
         footerLinks: z.array(link),
     }),
 });

@@ -11,6 +11,7 @@ Controls:
 - Site name and logo text
 - Default site description
 - Primary navigation labels and destinations
+- Optional primary-navigation child links and their order
 - Footer title and description
 - Footer navigation
 - Copyright name
@@ -51,13 +52,15 @@ back to the newest published Journal entry, and the feature is excluded from
 the configured recent-story count.
 
 The Homepage **Featured Portfolio Section** continues to use the shared
-reference-based tile list. Its default selections are the five Portfolio
-category Flexible Pages. Removing a tile changes Homepage placement only and
-never deletes the selected page or Content Entry.
+reference-based tile list. Its default selections are the four primary
+Portfolio category Flexible Pages: Video, Photography, Case Studies, and
+Software Projects. Removing a tile changes Homepage placement only and never
+deletes the selected page or Content Entry.
 
 Section titles, descriptions, links, capability items, technology items,
 visibility, and the Portfolio and Journal selections are all editable in Tina.
-The expanded `/about/` page remains separate.
+The expanded `/about/` page remains separate and is linked from the Homepage
+and footer rather than the primary header.
 
 Journal navigation uses the controlled Automotive, Projects, Field Notes, and
 Off-topic section registry. Latest links to the complete `/journal/` feed and
@@ -94,8 +97,8 @@ duplicate, and reserved paths before deployment.
   when the image is decorative.
 - **Navigation Label** is an optional shorter breadcrumb label. The page title
   is the fallback.
-- **Navigation Order** records sibling order for later generated menus. Lower
-  numbers come first; the current flat primary navigation is unchanged.
+- **Navigation Order** records sibling order for generated child-page contexts.
+  The explicit drag order in Site Settings controls the primary header.
 - **Draft** removes the route at the next deployment while retaining the file.
 - The SEO fields override the title, description, and social image only when
   populated.
@@ -121,7 +124,8 @@ Available blocks:
 Child-page paths use the same format as the page's **URL Path**, without a
 leading slash. Drafted, deleted, missing, or mistyped page paths are omitted
 from the public tile list. The paths inside the block determine tile order;
-`navigationOrder` is reserved for later generated navigation.
+`navigationOrder` does not override the explicit primary-navigation order in
+Site Settings.
 
 The `/services/` page contains a verification instance of every block. Image
 blocks open in the shared keyboard-accessible lightbox. Missing or invalid
