@@ -1,5 +1,18 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Homepage Portfolio tile fallback corrected
+
+Corrected after Sprint 7:
+
+- Removed the duplicate centered entry-type label from image-free Homepage
+  Portfolio tiles. The category is now rendered once with the title and
+  description, independent of tile size.
+- Replaced the redundant label with a decorative fallback surface consistent
+  with the Portfolio landing-page cards.
+- Confirmed the saved Homepage selection contains the four approved Portfolio
+  paths: Video, Photography, Case Studies, and Software Projects. Writing
+  Samples remains absent from the Homepage and primary navigation.
+
 ## 2026-08-04 - Sprint 7 navigation and information architecture implemented
 
 Completed locally:
