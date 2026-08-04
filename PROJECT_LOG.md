@@ -1,5 +1,23 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 7 TinaCloud schema-lock correction
+
+Corrected after the initial Sprint 7 deployment failed:
+
+- Regenerated `tina/tina-lock.json` after the navigation schema change. The
+  original Sprint 7 commit updated `tina/config.ts` but accidentally retained
+  the Sprint 6 lock, so TinaCloud repeatedly indexed the older schema.
+- Confirmed the regenerated lock includes the `SettingsNavigationPage` union
+  used by internal navigation references.
+- Confirmed Tina's generated GraphQL schema and TypeScript types contain the
+  same navigation reference type.
+
+Deployment recovery:
+
+- Commit and push the regenerated Tina lock to `gpt-handoff`.
+- Reindex `gpt-handoff` in TinaCloud after that commit is available remotely.
+- Retry the newest Cloudflare deployment after TinaCloud finishes indexing.
+
 ## 2026-08-04 - Homepage Portfolio tile fallback corrected
 
 Corrected after Sprint 7:
