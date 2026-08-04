@@ -24,6 +24,12 @@ Structured or reorderable Tina blocks are reasonable for the small number of
 landing pages, including the Homepage, Journal archive, and Portfolio archive.
 A future redesign only needs to remap those few pages.
 
+Portfolio tile lists store references and optional presentation overrides,
+not copies of the selected documents. Removing or rearranging a tile cannot
+delete or rewrite the underlying Content Entry or Flexible Page. A future
+migration can resolve each reference once and discard the landing-page
+presentation fields without changing narrative content.
+
 For articles and case studies, prefer ordinary Markdown plus a small set of
 durable metadata fields. Add a custom content block only when standard Markdown
 cannot represent the required material.

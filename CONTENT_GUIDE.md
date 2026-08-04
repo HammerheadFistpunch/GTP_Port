@@ -37,7 +37,7 @@ responsiveness, and component structure.
 
 ### Homepage preview links
 
-The Homepage **Featured Work Section** and **Journal Preview Section** each
+The Homepage **Featured Portfolio Section** and **Journal Preview Section** each
 include a **Section Title Link** field in Tina. The current destinations are
 `/portfolio` and `/journal`. These fields control the linked section headings;
 individual preview cards continue to link directly to their Content Entries.
@@ -156,19 +156,38 @@ page rather than the Homepage.
 ## Published content
 
 `src/content/entries/*.mdx` is the single source for articles, projects,
-galleries, case studies, and other published work.
+galleries, case studies, and other published material.
 
 The Tina **Placement** control determines where an entry appears:
 
-- **Portfolio only** — persistent curated work
+- **Portfolio only** — persistent curated projects
 - **Portfolio + Journal** — visible in both presentations
 - **Archive to Journal** — removed from Portfolio and retained chronologically
 
 Archiving changes metadata rather than moving or converting the Markdown file.
 Every entry keeps the same `/archive/[slug]/` detail URL.
 
-Portfolio order is controlled by `portfolioOrder`, and `tileSize` accepts
-Standard, Wide, Tall, or Large. Journal order uses `date`.
+The Portfolio and Homepage use ordered **Portfolio Tiles** as their primary
+selection and ordering model. A tile selects an existing Content Entry or
+Flexible Page, then optionally overrides its title, description, image, size,
+or emphasis only for that placement. Drag the tiles in Tina to reorder them.
+Removing a tile never deletes the selected source document.
+
+The Portfolio landing page supports **Dense** packing, which fills bento-grid
+gaps, and **Exact Order**, which preserves visible list order. Legacy
+`portfolioOrder` and Content Entry `tileSize` values remain as a fallback when
+the landing page has no explicit tiles. Journal order uses `date`.
+
+The five primary category pages are Flexible Pages at:
+
+- `/portfolio/video/`
+- `/portfolio/photography/`
+- `/portfolio/case-studies/`
+- `/portfolio/writing-samples/`
+- `/portfolio/software-projects/`
+
+The exact `/portfolio/` path remains reserved for the hand-authored landing
+route, while published Flexible Pages may use nested `portfolio/...` paths.
 
 ### Publishing conventions
 

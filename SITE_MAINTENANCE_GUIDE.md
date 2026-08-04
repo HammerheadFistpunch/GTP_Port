@@ -505,18 +505,33 @@ import React from "react";
 
 Type-only imports do not create the runtime `React` value.
 
-### Portfolio tile sizes
+### Portfolio tile board
 
-The tile-size feature spans:
+Portfolio landing and Homepage selections span:
 
-- Tina options in `tina/config.ts`
-- the `tileSize` enum in `src/content.config.ts`
-- stored Content Entry values
+- Tina reference and override fields in `tina/config.ts`
+- the tile schema in `src/content.config.ts`
+- `src/lib/portfolio-tiles.ts` source resolution
+- stored tile lists in `src/content/pages/portfolio.md` and `home.md`
 - `PortfolioBentoCard.astro` class and span rules
-- the grid in `src/pages/portfolio/index.astro`
+- the Portfolio and Homepage route queries
 
 Adding a new option only in Tina will allow the editor to write a value that
 Astro rejects. Adding it only to the schema will not give Tina a control for it.
+
+In Tina, open **Archive Pages → Portfolio** to add, remove, resize, override,
+or drag-order Portfolio tiles. A tile may reference a Content Entry or Flexible
+Page. Deleting a tile is safe because it removes only the placement; deleting
+the selected source is a separate action. Missing, drafted, and Journal-only
+sources are omitted from the public grid.
+
+Use **Dense** packing for gap-filling bento behavior or **Exact Order** when
+the visible sequence must match Tina's list exactly. `portfolioOrder` remains
+a fallback only when the explicit Portfolio tile list is empty.
+
+Portfolio category pages are Flexible Pages with nested paths beginning in
+`portfolio/`. The root `/portfolio/` route remains reserved and cannot be
+replaced by a Flexible Page.
 
 ### Homepage editable sections
 
@@ -528,7 +543,7 @@ Homepage fields span:
 - `src/pages/index.astro`
 - the visual component receiving the value
 
-The Featured Work and Journal Preview title links also pass through
+The Featured Portfolio and Journal Preview title links also pass through
 `SectionTitle.astro`.
 
 ### Site settings, navigation, and footer

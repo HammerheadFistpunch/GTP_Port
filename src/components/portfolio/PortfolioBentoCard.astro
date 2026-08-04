@@ -3,10 +3,11 @@ interface Props {
   title: string;
   description: string;
   image?: string;
-  category: string;
+  category?: string;
   entryType: string;
   href: string;
   tileSize?: "standard" | "wide" | "tall" | "large";
+  emphasis?: boolean;
 }
 
 const {
@@ -17,11 +18,15 @@ const {
   entryType,
   href,
   tileSize = "standard",
+  emphasis = false,
 } = Astro.props;
 ---
 
 <a
-  class:list={["bento-card", `bento-card--${tileSize}`, { "bento-card--image": image }]}
+  class:list={["bento-card", `bento-card--${tileSize}`, {
+    "bento-card--image": image,
+    "bento-card--emphasis": emphasis,
+  }]}
   href={href}
 >
   {image && <img src={image} alt="" loading="lazy" />}
@@ -31,8 +36,8 @@ const {
   <div class="content">
     <div class="meta">
       <span>{entryType}</span>
-      <span aria-hidden="true">·</span>
-      <span>{category}</span>
+      {category && <span aria-hidden="true">·</span>}
+      {category && <span>{category}</span>}
     </div>
 
     <h3>{title}</h3>
@@ -80,6 +85,10 @@ const {
     transform: translateY(-4px);
     border-color: var(--accent);
     box-shadow: var(--shadow-soft);
+  }
+
+  .bento-card--emphasis {
+    border-color: color-mix(in srgb, var(--accent) 70%, var(--border-color));
   }
 
   .bento-card:focus-visible {

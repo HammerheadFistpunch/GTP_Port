@@ -13,8 +13,10 @@ The site is operational and ready for real content. It includes:
 - authenticated TinaCloud editing at `/admin/`
 - one unified Content Entries collection with Portfolio and Journal placement
 - neutral `/archive/[slug]/` detail pages shared by every entry type
-- a curated, Tina-controlled Portfolio bento grid
-- editable Homepage preview headings that link to Portfolio and Journal
+- a curated, drag-reorderable Tina Portfolio tile board
+- five Portfolio category routes for Video, Photography, Case Studies,
+  Writing Samples, and Software Projects
+- explicit Homepage Portfolio selections plus linked Portfolio and Journal headings
 - native media, video, lightboxes, and shared Immich galleries
 - structured Resume content
 - guarded Flexible Pages with top-level and nested static routes
@@ -22,11 +24,10 @@ The site is operational and ready for real content. It includes:
   galleries, child-page tiles, and calls to action
 - responsive navigation, accessibility, and social metadata foundations
 
-Sprint 1 and Sprint 2A are deployed and verified. Sprint 2B completes the
-responsive media layer, adds keyboard-accessible Flexible Page image
-lightboxes and resilient media fallbacks, and lets editors insert YouTube
-videos directly inside Content Entry narratives. Content publishing can
-continue in parallel while the hosted 2B workflow is reviewed.
+Sprints 1 and 2 are deployed and verified. Sprint 3 implements the Portfolio
+category hierarchy and reference-based tile board; its local checks pass and
+its Cloudflare/TinaCloud workflow awaits verification after push. Content
+publishing can continue in parallel.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and
@@ -97,8 +98,9 @@ entry appears in Portfolio, Journal, or both. **Archive to Journal** removes an
 entry from Portfolio without moving its Markdown file or changing its detail
 URL.
 
-Portfolio order and tile size are presentation metadata. Journal order remains
-chronological by publication date.
+Portfolio and Homepage ordering now come from explicit Tina tile lists that
+reference existing content without owning it. Numeric `portfolioOrder` remains
+a migration fallback. Journal order remains chronological by publication date.
 
 ## Content portability
 

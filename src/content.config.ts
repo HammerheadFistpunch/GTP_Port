@@ -3,6 +3,7 @@ import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { validateFlexiblePagePath } from "./lib/flexible-pages";
 import { flexiblePageBlockSchema } from "./lib/page-blocks";
+import { portfolioTileSizeValues } from "./lib/portfolio-tiles";
 
 const sharedFields = {
     title: z.string(),
@@ -32,6 +33,15 @@ const link = z.object({
 });
 
 const headerStyle = z.enum(["compact", "featured"]).default("compact");
+
+const portfolioTile = z.object({
+    source: z.string(),
+    tileSize: z.enum(portfolioTileSizeValues).default("standard"),
+    titleOverride: z.string().optional(),
+    descriptionOverride: z.string().optional(),
+    imageOverride: z.string().optional(),
+    emphasis: z.boolean().default(false),
+});
 
 const timelineItem = z.object({
     period: z.string(),
@@ -110,12 +120,13 @@ const pages = defineCollection({
                 primaryCta: link,
                 secondaryCta: link,
             }),
-            featuredWork: z.object({
+            featuredPortfolio: z.object({
                 title: z.string(),
                 titleHref: z.string(),
                 subtitle: z.string(),
                 limit: z.number().int().positive().default(3),
                 emptyMessage: z.string(),
+                tiles: z.array(portfolioTile).default([]),
             }),
             journalPreview: z.object({
                 title: z.string(),
@@ -140,6 +151,8 @@ const pages = defineCollection({
             sectionTitle: z.string(),
             emptyMessage: z.string(),
             topics: z.array(z.string()).default([]),
+            portfolioPacking: z.enum(["dense", "exact"]).default("dense"),
+            portfolioTiles: z.array(portfolioTile).default([]),
         }),
         z.object({
             pageType: z.literal("standard"),

@@ -33,7 +33,9 @@ export function validateFlexiblePagePath(value: string): string | undefined {
         return "Use lowercase letters, numbers, and single hyphens in each path segment.";
     }
 
-    if (RESERVED_TOP_LEVEL_PATHS.has(segments[0])) {
+    const isPortfolioChild = segments[0] === "portfolio" && segments.length > 1;
+
+    if (RESERVED_TOP_LEVEL_PATHS.has(segments[0]) && !isPortfolioChild) {
         return `The top-level path "${segments[0]}" is reserved by the site.`;
     }
 

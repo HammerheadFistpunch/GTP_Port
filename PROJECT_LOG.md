@@ -1,5 +1,39 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 3 Portfolio hierarchy and tile board implemented
+
+Completed locally:
+
+- Locked the public section name to **Portfolio** and retained `/portfolio/`
+  as its canonical URL; navigation, footer, landing-page, Homepage, Tina, and
+  planning labels no longer call the section Work.
+- Added published Portfolio category pages for Video, Photography, Case
+  Studies, Writing Samples, and Software Projects.
+- Added ordered Tina tile lists to the Portfolio landing page and Homepage
+  Featured Portfolio section. Each tile references an existing Content Entry
+  or Flexible Page and may override size, emphasis, title, description, or
+  image without changing the selected document.
+- Added shared tile resolution that safely omits missing, drafted, or
+  non-Portfolio sources. Removing a tile never deletes its source.
+- Added Dense and Exact Order packing choices while retaining the existing
+  bento sizing and numeric `portfolioOrder` fallback during migration.
+- Regenerated `tina/tina-lock.json` from Tina's generated schema artifacts.
+
+Verified locally:
+
+- Tina audits all settings, page, Flexible Page, and Content Entry documents.
+- Strict TypeScript checking passes.
+- Astro generates 25 pages, including `/portfolio/`, all five Portfolio
+  category routes, and every existing `/archive/[slug]/` URL.
+- Generated Portfolio and Homepage HTML contain the explicit curated tiles.
+- `git diff --check` passes.
+
+Pending after push:
+
+- Confirm the Cloudflare deployment and all five Portfolio category routes.
+- Reindex TinaCloud and verify add, remove, resize, override, and drag-order
+  behavior in both Portfolio tile lists.
+
 ## 2026-08-04 - Sprint 2B media and narrative video implemented
 
 Completed locally:
@@ -169,14 +203,14 @@ Planned:
 - Expand Tina with creatable Flexible Pages and nested static URLs.
 - Add a constrained, reorderable block system for text, images, YouTube,
   Immich galleries, child-page tiles, and calls to action.
-- Replace numeric Portfolio ordering with a drag-reorderable Work landing-page
+- Replace numeric Portfolio ordering with a drag-reorderable Portfolio landing-page
   tile board that references permanent content without owning it.
 - Add a required primary Journal section, working section routes, a selected
   featured story, and a compact editorial landing page.
 - Add clickable tags and static tag archive pages while keeping sections and
   tags separate.
 - Redesign the Homepage around a smaller hero, a side-by-side Journal preview,
-  About Me, What I Do, Technology Stack, and selected Featured Work.
+  About Me, What I Do, Technology Stack, and selected Featured Portfolio.
 - Add optional nested navigation after the dynamic page and archive routes are
   proven.
 - Finish with migration, TinaCloud reindexing, route and accessibility QA, and
@@ -186,7 +220,7 @@ Decisions:
 
 - The work is divided into eight independently verifiable sprints in
   `Roadmap.md`.
-- Structured blocks are for flexible and landing pages; Journal and Work entry
+- Structured blocks are for flexible and landing pages; Journal and Portfolio entry
   bodies remain semantic and portable wherever possible.
 - Permanent content stays separate from landing-page tile placement and
   presentation overrides.
@@ -219,7 +253,7 @@ Completed:
 - Fixed the custom Tina Placement field's hosted runtime error by importing the
   React runtime explicitly. Content Entries, including Photography Samples,
   can now be opened and edited in TinaCloud.
-- Added editable **Section Title Link** fields to the Homepage Featured Work and
+- Added editable **Section Title Link** fields to the Homepage Featured Portfolio and
   Journal Preview sections.
 - Linked those Homepage headings to `/portfolio` and `/journal` by default
   while preserving direct links on the individual preview cards.

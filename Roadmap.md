@@ -6,13 +6,13 @@ Working branch: `gpt-handoff`
 ## Vision
 
 Build AngrySquirrel.org as a fast, dark, editorial-first personal site that
-combines long-form publishing with a professional body of work. Astro remains
+combines long-form publishing with a professional portfolio. Astro remains
 responsible for routing and rendering, TinaCMS manages content and curated
 page structure, and Markdown remains the portable source of truth.
 
 The next phase expands Tina from a content editor into a controlled site
 builder. It will support new pages, nested page structure, rearrangeable page
-blocks, curated Work tiles, Journal sections and tags, and a more useful
+blocks, curated Portfolio tiles, Journal sections and tags, and a more useful
 homepage without becoming an unrestricted Wix-style layout system.
 
 ## Completed foundation
@@ -29,7 +29,7 @@ homepage without becoming an unrestricted Wix-style layout system.
 
 ## Architecture guardrails
 
-- Keep Journal and Work entry bodies semantic and portable.
+- Keep Journal and Portfolio entry bodies semantic and portable.
 - Use structured blocks for landing pages and flexible pages where layout is
   part of the content.
 - Separate permanent content from its presentation on a landing page.
@@ -77,9 +77,9 @@ Depends on: completed foundation
 
 ## Sprint 2 - Reorderable page blocks and media
 
-Status: Chunk 2A is deployed and owner-verified. Chunk 2B is implemented and
-locally verified; its responsive media, graceful fallbacks, image lightbox,
-and Content Entry rich-text YouTube workflow await hosted verification.
+Status: Complete and deployed at commit `f2c2c7c`. Responsive media, graceful
+fallbacks, image-lightbox behavior, and the Content Entry rich-text YouTube
+workflow are owner-verified.
 
 Goal: let an editor assemble a flexible page from a constrained set of
 reusable blocks and rearrange them in Tina.
@@ -118,30 +118,33 @@ Decision: Content Entries remain narrative-first. YouTube will be inserted as
 an explicit rich-text embed rather than converting Journal and Portfolio
 bodies into structured page-builder blocks.
 
-## Sprint 3 - Work hierarchy and tile board
+## Sprint 3 - Portfolio hierarchy and tile board
 
-Goal: turn the current Portfolio into a glanceable, Tina-curated Work section
+Status: Implemented and locally verified. Cloudflare deployment and hosted
+Tina tile editing remain to be verified after push.
+
+Goal: turn the current Portfolio into a glanceable, Tina-curated section
 with reorderable category and featured-project tiles.
 
 Scope:
 
-- confirm the public naming decision: keep `/portfolio/` or migrate to `/work/`
+- keep Portfolio as the public name and `/portfolio/` as the canonical URL
 - create primary category pages for Video, Photography, Case Studies, Writing
   Samples, and Software Projects using Flexible Pages
 - replace numeric `portfolioOrder` as the primary landing-page control with an
-  ordered tile list stored on the Work landing document
+  ordered tile list stored on the Portfolio landing document
 - let each tile select an existing Content Entry or Flexible Page
 - support tile size plus optional title, image, description, and emphasis
   overrides without changing the selected source document
 - preserve intelligent dense packing or add an explicit exact-order mode
-- align Homepage Featured Work selection with the same source model
-- add redirects if the Portfolio URL changes
+- align Homepage Featured Portfolio selection with the same source model
+- keep numeric Portfolio ordering as a compatibility fallback during migration
 
 Acceptance:
 
 - tiles can be added, removed, resized, and drag-reordered in Tina
 - removing a tile does not delete its underlying project or page
-- every primary Work category has a valid landing page and may have children
+- every primary Portfolio category has a valid landing page and may have children
 - no existing archive detail URL is broken
 
 Depends on: Sprints 1-2
@@ -199,7 +202,7 @@ Depends on: Sprint 4 taxonomy conventions
 ## Sprint 6 - Homepage redesign
 
 Goal: make the homepage a compact overview of Patrick's positioning, recent
-writing, capabilities, tools, and selected work.
+writing, capabilities, tools, and selected portfolio projects.
 
 Scope:
 
@@ -207,11 +210,11 @@ Scope:
 - place the hero and Journal preview side by side on desktop and stack them on
   mobile
 - give the Journal preview one selected feature plus a compact recent list
-- add About Me, What I Do, Technology Stack, and Featured Work sections
+- add About Me, What I Do, Technology Stack, and Featured Portfolio sections
 - expose section copy, visibility, links, order, and featured selections in
   Tina
 - represent Video, Photography, Case Studies, Writing Samples, and Software
-  Projects in Featured Work
+  Projects in Featured Portfolio
 - preserve an expanded About page until the homepage version is proven
 
 Acceptance:
@@ -233,7 +236,7 @@ Scope:
 - convert flat navigation items into an ordered list with optional children
 - allow internal page selection while preserving explicit external URLs
 - add accessible desktop submenus and a clear mobile nested-navigation pattern
-- connect Work, Journal sections, and selected Flexible Pages
+- connect Portfolio, Journal sections, and selected Flexible Pages
 - decide whether About remains a standalone page
 - remove or redirect obsolete routes only after link and analytics review
 

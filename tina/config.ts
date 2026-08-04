@@ -22,6 +22,55 @@ const linkFields = [
     },
 ];
 
+const portfolioTileFields = [
+    {
+        type: "reference" as const,
+        name: "source",
+        label: "Portfolio Source",
+        required: true,
+        collections: ["entries", "flexiblePages"],
+        description:
+            "Choose an existing Content Entry or Flexible Page. Removing this tile never deletes the source.",
+    },
+    {
+        type: "string" as const,
+        name: "tileSize",
+        label: "Tile Size",
+        required: true,
+        options: [
+            { value: "standard", label: "Standard" },
+            { value: "wide", label: "Wide" },
+            { value: "tall", label: "Tall" },
+            { value: "large", label: "Large" },
+        ],
+    },
+    {
+        type: "boolean" as const,
+        name: "emphasis",
+        label: "Emphasize Tile",
+        description:
+            "Adds a stronger accent without changing the selected source document.",
+    },
+    {
+        type: "string" as const,
+        name: "titleOverride",
+        label: "Optional Title Override",
+    },
+    {
+        type: "string" as const,
+        name: "descriptionOverride",
+        label: "Optional Description Override",
+        ui: {
+            component: "textarea",
+        },
+    },
+    {
+        type: "image" as const,
+        name: "imageOverride",
+        label: "Optional Image Override",
+    },
+];
+
 const flexiblePageBlockTemplates = [
     {
         name: "richText",
@@ -476,8 +525,8 @@ export default defineConfig({
                     },
                     {
                         type: "object",
-                        name: "featuredWork",
-                        label: "Featured Work Section",
+                        name: "featuredPortfolio",
+                        label: "Featured Portfolio Section",
                         required: true,
                         fields: [
                             {
@@ -506,14 +555,38 @@ export default defineConfig({
                             {
                                 type: "number",
                                 name: "limit",
-                                label: "Number of Projects",
+                                label: "Legacy Project Limit",
                                 required: true,
+                                description:
+                                    "Fallback used only when no Portfolio Tiles are selected.",
                             },
                             {
                                 type: "string",
                                 name: "emptyMessage",
                                 label: "Empty-State Message",
                                 required: true,
+                            },
+                            {
+                                type: "object",
+                                name: "tiles",
+                                label: "Portfolio Tiles",
+                                list: true,
+                                required: true,
+                                description:
+                                    "Add and drag tiles to choose the Homepage portfolio order.",
+                                ui: {
+                                    itemProps: (item) => ({
+                                        label:
+                                            item?.titleOverride ||
+                                            item?.source ||
+                                            "Portfolio tile",
+                                    }),
+                                    defaultItem: {
+                                        tileSize: "standard",
+                                        emphasis: false,
+                                    },
+                                },
+                                fields: portfolioTileFields,
                             },
                         ],
                     },
@@ -695,6 +768,38 @@ export default defineConfig({
                         ui: {
                             component: "tags",
                         },
+                    },
+                    {
+                        type: "string",
+                        name: "portfolioPacking",
+                        label: "Portfolio Tile Packing",
+                        description:
+                            "Dense fills available gaps; Exact preserves the visible list order.",
+                        options: [
+                            { value: "dense", label: "Dense" },
+                            { value: "exact", label: "Exact Order" },
+                        ],
+                    },
+                    {
+                        type: "object",
+                        name: "portfolioTiles",
+                        label: "Portfolio Tiles",
+                        list: true,
+                        description:
+                            "Add and drag tiles to curate the Portfolio landing page. This field is used by portfolio.md only.",
+                        ui: {
+                            itemProps: (item) => ({
+                                label:
+                                    item?.titleOverride ||
+                                    item?.source ||
+                                    "Portfolio tile",
+                            }),
+                            defaultItem: {
+                                tileSize: "standard",
+                                emphasis: false,
+                            },
+                        },
+                        fields: portfolioTileFields,
                     },
                 ],
             },

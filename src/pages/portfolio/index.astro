@@ -3,8 +3,9 @@ import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PortfolioBentoCard from "../../components/portfolio/PortfolioBentoCard.astro";
 import Container from "../../components/ui/Container.astro";
+import { resolvePortfolioTiles } from "../../lib/portfolio-tiles";
 
-const projects = (await getCollection("entries", ({ data }) =>
+const portfolioEntries = (await getCollection("entries", ({ data }) =>
   !data.draft && (data.placement === "portfolio" || data.placement === "both")
 ))
   .sort((a, b) => {
@@ -26,6 +27,24 @@ if (!portfolioPage || portfolioPage.data.pageType !== "archive") {
 }
 
 const page = portfolioPage.data;
+const flexiblePages = await getCollection("flexiblePages");
+const selectedTiles = resolvePortfolioTiles(
+  page.portfolioTiles,
+  portfolioEntries,
+  flexiblePages,
+);
+const tiles = page.portfolioTiles.length > 0
+  ? selectedTiles
+  : portfolioEntries.map((entry) => ({
+      title: entry.data.title,
+      description: entry.data.description,
+      image: entry.data.coverImage,
+      category: entry.data.primaryTopic,
+      entryType: entry.data.entryType,
+      tileSize: entry.data.tileSize,
+      href: `/archive/${entry.id}/`,
+      emphasis: entry.data.featured,
+    }));
 ---
 
 <BaseLayout
@@ -44,17 +63,18 @@ const page = portfolioPage.data;
     <Container>
       <h2 id="portfolio-projects">{page.sectionTitle}</h2>
 
-      {projects.length > 0 ? (
-        <div class="project-grid">
-          {projects.map((project) => (
+      {tiles.length > 0 ? (
+        <div class:list={["project-grid", { "project-grid--exact": page.portfolioPacking === "exact" }]}>
+          {tiles.map((tile) => (
             <PortfolioBentoCard
-              title={project.data.title}
-              description={project.data.description}
-              image={project.data.coverImage}
-              category={project.data.primaryTopic}
-              entryType={project.data.entryType}
-              tileSize={project.data.tileSize}
-              href={`/archive/${project.id}/`}
+              title={tile.title}
+              description={tile.description}
+              image={tile.image}
+              category={tile.category}
+              entryType={tile.entryType}
+              tileSize={tile.tileSize}
+              href={tile.href}
+              emphasis={tile.emphasis}
             />
           ))}
         </div>
@@ -114,5 +134,9 @@ const page = portfolioPage.data;
     grid-auto-flow: dense;
     grid-auto-rows: minmax(10rem, auto);
     gap: var(--space-md);
+  }
+
+  .project-grid--exact {
+    grid-auto-flow: row;
   }
 </style>

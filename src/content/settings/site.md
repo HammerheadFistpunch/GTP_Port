@@ -8,7 +8,7 @@ copyrightName: Patrick Rich
 navigation:
   - label: Home
     href: /
-  - label: Work
+  - label: Portfolio
     href: /portfolio
   - label: The AngrySquirrel Journal
     href: /journal
@@ -21,7 +21,7 @@ navigation:
 footerLinks:
   - label: Home
     href: /
-  - label: Work
+  - label: Portfolio
     href: /portfolio
   - label: Journal
     href: /journal
@@ -32,4 +32,3 @@ footerLinks:
   - label: Resume
     href: /resume
 ---
-

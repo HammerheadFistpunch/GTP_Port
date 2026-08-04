@@ -16,7 +16,7 @@ homepage while preserving the current content and routes.
 
 1. Flexible page foundation
 2. Reorderable page blocks and media
-3. Work hierarchy and Tina tile board
+3. Portfolio hierarchy and Tina tile board
 4. Journal sections and landing page
 5. Tags and subject archives
 6. Homepage redesign
@@ -73,7 +73,7 @@ Stop and verify:
 Chunk 1B is deployed and the hosted create, nest, rename, draft, publish,
 delete, and 404 workflows are verified.
 
-## Active sprint - Sprint 2 hosted verification
+## Completed sprint - Sprint 2
 
 ### Chunk 2A - Block schema and renderer foundation
 
@@ -104,14 +104,38 @@ Stop and verify:
 - [x] add the approved rich-text YouTube embed to Content Entry bodies
 - [x] verify existing Content Entry Markdown remains unchanged and valid after
   the `.mdx` extension migration
-- [ ] finish the owner workflow and hosted accessibility checks
+- [x] finish the owner workflow and hosted accessibility checks
+
+Sprint 2B is deployed and owner-verified at commit `f2c2c7c`.
+
+## Active sprint - Sprint 3 hosted verification
+
+- [x] keep Portfolio as the public name and `/portfolio/` as the canonical URL
+- [x] create Video, Photography, Case Studies, Writing Samples, and Software
+  Projects category pages under `/portfolio/`
+- [x] add a drag-reorderable Tina Portfolio tile board
+- [x] allow each tile to reference a Content Entry or Flexible Page
+- [x] add tile size, emphasis, title, image, and description overrides
+- [x] add Dense and Exact Order packing modes
+- [x] migrate Homepage Featured Portfolio to the same reference model
+- [x] preserve numeric Portfolio ordering as a fallback during migration
+
+Stop and verify:
+
+- [x] Tina audits the tile references and content documents
+- [x] strict TypeScript checking passes
+- [x] Astro generates the Portfolio, all five category routes, and every
+  existing archive detail URL
+- [x] generated Portfolio and Homepage HTML contain the curated selections
+- [ ] Cloudflare deploys the schema and all Portfolio routes successfully
+- [ ] hosted Tina can add, remove, resize, override, and drag-reorder tiles
 
 ## Decision gates
 
 - [x] Before Sprint 2: use the six documented Flexible Page blocks and a
   rich-text YouTube embed for Content Entry bodies.
-- Before Sprint 3: decide whether the public name and URL remain Portfolio or
-  change to Work.
+- [x] Before Sprint 3: keep Portfolio as the public name and `/portfolio/` as
+  the canonical URL; do not introduce a Work section or `/work/` route.
 - Before Sprint 4: approve final Journal section names and migration mapping.
 - Before Sprint 5: choose generated tags or a controlled tag registry after a
   Tina usability test.
@@ -137,7 +161,7 @@ Stop and verify:
 Content publishing does not need to stop while the redesign is built:
 
 1. Replace remaining Resume, About, and Contact placeholders.
-2. Publish representative Work projects and Journal entries.
+2. Publish representative Portfolio projects and Journal entries.
 3. Review imported WordPress drafts and media rights.
 4. Avoid relying on numeric Portfolio order or display-only Journal topics for
    new long-term organization; those fields will be migrated.

@@ -8,17 +8,27 @@ hero:
   description: Patrick Rich. Personal and professional blog and portfolio. This site is a work in progress and in a "soft open" state. Content and features are being added daily.
   image: /uploads/ground-squirrel-line-art-transparent.png
   primaryCta:
-    label: View Work
+    label: View Portfolio
     href: /portfolio
   secondaryCta:
     label: Read Journal
     href: /journal
-featuredWork:
-  title: Featured Work
+featuredPortfolio:
+  title: Featured Portfolio
   titleHref: /portfolio
   subtitle: 'Selected projects across software, photography, video, and creative technology.'
   limit: 3
   emptyMessage: Featured projects are coming soon.
+  tiles:
+    - source: src/content/entries/Photography-Samples.mdx
+      tileSize: large
+      emphasis: true
+    - source: src/content/entries/intermountain-healthcare-strategy-analysis.mdx
+      tileSize: standard
+      emphasis: false
+    - source: src/content/entries/supply-chain-disruption-case-study.mdx
+      tileSize: standard
+      emphasis: false
 journalPreview:
   title: The AngrySquirrel Journal
   titleHref: /journal
@@ -32,4 +42,3 @@ aboutCallout:
     label: Learn More
     href: /about
 ---
-
