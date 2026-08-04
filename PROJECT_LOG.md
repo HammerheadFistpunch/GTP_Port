@@ -1,5 +1,37 @@
 # GTP_Port Project Log
 
+## 2026-08-03 - Tina site-builder expansion roadmap approved
+
+Planned:
+
+- Expand Tina with creatable Flexible Pages and nested static URLs.
+- Add a constrained, reorderable block system for text, images, YouTube,
+  Immich galleries, child-page tiles, and calls to action.
+- Replace numeric Portfolio ordering with a drag-reorderable Work landing-page
+  tile board that references permanent content without owning it.
+- Add a required primary Journal section, working section routes, a selected
+  featured story, and a compact editorial landing page.
+- Add clickable tags and static tag archive pages while keeping sections and
+  tags separate.
+- Redesign the Homepage around a smaller hero, a side-by-side Journal preview,
+  About Me, What I Do, Technology Stack, and selected Featured Work.
+- Add optional nested navigation after the dynamic page and archive routes are
+  proven.
+- Finish with migration, TinaCloud reindexing, route and accessibility QA, and
+  owner documentation updates.
+
+Decisions:
+
+- The work is divided into eight independently verifiable sprints in
+  `Roadmap.md`.
+- Structured blocks are for flexible and landing pages; Journal and Work entry
+  bodies remain semantic and portable wherever possible.
+- Permanent content stays separate from landing-page tile placement and
+  presentation overrides.
+- Existing public routes will be preserved or redirected before removal.
+- No feature in this entry is marked complete; implementation begins with
+  Sprint 1A in `BUILD_ORDER.md`.
+
 ## 2026-07-15 - Owner maintenance documentation added
 
 Completed:
