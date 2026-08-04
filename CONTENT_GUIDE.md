@@ -22,7 +22,7 @@ Controls:
 - `home.md` — hero, calls to action, linked section headings, preview limits,
   and About callout
 - `journal.md` — Journal archive header, topics, section title, and empty state
-- `portfolio.md` — Corpus archive header, section title, and empty state
+- `portfolio.md` — Portfolio archive header, section title, and empty state
 - `about.md` — About header and Markdown body
 - `resume.md` — Resume header, links, and Markdown body
 - `contact.md` — Contact header, links, and Markdown body
@@ -46,6 +46,28 @@ The topic list in `journal.md` currently controls visible topic chips only.
 Those chips are not yet filters or links. The planned topic-route work should
 derive navigation from published Content Entry `primaryTopic` values to avoid
 maintaining two conflicting topic lists.
+
+## Flexible Pages
+
+`src/content/flexible-pages/` stores pages that do not need a hand-authored
+Astro route. The Tina **Flexible Pages** collection can create and delete these
+documents. A page's explicit **URL Path** controls its static URL:
+
+```text
+path: services
+-> /services/
+
+path: services/video-production
+-> /services/video-production/
+```
+
+Use lowercase, kebab-case path segments without a leading slash. Draft pages
+remain in Git but do not receive a public route. The build rejects malformed,
+duplicate, and reserved paths before deployment.
+
+Sprint 1A provides the route proof and a minimal Markdown body. The expanded
+page shell, navigation metadata, header controls, and owner-facing create,
+rename, nesting, and deletion workflow belong to Sprint 1B.
 
 ## Published content
 
@@ -97,6 +119,7 @@ TinaCMS and TinaCloud map their collections to:
 
 - `src/content/settings`
 - `src/content/pages`
+- `src/content/flexible-pages`
 - `src/content/entries`
 
 Tina should edit these content files. Astro should continue to own files under

@@ -17,15 +17,17 @@ The site is operational and ready for real content. It includes:
 - editable Homepage preview headings that link to Portfolio and Journal
 - native media, video, lightboxes, and shared Immich galleries
 - structured Resume content
+- guarded Flexible Pages with top-level and nested static routes
 - responsive navigation, accessibility, and social metadata foundations
 
-Real portfolio projects, Journal entries, biography, resume, and contact content
-are now the active priority. Journal topic chips are currently display-only;
-functional topic routes remain planned. Filters, print refinement, design
-polish, and launch tooling are improvements rather than publishing blockers.
+Sprint 1A now proves Tina-managed Flexible Pages at `/services/` and
+`/services/video-production/` without changing existing public URLs. Its local
+checks pass; Cloudflare preview verification is the remaining gate before
+Sprint 1B adds the finished page shell and editorial controls. Content
+publishing can continue in parallel.
 
-See `DOCUMENTATION.md` for the documentation index, `NEXT_STEPS.md` for the
-active work queue, `Roadmap.md` for the broader sequence, and
+See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
+active work queue, `Roadmap.md` for the full sprint sequence, and
 `SITE_MAINTENANCE_GUIDE.md` for owner-directed code and Tina changes.
 
 ## Source of truth

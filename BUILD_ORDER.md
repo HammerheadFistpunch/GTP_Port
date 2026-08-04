@@ -1,85 +1,116 @@
 # GTP_Port Build Order
 
-Last updated: 2026-07-15
+Last updated: 2026-08-04
 Working branch: `gpt-handoff`
-Verified baseline: unified architecture through Chunk 5
+Verified baseline: unified Content Entries architecture and TinaCloud editor
 
 ## Current phase
 
-> Real content and job-search readiness
+> Controlled Tina site-builder expansion
 
-The functional site, hosted editor, deployment path, and core presentation
-components are operational. Real content can now be published while remaining
-design and feature work continues incrementally.
+The site is operational and publishable. The next phase adds dynamic pages,
+reorderable blocks and landing-page tiles, editorial taxonomy, and a compact
+homepage while preserving the current content and routes.
 
-## Verified complete
+## Active sprint order
 
-- Static Astro 6.4.6 architecture
-- TinaCMS local workflow and authenticated TinaCloud production editor
-- Six focused Tina collections
-- Unified Content Entries schema and Tina editing workflow
-- Portfolio, Journal, and shared `/archive/[slug]/` routes
-- Tina-controlled Portfolio bento grid and manual ordering
-- Editable Homepage preview headings linked to Portfolio and Journal
-- Project galleries, native video, YouTube, Vimeo, and lightboxes
-- Live Journal and Portfolio Immich galleries with proportion-preserving,
-  higher-quality previews and an accessible lightbox
-- Cross-type related Content Entries
-- Structured Resume editor and timeline
-- Responsive shared shell and keyboard-accessible mobile navigation
-- Skip link, visible focus states, current-page navigation, and reduced motion
-- Favicons, descriptions, canonical URLs, and social metadata foundation
-- Cloudflare production variables and automatic deployment from `gpt-handoff`
+1. Flexible page foundation
+2. Reorderable page blocks and media
+3. Work hierarchy and Tina tile board
+4. Journal sections and landing page
+5. Tags and subject archives
+6. Homepage redesign
+7. Nested navigation and information-architecture cleanup
+8. Migration, QA, and documentation
 
-## Publishing workflow
+Full scope and acceptance criteria are in `Roadmap.md`.
 
-Hosted content edits can be made at `/admin/`. Tina writes those content
-changes to `gpt-handoff`, and Cloudflare rebuilds the site.
+## Locked design constraints
 
-Code, schema, and layout work follows the review-first workflow:
+- Preserve the existing typography and color choices.
+- Use the approved homepage mockup for layout, hierarchy, density, and spacing.
+- Do not treat the redesign as a new visual system.
 
-```text
-Pull gpt-handoff
--> make one focused chunk
--> run the appropriate build and diff checks
--> review changed files
--> commit and push in VS Code
--> confirm the Cloudflare deployment
-```
+## Active chunk - Sprint 1
 
-## Active build order
+### Chunk 1A - Schema and route proof
 
-### Content first
+- [x] add the Flexible Pages content definition in Astro
+- [x] add the Tina collection with creation and deletion enabled
+- [x] add title, path, description, draft, and basic SEO fields
+- [x] add a catch-all route and minimal shared renderer
+- [x] protect reserved top-level paths and reject duplicate published paths
+- [x] create one parent and one nested test page
 
-1. Replace Resume, About, and Contact placeholders.
-2. Publish two or three strong Portfolio projects.
-3. Publish one or two representative Journal entries.
-4. Revisit Homepage copy and featured selections using the real content.
-5. Remove test entries and placeholder media after replacements are verified.
+Stop and verify:
 
-### Parallel refinement
+- [x] Tina local indexing succeeds
+- [x] strict TypeScript checking passes
+- [x] the Astro production build generates both test URLs
+- [x] all existing routes still build
+- [ ] Cloudflare preview deploys successfully
 
-1. Refine the pages that real content exposes as weak.
-2. Convert the display-only Journal topic chips into static topic routes when
-   the entry count makes them useful.
-3. Add Portfolio filtering when the project count makes it useful.
-4. Add inline narrative video only when a real story requires it.
-5. Complete Resume print styling.
+Chunk 1A is implemented and verified locally. Do not begin Chunk 1B until the
+changes are pushed to `gpt-handoff` and the Cloudflare preview gate passes.
 
-### Launch quality
+### Chunk 1B - Page shell and editorial controls
 
-1. Add sitemap, robots.txt, and RSS.
-2. Optimize images and final social cards.
-3. Run Lighthouse, responsive, cross-browser, and broken-link checks.
-4. Add analytics and search only if they provide clear value.
+- add eyebrow, header image, navigation metadata, and safe defaults
+- add missing-page and draft filtering behavior
+- refine the flexible-page layout responsively
+- document page creation, nesting, renaming, and deletion
+- reindex TinaCloud and test create/edit/delete in the hosted editor
 
-## Deferred integrations
+Stop and verify:
 
-- Pagefind until the published content volume warrants search
-- Giscus until a comment workflow is desired
+- a page can be created and nested entirely through Tina
+- renaming does not collide with a reserved or existing route
+- deleting the test child removes its generated route on the next build
+- existing About, Contact, Resume, Journal, Portfolio, and archive routes remain
+  unchanged
+
+## Decision gates
+
+- Before Sprint 2: approve the initial block list and determine whether Content
+  Entry video uses the same structured block or a rich-text template.
+- Before Sprint 3: decide whether the public name and URL remain Portfolio or
+  change to Work.
+- Before Sprint 4: approve final Journal section names and migration mapping.
+- Before Sprint 5: choose generated tags or a controlled tag registry after a
+  Tina usability test.
+- Before Sprint 7: decide whether About remains a standalone navigation item.
+
+## Chunk rules
+
+- one schema or presentation concern per reviewable chunk
+- no removal of legacy fields in the same chunk that introduces replacements
+- preserve published URLs or add redirects before changing them
+- use explicit Tina selections for featured content
+- update Tina, Astro validation, renderers, sample content, lockfile, and docs
+  together when a schema changes
+- require a successful local production build and Cloudflare preview before
+  starting the next chunk
+- finish every sprint by reviewing `PROJECT_LOG.md`, `BUILD_ORDER.md`,
+  `Roadmap.md`, and `SITE_MAINTENANCE_GUIDE.md`
+- update `README.md`, content guidance, portability guidance, or another
+  feature-specific document whenever that sprint changes its subject
+
+## Parallel content work
+
+Content publishing does not need to stop while the redesign is built:
+
+1. Replace remaining Resume, About, and Contact placeholders.
+2. Publish representative Work projects and Journal entries.
+3. Review imported WordPress drafts and media rights.
+4. Avoid relying on numeric Portfolio order or display-only Journal topics for
+   new long-term organization; those fields will be migrated.
+
+## Still deferred
+
+- Pagefind
+- Giscus
 - Resume PDF generation
 - advanced related-content ranking
+- unrestricted visual page building
 
-See `CONTENT_PORTABILITY.md` before adding new content-specific block systems.
-
-
+See `CONTENT_PORTABILITY.md` before expanding structured block use.

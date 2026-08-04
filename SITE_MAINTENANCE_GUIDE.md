@@ -20,6 +20,10 @@ The most important rule is:
 > A Tina field is not complete until the editing schema, Astro validation,
 > stored Markdown, and rendered page all agree about it.
 
+The current redesign also has a locked visual constraint: preserve the existing
+typography and color system. The approved homepage mockup guides layout,
+hierarchy, density, and spacing only.
+
 ## Safe working routine
 
 Use this routine for code changes:
@@ -63,6 +67,7 @@ Never commit `.env` or a real `TINA_TOKEN`.
 | --- | --- |
 | `src/content/entries/` | Markdown bodies and metadata for every article, project, case study, and gallery |
 | `src/content/pages/` | Editable Homepage, archive-page, About, Contact, and Resume content |
+| `src/content/flexible-pages/` | Tina-created standalone and nested pages with explicit URL paths |
 | `src/content/settings/site.md` | Navigation, footer, site name, and shared descriptions |
 | `src/content.config.ts` | Astro's validation rules for all stored content |
 | `tina/config.ts` | Fields and controls visible in TinaCMS |
@@ -104,9 +109,32 @@ The main routes are:
 | `/about/` | `src/pages/about.astro` | `StandardPageLayout.astro` |
 | `/contact/` | `src/pages/contact.astro` | `StandardPageLayout.astro` and `ContactMethods.astro` |
 | `/resume/` | `src/pages/resume.astro` | `StandardPageLayout.astro`, Resume Overview, and Timeline |
+| Flexible paths such as `/services/video-production/` | `src/pages/[...path].astro` | `FlexiblePageLayout.astro` |
 
 `BaseLayout.astro` wraps every page with metadata, navigation, footer, global
 styles, and the accessibility skip link.
+
+## Flexible Page route safety
+
+Flexible Pages use an explicit `path` field rather than deriving the public URL
+from the Markdown filename. `src/lib/flexible-pages.ts` normalizes and validates
+that field, while `src/pages/[...path].astro` rejects duplicate published paths
+during the build.
+
+Path segments must use lowercase letters, numbers, and single hyphens. The
+following top-level paths are reserved because the application or public asset
+tree already owns them:
+
+```text
+_astro, about, admin, archive, contact, journal, portfolio, resume, uploads
+```
+
+Do not remove a reserved value merely to make a Flexible Page build. Confirm
+the existing route or asset tree is intentionally being migrated first.
+
+Tina document filenames may contain folders, but the `path` frontmatter is the
+public routing contract. Keep the nested filename and URL path aligned where
+practical so repository browsing remains understandable.
 
 ## Changing the visuals
 
@@ -606,15 +634,21 @@ Before pushing, confirm:
 - mobile and keyboard behavior still work where applicable
 - links use site paths such as `/portfolio`, not local filesystem paths
 
-## When documentation should also change
+## Sprint documentation checklist
 
-Update the active documents when a change alters architecture, workflow,
-available CMS controls, route behavior, or roadmap status:
+Documentation is part of sprint completion, not a later cleanup task. At the
+end of every sprint:
 
-- `README.md` for current capabilities and setup
-- `CONTENT_GUIDE.md` for editable fields and publishing behavior
-- `BUILD_ORDER.md` and `NEXT_STEPS.md` for priorities
-- `Roadmap.md` for milestone status
-- `PROJECT_LOG.md` for important completed work and decisions
+1. Add completed work, decisions, and verification to `PROJECT_LOG.md`.
+2. Advance the active chunk and decision gates in `BUILD_ORDER.md`.
+3. Update status, dependencies, or acceptance criteria in `Roadmap.md`.
+4. Update this guide whenever routes, Tina controls, schemas, workflows,
+   dependencies, or maintenance procedures changed.
+5. Update `README.md`, `CONTENT_GUIDE.md`, `CONTENT_PORTABILITY.md`, or a
+   feature-specific guide only when that document's subject changed.
+6. Check `DOCUMENTATION.md` if documents were added, retired, or renamed.
 
-Pure color, spacing, or copy edits normally do not require roadmap changes.
+A sprint is not complete until the relevant documentation matches the built and
+deployed behavior. Small copy-only edits do not require a full roadmap rewrite,
+but meaningful visual changes should still be recorded when they alter the
+approved design direction.

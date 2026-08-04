@@ -1,0 +1,62 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Container from "../components/ui/Container.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoImage?: string;
+}
+
+const {
+  title,
+  description,
+  seoTitle,
+  seoDescription,
+  seoImage,
+} = Astro.props;
+---
+
+<BaseLayout
+  title={seoTitle || title}
+  description={seoDescription || description}
+  image={seoImage}
+>
+  <article class="flexible-page">
+    <header class="page-header">
+      <Container width="reading">
+        <h1>{title}</h1>
+        <p class="introduction">{description}</p>
+      </Container>
+    </header>
+
+    <Container width="reading">
+      <div class="article-content page-content">
+        <slot />
+      </div>
+    </Container>
+  </article>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-lg) 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .page-header h1 {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+  }
+
+  .introduction {
+    max-width: 44rem;
+    margin-bottom: 0;
+    font-size: 1.2rem;
+  }
+
+  .page-content {
+    padding: var(--space-lg) 0 var(--space-xl);
+  }
+</style>

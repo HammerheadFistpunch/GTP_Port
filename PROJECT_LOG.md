@@ -1,5 +1,90 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 1A Flexible Page route proof implemented
+
+Completed locally:
+
+- Added a separate `flexiblePages` Astro collection and Tina **Flexible
+  Pages** collection with document creation and deletion enabled.
+- Added editable title, URL path, description, draft state, SEO title, SEO
+  description, social image, and Markdown body fields.
+- Added a guarded catch-all Astro route and minimal shared Flexible Page
+  layout using the existing color, typography, width, and spacing system.
+- Added build-time validation for invalid paths, reserved top-level routes,
+  and duplicate published Flexible Page paths.
+- Added published `/services/` and `/services/video-production/` proof pages.
+- Regenerated the Tina schema lock.
+
+Verified locally:
+
+- Tina indexed the new collection successfully.
+- Strict TypeScript checking passed.
+- Astro built 17 static pages, including both proof URLs and all 15 baseline
+  routes.
+- The generated proof pages contain the expected canonical URLs and SEO
+  metadata.
+- `git diff --check` passed.
+
+Pending:
+
+- Push the implementation to `gpt-handoff` and confirm a successful
+  Cloudflare preview before beginning Sprint 1B.
+
+## 2026-08-03 - Documentation audit and cleanup completed
+
+Completed:
+
+- Consolidated active planning around `BUILD_ORDER.md` and `Roadmap.md`.
+- Retired stale `NEXT_STEPS.md`, `Audit.md`, and `CHUNK_MANIFEST.md` files
+  that duplicated or contradicted the current sprint plan.
+- Refreshed the README, documentation index, maintenance guide, build order,
+  roadmap, content guide, and repository agent instructions.
+- Recorded documentation maintenance as part of every sprint's completion
+  criteria.
+- Corrected the local development instruction to use the Tina-aware
+  `npm run dev` workflow.
+
+Decisions:
+
+- Preserve the site's existing typography and color choices during the
+  redesign.
+- Use the approved homepage mockup as the reference for layout, hierarchy,
+  density, and spacing only.
+- Sprint 1A remains the next application-code work; this cleanup changed
+  documentation only.
+
+## 2026-08-03 - Tina site-builder expansion roadmap approved
+
+Planned:
+
+- Expand Tina with creatable Flexible Pages and nested static URLs.
+- Add a constrained, reorderable block system for text, images, YouTube,
+  Immich galleries, child-page tiles, and calls to action.
+- Replace numeric Portfolio ordering with a drag-reorderable Work landing-page
+  tile board that references permanent content without owning it.
+- Add a required primary Journal section, working section routes, a selected
+  featured story, and a compact editorial landing page.
+- Add clickable tags and static tag archive pages while keeping sections and
+  tags separate.
+- Redesign the Homepage around a smaller hero, a side-by-side Journal preview,
+  About Me, What I Do, Technology Stack, and selected Featured Work.
+- Add optional nested navigation after the dynamic page and archive routes are
+  proven.
+- Finish with migration, TinaCloud reindexing, route and accessibility QA, and
+  owner documentation updates.
+
+Decisions:
+
+- The work is divided into eight independently verifiable sprints in
+  `Roadmap.md`.
+- Structured blocks are for flexible and landing pages; Journal and Work entry
+  bodies remain semantic and portable wherever possible.
+- Permanent content stays separate from landing-page tile placement and
+  presentation overrides.
+- Existing public routes will be preserved or redirected before removal.
+- No feature in this entry is marked complete; implementation begins with
+  Sprint 1A in `BUILD_ORDER.md`.
+
 ## 2026-07-15 - Owner maintenance documentation added
 
 Completed:
