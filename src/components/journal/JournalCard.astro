@@ -6,6 +6,7 @@ interface Props {
   date: string;
   category: string;
   href: string;
+  variant?: "default" | "editorial";
 }
 
 const {
@@ -15,10 +16,11 @@ const {
   date,
   category,
   href,
+  variant = "default",
 } = Astro.props;
 ---
 
-<a class="journal-card" href={href}>
+<a class:list={["journal-card", { "journal-card--editorial": variant === "editorial" }]} href={href}>
 
   {image ? (
     <img
@@ -34,9 +36,7 @@ const {
 
   <div class="content">
 
-    <div class="meta">
-      {category} · {date}
-    </div>
+    <div class="meta">{category}</div>
 
     <h3>
       {title}
@@ -45,6 +45,8 @@ const {
     <p>
       {excerpt}
     </p>
+
+    <div class="date">{date}</div>
 
   </div>
 
@@ -138,6 +140,16 @@ const {
 
 }
 
+.date {
+  margin-top: 1rem;
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
 
 .content p {
 
@@ -152,6 +164,18 @@ const {
 
 }
 
+.journal-card--editorial {
+  grid-template-columns: minmax(220px, 38%) 1fr;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.journal-card--editorial .content h3 {
+  margin: .45rem 0 .65rem;
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+}
+
 
 @media(max-width:800px){
 
@@ -159,6 +183,10 @@ const {
 
     grid-template-columns:1fr;
 
+  }
+
+  .journal-card--editorial {
+    grid-template-columns: 1fr;
   }
 
 }

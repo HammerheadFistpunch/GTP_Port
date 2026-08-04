@@ -8,10 +8,9 @@ headerStyle: compact
 sectionTitle: Latest entries
 emptyMessage: No published Journal entries yet.
 topics:
-  - Technology
-  - Cars
-  - Photography
+  - Automotive
   - Projects
-  - Personal
+  - Field Notes
+  - Off-topic
+featuredEntry: src/content/entries/2025-lexus-lx-700h-first-drive.mdx
 ---
-

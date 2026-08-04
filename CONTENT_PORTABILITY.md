@@ -30,6 +30,11 @@ delete or rewrite the underlying Content Entry or Flexible Page. A future
 migration can resolve each reference once and discard the landing-page
 presentation fields without changing narrative content.
 
+Journal organization uses a small controlled `journalSection` value and an
+optional landing-page reference to the featured entry. Both are portable
+frontmatter: a future platform can map the four section slugs directly and
+resolve the feature reference once without changing any article body.
+
 For articles and case studies, prefer ordinary Markdown plus a small set of
 durable metadata fields. Add a custom content block only when standard Markdown
 cannot represent the required material.

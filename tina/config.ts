@@ -1,5 +1,6 @@
 import { defineConfig } from "tinacms";
 import PlacementField from "./components/PlacementField";
+import { journalSectionOptions } from "../src/lib/journal-sections";
 
 const branch =
     process.env.GITHUB_BRANCH ||
@@ -763,11 +764,21 @@ export default defineConfig({
                     {
                         type: "string",
                         name: "topics",
-                        label: "Topics",
+                        label: "Legacy Topic List",
                         list: true,
+                        description:
+                            "Compatibility field retained during migration. Public Journal navigation now uses the controlled section list.",
                         ui: {
                             component: "tags",
                         },
+                    },
+                    {
+                        type: "reference",
+                        name: "featuredEntry",
+                        label: "Featured Journal Story",
+                        collections: ["entries"],
+                        description:
+                            "Select the story featured on journal.md. Draft or non-Journal entries are ignored safely.",
                     },
                     {
                         type: "string",
@@ -1354,6 +1365,14 @@ export default defineConfig({
                         required: true,
                         description:
                             "A broad label such as Cars, Photography, Software, Writing, or Case Study.",
+                    },
+                    {
+                        type: "string",
+                        name: "journalSection",
+                        label: "Primary Journal Section",
+                        options: journalSectionOptions,
+                        description:
+                            "Required when Placement includes Journal. Choose one controlled editorial section.",
                     },
                     {
                         type: "string",

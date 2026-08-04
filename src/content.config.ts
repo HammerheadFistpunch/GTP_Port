@@ -4,6 +4,7 @@ import { z } from "astro/zod";
 import { validateFlexiblePagePath } from "./lib/flexible-pages";
 import { flexiblePageBlockSchema } from "./lib/page-blocks";
 import { portfolioTileSizeValues } from "./lib/portfolio-tiles";
+import { journalSectionSlugs } from "./lib/journal-sections";
 
 const sharedFields = {
     title: z.string(),
@@ -85,6 +86,7 @@ const entries = defineCollection({
         date: z.coerce.date().optional(),
         updatedDate: z.coerce.date().optional(),
         primaryTopic: z.string(),
+        journalSection: z.enum(journalSectionSlugs).optional(),
         portfolioOrder: z.number().int().default(0),
         tileSize: z.enum([
             "standard",
@@ -100,6 +102,18 @@ const entries = defineCollection({
         }).optional(),
         immichGallery: immichGallery.optional(),
         media: z.array(mediaItem).default([]),
+    }).superRefine((entry, context) => {
+        const isPublishedInJournal =
+            !entry.draft &&
+            (entry.placement === "journal" || entry.placement === "both");
+
+        if (isPublishedInJournal && !entry.journalSection) {
+            context.addIssue({
+                code: "custom",
+                path: ["journalSection"],
+                message: "Published Journal entries require a primary Journal section.",
+            });
+        }
     }),
 });
 
@@ -151,6 +165,7 @@ const pages = defineCollection({
             sectionTitle: z.string(),
             emptyMessage: z.string(),
             topics: z.array(z.string()).default([]),
+            featuredEntry: z.string().optional(),
             portfolioPacking: z.enum(["dense", "exact"]).default("dense"),
             portfolioTiles: z.array(portfolioTile).default([]),
         }),

@@ -21,7 +21,8 @@ Controls:
 
 - `home.md` — hero, calls to action, linked section headings, preview limits,
   and About callout
-- `journal.md` — Journal archive header, topics, section title, and empty state
+- `journal.md` — Journal archive header, explicit featured story, legacy topic
+  list, section title, and empty state
 - `portfolio.md` — Portfolio archive header, section title, and empty state
 - `about.md` — About header and Markdown body
 - `resume.md` — Resume header, links, and Markdown body
@@ -42,10 +43,10 @@ include a **Section Title Link** field in Tina. The current destinations are
 `/portfolio` and `/journal`. These fields control the linked section headings;
 individual preview cards continue to link directly to their Content Entries.
 
-The topic list in `journal.md` currently controls visible topic chips only.
-Those chips are not yet filters or links. The planned topic-route work should
-derive navigation from published Content Entry `primaryTopic` values to avoid
-maintaining two conflicting topic lists.
+Journal navigation uses the controlled Automotive, Projects, Field Notes, and
+Off-topic section registry. Latest links to the complete `/journal/` feed and
+is not assignable to an entry. The `topics` list in `journal.md` is retained
+only as migration metadata and does not generate public navigation.
 
 ## Flexible Pages
 
@@ -177,6 +178,28 @@ The Portfolio landing page supports **Dense** packing, which fills bento-grid
 gaps, and **Exact Order**, which preserves visible list order. Legacy
 `portfolioOrder` and Content Entry `tileSize` values remain as a fallback when
 the landing page has no explicit tiles. Journal order uses `date`.
+
+### Journal sections and featured story
+
+Every published entry whose Placement includes Journal must select one
+**Primary Journal Section** in Tina:
+
+- Automotive
+- Projects
+- Field Notes
+- Off-topic
+
+Changing a section changes only where the entry appears in the Journal index;
+its `/archive/[slug]/` URL does not change. Use **Archive Pages → Journal →
+Featured Journal Story** to choose the landing-page feature. Tina stores a
+reference to the existing Content Entry, not a copy. A draft or non-Journal
+selection is skipped safely, and the selected feature is omitted from the
+remaining chronological feed.
+
+The static section routes are `/journal/automotive/`, `/journal/projects/`,
+`/journal/field-notes/`, and `/journal/off-topic/`. The legacy `primaryTopic`
+field remains available as a broad descriptive label and is separate from the
+controlled section used for routing.
 
 The five primary category pages are Flexible Pages at:
 

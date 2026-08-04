@@ -1,0 +1,54 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import JournalLanding, {
+  type JournalPostSummary,
+} from "../../components/journal/JournalLanding.astro";
+import { journalSections } from "../../lib/journal-sections";
+
+export function getStaticPaths() {
+  return journalSections.map((section) => ({
+    params: { section: section.slug },
+    props: { section },
+  }));
+}
+
+const { section } = Astro.props;
+const journalPage = await getEntry("pages", "journal");
+
+if (!journalPage || journalPage.data.pageType !== "archive") {
+  throw new Error("Missing Journal page content: src/content/pages/journal.md");
+}
+
+const page = journalPage.data;
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "long",
+  timeZone: "UTC",
+});
+const entries = (await getCollection("entries", ({ data }) =>
+  !data.draft &&
+  (data.placement === "journal" || data.placement === "both") &&
+  data.journalSection === section.slug
+)).sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
+);
+
+const posts: JournalPostSummary[] = entries.map((entry) => ({
+  title: entry.data.title,
+  excerpt: entry.data.description,
+  image: entry.data.coverImage,
+  date: entry.data.date ? dateFormatter.format(entry.data.date) : "Date pending",
+  section: section.label,
+  href: `/archive/${entry.id}/`,
+}));
+---
+
+<JournalLanding
+  title={`${section.label} | ${page.title}`}
+  eyebrow={`${page.title} section`}
+  headline={section.label}
+  description={section.description}
+  sectionTitle={`${section.label} entries`}
+  emptyMessage={`No published ${section.label} entries yet.`}
+  posts={posts}
+  activeSection={section.slug}
+/>

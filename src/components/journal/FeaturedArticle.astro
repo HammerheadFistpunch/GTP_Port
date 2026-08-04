@@ -6,6 +6,7 @@ interface Props {
   category: string;
   date: string;
   href: string;
+  variant?: "overlay" | "split";
 }
 
 const {
@@ -15,10 +16,11 @@ const {
   category,
   date,
   href,
+  variant = "overlay",
 } = Astro.props;
 ---
 
-<section class="featured">
+<section class:list={["featured", { "featured--split": variant === "split" }]}>
 
   {image ? (
     <img
@@ -70,6 +72,15 @@ const {
 
 }
 
+.featured--split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, .95fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  overflow: visible;
+  border-radius: 0;
+}
+
 
 .featured img {
 
@@ -79,6 +90,12 @@ const {
 
   object-fit:cover;
 
+}
+
+.featured--split img,
+.featured--split .image-placeholder {
+  aspect-ratio: 16 / 11;
+  border-radius: var(--radius-sm);
 }
 
 .image-placeholder {
@@ -126,6 +143,27 @@ const {
       rgba(0,0,0,.85)
     );
 
+}
+
+.featured--split .overlay {
+  position: static;
+  display: block;
+  padding: 0;
+  background: none;
+}
+
+.featured--split .content h2 {
+  color: var(--text-primary);
+  font-size: clamp(2rem, 4vw, 3.15rem);
+  line-height: 1.08;
+}
+
+.featured--split .content p {
+  color: var(--text-secondary);
+}
+
+.featured--split .content a {
+  color: var(--accent);
 }
 
 
@@ -177,6 +215,10 @@ const {
 
 
 @media(max-width:800px){
+
+.featured--split {
+  grid-template-columns: 1fr;
+}
 
 .overlay {
 

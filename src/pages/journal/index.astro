@@ -1,25 +1,15 @@
 ---
 import { getCollection, getEntry } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import CategoryNav from "../../components/journal/CategoryNav.astro";
-import JournalCard from "../../components/journal/JournalCard.astro";
-import Container from "../../components/ui/Container.astro";
+import JournalLanding, {
+  type JournalPostSummary,
+} from "../../components/journal/JournalLanding.astro";
+import { getJournalSection } from "../../lib/journal-sections";
 
-const posts = (await getCollection("entries", ({ data }) =>
+const entries = (await getCollection("entries", ({ data }) =>
   !data.draft && (data.placement === "journal" || data.placement === "both")
-))
-  .sort((a, b) => {
-    if (a.data.featured !== b.data.featured) {
-      return Number(b.data.featured) - Number(a.data.featured);
-    }
-
-    return (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0);
-  });
-
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  dateStyle: "long",
-  timeZone: "UTC",
-});
+)).sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
+);
 
 const journalPage = await getEntry("pages", "journal");
 
@@ -28,86 +18,36 @@ if (!journalPage || journalPage.data.pageType !== "archive") {
 }
 
 const page = journalPage.data;
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "long",
+  timeZone: "UTC",
+});
+
+const summarize = (entry: (typeof entries)[number]): JournalPostSummary => ({
+  title: entry.data.title,
+  excerpt: entry.data.description,
+  image: entry.data.coverImage,
+  date: entry.data.date ? dateFormatter.format(entry.data.date) : "Date pending",
+  section: getJournalSection(entry.data.journalSection)?.label ?? "Journal",
+  href: `/archive/${entry.id}/`,
+});
+
+const featuredEntry = entries.find(
+  (entry) => `src/content/entries/${entry.id}.mdx` === page.featuredEntry,
+);
+const featuredPost = featuredEntry ? summarize(featuredEntry) : undefined;
+const posts = entries
+  .filter((entry) => entry.id !== featuredEntry?.id)
+  .map(summarize);
 ---
 
-<BaseLayout
+<JournalLanding
   title={page.title}
+  eyebrow={page.eyebrow}
+  headline={page.headline}
   description={page.description}
->
-  <section class:list={["archive-hero", `archive-hero--${page.headerStyle}`]}>
-    <Container>
-      {page.eyebrow && <p class="eyebrow">{page.eyebrow}</p>}
-      <h1>{page.headline}</h1>
-      <p class="introduction">{page.description}</p>
-
-      {page.topics.length > 0 && (
-        <CategoryNav categories={page.topics} />
-      )}
-    </Container>
-  </section>
-
-  <section class="archive-list" aria-labelledby="journal-entries">
-    <Container width="reading">
-      <h2 id="journal-entries">{page.sectionTitle}</h2>
-
-      {posts.length > 0 ? (
-        posts.map((post) => (
-          <JournalCard
-            title={post.data.title}
-            excerpt={post.data.description}
-            image={post.data.coverImage}
-            date={post.data.date ? dateFormatter.format(post.data.date) : "Date pending"}
-            category={post.data.primaryTopic}
-            href={`/archive/${post.id}/`}
-          />
-        ))
-      ) : (
-        <p>{page.emptyMessage}</p>
-      )}
-    </Container>
-  </section>
-</BaseLayout>
-
-<style>
-  .archive-hero {
-    padding: var(--space-lg) 0;
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .archive-hero--featured {
-    padding: var(--space-xl) 0 var(--space-lg);
-  }
-
-  .eyebrow {
-    margin-bottom: var(--space-sm);
-    color: var(--accent);
-    font-family: var(--font-ui);
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .archive-hero h1 {
-    max-width: 22ch;
-    font-size: clamp(2.25rem, 5vw, 3.75rem);
-  }
-
-  .archive-hero--featured h1 {
-    max-width: 15ch;
-    font-size: clamp(3rem, 7vw, 5.5rem);
-  }
-
-  .introduction {
-    max-width: 44rem;
-    font-size: 1.2rem;
-  }
-
-  .archive-list {
-    padding-top: var(--space-lg);
-  }
-
-  .archive-list h2 {
-    margin-bottom: var(--space-md);
-  }
-</style>
+  sectionTitle={page.sectionTitle}
+  emptyMessage={page.emptyMessage}
+  featuredPost={featuredPost}
+  posts={posts}
+/>

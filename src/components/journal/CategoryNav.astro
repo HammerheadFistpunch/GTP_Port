@@ -1,51 +1,66 @@
 ---
+interface CategoryLink {
+  label: string;
+  href: string;
+  active?: boolean;
+}
+
 interface Props {
-  categories: string[];
+  categories: CategoryLink[];
 }
 
 const { categories } = Astro.props;
 ---
 
-<div class="categories" aria-label="Journal topics">
-
-{categories.map(category => (
-
-<span>
-
-{category}
-
-</span>
-
-))}
-
-</div>
+<nav class="categories" aria-label="Journal sections">
+  {categories.map((category) => (
+    <a
+      href={category.href}
+      aria-current={category.active ? "page" : undefined}
+    >
+      {category.label}
+    </a>
+  ))}
+</nav>
 
 <style>
+  .categories {
+    display: flex;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border-color);
+    scrollbar-width: thin;
+  }
 
-.categories{
+  .categories a {
+    position: relative;
+    flex: 0 0 auto;
+    padding: 0.85rem 0 1rem;
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
 
-display:flex;
+  .categories a::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: transparent;
+    content: "";
+  }
 
-gap:1rem;
+  .categories a:hover,
+  .categories a[aria-current="page"] {
+    color: var(--text-primary);
+  }
 
-flex-wrap:wrap;
-
-margin-bottom:3rem;
-
-}
-
-.categories span{
-
-padding:.5rem 1rem;
-
-border-radius:999px;
-
-background:var(--bg-surface);
-
-border:1px solid var(--border-color);
-
-color:var(--text-secondary);
-
-}
-
+  .categories a[aria-current="page"]::after {
+    background: var(--accent);
+  }
 </style>

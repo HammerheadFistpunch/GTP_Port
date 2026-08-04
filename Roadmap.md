@@ -120,8 +120,7 @@ bodies into structured page-builder blocks.
 
 ## Sprint 3 - Portfolio hierarchy and tile board
 
-Status: Implemented and locally verified. Cloudflare deployment and hosted
-Tina tile editing remain to be verified after push.
+Status: Complete, deployed, and owner-verified.
 
 Goal: turn the current Portfolio into a glanceable, Tina-curated section
 with reorderable category and featured-project tiles.
@@ -151,6 +150,9 @@ Depends on: Sprints 1-2
 
 ## Sprint 4 - Journal sections and landing page
 
+Status: Implemented and locally verified. Cloudflare deployment and hosted
+Tina section/feature editing remain to be verified after push.
+
 Goal: create a compact editorial landing page with a deliberate featured
 story, chronological feed, and working section navigation.
 
@@ -158,11 +160,13 @@ Scope:
 
 - add one required primary Journal section to Content Entries placed in the
   Journal
-- initial sections: Latest, Automotive, Off-topic, Projects, and Field Notes
+- initial assignable sections: Automotive, Projects, Field Notes, and Off-topic;
+  Latest is the complete feed
 - add static filtered section routes
 - replace display-only topic chips with real links
 - add a Tina-selected featured story and a chronological story list
-- add a section index beside the feed on desktop and stack it on mobile
+- add the approved horizontal section index on desktop and allow it to scroll
+  cleanly on mobile
 - define migration defaults for existing Journal entries
 
 Acceptance:

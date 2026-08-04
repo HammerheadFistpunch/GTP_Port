@@ -107,7 +107,8 @@ The main routes are:
 | --- | --- | --- |
 | `/` | `src/pages/index.astro` | Hero, Portfolio cards, Journal cards, About callout |
 | `/portfolio/` | `src/pages/portfolio/index.astro` | `PortfolioBentoCard.astro` |
-| `/journal/` | `src/pages/journal/index.astro` | `CategoryNav.astro` and `JournalCard.astro` |
+| `/journal/` | `src/pages/journal/index.astro` | `JournalLanding.astro` and Journal components |
+| `/journal/[section]/` | `src/pages/journal/[section].astro` | Filtered `JournalLanding.astro` |
 | `/archive/[slug]/` | `src/pages/archive/[...slug].astro` | `EntryLayout.astro` |
 | `/about/` | `src/pages/about.astro` | `StandardPageLayout.astro` |
 | `/contact/` | `src/pages/contact.astro` | `StandardPageLayout.astro` and `ContactMethods.astro` |
@@ -298,7 +299,7 @@ Common targets:
 | Homepage Portfolio cards | `src/components/portfolio/PortfolioCard.astro` |
 | Portfolio bento cards | `src/components/portfolio/PortfolioBentoCard.astro` |
 | Journal cards | `src/components/journal/JournalCard.astro` |
-| Homepage featured article | `src/components/journal/FeaturedArticle.astro` |
+| Journal and Homepage featured article | `src/components/journal/FeaturedArticle.astro` |
 | Entry headers and body shell | `src/layouts/EntryLayout.astro` |
 | About, Contact, and Resume header shell | `src/layouts/StandardPageLayout.astro` |
 | Gallery and lightbox | `Gallery.astro`, `Lightbox.astro`, and `ImmichGallery.astro` |
@@ -546,6 +547,31 @@ Homepage fields span:
 The Featured Portfolio and Journal Preview title links also pass through
 `SectionTitle.astro`.
 
+### Journal sections and featured story
+
+Journal section behavior spans:
+
+- `src/lib/journal-sections.ts` — controlled slugs, labels, descriptions, and URLs
+- `tina/config.ts` — section choice and featured-entry reference
+- `src/content.config.ts` — valid values and the published-Journal requirement
+- Content Entry `journalSection` frontmatter — the selected primary section
+- `src/content/pages/journal.md` — the explicit featured-entry reference
+- `src/pages/journal/index.astro` — chronological landing query and feature exclusion
+- `src/pages/journal/[section].astro` — generated filtered routes
+- `JournalLanding.astro`, `CategoryNav.astro`, `FeaturedArticle.astro`, and
+  `JournalCard.astro` — shared presentation
+
+In Tina, set **Primary Journal Section** whenever Placement includes Journal.
+Latest is not a section choice; it is the complete feed at `/journal/`. Open
+**Archive Pages → Journal** to select the featured story. The selected entry
+must be published and placed in Journal or Both. Draft and non-Journal
+references are ignored rather than breaking the build.
+
+To add or rename a section, update the shared registry and every stored entry
+before removing an old slug. Section URL changes require redirects. The legacy
+`primaryTopic`, `featured`, and archive `topics` fields remain during migration;
+do not repurpose them as route controls.
+
 ### Site settings, navigation, and footer
 
 Editable values live in `src/content/settings/site.md` and the `Site Settings`
@@ -574,9 +600,9 @@ entries and avoid renaming published entries casually.
 The unified `/archive/[slug]/` route is deliberately neutral so moving an entry
 between Portfolio and Journal does not change its URL.
 
-Journal topic chips are currently visual labels. Making them functional should
-use static topic routes generated from Content Entry `primaryTopic` values; it
-does not require a backend database.
+Journal section links are static routes generated from the controlled
+`journalSection` values. They are separate from descriptive tags and the
+legacy `primaryTopic` label.
 
 ## Images and media
 

@@ -108,7 +108,7 @@ Stop and verify:
 
 Sprint 2B is deployed and owner-verified at commit `f2c2c7c`.
 
-## Active sprint - Sprint 3 hosted verification
+## Completed sprint - Sprint 3
 
 - [x] keep Portfolio as the public name and `/portfolio/` as the canonical URL
 - [x] create Video, Photography, Case Studies, Writing Samples, and Software
@@ -127,8 +127,31 @@ Stop and verify:
 - [x] Astro generates the Portfolio, all five category routes, and every
   existing archive detail URL
 - [x] generated Portfolio and Homepage HTML contain the curated selections
-- [ ] Cloudflare deploys the schema and all Portfolio routes successfully
-- [ ] hosted Tina can add, remove, resize, override, and drag-reorder tiles
+- [x] Cloudflare deploys the schema and all Portfolio routes successfully
+- [x] hosted Tina can add, remove, and drag-reorder tiles; the owner accepted
+  the public tile layout
+
+## Active sprint - Sprint 4 hosted verification
+
+- [x] approve Automotive, Projects, Field Notes, and Off-topic as the assignable
+  sections; Latest is the complete feed
+- [x] add a required primary section to published Journal entries
+- [x] migrate all six existing Journal entries
+- [x] add static filtered section routes
+- [x] replace display-only topic chips with working links
+- [x] add a Tina-selected featured story
+- [x] keep the remaining feed chronological without duplicating the feature
+- [x] implement the approved compact editorial landing-page layout
+
+Stop and verify:
+
+- [x] Tina audits every content document and Journal reference
+- [x] strict TypeScript checking passes
+- [x] Astro generates all four section routes and every archive detail URL
+- [x] generated Journal HTML contains working section links and one copy of the
+  selected feature
+- [ ] Cloudflare deploys the Journal landing and section routes successfully
+- [ ] hosted Tina can change an entry section and select a different feature
 
 ## Decision gates
 
@@ -136,7 +159,8 @@ Stop and verify:
   rich-text YouTube embed for Content Entry bodies.
 - [x] Before Sprint 3: keep Portfolio as the public name and `/portfolio/` as
   the canonical URL; do not introduce a Work section or `/work/` route.
-- Before Sprint 4: approve final Journal section names and migration mapping.
+- [x] Before Sprint 4: use Automotive, Projects, Field Notes, and Off-topic;
+  Latest is navigation for the complete feed, not an entry section.
 - Before Sprint 5: choose generated tags or a controlled tag registry after a
   Tina usability test.
 - Before Sprint 7: decide whether About remains a standalone navigation item.

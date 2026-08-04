@@ -1,0 +1,168 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../ui/Container.astro";
+import CategoryNav from "./CategoryNav.astro";
+import FeaturedArticle from "./FeaturedArticle.astro";
+import JournalCard from "./JournalCard.astro";
+import {
+  journalSections,
+  journalSectionHref,
+  type JournalSectionSlug,
+} from "../../lib/journal-sections";
+
+export interface JournalPostSummary {
+  title: string;
+  excerpt: string;
+  image?: string;
+  date: string;
+  section: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  eyebrow?: string;
+  headline: string;
+  description: string;
+  sectionTitle: string;
+  emptyMessage: string;
+  posts: JournalPostSummary[];
+  featuredPost?: JournalPostSummary;
+  activeSection?: JournalSectionSlug;
+}
+
+const {
+  title,
+  eyebrow,
+  headline,
+  description,
+  sectionTitle,
+  emptyMessage,
+  posts,
+  featuredPost,
+  activeSection,
+} = Astro.props;
+
+const sectionLinks = [
+  {
+    label: "Latest",
+    href: "/journal/",
+    active: !activeSection,
+  },
+  ...journalSections.map((section) => ({
+    label: section.label,
+    href: journalSectionHref(section.slug),
+    active: activeSection === section.slug,
+  })),
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <main class="journal-shell">
+    <Container>
+      <header class="journal-header">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        <h1>{headline}</h1>
+        <p class="introduction">{description}</p>
+      </header>
+
+      <CategoryNav categories={sectionLinks} />
+
+      {featuredPost && (
+        <section class="featured-story" aria-label="Featured Journal story">
+          <FeaturedArticle
+            title={featuredPost.title}
+            excerpt={featuredPost.excerpt}
+            image={featuredPost.image}
+            category={`Featured · ${featuredPost.section}`}
+            date={featuredPost.date}
+            href={featuredPost.href}
+            variant="split"
+          />
+        </section>
+      )}
+
+      <section class="latest-stories" aria-labelledby="journal-entries">
+        <h2 id="journal-entries">{sectionTitle}</h2>
+
+        {posts.length > 0 ? (
+          <div class="story-list">
+            {posts.map((post) => (
+              <JournalCard
+                title={post.title}
+                excerpt={post.excerpt}
+                image={post.image}
+                date={post.date}
+                category={post.section}
+                href={post.href}
+                variant="editorial"
+              />
+            ))}
+          </div>
+        ) : (
+          <p>{emptyMessage}</p>
+        )}
+      </section>
+    </Container>
+  </main>
+</BaseLayout>
+
+<style>
+  .journal-shell {
+    padding: clamp(2.5rem, 6vw, 5rem) 0 var(--space-xl);
+  }
+
+  .journal-header {
+    max-width: 52rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .eyebrow {
+    margin-bottom: var(--space-sm);
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .journal-header h1 {
+    max-width: 24ch;
+    font-size: clamp(2.15rem, 5vw, 3.8rem);
+  }
+
+  .introduction {
+    max-width: 44rem;
+    margin-bottom: 0;
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+  }
+
+  .featured-story {
+    padding: clamp(2rem, 5vw, 4rem) 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .latest-stories {
+    padding-top: var(--space-md);
+  }
+
+  .latest-stories > h2 {
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-ui);
+    font-size: .95rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .story-list {
+    max-width: 68rem;
+  }
+
+  @media (max-width: 800px) {
+    .journal-shell {
+      padding-top: var(--space-md);
+    }
+  }
+</style>

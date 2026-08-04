@@ -1,5 +1,40 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 4 Journal sections and landing page implemented
+
+Completed locally:
+
+- Implemented the approved compact editorial Journal design without changing
+  the site's typography or color system.
+- Added controlled Automotive, Projects, Field Notes, and Off-topic sections;
+  Latest remains the complete landing feed rather than an assignable section.
+- Added one conditionally required `journalSection` value to every published
+  Journal entry and migrated all six current entries.
+- Added static `/journal/[section]/` routes and replaced display-only topic
+  chips with working section links.
+- Added an explicit Tina reference for the featured Journal story. The selected
+  feature is excluded from the remaining chronological landing feed.
+- Preserved the legacy `primaryTopic`, `featured`, and archive-page `topics`
+  values as documented compatibility fields during the staged migration.
+- Preserved every existing `/archive/[slug]/` detail URL.
+
+Verified locally:
+
+- Tina audits all 25 settings, page, Flexible Page, and Content Entry documents.
+- Strict TypeScript checking passes.
+- Astro generates 29 pages, including all four section routes and every
+  existing archive detail URL.
+- Generated Journal HTML includes every section link and includes the selected
+  featured entry exactly once.
+- The full TinaCloud build remains credential-gated as documented; no token was
+  added to the repository.
+
+Pending after push:
+
+- Confirm the Cloudflare deployment and responsive Journal layout.
+- Reindex TinaCloud and verify section selection plus featured-story selection
+  in the hosted editor.
+
 ## 2026-08-04 - Sprint 3 Portfolio hierarchy and tile board implemented
 
 Completed locally:
@@ -28,11 +63,10 @@ Verified locally:
 - Generated Portfolio and Homepage HTML contain the explicit curated tiles.
 - `git diff --check` passes.
 
-Pending after push:
+Hosted verification:
 
-- Confirm the Cloudflare deployment and all five Portfolio category routes.
-- Reindex TinaCloud and verify add, remove, resize, override, and drag-order
-  behavior in both Portfolio tile lists.
+- Cloudflare deployed all five Portfolio category routes successfully.
+- The owner verified Tina tile removal and the public Portfolio tile layout.
 
 ## 2026-08-04 - Sprint 2B media and narrative video implemented
 
