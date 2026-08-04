@@ -25,14 +25,5 @@ portfolioTiles:
   - source: src/content/flexible-pages/portfolio/software-projects.md
     tileSize: standard
     emphasis: false
-  - source: src/content/entries/Photography-Samples.mdx
-    tileSize: large
-    titleOverride: Landscape photography
-    emphasis: true
-  - source: src/content/entries/intermountain-healthcare-strategy-analysis.mdx
-    tileSize: standard
-    emphasis: false
-  - source: src/content/entries/supply-chain-disruption-case-study.mdx
-    tileSize: standard
-    emphasis: false
 ---
+
