@@ -38,6 +38,12 @@ homepage without becoming an unrestricted Wix-style layout system.
 - Every schema change must be reflected in Tina, Astro validation, example
   content, renderers, and the generated Tina lock.
 - Each sprint must build and deploy independently before the next begins.
+- Preserve the site's existing typography and color system throughout the
+  redesign.
+- Use the approved homepage mockup as the reference for layout, hierarchy,
+  density, and spacing—not as a replacement visual system.
+- Finish every sprint with a documentation pass covering status, next work,
+  owner maintenance instructions, and any affected feature guide.
 
 ## Sprint 1 - Flexible page foundation
 
@@ -254,12 +260,22 @@ Depends on: Sprints 1-7
 - advanced related-content ranking
 - unrestricted visual page-builder controls
 
-## Implementation rule
+## Sprint completion rule
 
 Only one sprint is active at a time. If a sprint becomes too large for one
 review cycle, split it at a schema/rendering boundary, such as `2A block
 schema` and `2B block presentation`, and require a successful Cloudflare
 preview between them.
+
+A sprint is not complete until its relevant checks pass and its documentation
+matches the repository. Every sprint must review and update, as applicable:
+
+- `PROJECT_LOG.md`
+- `BUILD_ORDER.md`
+- `Roadmap.md`
+- `SITE_MAINTENANCE_GUIDE.md`
+- `README.md`, `CONTENT_GUIDE.md`, `CONTENT_PORTABILITY.md`, or another
+  feature-specific guide when its subject changed
 
 See `CONTENT_PORTABILITY.md` and `SITE_MAINTENANCE_GUIDE.md` before changing
 content schemas or adding new block types.
