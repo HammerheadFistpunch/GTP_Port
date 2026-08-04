@@ -67,6 +67,7 @@ Never commit `.env` or a real `TINA_TOKEN`.
 | --- | --- |
 | `src/content/entries/` | Markdown bodies and metadata for every article, project, case study, and gallery |
 | `src/content/pages/` | Editable Homepage, archive-page, About, Contact, and Resume content |
+| `src/content/flexible-pages/` | Tina-created standalone and nested pages with explicit URL paths |
 | `src/content/settings/site.md` | Navigation, footer, site name, and shared descriptions |
 | `src/content.config.ts` | Astro's validation rules for all stored content |
 | `tina/config.ts` | Fields and controls visible in TinaCMS |
@@ -108,9 +109,32 @@ The main routes are:
 | `/about/` | `src/pages/about.astro` | `StandardPageLayout.astro` |
 | `/contact/` | `src/pages/contact.astro` | `StandardPageLayout.astro` and `ContactMethods.astro` |
 | `/resume/` | `src/pages/resume.astro` | `StandardPageLayout.astro`, Resume Overview, and Timeline |
+| Flexible paths such as `/services/video-production/` | `src/pages/[...path].astro` | `FlexiblePageLayout.astro` |
 
 `BaseLayout.astro` wraps every page with metadata, navigation, footer, global
 styles, and the accessibility skip link.
+
+## Flexible Page route safety
+
+Flexible Pages use an explicit `path` field rather than deriving the public URL
+from the Markdown filename. `src/lib/flexible-pages.ts` normalizes and validates
+that field, while `src/pages/[...path].astro` rejects duplicate published paths
+during the build.
+
+Path segments must use lowercase letters, numbers, and single hyphens. The
+following top-level paths are reserved because the application or public asset
+tree already owns them:
+
+```text
+_astro, about, admin, archive, contact, journal, portfolio, resume, uploads
+```
+
+Do not remove a reserved value merely to make a Flexible Page build. Confirm
+the existing route or asset tree is intentionally being migrated first.
+
+Tina document filenames may contain folders, but the `path` frontmatter is the
+public routing contract. Keep the nested filename and URL path aligned where
+practical so repository browsing remains understandable.
 
 ## Changing the visuals
 

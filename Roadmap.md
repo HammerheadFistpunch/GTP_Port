@@ -1,6 +1,6 @@
 # GTP_Port Roadmap
 
-Last updated: 2026-08-03
+Last updated: 2026-08-04
 Working branch: `gpt-handoff`
 
 ## Vision
@@ -46,6 +46,9 @@ homepage without becoming an unrestricted Wix-style layout system.
   owner maintenance instructions, and any affected feature guide.
 
 ## Sprint 1 - Flexible page foundation
+
+Status: Chunk 1A is implemented and verified locally. Cloudflare preview
+verification remains before Chunk 1B begins.
 
 Goal: allow a normal page or nested subpage to be created and deleted in Tina
 and receive a working static URL.

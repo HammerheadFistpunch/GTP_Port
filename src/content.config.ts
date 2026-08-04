@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { validateFlexiblePagePath } from "./lib/flexible-pages";
 
 const sharedFields = {
     title: z.string(),
@@ -155,6 +156,31 @@ const pages = defineCollection({
     ]),
 });
 
+const flexiblePages = defineCollection({
+    loader: glob({
+        pattern: "**/*.md",
+        base: "./src/content/flexible-pages",
+    }),
+    schema: z.object({
+        title: z.string(),
+        path: z.string().superRefine((value, context) => {
+            const error = validateFlexiblePagePath(value);
+
+            if (error) {
+                context.addIssue({
+                    code: "custom",
+                    message: error,
+                });
+            }
+        }),
+        description: z.string(),
+        draft: z.boolean().default(true),
+        seoTitle: z.string().optional(),
+        seoDescription: z.string().optional(),
+        seoImage: z.string().optional(),
+    }),
+});
+
 const settings = defineCollection({
     loader: glob({
         pattern: "**/*.md",
@@ -174,6 +200,7 @@ const settings = defineCollection({
 
 export const collections = {
     entries,
+    flexiblePages,
     pages,
     settings,
 };

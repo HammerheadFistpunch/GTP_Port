@@ -1,5 +1,35 @@
 # GTP_Port Project Log
 
+## 2026-08-04 - Sprint 1A Flexible Page route proof implemented
+
+Completed locally:
+
+- Added a separate `flexiblePages` Astro collection and Tina **Flexible
+  Pages** collection with document creation and deletion enabled.
+- Added editable title, URL path, description, draft state, SEO title, SEO
+  description, social image, and Markdown body fields.
+- Added a guarded catch-all Astro route and minimal shared Flexible Page
+  layout using the existing color, typography, width, and spacing system.
+- Added build-time validation for invalid paths, reserved top-level routes,
+  and duplicate published Flexible Page paths.
+- Added published `/services/` and `/services/video-production/` proof pages.
+- Regenerated the Tina schema lock.
+
+Verified locally:
+
+- Tina indexed the new collection successfully.
+- Strict TypeScript checking passed.
+- Astro built 17 static pages, including both proof URLs and all 15 baseline
+  routes.
+- The generated proof pages contain the expected canonical URLs and SEO
+  metadata.
+- `git diff --check` passed.
+
+Pending:
+
+- Push the implementation to `gpt-handoff` and confirm a successful
+  Cloudflare preview before beginning Sprint 1B.
+
 ## 2026-08-03 - Documentation audit and cleanup completed
 
 Completed:
