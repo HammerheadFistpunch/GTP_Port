@@ -11,7 +11,7 @@ hero:
   visible: true
   eyebrow: Video · Photography · Communication · Storyteller
   title: Nerd to Human Translation Services
-  description: 'Making complex things simple and engaging for over 2 decades. '
+  description: 'Making complex things simple and engaging for over two decades. '
   image: /uploads/ground-squirrel-line-art-transparent.png
   primaryCta:
     label: View Portfolio
