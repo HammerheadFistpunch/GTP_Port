@@ -29,7 +29,8 @@ featuredPortfolio:
   tiles:
     - source: src/content/flexible-pages/portfolio/video.md
       tileSize: wide
-      emphasis: true
+      emphasis: false
+      titleOverride: Video
       imageOverride: /uploads/wordpress/2024/02/image-12-2.png
     - source: src/content/flexible-pages/portfolio/photography.md
       tileSize: standard
