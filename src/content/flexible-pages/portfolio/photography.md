@@ -3,6 +3,7 @@ title: Photography
 path: portfolio/photography
 description: 'Landscape, editorial, documentary, and project photography.'
 eyebrow: Portfolio
+headerImage: /uploads/PXL_20260430_124019367-(Large).jpg
 navigationLabel: Photography
 navigationOrder: 20
 draft: false
