@@ -31,5 +31,6 @@ portfolioTiles:
   - source: src/content/flexible-pages/portfolio/software-projects.md
     tileSize: standard
     emphasis: false
+    titleOverride: Software - ideation
 ---
 
