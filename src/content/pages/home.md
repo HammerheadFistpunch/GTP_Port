@@ -51,7 +51,7 @@ journalPreview:
   visible: true
   title: From the Journal
   titleHref: /journal/
-  subtitle: 'Long-form writing, field notes, technology, cars, and personal projects.'
+  subtitle: Where I store all my best nuts
   featuredEntry: src/content/entries/2025-lexus-lx-700h-first-drive.mdx
   recentLimit: 3
   emptyMessage: Journal entries are coming soon.
