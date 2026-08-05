@@ -40,6 +40,7 @@ featuredPortfolio:
     - source: src/content/entries/supply-chain-disruption-case-study.mdx
       tileSize: standard
       emphasis: false
+      titleOverride: Case Studies / Research
       imageOverride: /uploads/wordpress/2024/06/image-8.png
     - source: src/content/flexible-pages/portfolio/software-projects.md
       tileSize: standard
