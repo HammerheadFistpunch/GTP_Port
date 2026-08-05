@@ -19,6 +19,7 @@ portfolioTiles:
   - source: src/content/flexible-pages/portfolio/photography.md
     tileSize: large
     emphasis: true
+    titleOverride: Photography
   - source: src/content/flexible-pages/portfolio/case-studies.md
     tileSize: wide
     emphasis: false
