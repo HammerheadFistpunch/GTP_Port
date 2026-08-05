@@ -42,6 +42,7 @@ featuredPortfolio:
     - source: src/content/flexible-pages/portfolio/software-projects.md
       tileSize: standard
       emphasis: false
+      imageOverride: /uploads/1772313990355.jpg
 journalPreview:
   visible: true
   title: From the Journal
