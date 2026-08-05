@@ -8,12 +8,13 @@ headerStyle: compact
 sectionTitle: Explore the portfolio
 emptyMessage: No published Portfolio projects yet.
 topics: []
-featuredEntry: ''
+featuredEntry: src/content/entries/how-all-wheel-drive-works.mdx
 portfolioPacking: dense
 portfolioTiles:
   - source: src/content/flexible-pages/portfolio/video.md
     tileSize: wide
     emphasis: true
+    titleOverride: Video
     imageOverride: /uploads/wordpress/2024/02/image-12-2.png
   - source: src/content/flexible-pages/portfolio/photography.md
     tileSize: large
