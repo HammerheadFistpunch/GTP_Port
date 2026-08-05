@@ -10,8 +10,8 @@ sectionOrder:
 hero:
   visible: true
   eyebrow: Video · Photography · Communication · Storyteller
-  title: Translating complex topics for over 20 years
-  description: 'Patrick Rich is a strategic communicator, creative producer, and technical storyteller who turns complicated subjects into useful, honest work.'
+  title: Nerd to human translation services
+  description: 'Welcome to the Angry Squirrel. This is the homepage for Patrick Rich, dedicated creative and supernerd. Take a look around. '
   image: /uploads/ground-squirrel-line-art-transparent.png
   primaryCta:
     label: View Portfolio
