@@ -21,8 +21,9 @@ portfolioTiles:
     emphasis: true
     titleOverride: Photography
   - source: src/content/flexible-pages/portfolio/case-studies.md
-    tileSize: wide
+    tileSize: standard
     emphasis: false
+    titleOverride: Case-Studies and research
   - source: src/content/flexible-pages/portfolio/writing-samples.md
     tileSize: standard
     emphasis: false
