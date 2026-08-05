@@ -35,6 +35,7 @@ featuredPortfolio:
     - source: src/content/flexible-pages/portfolio/photography.md
       tileSize: standard
       emphasis: false
+      titleOverride: Photography
       imageOverride: /uploads/PXL_20260430_124019367-(Large).jpg
     - source: src/content/entries/supply-chain-disruption-case-study.mdx
       tileSize: standard
