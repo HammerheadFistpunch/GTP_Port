@@ -1,8 +1,8 @@
 ---
 title: Video
 path: portfolio/video
-description: 'Video production, live broadcast, field production, and visual storytelling projects.'
-eyebrow: Portfolio
+description: Video Projects
+eyebrow: ''
 headerImage: /uploads/wordpress/2024/02/image-12-2.png
 navigationLabel: Video
 navigationOrder: 10
