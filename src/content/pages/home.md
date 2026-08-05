@@ -1,6 +1,6 @@
 ---
 pageType: home
-description: 'A personal portfolio of Patrick Rich and editorial journal exploring technology, vehicles, photography, filmmaking, and the projects worth documenting.'
+description: 'Patrick Rich, hammerheadfistpunch, utah, salt lake city, communicator.'
 sectionOrder:
   - intro
   - about
