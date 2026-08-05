@@ -35,7 +35,7 @@ featuredPortfolio:
       tileSize: standard
       emphasis: false
       imageOverride: /uploads/PXL_20260430_124019367-(Large).jpg
-    - source: src/content/flexible-pages/portfolio/case-studies.md
+    - source: src/content/entries/supply-chain-disruption-case-study.mdx
       tileSize: standard
       emphasis: false
       imageOverride: /uploads/wordpress/2024/06/image-8.png
