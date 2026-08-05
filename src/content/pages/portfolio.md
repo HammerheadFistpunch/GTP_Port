@@ -27,6 +27,7 @@ portfolioTiles:
   - source: src/content/flexible-pages/portfolio/writing-samples.md
     tileSize: standard
     emphasis: false
+    titleOverride: Writing-samples
   - source: src/content/flexible-pages/portfolio/software-projects.md
     tileSize: standard
     emphasis: false
