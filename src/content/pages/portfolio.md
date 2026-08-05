@@ -12,9 +12,9 @@ featuredEntry: ''
 portfolioPacking: dense
 portfolioTiles:
   - source: src/content/flexible-pages/portfolio/video.md
-    tileSize: tall
+    tileSize: wide
     emphasis: true
-    imageOverride: /uploads/PXL_20260716_202414906-(Large).jpg
+    imageOverride: /uploads/wordpress/2024/02/image-12-2.png
   - source: src/content/flexible-pages/portfolio/photography.md
     tileSize: large
     emphasis: true
