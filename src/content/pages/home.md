@@ -10,8 +10,8 @@ sectionOrder:
 hero:
   visible: true
   eyebrow: Video · Photography · Communication · Storyteller
-  title: Nerd to human translation services
-  description: 'Welcome to the Angry Squirrel. This is the homepage for Patrick Rich, dedicated creative and supernerd. Take a look around. '
+  title: Nerd to Human Translation Services
+  description: 'Making complex things simple and engaging for over 2 decades. '
   image: /uploads/ground-squirrel-line-art-transparent.png
   primaryCta:
     label: View Portfolio
