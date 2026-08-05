@@ -2,7 +2,7 @@
 pageType: archive
 title: Journal
 eyebrow: The AngrySquirrel Journal
-headline: 'Stories, field notes, and useful obsessions.'
+headline: Where I hide all my best nuts
 description: What's new at "The Squirrel"
 headerStyle: compact
 sectionTitle: Latest entries
@@ -14,3 +14,4 @@ topics:
   - Off-topic
 featuredEntry: src/content/entries/2025-lexus-lx-700h-first-drive.mdx
 ---
+
