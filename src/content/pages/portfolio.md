@@ -2,8 +2,8 @@
 pageType: archive
 title: Portfolio
 eyebrow: Portfolio
-headline: 'Projects built to solve, show, or explain something.'
-description: 'A curated portfolio of software, photography, video, writing, engineering, and case studies.'
+headline: What I've made
+description: A small sample of some of the projects I've created. Head over to the journal to see what I've been up to lately.
 headerStyle: compact
 sectionTitle: Explore the portfolio
 emptyMessage: No published Portfolio projects yet.
