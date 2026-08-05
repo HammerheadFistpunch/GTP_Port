@@ -38,6 +38,7 @@ featuredPortfolio:
     - source: src/content/flexible-pages/portfolio/case-studies.md
       tileSize: standard
       emphasis: false
+      imageOverride: /uploads/wordpress/2024/06/image-8.png
     - source: src/content/flexible-pages/portfolio/software-projects.md
       tileSize: standard
       emphasis: false
