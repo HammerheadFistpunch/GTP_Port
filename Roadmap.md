@@ -429,7 +429,8 @@ now renders valid YouTube elements as constrained `youtube-nocookie.com` players
 The shared image control supports managed uploads and validated external HTTPS
 URLs across cover, header, social, block, Hero, and destination images; Astro
 uses the same source policy. Hosted save/reopen and media rendering verification
-are required before 12C begins.
+inside the draft editor are required before 12C begins. Published-content
+renderer review remains part of the 12D rollout.
 
 Goal: replace the clunky Content Entry workflow with a focused Markdown editor
 and a safe import path.

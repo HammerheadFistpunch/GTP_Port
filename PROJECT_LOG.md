@@ -27,8 +27,9 @@ Validation:
   combined Astro child build pass with locked GraphQL version `2.4.7`.
 - Astro still produces 50 public pages and excludes the draft proof entry.
 
-Hosted image select/upload, external-URL save/reopen, and public rendering review
-remain required before Sprint 12C.
+Hosted image select/upload and external-URL preview/save/reopen remain required
+before Sprint 12C. Published-content renderer review remains in the 12D rollout;
+the proof entry is intentionally draft-only and has no public route.
 
 ## 2026-08-06 - Sprint 12A hosted YouTube preview correction
 

@@ -415,9 +415,11 @@ hosted save/reopen checks remain grouped into the next deployed checkpoint.
 - [x] pass Tina indexing/schema/admin, TypeScript, tests, and Astro production build
 - [ ] verify managed selection/upload and external URL preview in hosted Tina
 - [ ] save/reopen the external cover URL without rewriting it
-- [ ] verify the external cover and inline image render on the deployed proof review
+- [ ] verify the external cover and inline image previews in the hosted draft editor
 
 Chunk 12B is locally complete. Do not begin 12C until the hosted media checks pass.
+Published-content renderer review remains part of the 12D rollout because the
+proof fixture is intentionally draft-only and has no public route.
 
 ### Remaining Sprint 12 chunks
 
