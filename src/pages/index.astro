@@ -3,7 +3,6 @@ import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Button from "../components/ui/Button.astro";
 import Container from "../components/ui/Container.astro";
-import { resolvePortfolioTiles } from "../lib/portfolio-tiles";
 
 const homeEntry = await getEntry("pages", "home");
 
@@ -20,39 +19,6 @@ const defaultSectionOrder = [
   "portfolio",
 ] as const;
 const orderedSections = [...new Set([...page.sectionOrder, ...defaultSectionOrder])];
-
-const allProjects = (await getCollection("entries", ({ data }) =>
-  !data.draft && (data.placement === "portfolio" || data.placement === "both")
-)).sort((a, b) => {
-  if (a.data.portfolioOrder !== b.data.portfolioOrder) {
-    return a.data.portfolioOrder - b.data.portfolioOrder;
-  }
-
-  if (a.data.featured !== b.data.featured) {
-    return Number(b.data.featured) - Number(a.data.featured);
-  }
-
-  return a.data.title.localeCompare(b.data.title);
-});
-
-const flexiblePages = await getCollection("flexiblePages");
-const selectedPortfolioTiles = resolvePortfolioTiles(
-  page.featuredPortfolio.tiles,
-  allProjects,
-  flexiblePages,
-);
-const projects = page.featuredPortfolio.tiles.length > 0
-  ? selectedPortfolioTiles
-  : allProjects.slice(0, page.featuredPortfolio.limit).map((entry) => ({
-      title: entry.data.title,
-      description: entry.data.description,
-      image: entry.data.coverImage,
-      category: entry.data.primaryTopic,
-      entryType: entry.data.entryType,
-      href: `/archive/${entry.id}/`,
-      tileSize: entry.data.tileSize,
-      emphasis: entry.data.featured,
-    }));
 
 const journalEntries = (await getCollection("entries", ({ data }) =>
   !data.draft && (data.placement === "journal" || data.placement === "both")
@@ -241,45 +207,27 @@ const formatDate = (date?: Date) =>
         </section>
       )}
 
-      {section === "portfolio" && page.featuredPortfolio.visible && (
+      {section === "portfolio" && page.portfolioLinks.visible && (
         <section class="home-section home-portfolio" aria-labelledby="home-portfolio-title">
           <Container>
             <div class="section-heading">
               <div>
                 <p class="eyebrow">Selected paths</p>
-                <h2 id="home-portfolio-title">{page.featuredPortfolio.title}</h2>
-                <p>{page.featuredPortfolio.subtitle}</p>
+                <h2 id="home-portfolio-title">{page.portfolioLinks.title}</h2>
+                <p>{page.portfolioLinks.subtitle}</p>
               </div>
-              <a href={page.featuredPortfolio.titleHref}>View all Portfolio →</a>
             </div>
 
-            {projects.length > 0 ? (
-              <div class="portfolio-grid">
-                {projects.map((project) => (
-                  <a
-                    class:list={[
-                      "portfolio-tile",
-                      `portfolio-tile--${project.tileSize}`,
-                      { "portfolio-tile--emphasis": project.emphasis },
-                    ]}
-                    href={project.href}
-                  >
-                    {project.image ? (
-                      <img src={project.image} alt="" loading="lazy" />
-                    ) : (
-                      <div class="portfolio-placeholder" aria-hidden="true"></div>
-                    )}
-                    <div class="portfolio-copy">
-                      <p>{project.category ?? project.entryType}</p>
-                      <h3>{project.title}</h3>
-                      <span>{project.description}</span>
-                    </div>
+            <div class="portfolio-link-grid">
+              {page.portfolioLinks.links.map((link) => (
+                <a class="portfolio-link" href={link.href}>
+                  {link.image && <img src={link.image} alt="" loading="lazy" />}
+                  <span class="portfolio-link-shade" aria-hidden="true"></span>
+                  <h3>{link.label}</h3>
+                  <span class="portfolio-link-arrow" aria-hidden="true">→</span>
                   </a>
-                ))}
-              </div>
-            ) : (
-              <p class="empty-state">{page.featuredPortfolio.emptyMessage}</p>
-            )}
+              ))}
+            </div>
           </Container>
         </section>
       )}
@@ -591,19 +539,19 @@ const formatDate = (date?: Date) =>
     font-weight: 700;
   }
 
-  .portfolio-grid {
+  .portfolio-link-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-flow: dense;
-    grid-auto-rows: minmax(250px, auto);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 1rem;
   }
 
-  .portfolio-tile {
+  .portfolio-link {
     position: relative;
-    display: flex;
-    min-height: 250px;
+    display: grid;
+    min-height: 170px;
     overflow: hidden;
+    align-content: end;
+    padding: 1.1rem;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     background: var(--bg-elevated);
@@ -611,81 +559,54 @@ const formatDate = (date?: Date) =>
     text-decoration: none;
   }
 
-  .portfolio-tile--wide {
-    grid-column: span 2;
-  }
-
-  .portfolio-tile--tall {
-    grid-row: span 2;
-  }
-
-  .portfolio-tile--large {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-
-  .portfolio-tile img,
-  .portfolio-placeholder {
+  .portfolio-link img,
+  .portfolio-link-shade {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
   }
 
-  .portfolio-tile img {
+  .portfolio-link img {
     object-fit: cover;
-    opacity: .72;
-    transition: opacity .25s ease, transform .25s ease;
+    opacity: .58;
+    transition: opacity .2s ease, transform .2s ease;
   }
 
-  .portfolio-placeholder {
+  .portfolio-link-shade {
     background:
-      radial-gradient(circle at 82% 18%, rgba(76, 136, 181, .18), transparent 38%),
-      linear-gradient(145deg, var(--bg-elevated), var(--bg-surface));
+      linear-gradient(transparent 20%, rgba(8, 11, 14, .92)),
+      radial-gradient(circle at 82% 18%, rgba(76, 136, 181, .16), transparent 40%);
   }
 
-  .portfolio-copy {
+  .portfolio-link h3,
+  .portfolio-link-arrow {
     position: relative;
     z-index: 1;
-    align-self: end;
-    width: 100%;
-    padding: 1.35rem;
-    background: linear-gradient(transparent, rgba(8, 11, 14, .96));
   }
 
-  .portfolio-copy > p,
-  .portfolio-copy h3,
-  .portfolio-copy > span {
+  .portfolio-link h3 {
     margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.2;
   }
 
-  .portfolio-copy h3 {
-    margin: .3rem 0 .4rem;
-    font-size: 1.35rem;
+  .portfolio-link-arrow {
+    margin-top: .45rem;
+    color: var(--accent);
+    font-size: 1.15rem;
   }
 
-  .portfolio-copy > span {
-    display: -webkit-box;
-    overflow: hidden;
-    color: var(--text-secondary);
-    font-size: .88rem;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-
-  .portfolio-tile--emphasis {
+  .portfolio-link:hover,
+  .portfolio-link:focus-visible {
     border-color: var(--accent);
-  }
-
-  .portfolio-tile:hover,
-  .portfolio-tile:focus-visible {
     text-decoration: none;
   }
 
-  .portfolio-tile:hover img,
-  .portfolio-tile:focus-visible img {
-    opacity: .9;
-    transform: scale(1.025);
+  .portfolio-link:hover img,
+  .portfolio-link:focus-visible img {
+    opacity: .74;
+    transform: scale(1.02);
   }
 
   .empty-state {
@@ -698,7 +619,7 @@ const formatDate = (date?: Date) =>
     }
 
     .capability-grid,
-    .portfolio-grid {
+    .portfolio-link-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
@@ -736,18 +657,8 @@ const formatDate = (date?: Date) =>
     }
 
     .capability-grid,
-    .portfolio-grid {
+    .portfolio-link-grid {
       grid-template-columns: 1fr;
-    }
-
-    .portfolio-tile--wide,
-    .portfolio-tile--large {
-      grid-column: auto;
-    }
-
-    .portfolio-tile--tall,
-    .portfolio-tile--large {
-      grid-row: auto;
     }
 
     .recent-stories a {

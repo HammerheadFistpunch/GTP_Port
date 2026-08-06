@@ -88,8 +88,11 @@ const entryLinks = [
   links?.external && { label: "Visit Website", href: links.external },
 ].filter(Boolean) as { label: string; href: string }[];
 
+const portfolioBackLink = entryType === "Gallery" || primaryTopic.toLowerCase() === "photography"
+  ? { label: "Photography", href: "/portfolio/photography/" }
+  : { label: "Projects", href: "/journal/projects/" };
 const backLinks = [
-  placement !== "journal" && { label: "Portfolio", href: "/portfolio" },
+  placement !== "journal" && portfolioBackLink,
   placement !== "portfolio" && { label: "Journal", href: "/journal" },
 ].filter(Boolean) as { label: string; href: string }[];
 ---

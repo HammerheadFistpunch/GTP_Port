@@ -21,17 +21,15 @@ remains separate from presentation.
 ## Where blocks are appropriate
 
 Structured or reorderable Tina blocks are reasonable for the small number of
-landing pages, including the Homepage, Journal archive, and Portfolio archive.
+landing pages, including the Homepage and Journal archive.
 Homepage section order, visibility, capabilities, technology items, and curated
 references are presentation metadata; the referenced Journal entries,
 Portfolio entries, and Flexible Pages remain independent Markdown/MDX sources.
 A future redesign only needs to remap those few pages.
 
-Portfolio tile lists store references and optional presentation overrides,
-not copies of the selected documents. Removing or rearranging a tile cannot
-delete or rewrite the underlying Content Entry or Flexible Page. A future
-migration can resolve each reference once and discard the landing-page
-presentation fields without changing narrative content.
+Homepage Portfolio destinations store only a label, URL, and optional image,
+not copies of the selected documents. Removing or rearranging a destination
+cannot delete or rewrite the underlying Content Entry or Flexible Page.
 
 Journal organization uses a small controlled `journalSection` value and an
 optional landing-page reference to the featured entry. Both are portable

@@ -106,8 +106,7 @@ The main routes are:
 
 | URL | Route source | Primary presentation |
 | --- | --- | --- |
-| `/` | `src/pages/index.astro` | Hero, Portfolio cards, Journal cards, About callout |
-| `/portfolio/` | `src/pages/portfolio/index.astro` | `PortfolioBentoCard.astro` |
+| `/` | `src/pages/index.astro` | Hero, compact Portfolio links, Journal panel, and Homepage sections |
 | `/journal/` | `src/pages/journal/index.astro` | `JournalLanding.astro` and Journal components |
 | `/journal/[section]/` | `src/pages/journal/[section].astro` | Filtered `JournalLanding.astro` |
 | `/tags/[slug]/` | `src/pages/tags/[tag].astro` | Mixed Journal and Portfolio subject archive |
@@ -115,7 +114,7 @@ The main routes are:
 | `/about/` | `src/pages/about.astro` | `StandardPageLayout.astro` |
 | `/contact/` | `src/pages/contact.astro` | `StandardPageLayout.astro` and `ContactMethods.astro` |
 | `/resume/` | `src/pages/resume.astro` | `StandardPageLayout.astro`, Resume Overview, and Timeline |
-| Flexible paths such as `/services/video-production/` | `src/pages/[...path].astro` | `FlexiblePageLayout.astro` |
+| Flexible paths such as `/portfolio/video/` | `src/pages/[...path].astro` | `FlexiblePageLayout.astro` |
 
 `BaseLayout.astro` wraps every page with metadata, navigation, footer, global
 styles, and the accessibility skip link.
@@ -196,7 +195,7 @@ Create and publish:
 4. Clear **Draft**, save, wait for Cloudflare, and test the URL directly.
 
 Nest a page by entering its full path, such as
-`services/video-production`. A published Flexible Page at `services` is not
+`resources/video-production`. A published Flexible Page at `resources` is not
 required for routing, but it supplies the parent breadcrumb.
 
 Rename safely:
@@ -327,7 +326,7 @@ Common targets:
 | Footer | `src/components/ui/Footer.astro` |
 | Homepage layout, Hero, Journal panel, and sections | `src/pages/index.astro` |
 | Buttons | `src/components/ui/Button.astro` |
-| Portfolio bento cards | `src/components/portfolio/PortfolioBentoCard.astro` |
+| Homepage Portfolio destination links | `src/pages/index.astro` |
 | Journal cards | `src/components/journal/JournalCard.astro` |
 | Journal featured article | `src/components/journal/FeaturedArticle.astro` |
 | Entry headers and body shell | `src/layouts/EntryLayout.astro` |
@@ -353,7 +352,8 @@ Examples:
 - Change Homepage section order in Tina or `src/content/pages/home.md`; change
   its allowed block keys and fallback order in `src/content.config.ts` and
   `src/pages/index.astro` together.
-- Change Portfolio grid composition in `src/pages/portfolio/index.astro`.
+- Change Homepage Portfolio link composition in Tina or
+  `src/content/pages/home.md`; change its presentation in `src/pages/index.astro`.
 - Change Journal archive composition in `src/pages/journal/index.astro`.
 - Change every Content Entry detail page in `src/layouts/EntryLayout.astro`.
 
@@ -539,33 +539,18 @@ import React from "react";
 
 Type-only imports do not create the runtime `React` value.
 
-### Portfolio tile board
+### Portfolio destinations
 
-Portfolio landing and Homepage selections span:
+Portfolio no longer has a landing page or a separate tile board. The header
+label opens direct links to Video, Photography, Projects, Case Studies, and
+Writing. Video and Photography remain Flexible Pages; Software/Ideation and
+Case Studies/Research use `/journal/projects/`; Writing uses `/journal/`.
 
-- Tina reference and override fields in `tina/config.ts`
-- the tile schema in `src/content.config.ts`
-- `src/lib/portfolio-tiles.ts` source resolution
-- stored tile lists in `src/content/pages/portfolio.md` and `home.md`
-- `PortfolioBentoCard.astro` class and span rules
-- the Portfolio and Homepage route queries
-
-Adding a new option only in Tina will allow the editor to write a value that
-Astro rejects. Adding it only to the schema will not give Tina a control for it.
-
-In Tina, open **Archive Pages → Portfolio** to add, remove, resize, override,
-or drag-order Portfolio tiles. A tile may reference a Content Entry or Flexible
-Page. Deleting a tile is safe because it removes only the placement; deleting
-the selected source is a separate action. Missing, drafted, and Journal-only
-sources are omitted from the public grid.
-
-Use **Dense** packing for gap-filling bento behavior or **Exact Order** when
-the visible sequence must match Tina's list exactly. `portfolioOrder` remains
-a fallback only when the explicit Portfolio tile list is empty.
-
-Portfolio category pages are Flexible Pages with nested paths beginning in
-`portfolio/`. The root `/portfolio/` route remains reserved and cannot be
-replaced by a Flexible Page.
+The Homepage **Portfolio Links Section** stores a short label, destination, and
+optional background image for each compact tile. Its contract spans
+`tina/config.ts`, `src/content.config.ts`, `src/content/pages/home.md`, and
+`src/pages/index.astro`. Retired Portfolio and proof URLs are preserved in
+`public/_redirects`.
 
 ### Homepage editable sections
 
@@ -588,10 +573,10 @@ Journal or Both. A missing, drafted, or non-Journal selection falls back to the
 newest eligible entry. The recent list is chronological and excludes whichever
 entry actually becomes the feature.
 
-Featured Portfolio uses the shared resolver documented above. Its initial five
-tiles reference the Portfolio category Flexible Pages; removing a Homepage tile
-never deletes the source. The expanded About page remains independent from the
-short Homepage About section.
+The Portfolio Links section stores five compact direct destinations with an
+optional image for each. Drag the destination list to change its order; editing
+or removing a Homepage link does not delete its destination. The expanded About
+page remains independent from the short Homepage About section.
 
 ### Journal sections and featured story
 

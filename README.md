@@ -13,18 +13,18 @@ The site is operational and ready for real content. It includes:
 - authenticated TinaCloud editing at `/admin/`
 - one unified Content Entries collection with Portfolio and Journal placement
 - neutral `/archive/[slug]/` detail pages shared by every entry type
-- a curated, drag-reorderable Tina Portfolio tile board
-- four primary Portfolio category routes for Video, Photography, Case Studies,
-  and Software Projects, with the former Writing Samples route retained for
-  compatibility
+- a label-only Portfolio menu with direct Video, Photography, Projects, Case
+  Studies/Research, and Writing destinations
+- two surviving Portfolio Flexible Pages for Video and Photography, with
+  Journal-backed destinations for the other work types
 - a compact Journal landing page with an explicit featured story, chronological
   feed, and four static section routes
 - a controlled Tina tag registry with 29 static subject archives shared by
   Journal and Portfolio entries
 - a compact Homepage with side-by-side Hero and Journal panels, editable About,
-  capabilities, technology, and category-based Featured Portfolio sections
+  capabilities, technology, and compact Portfolio destination links
 - Tina-controlled Homepage visibility, section order, copy, links, Journal
-  feature, recent-story count, and Portfolio selections
+  feature, recent-story count, and Portfolio destination ordering
 - native media, video, lightboxes, and shared Immich galleries
 - structured Resume content
 - guarded Flexible Pages with top-level and nested static routes
@@ -33,12 +33,12 @@ The site is operational and ready for real content. It includes:
 - Tina-controlled nested primary navigation with accessible desktop disclosure,
   mobile expansion, internal page references, and custom/external URLs
 
-Sprints 1 through 6 are deployed and owner-accepted. Sprint 7 navigation and
-information-architecture work is implemented; its remaining explicit hosted
-interaction checks are tracked in `BUILD_ORDER.md`. Phase 2 begins with a Tina
-and content-model audit before simplifying Portfolio, Homepage tiles, Tina
-navigation, authoring, media URLs, and deployment. Resume remains a separate
-rebuild sprint. Content publishing can continue during the audit.
+Sprints 1 through 6 are deployed and owner-accepted. Sprint 7 navigation is
+implemented, Sprint 8's Tina/content-model audit is complete, and Sprint 9's
+Portfolio/Homepage simplification passes local Tina-aware production checks.
+Hosted Tina, redirect, and interaction verification remain tracked in
+`BUILD_ORDER.md`. Tina navigation cleanup, deliberate publishing, authoring,
+media URLs, and the separate Resume rebuild follow.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and

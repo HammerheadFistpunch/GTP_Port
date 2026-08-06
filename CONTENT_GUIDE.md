@@ -21,10 +21,9 @@ Controls:
 `src/content/pages/`
 
 - `home.md` — Homepage section order; Hero; Journal feature and recent count;
-  About Me; What I Do; Technology Stack; and Featured Portfolio selections
+  About Me; What I Do; Technology Stack; and Portfolio destination links
 - `journal.md` — Journal archive header, explicit featured story, legacy topic
   list, section title, and empty state
-- `portfolio.md` — Portfolio archive header, section title, and empty state
 - `about.md` — About header and Markdown body
 - `resume.md` — Resume header, links, and Markdown body
 - `contact.md` — Contact header, links, and Markdown body
@@ -51,14 +50,13 @@ Content Entry reference. A missing, drafted, or non-Journal selection falls
 back to the newest published Journal entry, and the feature is excluded from
 the configured recent-story count.
 
-The Homepage **Featured Portfolio Section** continues to use the shared
-reference-based tile list. Its default selections are the four primary
-Portfolio category Flexible Pages: Video, Photography, Case Studies, and
-Software Projects. Removing a tile changes Homepage placement only and never
-deletes the selected page or Content Entry.
+The Homepage **Portfolio Links Section** contains compact direct links for
+Video, Photography, Software/Ideation, Case Studies/Research, and Writing.
+Each item stores a label, URL, and optional image. Drag the list to reorder it;
+removing a Homepage item never deletes its destination.
 
 Section titles, descriptions, links, capability items, technology items,
-visibility, and the Portfolio and Journal selections are all editable in Tina.
+visibility, Portfolio destinations, and Journal selections are editable in Tina.
 The expanded `/about/` page remains separate and is linked from the Homepage
 and footer rather than the primary header.
 
@@ -74,11 +72,11 @@ Astro route. The Tina **Flexible Pages** collection can create and delete these
 documents. A page's explicit **URL Path** controls its static URL:
 
 ```text
-path: services
--> /services/
+path: resources
+-> /resources/
 
-path: services/video-production
--> /services/video-production/
+path: resources/video-production
+-> /resources/video-production/
 ```
 
 Use lowercase, kebab-case path segments without a leading slash. Draft pages
@@ -188,16 +186,11 @@ The Tina **Placement** control determines where an entry appears:
 Archiving changes metadata rather than moving or converting the Markdown file.
 Every entry keeps the same `/archive/[slug]/` detail URL.
 
-The Portfolio and Homepage use ordered **Portfolio Tiles** as their primary
-selection and ordering model. A tile selects an existing Content Entry or
-Flexible Page, then optionally overrides its title, description, image, size,
-or emphasis only for that placement. Drag the tiles in Tina to reorder them.
-Removing a tile never deletes the selected source document.
-
-The Portfolio landing page supports **Dense** packing, which fills bento-grid
-gaps, and **Exact Order**, which preserves visible list order. Legacy
-`portfolioOrder` and Content Entry `tileSize` values remain as a fallback when
-the landing page has no explicit tiles. Journal order uses `date`.
+Portfolio has no landing page. Video and Photography remain direct Flexible
+Pages; the other work types use Journal destinations. The Homepage uses a
+small ordered link list rather than copying Content Entries or storing bento
+layout metadata. Legacy `portfolioOrder` and `tileSize` entry fields remain
+temporarily for Sprint 10 schema migration only. Journal order uses `date`.
 
 ### Journal sections and featured story
 
@@ -245,16 +238,16 @@ name, so remove or replace every reference first.
 An unused Tag document still publishes a readable empty archive. This makes a
 new subject safe to create before its first entry is ready.
 
-The five primary category pages are Flexible Pages at:
+Portfolio links resolve directly as follows:
 
 - `/portfolio/video/`
 - `/portfolio/photography/`
-- `/portfolio/case-studies/`
-- `/portfolio/writing-samples/`
-- `/portfolio/software-projects/`
+- Software/Ideation → `/journal/projects/`
+- Case Studies/Research → `/journal/projects/`
+- Writing → `/journal/`
 
-The exact `/portfolio/` path remains reserved for the hand-authored landing
-route, while published Flexible Pages may use nested `portfolio/...` paths.
+`/portfolio/` and the retired category/proof paths redirect through
+`public/_redirects`. Do not recreate those retired paths as Flexible Pages.
 
 ### Publishing conventions
 

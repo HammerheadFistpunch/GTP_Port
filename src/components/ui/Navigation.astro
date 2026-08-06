@@ -25,7 +25,6 @@ const toPageHref = (path: string) => {
 
 const fixedPageReferences: Record<string, string> = {
   "src/content/pages/home.md": "/",
-  "src/content/pages/portfolio.md": "/portfolio/",
   "src/content/pages/journal.md": "/journal/",
   "src/content/pages/about.md": "/about/",
   "src/content/pages/contact.md": "/contact/",
@@ -60,15 +59,20 @@ const resolveDestination = (item: {
 };
 
 const navigation = site.navigation.flatMap((item, index) => {
-  const destination = resolveDestination(item);
-  if (!destination) return [];
-
   const children = item.children.flatMap((child) => {
     const resolvedChild = resolveDestination(child);
     return resolvedChild ? [resolvedChild] : [];
   });
+  const destination = resolveDestination(item);
 
-  return [{ ...destination, children, submenuId: `primary-submenu-${index}` }];
+  if (!destination && children.length === 0) return [];
+
+  return [{
+    label: destination?.label ?? item.label,
+    href: destination?.href,
+    children,
+    submenuId: `primary-submenu-${index}`,
+  }];
 });
 
 const currentPath = normalizePath(Astro.url.pathname);
@@ -78,6 +82,9 @@ const isWithinPage = (href: string) => {
   if (itemPath === "/") return currentPath === "/";
   return currentPath === itemPath || currentPath.startsWith(`${itemPath}/`);
 };
+const isItemCurrent = (item: (typeof navigation)[number]) =>
+  (item.href ? isWithinPage(item.href) : false) ||
+  item.children.some((child) => isWithinPage(child.href));
 ---
 
 <nav class="site-nav" aria-label="Primary navigation">
@@ -104,18 +111,31 @@ const isWithinPage = (href: string) => {
       {navigation.map((item) => (
         <li
           class:list={["nav-item", { "has-children": item.children.length > 0 }]}
-          data-current={isWithinPage(item.href) ? "true" : undefined}
+          data-current={isItemCurrent(item) ? "true" : undefined}
         >
           <div class="nav-item-heading">
-            <a
-              class="nav-link"
-              href={item.href}
-              aria-current={isExactPage(item.href) ? "page" : undefined}
-            >
-              {item.label}
-            </a>
+            {item.href ? (
+              <a
+                class="nav-link"
+                href={item.href}
+                aria-current={isExactPage(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            ) : (
+              <button
+                class="nav-link menu-label-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls={item.submenuId}
+                aria-label={`Open ${item.label} submenu`}
+              >
+                <span>{item.label}</span>
+                <span class="menu-label-arrow" aria-hidden="true">▾</span>
+              </button>
+            )}
 
-            {item.children.length > 0 && (
+            {item.href && item.children.length > 0 && (
               <button
                 class="submenu-toggle"
                 type="button"
@@ -156,7 +176,7 @@ const isWithinPage = (href: string) => {
   const toggleLabel = toggle?.querySelector<HTMLElement>(".nav-toggle-label");
   const menuLinks = navigation?.querySelectorAll<HTMLAnchorElement>(".nav-links a");
   const submenuToggles = navigation?.querySelectorAll<HTMLButtonElement>(
-    ".submenu-toggle",
+    ".submenu-toggle, .menu-label-toggle",
   );
 
   const closeSubmenus = (except?: HTMLButtonElement, returnFocus = false) => {
@@ -215,7 +235,7 @@ const isWithinPage = (href: string) => {
     if (event.key !== "Escape") return;
 
     const openSubmenu = navigation?.querySelector<HTMLButtonElement>(
-      '.submenu-toggle[aria-expanded="true"]',
+      '.submenu-toggle[aria-expanded="true"], .menu-label-toggle[aria-expanded="true"]',
     );
 
     if (openSubmenu) {
@@ -332,7 +352,8 @@ const isWithinPage = (href: string) => {
   align-items: center;
 }
 
-.nav-links a {
+.nav-links a,
+.menu-label-toggle {
   color: var(--text-secondary);
   text-decoration: none;
   font-family: var(--font-ui);
@@ -347,8 +368,22 @@ const isWithinPage = (href: string) => {
   min-height: 36px;
 }
 
+.menu-label-toggle {
+  gap: .35rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menu-label-arrow {
+  transition: transform .2s ease;
+}
+
 .nav-links a:hover,
 .nav-links a:focus-visible,
+.menu-label-toggle:hover,
+.menu-label-toggle:focus-visible,
 .nav-item[data-current="true"] > .nav-item-heading > .nav-link {
   color: var(--text-primary);
 }
@@ -384,6 +419,10 @@ const isWithinPage = (href: string) => {
 }
 
 .nav-item[data-submenu-open] .submenu-toggle span {
+  transform: rotate(180deg);
+}
+
+.nav-item[data-submenu-open] .menu-label-arrow {
   transform: rotate(180deg);
 }
 

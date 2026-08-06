@@ -1,5 +1,36 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Sprint 9 Portfolio and Homepage simplification implemented
+
+- Removed the public Portfolio landing page and made Portfolio an accessible
+  label-only navigation group.
+- Kept Video and Photography as direct Flexible Pages; routed
+  Software/Ideation and Case Studies/Research to `/journal/projects/`, and
+  Writing to `/journal/`.
+- Replaced the Homepage bento cards with five compact image-and-label links.
+- Replaced the misleading Homepage order selector with a real drag-and-drop
+  control plus keyboard move buttons.
+- Migrated both case studies into the Projects Journal section without changing
+  their `/archive/` detail URLs.
+- Retired legacy category pages, Services proof pages, `Test-content.mdx`, and
+  their unused Portfolio renderer/resolver code after reference checks.
+- Added Cloudflare redirects for every retired public route.
+- Regenerated the Tina lock through the local Tina-aware build.
+
+Validation:
+
+- `npx tsc --noEmit` passes.
+- `npm run build:astro` passes with 50 routes.
+- `npx tinacms dev -c "astro build"` passes, including local indexing and
+  custom Tina component compilation.
+- the full cloud `npm run build` reaches the expected missing TinaCloud
+  `clientId`/token boundary in this credential-free workspace.
+- generated-route assertions confirm the two case-study URLs and surviving
+  Portfolio pages, absence of retired routes, and copied `_redirects` file.
+
+Cloudflare redirects and hosted Tina save/reorder behavior remain the owner
+verification gate before Sprint 9 is marked deployed.
+
 ## 2026-08-06 - Sprint 8 decisions locked
 
 Owner decisions close the Sprint 8 planning gates:

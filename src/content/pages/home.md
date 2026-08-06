@@ -5,6 +5,7 @@ sectionOrder:
   - intro
   - about
   - capabilities
+  - portfolio
   - technology
 hero:
   visible: true
@@ -13,39 +14,31 @@ hero:
   description: 'Making complex things simple and engaging for over two decades. '
   image: /uploads/ground-squirrel-line-art-transparent.png
   primaryCta:
-    label: View Portfolio
-    href: /portfolio/
+    label: Watch Video
+    href: /portfolio/video/
   secondaryCta:
     label: Read Journal
     href: /journal/
-featuredPortfolio:
-  visible: false
-  title: Featured Portfolio
-  titleHref: /portfolio/
-  subtitle: 'Selected paths into video, photography, case studies, and software projects.'
-  limit: 4
-  emptyMessage: Featured Portfolio selections are coming soon.
-  tiles:
-    - source: src/content/flexible-pages/portfolio/video.md
-      tileSize: wide
-      emphasis: false
-      titleOverride: Video
-      imageOverride: /uploads/wordpress/2024/02/image-12-2.png
-    - source: src/content/flexible-pages/portfolio/photography.md
-      tileSize: standard
-      emphasis: false
-      titleOverride: Photography
-      imageOverride: /uploads/PXL_20260430_124019367-(Large).jpg
-    - source: src/content/entries/supply-chain-disruption-case-study.mdx
-      tileSize: standard
-      emphasis: false
-      titleOverride: Case Studies / Research
-      imageOverride: /uploads/wordpress/2024/06/image-8.png
-    - source: src/content/flexible-pages/portfolio/software-projects.md
-      tileSize: standard
-      emphasis: false
-      titleOverride: Software / Ideation
-      imageOverride: /uploads/1772313990355.jpg
+portfolioLinks:
+  visible: true
+  title: Explore the Work
+  subtitle: 'Go directly to video, photography, projects, research, and published writing.'
+  links:
+    - label: Video
+      href: /portfolio/video/
+      image: /uploads/wordpress/2024/02/image-12-2.png
+    - label: Photography
+      href: /portfolio/photography/
+      image: /uploads/PXL_20260430_124019367-(Large).jpg
+    - label: Software / Ideation
+      href: /journal/projects/
+      image: /uploads/1772313990355.jpg
+    - label: Case Studies / Research
+      href: /journal/projects/
+      image: /uploads/wordpress/2024/06/image-8.png
+    - label: Writing
+      href: /journal/
+      image: /uploads/PXL_20260716_202414906-(Large).jpg
 journalPreview:
   visible: true
   title: From the Journal
@@ -77,8 +70,8 @@ capabilitiesSection:
     - title: Creative Systems
       description: 'Workflows, automation, and infrastructure that improve quality while reducing friction and cost.'
   link:
-    label: Explore the portfolio
-    href: /portfolio/
+    label: Explore projects
+    href: /journal/projects/
 technologySection:
   visible: true
   eyebrow: Technology Stack
@@ -97,6 +90,5 @@ technologySection:
     - Ollama
   link:
     label: See software projects
-    href: /portfolio/software-projects/
+    href: /journal/projects/
 ---
-

@@ -9,16 +9,17 @@ navigation:
   - label: Home
     href: /
   - label: Portfolio
-    href: /portfolio/
     children:
       - label: Video
         page: src/content/flexible-pages/portfolio/video.md
       - label: Photography
         page: src/content/flexible-pages/portfolio/photography.md
-      - label: Case Studies
-        page: src/content/flexible-pages/portfolio/case-studies.md
-      - label: Software Projects
-        page: src/content/flexible-pages/portfolio/software-projects.md
+      - label: Software / Ideation
+        href: /journal/projects/
+      - label: Case Studies / Research
+        href: /journal/projects/
+      - label: Writing
+        href: /journal/
   - label: Journal
     href: /journal/
   - label: Resume
@@ -28,8 +29,12 @@ navigation:
 footerLinks:
   - label: Home
     href: /
-  - label: Portfolio
-    href: /portfolio
+  - label: Video
+    href: /portfolio/video/
+  - label: Photography
+    href: /portfolio/photography/
+  - label: Projects
+    href: /journal/projects/
   - label: Journal
     href: /journal
   - label: About

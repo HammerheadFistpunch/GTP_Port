@@ -6,7 +6,7 @@ Verified baseline: unified Content Entries architecture and TinaCloud editor
 
 ## Current phase
 
-> Publishing-system simplification planning
+> Publishing-system simplification implementation
 
 The site is operational and publishable. The next phase removes unnecessary
 Portfolio indirection, simplifies Tina around real owner workflows, adds
@@ -289,6 +289,31 @@ control with keyboard controls. Retired Portfolio and proof routes will redirect
 to the closest surviving destination, and the Test entry will be removed only
 after reference checks. The exact Tina sidebar organization remains a Sprint 10
 decision.
+
+## Active sprint - Sprint 9 public simplification
+
+- [x] make Portfolio a label-only navigation group
+- [x] keep Video and Photography as direct Flexible Pages
+- [x] route Software/Ideation and Case Studies/Research to Projects
+- [x] route Writing to the complete Journal feed
+- [x] replace Homepage bento cards with compact image-and-label links
+- [x] add real drag-and-drop Homepage section ordering with keyboard controls
+- [x] migrate the two case studies to Projects without changing detail URLs
+- [x] retire legacy category, Services proof, and Test content after reference checks
+- [x] add redirects for every retired public route
+- [x] regenerate the Tina lock and pass local Tina-aware build validation
+
+Stop and verify:
+
+- [x] local output contains Video, Photography, Projects, and both case studies
+- [x] local output omits the Portfolio landing, proof pages, and Test entry
+- [x] no public navigation or Homepage link targets `/portfolio/`
+- [ ] Cloudflare serves the retired-route redirects
+- [ ] hosted Tina saves reordered Homepage sections and destination links
+- [ ] deployed desktop/mobile navigation and compact tiles pass owner review
+
+Sprint 9 implementation is locally complete. The three hosted checks above are
+the deployment gate before beginning Sprint 10 schema/sidebar cleanup.
 
 ## Decision gates
 

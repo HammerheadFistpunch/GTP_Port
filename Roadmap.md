@@ -326,6 +326,9 @@ Depends on: Sprint 7 source and hosted-editor checkpoint
 
 ### Sprint 9 - Public Portfolio and Homepage simplification
 
+Status: Implemented locally; awaiting Cloudflare redirect and hosted Tina
+interaction verification.
+
 Goal: remove the redundant Portfolio landing experience and make Portfolio a
 small set of direct destinations.
 

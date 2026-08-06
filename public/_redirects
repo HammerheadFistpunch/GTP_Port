@@ -1,0 +1,13 @@
+/portfolio / 301
+/portfolio/ / 301
+/portfolio/software-projects /journal/projects/ 301
+/portfolio/software-projects/ /journal/projects/ 301
+/portfolio/case-studies /journal/projects/ 301
+/portfolio/case-studies/ /journal/projects/ 301
+/portfolio/writing-samples /journal/ 301
+/portfolio/writing-samples/ /journal/ 301
+/services/video-production /portfolio/video/ 301
+/services/video-production/ /portfolio/video/ 301
+/services/* /portfolio/video/ 301
+/archive/Test-content /journal/ 301
+/archive/Test-content/ /journal/ 301
