@@ -11,7 +11,7 @@ The site is operational and ready for real content. It includes:
 - a static Astro site deployed through Cloudflare Pages
 - Git-backed Markdown and MDX content
 - authenticated TinaCloud editing at `/admin/`
-- one unified Content Entries collection with Portfolio and Journal placement
+- one unified Journal Entries collection with Portfolio and Journal placement
 - neutral `/archive/[slug]/` detail pages shared by every entry type
 - a label-only Portfolio menu with direct Video, Photography, Projects, Case
   Studies/Research, and Writing destinations
@@ -33,12 +33,12 @@ The site is operational and ready for real content. It includes:
 - Tina-controlled nested primary navigation with accessible desktop disclosure,
   mobile expansion, internal page references, and custom/external URLs
 
-Sprints 1 through 6 are deployed and owner-accepted. Sprint 7 navigation is
-implemented, Sprint 8's Tina/content-model audit is complete, and Sprint 9's
-Portfolio/Homepage simplification passes local Tina-aware production checks.
-Hosted Tina, redirect, and interaction verification remain tracked in
-`BUILD_ORDER.md`. Tina navigation cleanup, deliberate publishing, authoring,
-media URLs, and the separate Resume rebuild follow.
+Sprints 1 through 6 are deployed and owner-accepted. Sprints 7 through 9 are
+implemented, and Sprint 10's Tina navigation/schema cleanup passes local
+schema, TypeScript, admin-bundle, content, and route validation. Hosted Tina,
+redirect, and interaction verification remain tracked in `BUILD_ORDER.md`.
+Deliberate publishing, Markdown-first authoring, media URLs, and the separate
+Resume rebuild follow.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and
@@ -109,9 +109,8 @@ entry appears in Portfolio, Journal, or both. **Archive to Journal** removes an
 entry from Portfolio without moving its Markdown file or changing its detail
 URL.
 
-Portfolio and Homepage ordering now come from explicit Tina tile lists that
-reference existing content without owning it. Numeric `portfolioOrder` remains
-a migration fallback. Journal entries use one controlled primary section;
+Homepage Portfolio ordering comes from an explicit Tina destination list that
+links to existing content without owning it. Journal entries use one controlled primary section;
 `/journal/` remains chronological and excludes its explicitly selected feature
 from the remaining feed. Descriptive subjects come from referenced Tag
 documents and publish separately at `/tags/[slug]/`.

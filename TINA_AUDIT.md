@@ -4,6 +4,13 @@ Last updated: 2026-08-06
 Branch reviewed: `gpt-handoff`
 Scope: Sprint 8A inventory only; no schema, content, or route changes
 
+Sprint 10 follow-through: the approved grouped navigation is implemented;
+Journal `topics`, Flexible Page `navigationOrder`, entry `featured`,
+`portfolioOrder`, and `tileSize`, plus the legacy `post` helper, were removed
+after Sprint 9 eliminated their consumers. `placement` remains a compatibility
+field because active Journal filters and the Portfolio-only Photography entry
+still consume it.
+
 ## Executive findings
 
 The current editor has eight collections in this order:

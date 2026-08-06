@@ -15,7 +15,6 @@ const sharedFields = {
         ),
     })).default([]),
     coverImage: z.string().optional(),
-    featured: z.boolean().default(false),
     draft: z.boolean().default(false),
 };
 
@@ -136,13 +135,6 @@ const entries = defineCollection({
         updatedDate: z.coerce.date().optional(),
         primaryTopic: z.string(),
         journalSection: z.enum(journalSectionSlugs).optional(),
-        portfolioOrder: z.number().int().default(0),
-        tileSize: z.enum([
-            "standard",
-            "wide",
-            "tall",
-            "large",
-        ]).default("standard"),
         technologies: z.array(z.string()).default([]),
         links: z.object({
             repository: z.url().optional(),
@@ -237,7 +229,6 @@ const pages = defineCollection({
             headerStyle,
             sectionTitle: z.string(),
             emptyMessage: z.string(),
-            topics: z.array(z.string()).default([]),
             featuredEntry: z.string().optional(),
         }),
         z.object({
@@ -278,7 +269,6 @@ const flexiblePages = defineCollection({
         headerImage: z.string().optional(),
         headerImageAlt: z.string().optional(),
         navigationLabel: z.string().optional(),
-        navigationOrder: z.number().int().default(0),
         draft: z.boolean().default(false),
         seoTitle: z.string().optional(),
         seoDescription: z.string().optional(),

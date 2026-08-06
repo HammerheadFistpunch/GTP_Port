@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-06 after Phase 2 simplification planning
+Last reviewed: 2026-08-06 after Sprint 10 Tina navigation/schema cleanup
 
 ## Active project documents
 

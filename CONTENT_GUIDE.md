@@ -22,8 +22,8 @@ Controls:
 
 - `home.md` — Homepage section order; Hero; Journal feature and recent count;
   About Me; What I Do; Technology Stack; and Portfolio destination links
-- `journal.md` — Journal archive header, explicit featured story, legacy topic
-  list, section title, and empty state
+- `journal.md` — Journal archive header, explicit featured story, section title,
+  and empty state
 - `about.md` — About header and Markdown body
 - `resume.md` — Resume header, links, and Markdown body
 - `contact.md` — Contact header, links, and Markdown body
@@ -38,7 +38,7 @@ responsiveness, and component structure.
 
 ### Homepage sections and selections
 
-The Tina **Homepage** collection contains one drag-reorderable **Homepage
+The Tina **Main Homepage** page contains one drag-reorderable **Homepage
 Section Order** list. Use each option once. Removing or duplicating an option
 does not delete content; Astro normalizes the list and restores omitted blocks.
 Use each section's **Show** switch to hide it intentionally.
@@ -46,7 +46,7 @@ Use each section's **Show** switch to hide it intentionally.
 The **Hero + Journal** item is one responsive top block. Hero and Journal have
 independent visibility controls; when both are visible they sit side by side on
 desktop and stack Hero-first on mobile. The Journal feature is an explicit
-Content Entry reference. A missing, drafted, or non-Journal selection falls
+Journal Entry reference. A missing, drafted, or non-Journal selection falls
 back to the newest published Journal entry, and the feature is excluded from
 the configured recent-story count.
 
@@ -62,13 +62,24 @@ and footer rather than the primary header.
 
 Journal navigation uses the controlled Automotive, Projects, Field Notes, and
 Off-topic section registry. Latest links to the complete `/journal/` feed and
-is not assignable to an entry. The `topics` list in `journal.md` is retained
-only as migration metadata and does not generate public navigation.
+is not assignable to an entry.
+
+## Tina navigation
+
+- **Settings** → Site Settings and Tags
+- **Pages** → Main Homepage, Journal Homepage, About, Contact, Resume, and New
+  Pages
+- **Content** → Journal Entries
+- **Site** → Media Manager
+
+The grouped links are the only owner-facing entry points. Tina's underlying
+collection names remain stable so existing references and generated queries do
+not need a content migration.
 
 ## Flexible Pages
 
 `src/content/flexible-pages/` stores pages that do not need a hand-authored
-Astro route. The Tina **Flexible Pages** collection can create and delete these
+Astro route. The Tina **New Pages** collection can create and delete these
 documents. A page's explicit **URL Path** controls its static URL:
 
 ```text
@@ -95,8 +106,6 @@ duplicate, and reserved paths before deployment.
   when the image is decorative.
 - **Navigation Label** is an optional shorter breadcrumb label. The page title
   is the fallback.
-- **Navigation Order** records sibling order for generated child-page contexts.
-  The explicit drag order in Site Settings controls the primary header.
 - **Draft** removes the route at the next deployment while retaining the file.
 - The SEO fields override the title, description, and social image only when
   populated.
@@ -121,12 +130,10 @@ Available blocks:
 
 Child-page paths use the same format as the page's **URL Path**, without a
 leading slash. Drafted, deleted, missing, or mistyped page paths are omitted
-from the public tile list. The paths inside the block determine tile order;
-`navigationOrder` does not override the explicit primary-navigation order in
-Site Settings.
+from the public tile list. The paths inside the block determine tile order
+independently of the explicit primary-navigation order in Site Settings.
 
-The `/services/` page contains a verification instance of every block. Image
-blocks open in the shared keyboard-accessible lightbox. Missing or invalid
+Image blocks open in the shared keyboard-accessible lightbox. Missing or invalid
 image, gallery, video, tile, and link values are skipped or replaced with a
 readable fallback rather than breaking the page.
 
@@ -137,7 +144,7 @@ breadcrumb.
 
 ### Create and publish
 
-1. Open **Flexible Pages** in Tina and choose **Create New**.
+1. Open **Pages → New Pages** in Tina and choose **Create New**.
 2. Enter the title, description, and a lowercase URL path without leading or
    trailing slashes.
 3. Keep **Draft** enabled while editing. New pages default to draft.
@@ -147,7 +154,7 @@ breadcrumb.
    it directly.
 
 For a nested page, use the complete path. For example,
-`services/audio-production` publishes at `/services/audio-production/`.
+`resources/audio-production` publishes at `/resources/audio-production/`.
 Creating a nested page does not require a matching parent, but creating and
 publishing the parent gives visitors a complete breadcrumb trail.
 
@@ -186,11 +193,10 @@ The Tina **Placement** control determines where an entry appears:
 Archiving changes metadata rather than moving or converting the Markdown file.
 Every entry keeps the same `/archive/[slug]/` detail URL.
 
-Portfolio has no landing page. Video and Photography remain direct Flexible
-Pages; the other work types use Journal destinations. The Homepage uses a
-small ordered link list rather than copying Content Entries or storing bento
-layout metadata. Legacy `portfolioOrder` and `tileSize` entry fields remain
-temporarily for Sprint 10 schema migration only. Journal order uses `date`.
+Portfolio has no landing page. Video and Photography remain direct New Pages;
+the other work types use Journal destinations. The Homepage uses a small
+ordered link list rather than copying Journal Entries or storing bento layout
+metadata. Journal order uses `date`.
 
 ### Journal sections and featured story
 
@@ -203,9 +209,9 @@ Every published entry whose Placement includes Journal must select one
 - Off-topic
 
 Changing a section changes only where the entry appears in the Journal index;
-its `/archive/[slug]/` URL does not change. Use **Archive Pages → Journal →
+its `/archive/[slug]/` URL does not change. Use **Pages → Journal Homepage →
 Featured Journal Story** to choose the landing-page feature. Tina stores a
-reference to the existing Content Entry, not a copy. A draft or non-Journal
+reference to the existing Journal Entry, not a copy. A draft or non-Journal
 selection is skipped safely, and the selected feature is omitted from the
 remaining chronological feed.
 
@@ -216,9 +222,10 @@ controlled section used for routing.
 
 ### Tags and subject archives
 
-Tags are controlled references, not free-text labels. In Tina, open **Tags**
+Tags are controlled references, not free-text labels. In Tina, open **Settings
+→ Tags**
 to create a reusable subject, then select it from the **Tags** list on any
-Content Entry. Published Journal and Portfolio entries are collected together
+Journal Entry. Published Journal and Portfolio entries are collected together
 at `/tags/[slug]/`; drafts never appear.
 
 Each Tag document has:

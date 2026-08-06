@@ -1,5 +1,39 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Sprint 10 Tina navigation and schema cleanup implemented
+
+- Added a grouped owner-facing Tina menu: **Settings** contains Site Settings
+  and Tags; **Pages** contains Main Homepage, Journal Homepage, About, Contact,
+  Resume, and New Pages; **Content** retains Journal Entries; Tina's **Site**
+  group retains Media Manager.
+- Hid Tina's redundant flat collection list so every retained owner task has
+  one obvious menu location. The underlying collection names remain stable for
+  GraphQL references and existing content.
+- Relabeled Homepage, Journal, Flexible Page, and Content Entry collections
+  around owner tasks and hid the internal `pageType` controls.
+- Removed the unused Journal `topics`, Flexible Page `navigationOrder`, entry
+  `featured`, `portfolioOrder`, and `tileSize` fields from Tina, Astro schemas,
+  and stored content.
+- Removed the unreferenced Tina helper that queried the nonexistent legacy
+  `post` collection.
+- Kept `placement` as a documented compatibility field because the published
+  Photography gallery remains Portfolio-only and Journal filters still consume
+  it. Its redesign belongs with the Sprint 12 authoring model.
+- Regenerated `tina/tina-lock.json` through Tina's local development build.
+
+Validation:
+
+- `npx tsc --noEmit` passes.
+- Tina local indexing, generated client/schema, and admin compilation pass.
+- the compiled admin bundle contains the grouped navigation extension.
+- the regenerated Tina lock has the new labels and none of the removed fields.
+- a secret-free Astro validation build produces the expected 50 routes.
+- the ordinary Astro command is blocked in this workspace only when the Tina
+  integration attempts its network check; no site source or route error occurs.
+
+Hosted sidebar navigation, document saving, New Pages creation, and TinaCloud
+reindexing remain the deployment verification gate.
+
 ## 2026-08-06 - Sprint 9 Portfolio and Homepage simplification implemented
 
 - Removed the public Portfolio landing page and made Portfolio an accessible

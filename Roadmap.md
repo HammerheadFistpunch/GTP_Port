@@ -384,6 +384,12 @@ Acceptance:
 
 Depends on: Sprints 8-9
 
+Implementation status: locally complete on 2026-08-06. The grouped admin menu,
+task-facing labels, hidden internal controls, dead-field migrations, generated
+lock, and local validation are complete. `placement` remains temporarily
+because active Journal filters and the Portfolio-only Photography entry consume
+it. Hosted Tina navigation/save/create checks and TinaCloud reindexing remain.
+
 ### Sprint 11 - Deliberate publishing workflow
 
 Goal: let multiple Tina saves accumulate without rebuilding the public site

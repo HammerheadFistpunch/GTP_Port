@@ -1,6 +1,7 @@
 import { defineConfig } from "tinacms";
 import PlacementField from "./components/PlacementField";
 import SectionOrderField from "./components/SectionOrderField";
+import { installAdminNavigation } from "./components/AdminNavigation";
 import { journalSectionOptions } from "../src/lib/journal-sections";
 
 const branch =
@@ -346,6 +347,8 @@ const entryRichTextTemplates = [
 export default defineConfig({
     branch,
 
+    cmsCallback: installAdminNavigation,
+
     clientId: process.env.TINA_PUBLIC_CLIENT_ID || "",
     token: process.env.TINA_TOKEN || "",
 
@@ -506,7 +509,7 @@ export default defineConfig({
              */
             {
                 name: "homepage",
-                label: "Homepage",
+                label: "Main Homepage",
                 path: "src/content/pages",
                 format: "md",
 
@@ -535,6 +538,9 @@ export default defineConfig({
                         ],
                         description:
                             "Internal setting used by Astro to identify the homepage.",
+                        ui: {
+                            component: "hidden",
+                        },
                     },
                     {
                         type: "string",
@@ -884,7 +890,7 @@ export default defineConfig({
              */
             {
                 name: "archivePage",
-                label: "Archive Pages",
+                label: "Journal Homepage",
                 path: "src/content/pages",
                 format: "md",
 
@@ -913,6 +919,9 @@ export default defineConfig({
                         ],
                         description:
                             "Internal setting used by Astro to identify an archive landing page.",
+                        ui: {
+                            component: "hidden",
+                        },
                     },
                     {
                         type: "string",
@@ -970,17 +979,6 @@ export default defineConfig({
                         required: true,
                     },
                     {
-                        type: "string",
-                        name: "topics",
-                        label: "Legacy Topic List",
-                        list: true,
-                        description:
-                            "Compatibility field retained during migration. Public Journal navigation now uses the controlled section list.",
-                        ui: {
-                            component: "tags",
-                        },
-                    },
-                    {
                         type: "reference",
                         name: "featuredEntry",
                         label: "Featured Journal Story",
@@ -1030,6 +1028,9 @@ export default defineConfig({
                         ],
                         description:
                             "Internal setting used by Astro to identify a standard content page.",
+                        ui: {
+                            component: "hidden",
+                        },
                     },
                     {
                         type: "string",
@@ -1127,6 +1128,9 @@ export default defineConfig({
                         ],
                         description:
                             "Internal setting used by Astro to identify the resume page.",
+                        ui: {
+                            component: "hidden",
+                        },
                     },
                     {
                         type: "string",
@@ -1316,13 +1320,12 @@ export default defineConfig({
              */
             {
                 name: "flexiblePages",
-                label: "Flexible Pages",
+                label: "New Pages",
                 path: "src/content/flexible-pages",
                 format: "md",
 
                 defaultItem: () => ({
                     draft: true,
-                    navigationOrder: 0,
                 }),
 
                 ui: {
@@ -1394,16 +1397,6 @@ export default defineConfig({
                             "Optional shorter title for breadcrumbs and future menus. The page title is used when blank.",
                     },
                     {
-                        type: "number",
-                        name: "navigationOrder",
-                        label: "Navigation Order",
-                        description:
-                            "Lower numbers will appear first among sibling pages in future generated menus.",
-                        ui: {
-                            component: "number",
-                        },
-                    },
-                    {
                         type: "boolean",
                         name: "draft",
                         label: "Draft",
@@ -1464,7 +1457,7 @@ export default defineConfig({
              */
             {
                 name: "entries",
-                label: "Content Entries",
+                label: "Journal Entries",
                 path: "src/content/entries",
                 format: "mdx",
 
@@ -1579,31 +1572,8 @@ export default defineConfig({
                     },
                     {
                         type: "boolean",
-                        name: "featured",
-                        label: "Featured Entry",
-                    },
-                    {
-                        type: "boolean",
                         name: "draft",
                         label: "Draft",
-                    },
-                    {
-                        type: "number",
-                        name: "portfolioOrder",
-                        label: "Portfolio Order",
-                        description:
-                            "Lower numbers appear first. Journal placement ignores this value.",
-                    },
-                    {
-                        type: "string",
-                        name: "tileSize",
-                        label: "Portfolio Tile Size",
-                        options: [
-                            { value: "standard", label: "Standard" },
-                            { value: "wide", label: "Wide" },
-                            { value: "tall", label: "Tall" },
-                            { value: "large", label: "Large" },
-                        ],
                     },
                     {
                         type: "string",

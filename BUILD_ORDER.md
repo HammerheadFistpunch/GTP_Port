@@ -243,7 +243,7 @@ Tina schema lock, and subsequent successful Tina content commits. Cloudflare
 and interaction checks above remain explicit until owner verification is
 recorded; they do not authorize removing compatibility routes or fields.
 
-## Active sprint - Sprint 8 audit
+## Completed planning - Sprint 8 audit
 
 ### Chunk 8A - Inventory and consumer map
 
@@ -265,7 +265,7 @@ Chunk 8A is complete in `TINA_AUDIT.md`.
 
 ### Chunk 8B - Target models and implementation gates
 
-- [ ] approve the smallest practical Tina navigation
+- [x] approve the smallest practical Tina navigation
 - [x] choose the exact Journal/tag destinations for Software/Ideation, Case
   Studies/Research, and Writing
 - [x] choose true drag-and-drop Homepage section ordering
@@ -277,7 +277,7 @@ Chunk 8A is complete in `TINA_AUDIT.md`.
 
 Stop and verify:
 
-- [ ] the target editor model contains no duplicate editing locations
+- [x] the target editor model contains no duplicate editing locations
 - [x] the public navigation model has no dependency on a Portfolio landing page
 - [x] browser-delivered code contains no GitHub or Cloudflare secret
 - [x] accepted decisions are reflected in `Roadmap.md` before Sprint 9 begins
@@ -287,10 +287,10 @@ Case Studies/Research will use the existing Projects feed; Writing will use the
 complete Journal feed. Homepage ordering will use a genuine drag-and-drop
 control with keyboard controls. Retired Portfolio and proof routes will redirect
 to the closest surviving destination, and the Test entry will be removed only
-after reference checks. The exact Tina sidebar organization remains a Sprint 10
-decision.
+after reference checks. The approved Tina menu uses Settings, Pages, Content,
+and Site groups; Content retains Journal Entries so authoring stays accessible.
 
-## Active sprint - Sprint 9 public simplification
+## Completed implementation - Sprint 9 public simplification
 
 - [x] make Portfolio a label-only navigation group
 - [x] keep Video and Photography as direct Flexible Pages
@@ -312,8 +312,36 @@ Stop and verify:
 - [ ] hosted Tina saves reordered Homepage sections and destination links
 - [ ] deployed desktop/mobile navigation and compact tiles pass owner review
 
-Sprint 9 implementation is locally complete. The three hosted checks above are
-the deployment gate before beginning Sprint 10 schema/sidebar cleanup.
+Sprint 9 implementation is locally complete. Its three hosted checks remain
+part of the combined Sprint 9-10 deployment review.
+
+## Active sprint - Sprint 10 Tina navigation and schema cleanup
+
+- [x] implement grouped Settings, Pages, Content, and Site navigation
+- [x] keep Site Settings and Tags under Settings
+- [x] expose Main Homepage, Journal Homepage, About, Contact, Resume, and New
+  Pages under Pages
+- [x] retain Journal Entries under Content and Media Manager under Site
+- [x] hide the redundant flat collection list
+- [x] relabel collections around owner tasks and hide internal page-type fields
+- [x] remove legacy Journal topics and unused Flexible Page navigation order
+- [x] remove obsolete entry featured, Portfolio order, and tile-size fields
+- [x] remove the legacy nonexistent-`post` Tina helper
+- [x] regenerate the Tina lock and pass local schema/content validation
+- [ ] reindex `gpt-handoff` in TinaCloud after deployment
+
+Stop and verify:
+
+- [x] TypeScript passes
+- [x] Tina local indexing and admin compilation pass
+- [x] the lock contains the new labels and none of the removed fields
+- [x] the Astro validation build produces the expected 50 routes
+- [ ] hosted Tina shows the grouped menu in the approved order
+- [ ] every fixed-page shortcut opens and saves the intended document
+- [ ] Tags, Journal Entries, New Pages creation, and Media Manager work
+
+Sprint 10 is locally complete. Hosted Tina verification is the gate before
+starting Sprint 11's deliberate publishing workflow.
 
 ## Decision gates
 
@@ -335,7 +363,9 @@ the deployment gate before beginning Sprint 10 schema/sidebar cleanup.
 - [x] During Sprint 8: approve Journal destinations, retired-route behavior,
   true Homepage ordering, raw-Markdown direction, and secure publish-gating
   architecture.
-- [ ] Before Sprint 10: approve the final Tina sidebar organization.
+- [x] Before Sprint 10: use Settings → Site Settings/Tags; Pages → Main
+  Homepage/Journal Homepage/About/Contact/Resume/New Pages; preserve Journal
+  Entries under Content and Media Manager under Site.
 
 ## Chunk rules
 

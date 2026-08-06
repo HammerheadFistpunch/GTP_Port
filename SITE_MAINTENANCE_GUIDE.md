@@ -179,7 +179,6 @@ Flexible Pages now use the following optional editorial controls:
 | `headerImage` | Wide responsive image above the Markdown body |
 | `headerImageAlt` | Accessible description; blank means decorative |
 | `navigationLabel` | Short breadcrumb label; falls back to `title` |
-| `navigationOrder` | Stored sibling order for future generated menus |
 
 Published parent paths generate breadcrumbs automatically. The global primary
 navigation remains controlled by `src/content/settings/site.md`; its ordered
@@ -189,7 +188,7 @@ top-level items and optional child lists are edited in Tina Site Settings.
 
 Create and publish:
 
-1. In Tina, open **Flexible Pages** and create a document.
+1. In Tina, open **Pages → New Pages** and create a document.
 2. Enter required content and a lowercase kebab-case **URL Path**.
 3. Leave **Draft** enabled until the page is ready.
 4. Clear **Draft**, save, wait for Cloudflare, and test the URL directly.
@@ -497,8 +496,7 @@ For option fields, these locations must agree:
 - any TypeScript union in a component or layout
 - any CSS class or conditional behavior based on the value
 
-Current examples include `placement`, `entryType`, `tileSize`, and
-`headerStyle`.
+Current examples include `placement`, `entryType`, and `headerStyle`.
 
 ## Removing an editable Tina field
 
@@ -525,7 +523,7 @@ The custom Placement interface spans:
 - `tina/config.ts` — field definition and allowed choices
 - `src/content.config.ts` — allowed stored values
 - Content Entry Markdown — current `placement` value
-- Homepage, Journal, Portfolio, and Entry Layout queries — presentation logic
+- Homepage, Journal, tag archive, and Entry Layout queries — presentation logic
 
 The values `portfolio`, `both`, and `journal` are code contracts. Changing a
 label is relatively safe. Changing one of those stored values requires updating
@@ -556,7 +554,7 @@ optional background image for each compact tile. Its contract spans
 
 Homepage fields span:
 
-- the `Homepage` collection in `tina/config.ts`
+- the `Main Homepage` page in `tina/config.ts`
 - the `pageType: "home"` schema in `src/content.config.ts`
 - `src/content/pages/home.md`
 - `src/pages/index.astro`
@@ -594,20 +592,27 @@ Journal section behavior spans:
 
 In Tina, set **Primary Journal Section** whenever Placement includes Journal.
 Latest is not a section choice; it is the complete feed at `/journal/`. Open
-**Archive Pages → Journal** to select the featured story. The selected entry
+**Pages → Journal Homepage** to select the featured story. The selected entry
 must be published and placed in Journal or Both. Draft and non-Journal
 references are ignored rather than breaking the build.
 
 To add or rename a section, update the shared registry and every stored entry
 before removing an old slug. Section URL changes require redirects. The legacy
-`primaryTopic`, `featured`, and archive `topics` fields remain during migration;
-do not repurpose them as route controls.
+`primaryTopic` field remains a descriptive label; do not repurpose it as a
+route control.
 
 ### Site settings, navigation, and footer
 
-Editable values live in `src/content/settings/site.md` and the `Site Settings`
-collection in Tina. Their presentation lives in `Navigation.astro`,
+Editable values live in `src/content/settings/site.md` and **Settings → Site
+Settings** in Tina. Their presentation lives in `Navigation.astro`,
 `Footer.astro`, and `BaseLayout.astro`.
+
+The owner-facing Tina menu is registered from
+`tina/components/AdminNavigation.tsx` through `cmsCallback` in
+`tina/config.ts`. It groups fixed-document shortcuts under Settings and Pages,
+keeps Journal Entries under Content, and leaves Tina's Media Manager under
+Site. After any Tina package upgrade, verify every shortcut and the group order
+because the extension organizes Tina's generated sidebar markup.
 
 Each primary-navigation destination can use either an **Internal Page**
 reference or a **Custom or External URL**. Internal references take priority
@@ -789,7 +794,7 @@ Use Git search to find every import or CSS variable reference before reverting.
 Pause and make a backup commit before changing:
 
 - collection names or collection paths
-- `placement`, `entryType`, or `tileSize` stored values
+- `placement` or `entryType` stored values
 - `src/pages/archive/[...slug].astro`
 - published Markdown filenames
 - `astro.config.mjs`
