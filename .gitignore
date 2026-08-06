@@ -24,6 +24,7 @@ pnpm-debug.log*
 .idea/
 .vs/
 node_modules
+.tools/
 .env
 tina/__generated__
 .vs

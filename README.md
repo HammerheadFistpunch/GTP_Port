@@ -34,10 +34,11 @@ The site is operational and ready for real content. It includes:
   mobile expansion, internal page references, and custom/external URLs
 
 Sprints 1 through 6 are deployed and owner-accepted. Sprint 7 navigation and
-information-architecture work is implemented and awaiting Cloudflare, hosted
-Tina, and owner interaction verification. Remaining broader hosted Tina and
-cross-device edge-case checks are tracked for Sprint 8's final QA pass. Content
-publishing can continue in parallel.
+information-architecture work is implemented; its remaining explicit hosted
+interaction checks are tracked in `BUILD_ORDER.md`. Phase 2 begins with a Tina
+and content-model audit before simplifying Portfolio, Homepage tiles, Tina
+navigation, authoring, media URLs, and deployment. Resume remains a separate
+rebuild sprint. Content publishing can continue during the audit.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and

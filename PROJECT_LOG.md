@@ -1,5 +1,104 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Sprint 8 decisions locked
+
+Owner decisions close the Sprint 8 planning gates:
+
+- Software/Ideation and Case Studies/Research will use the existing Projects
+  Journal section; Writing will use the complete Journal feed.
+- Homepage section ordering will use genuine drag-and-drop plus keyboard move
+  controls.
+- Services proof pages and `Test-content.mdx` will retire only after reference
+  checks and redirects to the closest surviving destinations.
+- Markdown-first authoring and the protected server-side publish relay remain
+  the approved implementation directions from the feasibility review.
+
+The final Tina sidebar organization remains a Sprint 10 decision. Sprint 9 can
+proceed in schema-safe chunks without adding new Portfolio-only tags.
+
+## 2026-08-06 - Sprint 8B feasibility findings recorded
+
+Verified from current TinaCMS and Cloudflare documentation that the requested
+authoring and publishing workflows are feasible:
+
+- Tina text fields can own the Markdown body, and custom React field components
+  can provide a source editor plus rendered preview.
+- repository uploads can remain available while a custom source control accepts
+  validated external HTTPS image URLs.
+- Cloudflare Pages can disable automatic production-branch deployments and
+  trigger a chosen branch through a deploy hook.
+- the deploy hook cannot live in Tina's static browser bundle; a protected
+  server-side relay must hold the secret and authenticate the Publish action.
+
+Recorded the architecture, implementation spikes, fallback, and security gates
+in `TINA_FEASIBILITY.md`. No application or service configuration changed.
+
+## 2026-08-06 - Sprint 8A Tina audit completed
+
+Completed a non-destructive inventory of all Tina collections, visible fields,
+nested controls, stored content, Astro validation, renderers, and routes. The
+result is recorded in `TINA_AUDIT.md`.
+
+Key findings:
+
+- Archive Pages combines active Journal settings with the retiring Portfolio
+  landing model, which exposes controls irrelevant to each document.
+- Homepage ordering is stored as a list of predefined string options, so the
+  current drag-to-reorder instruction does not match the editor control.
+- Journal `topics`, Flexible Page `navigationOrder`, and a legacy Tina `post`
+  query helper have no active public consumer.
+- Portfolio placement, ordering, tile sizing, packing, and override fields must
+  remain only until Sprint 9 migrates routes, links, and fallbacks.
+- the three planned Journal-backed Portfolio destinations do not yet have exact
+  controlled tags, and several Homepage/navigation/footer links still target
+  routes scheduled for retirement.
+- Services proof pages and a published Test entry require an owner migration
+  decision.
+
+No Tina schema, content file, application source, or route changed in this
+audit chunk. Sprint 8B is now the active decision and feasibility checkpoint.
+
+## 2026-08-06 - Phase 2 simplification requirements recorded
+
+Owner review identified the next set of problems after the visual and
+information-architecture redesign:
+
+- Homepage Portfolio tiles contain more repeated information than they need.
+- Tina describes Homepage ordering as drag-and-drop even though the current
+  control behaves like a choice list.
+- The public Portfolio landing page is unnecessary. Video and Photography
+  should remain direct Flexible Pages; Software/Ideation, Case Studies/Research,
+  and Writing should resolve to Journal feeds or controlled tag archives.
+- Tina contains redundant, obsolete, transitional, or confusing fields and
+  collection entry points that require a consumer-level audit before removal.
+- Content Entry authoring should become plain Markdown with live preview.
+- image controls should accept public Immich or other direct URLs as well as
+  repository-managed uploads.
+- exported Markdown should be importable, validated, completed with required
+  metadata, and published without rebuilding the body by hand.
+- routine Tina saves should not deploy the site; an authenticated **Publish
+  Site** action inside Tina should publish the completed editing session.
+- Resume requires a separate redesign sprint.
+
+Planning decision:
+
+- Replace the former broad Sprint 8 cleanup with Sprints 8-14 covering audit,
+  public Portfolio/Homepage simplification, Tina cleanup, deliberate publishing,
+  Markdown-first authoring and import, Resume, and final migration/QA.
+- Do not remove a field, collection, or compatibility route until Sprint 8 maps
+  its stored data and every active consumer.
+- Treat raw-Markdown editing and secure publish gating as feasibility gates;
+  neither should be implemented by exposing repository or deploy credentials in
+  browser code.
+
+Repository state reviewed:
+
+- `gpt-handoff` is the remote default and working branch.
+- Sprint 7 navigation code and the corrected Tina lock are present.
+- Later Tina-generated content commits confirm continuing hosted content saves.
+- The pending Sprint 7 deployment and interaction checks remain open until an
+  explicit owner verification is recorded.
+
 ## 2026-08-04 - Sprint 7 TinaCloud schema-lock correction
 
 Corrected after the initial Sprint 7 deployment failed:

@@ -1,8 +1,11 @@
 # Documentation Index
 
-Last reviewed: 2026-08-04 after the Sprint 7 navigation implementation
+Last reviewed: 2026-08-06 after Phase 2 simplification planning
 
 ## Active project documents
+
+- `TINA_AUDIT.md` - Sprint 8 field/consumer inventory, disposition map, stored-data findings, and migration gates
+- `TINA_FEASIBILITY.md` - Sprint 8B Markdown, external-media, and deliberate-publishing feasibility findings
 
 | Document | Purpose |
 | --- | --- |

@@ -1,6 +1,6 @@
 # GTP_Port Roadmap
 
-Last updated: 2026-08-04
+Last updated: 2026-08-06
 Working branch: `gpt-handoff`
 
 ## Vision
@@ -10,10 +10,11 @@ combines long-form publishing with a professional portfolio. Astro remains
 responsible for routing and rendering, TinaCMS manages content and curated
 page structure, and Markdown remains the portable source of truth.
 
-The next phase expands Tina from a content editor into a controlled site
-builder. It will support new pages, nested page structure, rearrangeable page
-blocks, curated Portfolio tiles, Journal sections and tags, and a more useful
-homepage without becoming an unrestricted Wix-style layout system.
+The completed redesign expanded Tina from a content editor into a controlled
+site builder. The next phase simplifies that system around the way the site is
+actually being used: Journal-first publishing, direct Portfolio destinations,
+plain-Markdown authoring, externally hosted media, deliberate deployment, and
+a separately rebuilt Resume.
 
 ## Completed foundation
 
@@ -208,7 +209,7 @@ Depends on: Sprint 4 taxonomy conventions
 ## Sprint 6 - Homepage redesign
 
 Status: Complete, deployed, and owner-accepted. Full cross-device, keyboard,
-and hosted Tina editing edge-case checks remain grouped with Sprint 8's final
+and hosted Tina editing edge-case checks remain grouped with Sprint 14's final
 schema reindex and QA pass.
 
 Goal: make the homepage a compact overview of Patrick's positioning, recent
@@ -268,36 +269,217 @@ Acceptance:
 
 Depends on: Sprints 1, 3, 4, and 6
 
-## Sprint 8 - Migration, QA, and documentation
+## Phase 2 - Publishing-system simplification
 
-Goal: finish the redesign as a reliable publishing system rather than a set of
+The August 6 owner review replaces the former single Sprint 8 cleanup pass
+with the staged work below. Removing fields, collections, or routes before the
+audit and migration steps is explicitly out of scope.
+
+Locked decisions:
+
+- remove the public Portfolio landing page
+- keep Video and Photography as direct Flexible Page destinations
+- surface Software/Ideation, Case Studies/Research, and Writing through Journal
+  feeds or controlled tag archives rather than parallel Portfolio pages
+- use the existing Projects section for Software/Ideation and Case
+  Studies/Research; use the complete Journal feed for Writing
+- replace the misleading Homepage ordering field with real drag-and-drop plus
+  keyboard move controls
+- retire the Services proof pages and published Test entry only after reference
+  checks and redirects to the closest surviving destinations
+- make plain Markdown with live preview the primary Content Entry authoring
+  experience
+- provide a deliberate **Publish Site** action inside Tina
+- rebuild Resume in its own sprint
+
+### Sprint 8 - Tina and content-model audit
+
+Status: Complete. Chunk 8A inventory and Chunk 8B decisions/feasibility are
+recorded in `TINA_AUDIT.md` and `TINA_FEASIBILITY.md`.
+
+Goal: produce a field-by-field migration map before simplifying the editor or
+deleting compatibility data.
+
+Scope:
+
+- inventory every Tina collection, field, label, custom control, reference,
+  and list-ordering instruction
+- trace every stored field through Astro validation, renderers, routes, and
+  existing content
+- classify each item as keep, relabel, consolidate, migrate, compatibility
+  hold, or remove
+- identify misleading controls, including Homepage section ordering that is
+  presented as drag-reorderable but currently behaves like a choice list
+- define the smallest practical Tina sidebar for Site Settings, Homepage,
+  Journal settings, Content, fixed pages, Flexible Pages, taxonomy, and media
+- record the exact redirect or compatibility behavior required for retired
+  Portfolio routes
+
+Acceptance:
+
+- every active Tina field has a documented consumer and disposition
+- no deletion is proposed without a content migration or compatibility plan
+- the target Tina navigation has no duplicate path to the same document
+- unresolved Tina platform limitations are isolated as implementation spikes
+
+Depends on: Sprint 7 source and hosted-editor checkpoint
+
+### Sprint 9 - Public Portfolio and Homepage simplification
+
+Goal: remove the redundant Portfolio landing experience and make Portfolio a
+small set of direct destinations.
+
+Scope:
+
+- change the Portfolio header item into a navigation group without a landing
+  page dependency
+- link Video and Photography directly to their Flexible Pages
+- link Software/Ideation and Case Studies/Research to the existing Projects
+  Journal section, and Writing to the complete Journal feed
+- remove the Portfolio landing route only after navigation, Homepage, footer,
+  metadata, and redirect behavior are migrated
+- replace information-heavy Homepage Portfolio cards with compact image-and-
+  label destination tiles
+- retire redundant category Flexible Pages only after their replacements are
+  verified
+
+Acceptance:
+
+- no public navigation or Homepage control points to `/portfolio/`
+- every Portfolio submenu item reaches published content without an
+  intermediate landing page
+- compact Homepage destination tiles do not repeat category, title, and
+  description copy
+- established detail URLs under `/archive/` remain unchanged
+
+Depends on: Sprint 8 migration map and approved Journal-backed destinations
+
+### Sprint 10 - Tina navigation and schema cleanup
+
+Goal: make Tina understandable enough for routine editing without exposing
+dead, redundant, or transitional controls.
+
+Scope:
+
+- implement the approved collection/sidebar organization
+- relabel collections and fields around user tasks rather than implementation
+  terms
+- replace misleading ordering controls with true ordered lists or explicit
+  move controls
+- migrate and remove obsolete Portfolio, Homepage, topic, placement, tile, and
+  page fields identified by Sprint 8
+- preserve only documented compatibility fields
+- regenerate the Tina lock and reindex TinaCloud after each schema chunk
+
+Acceptance:
+
+- each document type has one obvious editing location
+- every visible control changes a currently rendered or documented value
+- all required reference, route, and content migrations pass before legacy
+  fields are removed
+- hosted Tina can create, edit, reorder, and save the retained content models
+
+Depends on: Sprints 8-9
+
+### Sprint 11 - Deliberate publishing workflow
+
+Goal: let multiple Tina saves accumulate without rebuilding the public site
+until the editor chooses **Publish Site**.
+
+Scope:
+
+- select a secure staging-branch or build-gating architecture compatible with
+  TinaCloud, GitHub, and Cloudflare Pages
+- keep credentials and deploy-hook secrets out of browser-delivered code and
+  repository content
+- add a clear Publish Site action inside the authenticated Tina experience
+- show success, failure, already-publishing, and no-pending-change states
+- document recovery when a publish build fails
+
+Acceptance:
+
+- ordinary Tina saves do not create a public deployment
+- one deliberate action publishes the complete saved session
+- a failed build leaves the current public site intact and reports a useful
+  recovery path
+- the workflow is verifiably authenticated and exposes no reusable secret
+
+Depends on: Sprint 8 feasibility findings; may be implemented alongside Sprint
+10 if schema changes remain isolated
+
+### Sprint 12 - Markdown-first content authoring and external media
+
+Goal: replace the clunky Content Entry workflow with a focused Markdown editor
+and a safe import path.
+
+Scope:
+
+- add a plain-Markdown editor with live rendered preview as the primary body
+  editor
+- retain the minimum structured publishing fields required for title, summary,
+  date, section, tags, draft state, and metadata
+- accept local uploads or direct image URLs for cover, header, block, and inline
+  content where each renderer supports them
+- explicitly support public Immich-hosted image URLs
+- add a Markdown/MDX import workflow that parses frontmatter, identifies
+  missing required fields, validates links and images, and preserves portable
+  body content
+- allow imported standard Markdown links and images to render without manual
+  conversion; keep structured inline YouTube insertion as an optional follow-up
+
+Acceptance:
+
+- a new entry can be written, previewed, saved, and reopened without body loss
+- an exported `.md` file can be imported, completed, and published without
+  manually recreating its body
+- working absolute image and link URLs remain working in the final `.mdx`
+- invalid frontmatter, unsafe paths, and unsupported MDX produce actionable
+  validation instead of a broken build
+
+Depends on: Sprint 8 field audit and a Tina editor feasibility proof; publish
+gating from Sprint 11 is preferred before owner rollout
+
+### Sprint 13 - Resume rebuild
+
+Goal: replace the current Resume implementation with an intentionally designed,
+maintainable source model and public page.
+
+Scope and acceptance will be defined from a separate Resume content and design
+review. Resume PDF generation remains optional until that review chooses a
+single-source export strategy.
+
+Depends on: Tina cleanup conventions from Sprint 10
+
+### Sprint 14 - Migration, QA, and documentation
+
+Goal: finish Phase 2 as a reliable publishing system rather than a set of
 partially migrated features.
 
 Scope:
 
-- migrate existing Portfolio order, Journal topics, tags, and homepage
-  selections into the new models
-- remove transitional fields only after content migration is verified
-- reindex TinaCloud and confirm production editing
+- complete remaining content, route, taxonomy, and reference migrations
+- remove transitional fields only after their replacements are verified
 - run strict type, production build, diff, route, broken-link, accessibility,
   responsive, cross-browser, and Lighthouse checks
-- verify Cloudflare redirects, metadata, RSS, sitemap, and robots behavior
-- update owner maintenance, content, portability, and troubleshooting docs
+- verify redirects, metadata, RSS, sitemap, and robots behavior
+- verify Tina authoring and deliberate Cloudflare deployment end to end
+- update owner maintenance, content, portability, import, publishing, and
+  troubleshooting documentation
 
 Acceptance:
 
 - all published content is reachable through the intended hierarchy
-- Tina editing and Cloudflare deployment work end to end
 - no transitional field remains without a documented compatibility purpose
+- Tina editing and deliberate deployment work end to end
 - repository documentation matches the deployed site
 
-Depends on: Sprints 1-7
+Depends on: Sprints 8-13
 
 ## Deferred integrations
 
 - Pagefind until published content volume warrants search
 - Giscus until a comment workflow is desired
-- Resume PDF generation
+- Resume PDF generation until Sprint 13 chooses a source strategy
 - advanced related-content ranking
 - unrestricted visual page-builder controls
 

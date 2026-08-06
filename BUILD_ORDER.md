@@ -1,27 +1,27 @@
 # GTP_Port Build Order
 
-Last updated: 2026-08-04
+Last updated: 2026-08-06
 Working branch: `gpt-handoff`
 Verified baseline: unified Content Entries architecture and TinaCloud editor
 
 ## Current phase
 
-> Controlled Tina site-builder expansion
+> Publishing-system simplification planning
 
-The site is operational and publishable. The next phase adds dynamic pages,
-reorderable blocks and landing-page tiles, editorial taxonomy, and a compact
-homepage while preserving the current content and routes.
+The site is operational and publishable. The next phase removes unnecessary
+Portfolio indirection, simplifies Tina around real owner workflows, adds
+Markdown-first authoring and deliberate deployment, and rebuilds Resume after
+the content system is stable.
 
 ## Active sprint order
 
-1. Flexible page foundation
-2. Reorderable page blocks and media
-3. Portfolio hierarchy and Tina tile board
-4. Journal sections and landing page
-5. Tags and subject archives
-6. Homepage redesign
-7. Nested navigation and information-architecture cleanup
-8. Migration, QA, and documentation
+8. Tina and content-model audit
+9. Public Portfolio and Homepage simplification
+10. Tina navigation and schema cleanup
+11. Deliberate publishing workflow
+12. Markdown-first content authoring and external media
+13. Resume rebuild
+14. Migration, QA, and documentation
 
 Full scope and acceptance criteria are in `Roadmap.md`.
 
@@ -211,10 +211,10 @@ Stop and verify:
 - [ ] hosted Tina can reorder, hide, edit, and change Homepage selections
 
 Sprint 6 is deployed and owner-accepted. The remaining cross-device, keyboard,
-and hosted-editor edge-case checks will be completed during Sprint 8's final
+and hosted-editor edge-case checks will be completed during Sprint 14's final
 schema reindex and QA pass rather than blocking navigation work.
 
-## Active sprint - Sprint 7
+## Verification checkpoint - Sprint 7
 
 - [x] remove About from the primary navigation while preserving its page,
   Homepage link, and footer link
@@ -238,6 +238,58 @@ Stop and verify:
 - [ ] hosted Tina can reorder top-level and child links and select internal pages
 - [ ] deployed desktop keyboard/pointer and mobile touch behavior pass owner review
 
+The `gpt-handoff` branch contains the Sprint 7 implementation, its corrected
+Tina schema lock, and subsequent successful Tina content commits. Cloudflare
+and interaction checks above remain explicit until owner verification is
+recorded; they do not authorize removing compatibility routes or fields.
+
+## Active sprint - Sprint 8 audit
+
+### Chunk 8A - Inventory and consumer map
+
+- [x] list every Tina collection in its current sidebar order
+- [x] map every Tina field to stored content, Astro validation, and renderer or
+  route consumers
+- [x] mark each field keep, relabel, consolidate, migrate, compatibility hold,
+  or remove
+- [x] identify duplicate document entry points and misleading control text
+- [x] inventory Portfolio, Homepage, Journal, Resume, media, and deploy fields
+
+Stop and verify:
+
+- [x] every visible Tina control has a documented disposition
+- [x] every proposed removal has a migration or compatibility plan
+- [x] no source, content, schema, or route change is included in the audit chunk
+
+Chunk 8A is complete in `TINA_AUDIT.md`.
+
+### Chunk 8B - Target models and implementation gates
+
+- [ ] approve the smallest practical Tina navigation
+- [x] choose the exact Journal/tag destinations for Software/Ideation, Case
+  Studies/Research, and Writing
+- [x] choose true drag-and-drop Homepage section ordering
+- [x] choose safe retirement for Services proof pages and `Test-content.mdx`
+- [x] define redirect behavior for `/portfolio/` and retired category pages
+- [x] prove the feasible Tina approach for raw Markdown plus live preview
+- [x] choose a secure Tina/GitHub/Cloudflare publish-gating architecture
+- [x] split implementation into schema-safe, independently deployable chunks
+
+Stop and verify:
+
+- [ ] the target editor model contains no duplicate editing locations
+- [x] the public navigation model has no dependency on a Portfolio landing page
+- [x] browser-delivered code contains no GitHub or Cloudflare secret
+- [x] accepted decisions are reflected in `Roadmap.md` before Sprint 9 begins
+
+Technical findings are recorded in `TINA_FEASIBILITY.md`. Software/Ideation and
+Case Studies/Research will use the existing Projects feed; Writing will use the
+complete Journal feed. Homepage ordering will use a genuine drag-and-drop
+control with keyboard controls. Retired Portfolio and proof routes will redirect
+to the closest surviving destination, and the Test entry will be removed only
+after reference checks. The exact Tina sidebar organization remains a Sprint 10
+decision.
+
 ## Decision gates
 
 - [x] Before Sprint 2: use the six documented Flexible Page blocks and a
@@ -251,6 +303,14 @@ Stop and verify:
 - [x] Before Sprint 7: remove About from the primary navigation, preserve the
   page through Homepage/footer links, omit Writing Samples from the Portfolio
   hierarchy, and keep Journal section navigation on the Journal archive.
+- [x] Before Sprint 8: remove the Portfolio landing page; retain direct Video
+  and Photography pages; use Journal destinations for Software/Ideation, Case
+  Studies/Research, and Writing; prioritize plain Markdown with live preview;
+  place deliberate publishing inside Tina; and reserve Resume for its own sprint.
+- [x] During Sprint 8: approve Journal destinations, retired-route behavior,
+  true Homepage ordering, raw-Markdown direction, and secure publish-gating
+  architecture.
+- [ ] Before Sprint 10: approve the final Tina sidebar organization.
 
 ## Chunk rules
 
