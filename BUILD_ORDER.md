@@ -385,6 +385,7 @@ deploy hook have successfully triggered a build. Full configuration is in
 - [x] add a representative draft fixture with Markdown, an absolute image, and YouTube
 - [x] add Tina parse/serialize/reopen round-trip tests
 - [x] regenerate the Tina lock and pass local schema/content validation
+- [x] contain split panes and preview media within Tina's editor canvas
 - [ ] verify the deployed Tina editor can save and reopen the draft fixture unchanged
 
 Stop and verify:

@@ -1,5 +1,17 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Sprint 12A hosted editor layout correction
+
+- Removed the split editor's fixed 28-rem-per-pane minimum, which could make
+  the Markdown source and preview wider than Tina's available content panel.
+- Kept split mode as equal, genuinely shrinkable columns and added a
+  container-based stacked layout when the editor panel is narrower than 44rem.
+- Constrained the preview, images, code blocks, and tables so wide content
+  scrolls inside its own pane instead of creating a page-level scrollbar or
+  clipping beyond the Tina canvas.
+
+Hosted verification remains required after deployment before Sprint 12B.
+
 ## 2026-08-06 - Sprint 12A Markdown editor proof implemented
 
 - Replaced the Journal Entry rich-text body control with a required string-body

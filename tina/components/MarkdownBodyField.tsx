@@ -181,6 +181,12 @@ const renderPreview = (markdown: string) => {
 };
 
 const styles: Record<string, CSSProperties> = {
+    editor: {
+        width: "100%",
+        maxWidth: "100%",
+        minWidth: 0,
+        containerType: "inline-size",
+    },
     toolbar: {
         display: "flex",
         flexWrap: "wrap",
@@ -205,9 +211,14 @@ const styles: Record<string, CSSProperties> = {
     grid: {
         display: "grid",
         gap: 12,
+        width: "100%",
+        maxWidth: "100%",
+        minWidth: 0,
     },
     pane: {
         minWidth: 0,
+        maxWidth: "100%",
+        overflow: "hidden",
     },
     paneLabel: {
         display: "block",
@@ -234,8 +245,12 @@ const styles: Record<string, CSSProperties> = {
         tabSize: 4,
     },
     preview: {
+        width: "100%",
+        maxWidth: "100%",
+        boxSizing: "border-box",
         minHeight: 520,
         padding: 20,
+        overflowX: "auto",
         overflowWrap: "anywhere",
         border: "1px solid #d1d5db",
         borderRadius: 8,
@@ -284,7 +299,7 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
     const showPreview = mode !== "write";
 
     return (
-        <div>
+        <div style={styles.editor}>
             <div style={styles.heading}>
                 {typeof field.label === "string" ? field.label : "Entry Content (Markdown)"}
             </div>
@@ -315,10 +330,12 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
             )}
 
             <div
+                className="markdown-body-editor-grid"
+                data-mode={mode}
                 style={{
                     ...styles.grid,
                     gridTemplateColumns: mode === "split"
-                        ? "repeat(auto-fit, minmax(min(100%, 28rem), 1fr))"
+                        ? "repeat(2, minmax(0, 1fr))"
                         : "minmax(0, 1fr)",
                 }}
             >
@@ -351,17 +368,22 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
             </div>
 
             <style>{`
+                @container (max-width: 44rem) {
+                    .markdown-body-editor-grid[data-mode="split"] {
+                        grid-template-columns: minmax(0, 1fr) !important;
+                    }
+                }
                 .markdown-body-preview > :first-child { margin-top: 0; }
                 .markdown-body-preview > :last-child { margin-bottom: 0; }
                 .markdown-body-preview h1,
                 .markdown-body-preview h2,
                 .markdown-body-preview h3 { line-height: 1.25; margin: 1.5em 0 0.6em; }
                 .markdown-body-preview a { color: #2563eb; text-decoration: underline; }
-                .markdown-body-preview img { display: block; max-width: 100%; height: auto; margin: 1rem 0; border-radius: 6px; }
+                .markdown-body-preview img { display: block; width: auto; max-width: 100%; height: auto; object-fit: contain; margin: 1rem 0; border-radius: 6px; }
                 .markdown-body-preview blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid #9ca3af; color: #4b5563; }
-                .markdown-body-preview pre { overflow-x: auto; padding: 1rem; border-radius: 6px; background: #111827; color: #f9fafb; }
+                .markdown-body-preview pre { max-width: 100%; box-sizing: border-box; overflow-x: auto; padding: 1rem; border-radius: 6px; background: #111827; color: #f9fafb; }
                 .markdown-body-preview code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
-                .markdown-body-preview table { width: 100%; border-collapse: collapse; }
+                .markdown-body-preview table { display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
                 .markdown-body-preview th,
                 .markdown-body-preview td { padding: 0.5rem; border: 1px solid #d1d5db; text-align: left; }
                 .markdown-body-preview .markdown-youtube-preview { display: grid; gap: 0.25rem; margin: 1rem 0; padding: 1rem; border: 1px solid #93c5fd; border-radius: 6px; background: #eff6ff; font-family: ui-sans-serif, system-ui, sans-serif; }
