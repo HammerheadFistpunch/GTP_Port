@@ -19,7 +19,7 @@ hero:
     label: Read Journal
     href: /journal/
 featuredPortfolio:
-  visible: true
+  visible: false
   title: Featured Portfolio
   titleHref: /portfolio/
   subtitle: 'Selected paths into video, photography, case studies, and software projects.'
