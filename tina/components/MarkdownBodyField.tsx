@@ -1,6 +1,7 @@
 import React from "react";
 import type { CSSProperties, ChangeEvent, FocusEvent } from "react";
 import { marked } from "marked";
+import { getYouTubeEmbedUrl } from "../lib/youtubeEmbed";
 
 type EditorMode = "write" | "split" | "preview";
 
@@ -39,6 +40,7 @@ const allowedTags = new Set([
     "h5",
     "h6",
     "hr",
+    "iframe",
     "img",
     "li",
     "ol",
@@ -57,7 +59,6 @@ const allowedTags = new Set([
 
 const blockedTags = new Set([
     "embed",
-    "iframe",
     "link",
     "meta",
     "object",
@@ -92,7 +93,19 @@ const replaceYouTubeEmbeds = (markdown: string) => markdown.replace(
         const title = mdxAttribute(attributes, "title") || "YouTube video";
         const caption = mdxAttribute(attributes, "caption");
         const url = mdxAttribute(attributes, "url");
+        const embedUrl = getYouTubeEmbedUrl(url);
         const detail = [url, caption].filter(Boolean).map(escapeHtml).join(" — ");
+
+        if (embedUrl) {
+            return [
+                '<figure class="markdown-youtube-preview">',
+                '<div class="markdown-youtube-frame">',
+                `<iframe class="markdown-youtube-iframe" src="${escapeHtml(embedUrl)}" title="${escapeHtml(title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,
+                "</div>",
+                caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : "",
+                "</figure>",
+            ].join("");
+        }
 
         return [
             '<div class="markdown-youtube-preview">',
@@ -155,6 +168,20 @@ const sanitizePreview = (html: string) => {
             if (title) element.setAttribute("title", title);
         }
 
+        if (tag === "iframe") {
+            const src = getYouTubeEmbedUrl(originalAttributes.get("src") || "");
+            if (!src) {
+                element.remove();
+                continue;
+            }
+            element.setAttribute("class", "markdown-youtube-iframe");
+            element.setAttribute("src", src);
+            element.setAttribute("title", originalAttributes.get("title") || "YouTube video");
+            element.setAttribute("loading", "lazy");
+            element.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+            element.setAttribute("allowfullscreen", "");
+        }
+
         if (tag === "code") {
             const className = originalAttributes.get("class") || "";
             if (/^language-[a-z0-9_-]+$/i.test(className)) {
@@ -162,7 +189,13 @@ const sanitizePreview = (html: string) => {
             }
         }
 
-        if (tag === "div" && originalAttributes.get("class") === "markdown-youtube-preview") {
+        if (tag === "figure" && originalAttributes.get("class") === "markdown-youtube-preview") {
+            element.setAttribute("class", "markdown-youtube-preview");
+        }
+
+        if (tag === "div" && originalAttributes.get("class") === "markdown-youtube-frame") {
+            element.setAttribute("class", "markdown-youtube-frame");
+        } else if (tag === "div" && originalAttributes.get("class") === "markdown-youtube-preview") {
             element.setAttribute("class", "markdown-youtube-preview");
         }
     }
@@ -386,8 +419,12 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
                 .markdown-body-preview table { display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
                 .markdown-body-preview th,
                 .markdown-body-preview td { padding: 0.5rem; border: 1px solid #d1d5db; text-align: left; }
-                .markdown-body-preview .markdown-youtube-preview { display: grid; gap: 0.25rem; margin: 1rem 0; padding: 1rem; border: 1px solid #93c5fd; border-radius: 6px; background: #eff6ff; font-family: ui-sans-serif, system-ui, sans-serif; }
-                .markdown-body-preview .markdown-youtube-preview span { color: #4b5563; font-size: 0.875rem; }
+                .markdown-body-preview .markdown-youtube-preview { display: grid; gap: 0.5rem; width: 100%; max-width: 100%; margin: 1rem 0; font-family: ui-sans-serif, system-ui, sans-serif; }
+                .markdown-body-preview div.markdown-youtube-preview { box-sizing: border-box; padding: 1rem; border: 1px solid #93c5fd; border-radius: 6px; background: #eff6ff; }
+                .markdown-body-preview .markdown-youtube-preview span,
+                .markdown-body-preview .markdown-youtube-preview figcaption { color: #4b5563; font-size: 0.875rem; }
+                .markdown-body-preview .markdown-youtube-frame { position: relative; width: 100%; max-width: 100%; overflow: hidden; aspect-ratio: 16 / 9; border-radius: 6px; background: #000; }
+                .markdown-body-preview .markdown-youtube-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
             `}</style>
 
             {meta?.touched && meta.error && (

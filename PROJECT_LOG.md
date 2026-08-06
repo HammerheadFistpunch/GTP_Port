@@ -1,5 +1,17 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Sprint 12A hosted YouTube preview correction
+
+- Replaced the editor's informational YouTube card with the expected responsive,
+  playable preview for valid `<YouTube />` elements.
+- Restricted preview players to valid HTTPS YouTube URLs, converted them to
+  `youtube-nocookie.com` embeds, and retained the non-playing fallback for an
+  invalid or unsupported URL.
+- Added URL-parser coverage for standard, short, and Shorts links plus unsafe
+  protocol and lookalike-host rejection.
+
+Hosted verification remains required after deployment before Sprint 12B.
+
 ## 2026-08-06 - Sprint 12A hosted editor layout correction
 
 - Removed the split editor's fixed 28-rem-per-pane minimum, which could make
@@ -20,8 +32,8 @@ Hosted verification remains required after deployment before Sprint 12B.
   preview allowlists Markdown output, removes active/unsafe HTML, rejects unsafe
   link and image protocols, and never executes body MDX.
 - Preserved the established `<YouTube />` element as raw source and represented
-  it with a non-executing preview card. Other custom MDX components produce a
-  visible compatibility warning instead of being silently interpreted.
+  valid URLs with a constrained player preview. Other custom MDX components
+  produce a visible compatibility warning instead of being silently interpreted.
 - Added a draft Content Entry fixture containing headings, links, an absolute
   image, lists, a blockquote, fenced code, and the existing YouTube element.
 - Added Node tests that parse, serialize, and reopen the draft through Tina's
@@ -32,7 +44,7 @@ Hosted verification remains required after deployment before Sprint 12B.
 
 Validation:
 
-- `npm run test:authoring` passes both round-trip tests.
+- `npm run test:authoring` passes the round-trip and YouTube URL safety tests.
 - `npx tsc --noEmit` passes after Astro content types are generated.
 - Tina local indexing, generated schema, lock generation, and custom admin
   compilation pass.

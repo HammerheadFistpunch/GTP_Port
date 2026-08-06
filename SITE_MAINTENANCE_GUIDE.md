@@ -701,7 +701,9 @@ The implementation spans:
 
 - `tina/config.ts` — required string body, custom editor, and MDX collection format
 - `tina/components/MarkdownBodyField.tsx` — source editor, sanitized preview,
-  YouTube preview card, and unsupported-MDX warning
+  constrained YouTube player, and unsupported-MDX warning
+- `tina/lib/youtubeEmbed.ts` — HTTPS YouTube URL validation and privacy-enhanced
+  preview URL conversion
 - `astro.config.mjs` — the Astro MDX integration
 - `src/pages/archive/[...slug].astro` — the MDX component mapping
 - `src/components/content/YouTubeEmbed.astro` — the body-level wrapper
@@ -709,11 +711,12 @@ The implementation spans:
 - `src/content/entries/*.mdx` — stored Markdown and `<YouTube />` elements
 - `tests/sprint12a-roundtrip.test.mjs` — Tina file round-trip compatibility
 
-Keep those names and attributes aligned. The Tina preview intentionally shows a
-non-executing YouTube card; the public Astro route renders the actual player.
-Do not add general-purpose MDX components to entry bodies. Tina warns about
-unsupported capitalized component names but preserves their source so an editor
-can remove them deliberately.
+Keep those names and attributes aligned. For a valid HTTPS YouTube URL, Tina's
+sanitized preview renders a responsive player from `youtube-nocookie.com`; an
+invalid URL receives a non-playing fallback. The public Astro route independently
+validates and renders the saved source. Do not add general-purpose MDX components
+to entry bodies. Tina warns about unsupported capitalized component names but
+preserves their source so an editor can remove them deliberately.
 
 After changing the editor or body schema, run `npm run test:authoring`, regenerate
 `tina/tina-lock.json` through the Tina local development build, run TypeScript

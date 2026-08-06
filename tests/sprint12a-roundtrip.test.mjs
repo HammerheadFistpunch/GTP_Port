@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { parseFile, stringifyFile } from "@tinacms/graphql";
+import { getYouTubeEmbedUrl } from "../tina/lib/youtubeEmbed.ts";
 
 const fixtureUrl = new URL(
     "../src/content/entries/sprint-12a-markdown-editor-proof.mdx",
@@ -51,4 +52,22 @@ test("the established YouTube MDX element survives the raw-body round trip", asy
 
     assert.match(reopened.$_body, /<YouTube url="https:\/\/www\.youtube\.com\/watch\?v=8rckrqsaZjk"/);
     assert.equal((reopened.$_body.match(/<YouTube\b/g) || []).length, 1);
+});
+
+test("the editor preview accepts only valid HTTPS YouTube embeds", () => {
+    assert.equal(
+        getYouTubeEmbedUrl("https://www.youtube.com/watch?v=8rckrqsaZjk"),
+        "https://www.youtube-nocookie.com/embed/8rckrqsaZjk",
+    );
+    assert.equal(
+        getYouTubeEmbedUrl("https://youtu.be/8rckrqsaZjk"),
+        "https://www.youtube-nocookie.com/embed/8rckrqsaZjk",
+    );
+    assert.equal(
+        getYouTubeEmbedUrl("https://www.youtube.com/shorts/8rckrqsaZjk"),
+        "https://www.youtube-nocookie.com/embed/8rckrqsaZjk",
+    );
+    assert.equal(getYouTubeEmbedUrl("http://www.youtube.com/watch?v=8rckrqsaZjk"), "");
+    assert.equal(getYouTubeEmbedUrl("https://youtube.com.example.org/watch?v=8rckrqsaZjk"), "");
+    assert.equal(getYouTubeEmbedUrl("javascript:alert(1)"), "");
 });

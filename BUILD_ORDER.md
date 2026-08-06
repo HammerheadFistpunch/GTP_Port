@@ -380,7 +380,7 @@ deploy hook have successfully triggered a build. Full configuration is in
 - [x] change the Journal Entry body from rich-text JSON to a raw string body
 - [x] add Write, Split, and Preview editor modes
 - [x] sanitize the rendered preview and block active or unsafe HTML
-- [x] preserve the established `<YouTube />` MDX source without executing it in Tina
+- [x] preserve the established `<YouTube />` MDX source and render valid URLs in a constrained preview player
 - [x] warn visibly when an unsupported custom MDX component is present
 - [x] add a representative draft fixture with Markdown, an absolute image, and YouTube
 - [x] add Tina parse/serialize/reopen round-trip tests
@@ -394,7 +394,7 @@ Stop and verify:
 - [x] strict TypeScript checking passes
 - [x] Tina local indexing and custom admin compilation pass
 - [x] Astro produces the existing 50 public routes and excludes the draft fixture
-- [ ] hosted Tina displays the editor, sanitized preview, and YouTube preview card
+- [ ] hosted Tina displays the editor, sanitized preview, and responsive YouTube player
 - [ ] a hosted no-op save does not rewrite or lose the fixture body
 
 Chunk 12A is locally complete. Do not begin 12B until the hosted editor and
