@@ -1,0 +1,5 @@
+/deployment.json
+  Cache-Control: no-store
+
+/admin/api/publish
+  Cache-Control: no-store

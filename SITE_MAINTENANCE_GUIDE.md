@@ -10,7 +10,7 @@ Most changes fall into one of four categories:
 
 | Change | Primary files | Required check |
 | --- | --- | --- |
-| Edit words, links, images, or entries | TinaCMS or `src/content/` | Review Cloudflare deployment |
+| Edit words, links, images, or entries | TinaCMS or `src/content/` | Deliberate Publish Site build and deployed review |
 | Change colors, fonts, spacing, or component appearance | `src/styles/` or the component's `.astro` file | `npm run build:astro` |
 | Add or remove a Tina field | Tina schema, Astro schema, Markdown, renderer, Tina lock | Tina indexing and production build |
 | Change routes, collections, packages, or filenames | Several connected files | Full build and careful link review |
@@ -43,7 +43,8 @@ Use this routine for code changes:
 7. Run the appropriate verification command.
 8. Review every changed file in GitHub Desktop.
 9. Commit with a specific description and push.
-10. Confirm the Cloudflare Pages build and deployed page.
+10. Open **Site → Publish Site** in Tina, publish the complete saved change set,
+    and confirm the Cloudflare Pages build and deployed page.
 
 If local Tina credentials are unavailable, visual and Astro changes can still
 be checked with:
@@ -74,6 +75,9 @@ Never commit `.env` or a real `TINA_TOKEN`.
 | `tina/config.ts` | Fields and controls visible in TinaCMS |
 | `tina/components/` | Custom Tina editor controls, including Placement actions |
 | `tina/tina-lock.json` | Generated Tina schema lock; regenerate it, never hand-edit it |
+| `functions/admin/api/publish.js` | Access-validated server relay for the secret Cloudflare deploy hook |
+| `src/pages/deployment.json.ts` | Build commit manifest used to compare saved and live versions |
+| `PUBLISHING_GUIDE.md` | Cloudflare setup, owner workflow, security, and failed-build recovery |
 | `src/pages/` | Route behavior, collection queries, sorting, and page composition |
 | `src/layouts/` | Shared page shells and Content Entry rendering |
 | `src/components/` | Reusable visual and interactive pieces |
@@ -191,7 +195,9 @@ Create and publish:
 1. In Tina, open **Pages → New Pages** and create a document.
 2. Enter required content and a lowercase kebab-case **URL Path**.
 3. Leave **Draft** enabled until the page is ready.
-4. Clear **Draft**, save, wait for Cloudflare, and test the URL directly.
+4. Clear **Draft** and save when ready for the next release.
+5. Finish the editing session, open **Site → Publish Site**, publish once, and
+   test the URL directly after the screen reports that it is live.
 
 Nest a page by entering its full path, such as
 `resources/video-production`. A published Flexible Page at `resources` is not
@@ -610,9 +616,10 @@ Settings** in Tina. Their presentation lives in `Navigation.astro`,
 The owner-facing Tina menu is registered from
 `tina/components/AdminNavigation.tsx` through `cmsCallback` in
 `tina/config.ts`. It groups fixed-document shortcuts under Settings and Pages,
-keeps Journal Entries under Content, and leaves Tina's Media Manager under
-Site. After any Tina package upgrade, verify every shortcut and the group order
-because the extension organizes Tina's generated sidebar markup.
+keeps Journal Entries under Content, and places Publish Site beside Tina's
+Media Manager under Site. After any Tina package upgrade, verify every shortcut
+and the group order because the extension organizes Tina's generated sidebar
+markup.
 
 Each primary-navigation destination can use either an **Internal Page**
 reference or a **Custom or External URL**. Internal references take priority
@@ -715,13 +722,14 @@ Cloudflare currently installs from `package-lock.json` and uses Node
 
 | Change made | Minimum verification |
 | --- | --- |
-| Tina content edit only | Save, wait for Cloudflare, review deployed page |
+| Tina content edit only | Save all session edits, use Publish Site once, review deployed page |
 | CSS or `.astro` visual change | `npm run build:astro` and browser review |
 | Astro content schema change | `npm run build:astro`, then review all documents in that collection |
 | Tina schema change | Start `npm run dev`, confirm indexing, commit regenerated lock, then Cloudflare build |
 | Route or collection query change | `npm run build:astro`, confirm route count and expected generated URLs |
 | Package change | `npm install`, full build, and Cloudflare build |
 | Custom Tina TSX change | `npx tsc --noEmit`, Tina editor test, and Cloudflare build |
+| Pages Function change | `npx wrangler pages functions build`, Access test, and hosted endpoint test |
 
 Useful commands:
 

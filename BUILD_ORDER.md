@@ -340,8 +340,38 @@ Stop and verify:
 - [ ] every fixed-page shortcut opens and saves the intended document
 - [ ] Tags, Journal Entries, New Pages creation, and Media Manager work
 
-Sprint 10 is locally complete. Hosted Tina verification is the gate before
-starting Sprint 11's deliberate publishing workflow.
+Sprint 10 is pushed. Hosted Tina verification remains grouped with the next
+hosted checkpoint.
+
+## Active sprint - Sprint 11 deliberate publishing workflow
+
+- [x] add a Tina **Site → Publish Site** screen
+- [x] compare the latest saved `gpt-handoff` commit with the live build commit
+- [x] add no-pending, pending, publishing, success, and failure states
+- [x] keep the Cloudflare deploy-hook URL in a server-only encrypted secret
+- [x] validate Cloudflare Access JWTs and restrict publishing to one configured identity
+- [x] add a KV-backed duplicate-publish lock
+- [x] add a static deployment manifest with no-store cache behavior
+- [x] document Cloudflare setup, cutoff sequence, and failed-build recovery
+- [x] compile TypeScript, Tina admin, Astro routes, and the Pages Function locally
+- [ ] deploy the Sprint 11 code while automatic production builds remain enabled
+- [ ] configure the Access application, environment values, encrypted hook, and KV binding
+- [ ] smoke-test the deploy hook before disabling automatic production builds
+- [ ] confirm a Tina save creates no deployment after automatic builds are disabled
+- [ ] publish one saved session through Tina and verify the live commit changes
+- [ ] confirm a failed build leaves the current public deployment intact
+
+Stop and verify:
+
+- [x] no deploy-hook URL, GitHub credential, or reusable secret exists in the browser bundle or repository
+- [x] local saved/live comparison identifies the no-pending state deterministically
+- [x] concurrent publish attempts receive a useful already-publishing response
+- [ ] the hosted endpoint rejects unauthenticated and wrong-identity requests
+- [ ] the complete deliberate-publishing workflow passes from Tina save to live deployment
+
+Do not disable automatic production builds until the deployed relay and branch-specific
+deploy hook have successfully triggered a build. Full configuration is in
+`PUBLISHING_GUIDE.md`.
 
 ## Decision gates
 

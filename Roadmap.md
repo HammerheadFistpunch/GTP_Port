@@ -392,6 +392,10 @@ it. Hosted Tina navigation/save/create checks and TinaCloud reindexing remain.
 
 ### Sprint 11 - Deliberate publishing workflow
 
+Status: Implemented locally on 2026-08-06; awaiting Cloudflare bindings,
+Access policy, deploy-hook smoke test, automatic-build cutoff, and hosted
+end-to-end verification.
+
 Goal: let multiple Tina saves accumulate without rebuilding the public site
 until the editor chooses **Publish Site**.
 

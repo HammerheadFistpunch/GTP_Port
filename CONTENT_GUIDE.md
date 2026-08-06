@@ -70,7 +70,7 @@ is not assignable to an entry.
 - **Pages** → Main Homepage, Journal Homepage, About, Contact, Resume, and New
   Pages
 - **Content** → Journal Entries
-- **Site** → Media Manager
+- **Site** → Publish Site and Media Manager
 
 The grouped links are the only owner-facing entry points. Tina's underlying
 collection names remain stable so existing references and generated queries do
@@ -149,9 +149,12 @@ breadcrumb.
    trailing slashes.
 3. Keep **Draft** enabled while editing. New pages default to draft.
 4. Add optional presentation, navigation, and SEO fields, then save.
-5. Clear **Draft** and save when ready to publish.
-6. Wait for Cloudflare to deploy, then open the exact public path and refresh
-   it directly.
+5. Clear **Draft** and save when ready to include the page in the next release.
+6. Continue any other edits for the session.
+7. Open **Site → Publish Site**, confirm that saved and live commits differ,
+   and choose **Publish Site** once.
+8. Wait for the screen to report that the saved changes are live, then open the
+   exact public path and refresh it directly.
 
 For a nested page, use the complete path. For example,
 `resources/audio-production` publishes at `/resources/audio-production/`.

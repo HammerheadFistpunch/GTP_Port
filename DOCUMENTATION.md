@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-06 after Sprint 10 Tina navigation/schema cleanup
+Last reviewed: 2026-08-06 after Sprint 11 deliberate-publishing implementation
 
 ## Active project documents
 
@@ -16,6 +16,7 @@ Last reviewed: 2026-08-06 after Sprint 10 Tina navigation/schema cleanup
 | `SITE_MAINTENANCE_GUIDE.md` | Owner guide to visual, Astro, Tina, schema, route, and dependency changes |
 | `CONTENT_GUIDE.md` | Editable content locations and publishing behavior |
 | `CONTENT_PORTABILITY.md` | Redesign and migration guardrails |
+| `PUBLISHING_GUIDE.md` | Deliberate publishing setup, owner workflow, security, and recovery |
 
 ## Project instructions
 

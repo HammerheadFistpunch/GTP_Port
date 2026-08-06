@@ -10,7 +10,8 @@ The site is operational and ready for real content. It includes:
 
 - a static Astro site deployed through Cloudflare Pages
 - Git-backed Markdown and MDX content
-- authenticated TinaCloud editing at `/admin/`
+- TinaCloud editing at `/admin/`, with Cloudflare Access protection prepared
+  for the Sprint 11 hosted setup
 - one unified Journal Entries collection with Portfolio and Journal placement
 - neutral `/archive/[slug]/` detail pages shared by every entry type
 - a label-only Portfolio menu with direct Video, Photography, Projects, Case
@@ -32,13 +33,15 @@ The site is operational and ready for real content. It includes:
   galleries, child-page tiles, and calls to action
 - Tina-controlled nested primary navigation with accessible desktop disclosure,
   mobile expansion, internal page references, and custom/external URLs
+- deliberate production publishing through a protected Tina **Publish Site**
+  screen, a server-only Cloudflare deploy hook, and saved/live commit checks
 
 Sprints 1 through 6 are deployed and owner-accepted. Sprints 7 through 9 are
-implemented, and Sprint 10's Tina navigation/schema cleanup passes local
-schema, TypeScript, admin-bundle, content, and route validation. Hosted Tina,
-redirect, and interaction verification remain tracked in `BUILD_ORDER.md`.
-Deliberate publishing, Markdown-first authoring, media URLs, and the separate
-Resume rebuild follow.
+implemented, Sprint 10 is pushed, and Sprint 11's deliberate publishing code
+passes local TypeScript, Tina, Astro, and Pages Function compilation. Hosted
+Cloudflare configuration and end-to-end verification remain tracked in
+`BUILD_ORDER.md`. Markdown-first authoring, media URLs, and the separate Resume
+rebuild follow.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and
@@ -65,7 +68,9 @@ Open https://angrysquirrel.org/admin/
 -> edit content in TinaCloud
 -> save the entry
 -> Tina commits the content change to gpt-handoff
--> Cloudflare Pages rebuilds
+-> continue editing without rebuilding the public site
+-> open Site > Publish Site once the session is complete
+-> Cloudflare builds the latest gpt-handoff commit
 -> review the deployed page
 ```
 
@@ -79,11 +84,13 @@ Pull gpt-handoff
 -> make and review changes
 -> npm run build
 -> commit and push in VS Code
--> Cloudflare Pages rebuilds
+-> open Tina Site > Publish Site when the complete change set is ready
 ```
 
 Cloudflare Pages must define `TINA_PUBLIC_CLIENT_ID`, `TINA_TOKEN`, and
-`GITHUB_BRANCH`. The token is secret and must never be committed.
+`GITHUB_BRANCH`. The deliberate workflow additionally requires the bindings and
+Access policy in `PUBLISHING_GUIDE.md`. Tokens and the deploy-hook URL are
+secrets and must never be committed.
 
 ## Verification
 

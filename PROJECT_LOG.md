@@ -1,5 +1,35 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Sprint 11 deliberate publishing implemented locally
+
+- Added a Tina **Site → Publish Site** screen that compares the latest saved
+  `gpt-handoff` commit with the commit embedded in the live Cloudflare build.
+- Added accurate checking, no-pending, pending, publishing, success, and failure
+  states plus 15-second live-deployment polling.
+- Added `/admin/api/publish` as a Cloudflare Pages Function. It validates the
+  Cloudflare Access JWT, requires the configured owner email, looks up the
+  public branch head server-side, and calls the encrypted deploy hook without
+  exposing it to Tina's browser bundle.
+- Added a 15-minute `PUBLISH_STATE` KV lock so duplicate requests across tabs
+  report an already-publishing state; completed deployments clear their own lock.
+- Added `/deployment.json` with no-store caching so Tina can distinguish the
+  currently live commit from newer saved work after reloads.
+- Added `PUBLISHING_GUIDE.md` and safe environment-variable placeholders. The
+  deploy-hook URL remains an encrypted Cloudflare secret and never belongs in
+  the repository or a public-prefixed variable.
+
+Validation:
+
+- `npx tsc --noEmit` passes.
+- Tina local indexing and custom admin compilation pass.
+- the Cloudflare Pages Function compiles successfully with Wrangler.
+- a secret-free Astro build produces the expected 50 public pages plus the
+  deployment manifest.
+
+Hosted configuration and the safe automatic-build cutoff remain required. The
+existing automatic production build must stay enabled until the new relay and
+deploy hook have triggered a successful smoke-test build.
+
 ## 2026-08-06 - Sprint 10 Tina navigation and schema cleanup implemented
 
 - Added a grouped owner-facing Tina menu: **Settings** contains Site Settings
