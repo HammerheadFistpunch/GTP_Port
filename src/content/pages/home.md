@@ -6,7 +6,6 @@ sectionOrder:
   - about
   - capabilities
   - technology
-  - portfolio
 hero:
   visible: true
   eyebrow: Video · Photography · Communication · Storyteller
