@@ -53,7 +53,9 @@ string so its narrative content can be extracted without Tina.
 
 Content Entries do not use the Flexible Page block list. They use `.mdx`, a
 Markdown-compatible format, solely to permit the constrained `<YouTube />`
-rich-text embed. Journal and Portfolio narratives remain Markdown-first and do
+element. Tina stores the body as a string and exposes the source beside a
+sanitized preview, so ordinary Markdown is not converted into a rich-text JSON
+editing model. Journal and Portfolio narratives remain Markdown-first and do
 not become page-builder documents. A future migration can replace each embed
 with the stored URL or map that single component to the destination system.
 

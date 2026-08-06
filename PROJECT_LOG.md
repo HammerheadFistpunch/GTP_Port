@@ -1,5 +1,34 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Sprint 12A Markdown editor proof implemented
+
+- Replaced the Journal Entry rich-text body control with a required string-body
+  field so Tina edits the portable Markdown/MDX source directly.
+- Added a custom source editor with Write, Split, and Preview modes. The live
+  preview allowlists Markdown output, removes active/unsafe HTML, rejects unsafe
+  link and image protocols, and never executes body MDX.
+- Preserved the established `<YouTube />` element as raw source and represented
+  it with a non-executing preview card. Other custom MDX components produce a
+  visible compatibility warning instead of being silently interpreted.
+- Added a draft Content Entry fixture containing headings, links, an absolute
+  image, lists, a blockquote, fenced code, and the existing YouTube element.
+- Added Node tests that parse, serialize, and reopen the draft through Tina's
+  own MDX file utilities, then confirm standard Markdown and YouTube source
+  survive the round trip.
+- Regenerated `tina/tina-lock.json`; the Journal Entry body is now a required
+  GraphQL string rather than a rich-text JSON value.
+
+Validation:
+
+- `npm run test:authoring` passes both round-trip tests.
+- `npx tsc --noEmit` passes after Astro content types are generated.
+- Tina local indexing, generated schema, lock generation, and custom admin
+  compilation pass.
+- a secret-free Astro production build still produces 50 public pages; the
+  Sprint 12A fixture remains draft-only and receives no public route.
+
+Hosted Tina save/reopen review remains the deployment gate before Sprint 12B.
+
 ## 2026-08-06 - Sprint 11 deliberate publishing implemented locally
 
 - Added a Tina **Site → Publish Site** screen that compares the latest saved

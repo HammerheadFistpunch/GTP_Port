@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-06 after Sprint 11 deliberate-publishing implementation
+Last reviewed: 2026-08-06 after Sprint 12A Markdown-editor implementation
 
 ## Active project documents
 

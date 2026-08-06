@@ -35,13 +35,16 @@ The site is operational and ready for real content. It includes:
   mobile expansion, internal page references, and custom/external URLs
 - deliberate production publishing through a protected Tina **Publish Site**
   screen, a server-only Cloudflare deploy hook, and saved/live commit checks
+- a Markdown-source Journal Entry editor with Write/Split/Preview modes,
+  sanitized preview output, and preserved existing YouTube MDX
 
 Sprints 1 through 6 are deployed and owner-accepted. Sprints 7 through 9 are
 implemented, Sprint 10 is pushed, and Sprint 11's deliberate publishing code
 passes local TypeScript, Tina, Astro, and Pages Function compilation. Hosted
 Cloudflare configuration and end-to-end verification remain tracked in
-`BUILD_ORDER.md`. Markdown-first authoring, media URLs, and the separate Resume
-rebuild follow.
+`BUILD_ORDER.md`. Sprint 12A's Markdown editor proof passes local schema,
+round-trip, TypeScript, Tina, and Astro validation; its hosted save/reopen gate
+comes next, followed by media URLs, import, and the separate Resume rebuild.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and

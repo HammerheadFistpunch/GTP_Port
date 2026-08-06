@@ -1,5 +1,6 @@
 import { defineConfig } from "tinacms";
 import PlacementField from "./components/PlacementField";
+import MarkdownBodyField from "./components/MarkdownBodyField";
 import SectionOrderField from "./components/SectionOrderField";
 import { installAdminNavigation } from "./components/AdminNavigation";
 import { journalSectionOptions } from "../src/lib/journal-sections";
@@ -301,44 +302,6 @@ const flexiblePageBlockTemplates = [
                     { value: "primary", label: "Primary" },
                     { value: "secondary", label: "Secondary" },
                 ],
-            },
-        ],
-    },
-];
-
-const entryRichTextTemplates = [
-    {
-        name: "YouTube",
-        label: "YouTube Video",
-        ui: {
-            defaultItem: {
-                title: "Embedded YouTube video",
-            },
-        },
-        fields: [
-            {
-                type: "string" as const,
-                name: "url",
-                label: "YouTube URL",
-                required: true,
-                description:
-                    "Paste a standard youtube.com, youtu.be, or YouTube embed URL.",
-            },
-            {
-                type: "string" as const,
-                name: "title",
-                label: "Accessible Video Title",
-                required: true,
-                description:
-                    "Describe the video for screen readers and when the embed cannot load.",
-            },
-            {
-                type: "string" as const,
-                name: "caption",
-                label: "Optional Caption",
-                ui: {
-                    component: "textarea",
-                },
             },
         ],
     },
@@ -1666,11 +1629,16 @@ export default defineConfig({
                         ],
                     },
                     {
-                        type: "rich-text",
+                        type: "string",
                         name: "body",
-                        label: "Entry Content",
+                        label: "Entry Content (Markdown)",
+                        description:
+                            "Write portable Markdown and compare it with the sanitized preview. Existing YouTube embeds remain supported as MDX source.",
+                        required: true,
                         isBody: true,
-                        templates: entryRichTextTemplates,
+                        ui: {
+                            component: MarkdownBodyField,
+                        },
                     },
                 ],
             },

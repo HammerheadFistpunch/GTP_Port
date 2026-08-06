@@ -3,6 +3,12 @@
 Last updated: 2026-08-06
 Scope: Sprint 8B technical findings and approved implementation direction
 
+Sprint 12A result: the recommended string-body editor spike was implemented on
+2026-08-06. Tina parse/serialize/reopen tests preserve the representative
+Markdown and existing `<YouTube />` source, local schema generation exposes the
+body as a string, and the Astro build passes. Hosted Tina save/reopen review is
+the remaining rollout gate.
+
 ## Result
 
 Both requested workflows are feasible without replacing Astro or TinaCMS:

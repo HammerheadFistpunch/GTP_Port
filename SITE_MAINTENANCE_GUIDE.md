@@ -686,19 +686,39 @@ test both grid visibility and Previous/Next navigation after gallery changes.
 
 ### Content Entry YouTube embeds
 
-Tina exposes **YouTube Video** through the Embed control in the Content Entry
-rich-text body. The implementation spans:
+Tina's **Entry Content (Markdown)** field edits the raw `.mdx` body and shows a
+sanitized live preview. Its Write, Split, and Preview modes are implemented in
+`tina/components/MarkdownBodyField.tsx`. Standard Markdown is the default; the
+preview removes active HTML and unsafe URL protocols and does not execute MDX.
 
-- `tina/config.ts` — the `YouTube` rich-text template and MDX collection format
+The one approved custom body element remains:
+
+```mdx
+<YouTube url="https://www.youtube.com/watch?v=VIDEO_ID" title="Descriptive video title" caption="Optional caption" />
+```
+
+The implementation spans:
+
+- `tina/config.ts` — required string body, custom editor, and MDX collection format
+- `tina/components/MarkdownBodyField.tsx` — source editor, sanitized preview,
+  YouTube preview card, and unsupported-MDX warning
 - `astro.config.mjs` — the Astro MDX integration
 - `src/pages/archive/[...slug].astro` — the MDX component mapping
 - `src/components/content/YouTubeEmbed.astro` — the body-level wrapper
 - `src/components/portfolio/VideoEmbed.astro` — URL parsing, iframe, and fallback
 - `src/content/entries/*.mdx` — stored Markdown and `<YouTube />` elements
+- `tests/sprint12a-roundtrip.test.mjs` — Tina file round-trip compatibility
 
-Keep those names and fields aligned. Do not expose general-purpose MDX
-components in Tina. The narrow component list is what keeps entries readable,
-portable, and safe to edit.
+Keep those names and attributes aligned. The Tina preview intentionally shows a
+non-executing YouTube card; the public Astro route renders the actual player.
+Do not add general-purpose MDX components to entry bodies. Tina warns about
+unsupported capitalized component names but preserves their source so an editor
+can remove them deliberately.
+
+After changing the editor or body schema, run `npm run test:authoring`, regenerate
+`tina/tina-lock.json` through the Tina local development build, run TypeScript
+and Astro production checks, then save/reopen the draft proof entry in hosted
+Tina before applying the editor to additional content models.
 
 ## Package and dependency changes
 

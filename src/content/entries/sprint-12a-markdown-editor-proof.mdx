@@ -1,0 +1,32 @@
+---
+title: Sprint 12A Markdown Editor Proof
+description: Draft fixture used to verify Markdown authoring, preview sanitization, and source round trips.
+date: 2026-08-06T00:00:00.000Z
+entryType: Article
+placement: journal
+primaryTopic: Technology
+journalSection: field-notes
+tags:
+  - tag: src/content/tags/engineering.md
+draft: true
+technologies: []
+media: []
+---
+
+## Portable Markdown proof
+
+This draft exercises **strong text**, *emphasis*, [an absolute link](https://angrysquirrel.org/), and an ordinary Markdown image.
+
+![Angry Squirrel editor proof](https://angrysquirrel.org/uploads/ground-squirrel-line-art-transparent.png "Remote image preview")
+
+> The body should remain readable Markdown after save and reopen.
+
+- Lists remain lists.
+- Inline `code` remains code.
+- Source whitespace remains under the author's control.
+
+```ts
+const roundTrip = "plain Markdown in, plain Markdown out";
+```
+
+<YouTube url="https://www.youtube.com/watch?v=8rckrqsaZjk" title="Existing YouTube MDX compatibility proof" caption="The editor shows a safe placeholder while Astro keeps rendering the established component." />

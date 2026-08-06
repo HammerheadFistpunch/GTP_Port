@@ -373,6 +373,41 @@ Do not disable automatic production builds until the deployed relay and branch-s
 deploy hook have successfully triggered a build. Full configuration is in
 `PUBLISHING_GUIDE.md`.
 
+## Active sprint - Sprint 12 Markdown-first authoring and external media
+
+### Chunk 12A - Markdown editor proof
+
+- [x] change the Journal Entry body from rich-text JSON to a raw string body
+- [x] add Write, Split, and Preview editor modes
+- [x] sanitize the rendered preview and block active or unsafe HTML
+- [x] preserve the established `<YouTube />` MDX source without executing it in Tina
+- [x] warn visibly when an unsupported custom MDX component is present
+- [x] add a representative draft fixture with Markdown, an absolute image, and YouTube
+- [x] add Tina parse/serialize/reopen round-trip tests
+- [x] regenerate the Tina lock and pass local schema/content validation
+- [ ] verify the deployed Tina editor can save and reopen the draft fixture unchanged
+
+Stop and verify:
+
+- [x] authoring round-trip tests pass
+- [x] strict TypeScript checking passes
+- [x] Tina local indexing and custom admin compilation pass
+- [x] Astro produces the existing 50 public routes and excludes the draft fixture
+- [ ] hosted Tina displays the editor, sanitized preview, and YouTube preview card
+- [ ] a hosted no-op save does not rewrite or lose the fixture body
+
+Chunk 12A is locally complete. Do not begin 12B until the hosted editor and
+save/reopen checks pass.
+
+### Remaining Sprint 12 chunks
+
+- [ ] **12B External media** — shared managed-upload/direct-HTTPS control,
+  previews, public Immich image URLs, and renderer coverage
+- [ ] **12C Import workflow** — `.md`/`.mdx` parsing, metadata mapping,
+  validation, missing-field completion, and canonical output
+- [ ] **12D Rollout and documentation** — existing-content verification,
+  Sprint 11 hosted-status reconciliation, owner rollout, and final guide updates
+
 ## Decision gates
 
 - [x] Before Sprint 2: use the six documented Flexible Page blocks and a

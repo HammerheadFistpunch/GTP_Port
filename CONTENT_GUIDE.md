@@ -273,22 +273,44 @@ Portfolio links resolve directly as follows:
   expanded Immich gallery is also present.
 - Use `draft: true` until the deployed entry has been reviewed.
 
+### Markdown body editor
+
+Journal Entry bodies use Tina's **Entry Content (Markdown)** editor. **Write**
+shows the portable source, **Preview** shows sanitized rendered Markdown, and
+**Split** shows both. The preview does not execute scripts, iframes, raw MDX,
+or unsafe link/image protocols; it is an authoring aid rather than the final
+Astro page renderer.
+
+Ordinary Markdown headings, paragraphs, emphasis, links, images, lists,
+blockquotes, tables, and fenced code remain readable in the `.mdx` source. Use
+standard Markdown wherever possible. Save the entry, reopen it, and compare
+the source before publishing whenever it contains an existing custom element.
+
 ### Inline YouTube video
 
 Content Entry files use MDX, which preserves ordinary Markdown and adds one
-approved rich-text element for inline YouTube video. In Tina:
+approved source element for inline YouTube video. In Tina:
 
-1. Open **Content Entries** and place the cursor where the video belongs.
-2. Use the rich-text **Embed** control and choose **YouTube Video**.
-3. Paste a `youtube.com`, `youtu.be`, or YouTube embed URL.
-4. Add a descriptive **Accessible Video Title** and optional caption.
-5. Save, wait for deployment, and verify the video at desktop and phone width.
+1. Open **Content → Journal Entries** and switch the body to **Write** or
+   **Split**.
+2. Place a self-closing element where the video belongs:
+
+   ```mdx
+   <YouTube url="https://www.youtube.com/watch?v=VIDEO_ID" title="Descriptive video title" caption="Optional caption" />
+   ```
+
+3. Confirm the preview shows a YouTube compatibility card with the expected
+   title, URL, and caption.
+4. Save, reopen the entry, and confirm the element remains in the source.
+5. Publish the saved session and verify the actual player at desktop and phone
+   width.
 
 The stored source is a readable `<YouTube ... />` element surrounded by normal
 Markdown. A valid URL renders through YouTube's privacy-enhanced
 `youtube-nocookie.com` domain. An invalid or incomplete URL shows a safe text
 fallback instead of breaking the entry. Do not add arbitrary React or Astro
-components to entry bodies.
+components to entry bodies. Tina warns when it detects an unsupported capitalized
+MDX component name; the warning does not rewrite the source.
 
 ### Immich galleries
 
