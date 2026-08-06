@@ -422,11 +422,14 @@ Depends on: Sprint 8 feasibility findings; may be implemented alongside Sprint
 
 ### Sprint 12 - Markdown-first content authoring and external media
 
-Status: Chunk 12A implemented locally on 2026-08-06. The raw string-body
+Status: Chunks 12A and 12B implemented locally on 2026-08-06. The raw string-body
 editor, sanitized live preview, draft fixture, Tina round-trip tests, existing
 YouTube MDX compatibility, generated schema, and Astro build pass. Hosted Tina
 now renders valid YouTube elements as constrained `youtube-nocookie.com` players.
-Save/reopen verification is required before 12B begins.
+The shared image control supports managed uploads and validated external HTTPS
+URLs across cover, header, social, block, Hero, and destination images; Astro
+uses the same source policy. Hosted save/reopen and media rendering verification
+are required before 12C begins.
 
 Goal: replace the clunky Content Entry workflow with a focused Markdown editor
 and a safe import path.

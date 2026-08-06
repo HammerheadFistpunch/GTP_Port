@@ -10,6 +10,7 @@ import RelatedEntries from "../components/content/RelatedEntries.astro";
 import Container from "../components/ui/Container.astro";
 import TagLinks from "../components/content/TagLinks.astro";
 import type { ResolvedTag } from "../lib/tags";
+import { getSupportedImageSource } from "../lib/image-sources";
 
 interface EntryLinks {
   repository?: string;
@@ -71,14 +72,13 @@ const {
 } = Astro.props;
 
 const isArticle = entryType === "Article";
+const safeCoverImage = getSupportedImageSource(coverImage) || undefined;
 
 const galleryImages = media
-  .filter((item) => item.type === "image")
-  .map((item) => ({
-    src: item.src,
-    alt: item.alt || title,
-    caption: item.caption,
-  }));
+  .flatMap((item) => {
+    const src = item.type === "image" ? getSupportedImageSource(item.src) : "";
+    return src ? [{ src, alt: item.alt || title, caption: item.caption }] : [];
+  });
 
 const videos = media.filter((item) => item.type === "video");
 
@@ -100,7 +100,7 @@ const backLinks = [
 <BaseLayout
   title={title}
   description={description}
-  image={coverImage}
+  image={safeCoverImage}
   type="article"
 >
   <article class:list={["entry", { "entry--article": isArticle }]} aria-labelledby="entry-title">
@@ -138,9 +138,9 @@ const backLinks = [
         )}
       </header>
 
-      {coverImage && (
+      {safeCoverImage && (
         <figure class="entry-hero">
-          <img src={coverImage} alt={title} />
+          <img src={safeCoverImage} alt={title} />
         </figure>
       )}
 

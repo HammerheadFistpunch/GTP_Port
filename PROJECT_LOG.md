@@ -1,5 +1,35 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Sprint 12B external image authoring implemented
+
+- Added one reusable Tina image control that retains Media Manager selection and
+  upload while also accepting a directly entered HTTPS image URL.
+- Added contained image previews, managed/external source labels, a clear action,
+  and actionable client-side validation to cover, header, social, image-block,
+  Homepage Hero, and Homepage destination-image fields.
+- Added one shared source policy for repository-managed `/uploads/...` paths and
+  credential-free HTTPS URLs, including public Immich-hosted asset URLs.
+- Rejected HTTP, protocol-relative, data, credential-bearing, traversal, and
+  ambiguous relative values in Tina and Astro content validation.
+- Hardened Entry cover/gallery, Flexible Page header/social, and image-block
+  renderers so invalid sources are omitted rather than emitted into the page.
+- Updated the Markdown preview to omit unsafe inline-image sources with a visible
+  correction message while preserving safe `/uploads`, HTTPS, and portable
+  relative Markdown images.
+- Added an external HTTPS cover image to the draft authoring proof and five media
+  and round-trip tests covering supported and rejected source forms.
+
+Validation:
+
+- `npm run test:authoring` passes all five tests.
+- strict TypeScript checking passes.
+- Tina local indexing, schema generation, custom admin compilation, and the
+  combined Astro child build pass with locked GraphQL version `2.4.7`.
+- Astro still produces 50 public pages and excludes the draft proof entry.
+
+Hosted image select/upload, external-URL save/reopen, and public rendering review
+remain required before Sprint 12C.
+
 ## 2026-08-06 - Sprint 12A hosted YouTube preview correction
 
 - Replaced the editor's informational YouTube card with the expected responsive,

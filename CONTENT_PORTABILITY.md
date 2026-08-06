@@ -14,6 +14,8 @@ remains separate from presentation.
   references in frontmatter.
 - Use stable, lowercase, kebab-case filenames.
 - Use relative local media paths such as `/uploads/project-cover.jpg`.
+- When external hosting is intentional, store the complete credential-free
+  HTTPS image URL without converting it into a Tina-specific object.
 - Avoid raw layout HTML, CSS classes, inline styles, and framework components in
   authored content.
 - Avoid turning every article into a page-builder made from custom Tina blocks.
@@ -67,6 +69,10 @@ share should not be the only copy needed to understand a project.
 
 Immich gallery links are portable metadata, but their availability depends on
 the Immich server, proxy, domain, and public-share token.
+
+Direct public Immich image URLs are portable strings and render like other HTTPS
+images, but they retain the same availability dependency. Keep an owned copy of
+any image required to understand a job-critical project.
 
 ## What a future redesign changes
 

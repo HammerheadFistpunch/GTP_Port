@@ -4,6 +4,12 @@ import { z } from "astro/zod";
 import { validateFlexiblePagePath } from "./lib/flexible-pages";
 import { flexiblePageBlockSchema } from "./lib/page-blocks";
 import { journalSectionSlugs } from "./lib/journal-sections";
+import { getImageSourceError } from "./lib/image-sources";
+
+const imageSource = z.string().superRefine((value, context) => {
+    const error = getImageSourceError(value);
+    if (error) context.addIssue({ code: "custom", message: error });
+});
 
 const sharedFields = {
     title: z.string(),
@@ -14,7 +20,7 @@ const sharedFields = {
             "Tags must reference a document in src/content/tags.",
         ),
     })).default([]),
-    coverImage: z.string().optional(),
+    coverImage: imageSource.optional(),
     draft: z.boolean().default(false),
 };
 
@@ -42,6 +48,10 @@ const mediaItem = z.object({
     src: z.string(),
     alt: z.string().optional(),
     caption: z.string().optional(),
+}).superRefine((item, context) => {
+    if (item.type !== "image") return;
+    const error = getImageSourceError(item.src);
+    if (error) context.addIssue({ code: "custom", path: ["src"], message: error });
 });
 
 const immichGallery = z.object({
@@ -89,7 +99,7 @@ const homepageLink = z.object({
 });
 
 const homepagePortfolioLink = homepageLink.extend({
-    image: z.string().optional(),
+    image: imageSource.optional(),
 });
 
 const timelineItem = z.object({
@@ -173,7 +183,7 @@ const pages = defineCollection({
                 eyebrow: z.string().optional(),
                 title: z.string(),
                 description: z.string(),
-                image: z.string().optional(),
+                image: imageSource.optional(),
                 primaryCta: link,
                 secondaryCta: link,
             }),
@@ -266,13 +276,13 @@ const flexiblePages = defineCollection({
         }),
         description: z.string(),
         eyebrow: z.string().optional(),
-        headerImage: z.string().optional(),
+        headerImage: imageSource.optional(),
         headerImageAlt: z.string().optional(),
         navigationLabel: z.string().optional(),
         draft: z.boolean().default(false),
         seoTitle: z.string().optional(),
         seoDescription: z.string().optional(),
-        seoImage: z.string().optional(),
+        seoImage: imageSource.optional(),
         blocks: z.array(flexiblePageBlockSchema).default([]),
     }),
 });

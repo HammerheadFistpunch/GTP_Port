@@ -1,9 +1,11 @@
 import { defineConfig } from "tinacms";
 import PlacementField from "./components/PlacementField";
 import MarkdownBodyField from "./components/MarkdownBodyField";
+import ExternalImageField from "./components/ExternalImageField";
 import SectionOrderField from "./components/SectionOrderField";
 import { installAdminNavigation } from "./components/AdminNavigation";
 import { journalSectionOptions } from "../src/lib/journal-sections";
+import { getImageSourceError } from "../src/lib/image-sources";
 
 const branch =
     process.env.GITHUB_BRANCH ||
@@ -26,6 +28,12 @@ const linkFields = [
     },
 ];
 
+const externalImageUi = {
+    component: ExternalImageField,
+    clearable: true,
+    validate: (value?: string) => getImageSourceError(value),
+};
+
 const homepagePortfolioLinkFields = [
     ...linkFields,
     {
@@ -34,6 +42,7 @@ const homepagePortfolioLinkFields = [
         label: "Optional Image",
         description:
             "Shown behind the destination label. Leave blank for a simple text tile.",
+        ui: externalImageUi,
     },
 ];
 
@@ -136,6 +145,7 @@ const flexiblePageBlockTemplates = [
                 name: "src",
                 label: "Image",
                 required: true,
+                ui: externalImageUi,
             },
             {
                 type: "string" as const,
@@ -561,6 +571,7 @@ export default defineConfig({
                                 type: "image",
                                 name: "image",
                                 label: "Hero Image",
+                                ui: externalImageUi,
                             },
                             {
                                 type: "object",
@@ -1344,6 +1355,7 @@ export default defineConfig({
                         label: "Header Image",
                         description:
                             "Optional wide image shown between the page header and body.",
+                        ui: externalImageUi,
                     },
                     {
                         type: "string",
@@ -1387,6 +1399,7 @@ export default defineConfig({
                         type: "image",
                         name: "seoImage",
                         label: "Social Sharing Image",
+                        ui: externalImageUi,
                     },
                     {
                         type: "object",
@@ -1532,6 +1545,7 @@ export default defineConfig({
                         type: "image",
                         name: "coverImage",
                         label: "Cover Image",
+                        ui: externalImageUi,
                     },
                     {
                         type: "boolean",

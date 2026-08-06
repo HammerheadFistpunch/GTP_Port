@@ -672,7 +672,36 @@ from content as:
 Do not use a Windows filesystem path, a `localhost` URL, or a path beginning
 with `public/` in content.
 
-Critical cover and narrative images should remain locally owned. Immich is the
+Image fields for Content Entry covers, Flexible Page headers/social images,
+Flexible Page image blocks, the Homepage Hero, and Homepage Portfolio links use
+the shared `tina/components/ExternalImageField.tsx` control:
+
+- **Choose or upload** opens Tina's existing Media Manager and stores a managed
+  `/uploads/...` path.
+- The text field accepts a complete, publicly reachable HTTPS image URL and
+  shows a contained preview before saving.
+- Public Immich asset URLs work when they point directly to an image resource;
+  an Immich album/share page belongs in the dedicated Immich Gallery field.
+- HTTP, protocol-relative, data, credential-bearing, traversal, and ambiguous
+  relative values are rejected with a correction message.
+
+The shared policy is implemented in `src/lib/image-sources.ts`, enforced in
+`tina/config.ts`, `src/content.config.ts`, and `src/lib/page-blocks.ts`, then
+checked again by the Entry and Flexible Page renderers. Keep those consumers
+aligned when changing accepted source forms.
+
+For Markdown body images, use ordinary syntax:
+
+```md
+![Useful alternative text](/uploads/example.jpg)
+![Useful alternative text](https://public.example/image.jpg)
+```
+
+The editor preview displays safe managed, HTTPS, and portable relative Markdown
+images. It omits an unsafe image and shows an actionable warning without
+rewriting the stored source.
+
+Critical cover and narrative images should normally remain locally owned. Immich is the
 expanded live-gallery layer and should not be the only copy of essential
 project media.
 

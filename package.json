@@ -9,7 +9,7 @@
     "dev": "tinacms dev -c \"astro dev\"",
     "build": "tinacms build && astro build",
     "build:astro": "astro build",
-    "test:authoring": "node --test tests/sprint12a-roundtrip.test.mjs",
+    "test:authoring": "node --test tests/*.test.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

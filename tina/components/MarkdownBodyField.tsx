@@ -2,6 +2,10 @@ import React from "react";
 import type { CSSProperties, ChangeEvent, FocusEvent } from "react";
 import { marked } from "marked";
 import { getYouTubeEmbedUrl } from "../lib/youtubeEmbed";
+import {
+    isSafeRelativeMarkdownImage,
+    isSupportedImageSource,
+} from "../../src/lib/image-sources";
 
 type EditorMode = "write" | "split" | "preview";
 
@@ -69,6 +73,12 @@ const blockedTags = new Set([
 const safeUrl = (value: string, image = false) => {
     const normalized = value.trim();
 
+    if (image) {
+        if (isSupportedImageSource(normalized)) return normalized;
+        if (isSafeRelativeMarkdownImage(normalized)) return normalized;
+        return "";
+    }
+
     if (/^(https?:\/\/|\/|\.\/|\.\.\/|#)/i.test(normalized)) return normalized;
     if (!image && /^(mailto:|tel:)/i.test(normalized)) return normalized;
 
@@ -120,6 +130,11 @@ const unsupportedMdxComponents = (markdown: string) => Array.from(
     markdown.matchAll(/<([A-Z][A-Za-z0-9]*)\b/g),
     (match) => match[1],
 ).filter((name, index, names) => name !== "YouTube" && names.indexOf(name) === index);
+
+const unsafeMarkdownImages = (markdown: string) => Array.from(
+    markdown.matchAll(/!\[[^\]]*\]\(\s*<?([^\s)>]+)>?(?:\s+["'][^"']*["'])?\s*\)/g),
+    (match) => match[1],
+).filter((source, index, sources) => !safeUrl(source, true) && sources.indexOf(source) === index);
 
 const sanitizePreview = (html: string) => {
     const document = new DOMParser().parseFromString(html, "text/html");
@@ -327,6 +342,7 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
     const markdown = typeof input.value === "string" ? input.value : "";
     const html = React.useMemo(() => renderPreview(markdown), [markdown]);
     const unsupported = React.useMemo(() => unsupportedMdxComponents(markdown), [markdown]);
+    const unsafeImages = React.useMemo(() => unsafeMarkdownImages(markdown), [markdown]);
     const editorId = React.useId();
     const showEditor = mode !== "preview";
     const showPreview = mode !== "write";
@@ -359,6 +375,13 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
                 <p role="alert" style={styles.warning}>
                     Preview skipped unsupported MDX component{unsupported.length === 1 ? "" : "s"}: {unsupported.join(", ")}.
                     The source remains unchanged; remove or replace the component before publishing.
+                </p>
+            )}
+
+            {unsafeImages.length > 0 && (
+                <p role="alert" style={styles.warning}>
+                    Preview omitted unsafe image source{unsafeImages.length === 1 ? "" : "s"}: {unsafeImages.join(", ")}.
+                    Use a managed /uploads path, a relative Markdown path, or a complete HTTPS image URL.
                 </p>
             )}
 

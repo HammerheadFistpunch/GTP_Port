@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-06 after Sprint 12A Markdown-editor implementation
+Last reviewed: 2026-08-06 after Sprint 12B external-image authoring
 
 ## Active project documents
 

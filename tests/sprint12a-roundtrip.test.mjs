@@ -21,6 +21,7 @@ const parseEntry = (source) => parseFile(
         primaryTopic: validator.string().required(),
         journalSection: validator.string(),
         tags: validator.array(),
+        coverImage: validator.string(),
         draft: validator.boolean(),
         technologies: validator.array(),
         media: validator.array(),
@@ -42,6 +43,10 @@ test("Tina's MDX parser preserves the raw Markdown body through serialization", 
     );
     assert.match(reopened.$_body, /\[an absolute link\]\(https:\/\/angrysquirrel\.org\/\)/);
     assert.match(reopened.$_body, /!\[Angry Squirrel editor proof\]\(https:\/\/angrysquirrel\.org\//);
+    assert.equal(
+        reopened.coverImage,
+        "https://angrysquirrel.org/uploads/ground-squirrel-line-art-transparent.png",
+    );
 });
 
 test("the established YouTube MDX element survives the raw-body round trip", async () => {

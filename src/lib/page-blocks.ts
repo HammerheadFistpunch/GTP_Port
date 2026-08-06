@@ -1,6 +1,11 @@
 import { z } from "astro/zod";
+import { getImageSourceError } from "./image-sources";
 
 const optionalText = z.string().optional();
+const optionalImageSource = z.string().superRefine((value, context) => {
+    const error = getImageSourceError(value);
+    if (error) context.addIssue({ code: "custom", message: error });
+}).optional();
 
 export const flexiblePageBlockSchema = z.discriminatedUnion("_template", [
     z.object({
@@ -11,7 +16,7 @@ export const flexiblePageBlockSchema = z.discriminatedUnion("_template", [
     z.object({
         _template: z.literal("image"),
         heading: optionalText,
-        src: optionalText,
+        src: optionalImageSource,
         alt: optionalText,
         caption: optionalText,
     }),

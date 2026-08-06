@@ -2,6 +2,7 @@
 import BaseLayout from "./BaseLayout.astro";
 import Container from "../components/ui/Container.astro";
 import InlineImageLightbox from "../components/portfolio/InlineImageLightbox.astro";
+import { getSupportedImageSource } from "../lib/image-sources";
 
 interface Props {
   title: string;
@@ -26,12 +27,14 @@ const {
   seoImage,
   breadcrumbs = [],
 } = Astro.props;
+const safeHeaderImage = getSupportedImageSource(headerImage) || undefined;
+const safeSeoImage = getSupportedImageSource(seoImage) || undefined;
 ---
 
 <BaseLayout
   title={seoTitle || title}
   description={seoDescription || description}
-  image={seoImage}
+  image={safeSeoImage}
 >
   <article class="flexible-page">
     <Container width="reading">
@@ -56,10 +59,10 @@ const {
       </Container>
     </header>
 
-    {headerImage && (
+    {safeHeaderImage && (
       <Container>
         <figure class="page-hero">
-          <img src={headerImage} alt={headerImageAlt || ""} />
+          <img src={safeHeaderImage} alt={headerImageAlt || ""} />
         </figure>
       </Container>
     )}

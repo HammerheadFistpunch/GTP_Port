@@ -102,6 +102,7 @@ duplicate, and reserved paths before deployment.
   description.
 - **Eyebrow** is an optional short label above the page title.
 - **Header Image** is an optional responsive image between the header and body.
+  Choose/upload a managed image or paste a complete public HTTPS image URL.
 - **Header Image Alt Text** describes a meaningful image; leave it blank only
   when the image is decorative.
 - **Navigation Label** is an optional shorter breadcrumb label. The page title
@@ -122,7 +123,7 @@ Available blocks:
 | Block | Stored content |
 | --- | --- |
 | Rich Text | Optional heading plus portable Markdown text |
-| Image | Optional heading, repository image path, alt text, and caption |
+| Image | Optional heading, managed path or public HTTPS image URL, alt text, and caption |
 | YouTube Video | Optional heading, YouTube URL, accessible title, and caption |
 | Immich Gallery | Heading, public share URL, and image-alt prefix |
 | Child Page Tiles | Heading, introduction, and an ordered list of Flexible Page paths |

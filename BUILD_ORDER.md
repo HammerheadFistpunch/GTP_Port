@@ -397,13 +397,30 @@ Stop and verify:
 - [ ] hosted Tina displays the editor, sanitized preview, and responsive YouTube player
 - [ ] a hosted no-op save does not rewrite or lose the fixture body
 
-Chunk 12A is locally complete. Do not begin 12B until the hosted editor and
-save/reopen checks pass.
+Chunk 12A is locally complete. The owner approved proceeding to 12B while the
+hosted save/reopen checks remain grouped into the next deployed checkpoint.
+
+### Chunk 12B - External image authoring
+
+- [x] add one shared managed-upload/direct-HTTPS Tina image control
+- [x] retain Media Manager selection and upload behavior
+- [x] show contained previews for managed and external images
+- [x] validate `/uploads/...` paths and credential-free HTTPS URLs in Tina
+- [x] explicitly accept public Immich-hosted HTTPS asset URLs
+- [x] reject HTTP, protocol-relative, data, traversal, and ambiguous sources
+- [x] apply the control to cover, header, social, block, Hero, and destination images
+- [x] guard Entry, Flexible Page, and image-block renderers
+- [x] warn when the Markdown preview omits an unsafe inline-image source
+- [x] add media-source tests and an external cover to the draft proof entry
+- [x] pass Tina indexing/schema/admin, TypeScript, tests, and Astro production build
+- [ ] verify managed selection/upload and external URL preview in hosted Tina
+- [ ] save/reopen the external cover URL without rewriting it
+- [ ] verify the external cover and inline image render on the deployed proof review
+
+Chunk 12B is locally complete. Do not begin 12C until the hosted media checks pass.
 
 ### Remaining Sprint 12 chunks
 
-- [ ] **12B External media** — shared managed-upload/direct-HTTPS control,
-  previews, public Immich image URLs, and renderer coverage
 - [ ] **12C Import workflow** — `.md`/`.mdx` parsing, metadata mapping,
   validation, missing-field completion, and canonical output
 - [ ] **12D Rollout and documentation** — existing-content verification,
