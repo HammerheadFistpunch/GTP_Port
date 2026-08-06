@@ -1,7 +1,7 @@
 ---
 siteName: TheAngrySquirrel
 logoText: TheAngrySquirrel
-siteDescription: 'Patrick Rich - HammerheadFistpunch. Two names, one legend'
+siteDescription: 'Patrick Rich - HammerheadFistpunch. Two names, one legend.'
 footerTitle: TheAngrySquirrel
 footerDescription: 'Patrick Rich - HammerheadFistpunch. Two names, one legend'
 copyrightName: Patrick Rich
@@ -44,3 +44,4 @@ footerLinks:
   - label: Resume
     href: /resume
 ---
+
