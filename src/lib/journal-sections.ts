@@ -59,8 +59,8 @@ export const resolveJournalSection = (
 ) => {
   if (!reference) return undefined;
   const id = journalSectionReferenceId(reference);
-  if (id) return registry.byId.get(id);
-  return registry.byRoute.get(reference);
+  const section = id ? registry.byId.get(id) : registry.byRoute.get(reference);
+  return section?.active ? section : undefined;
 };
 
 export const journalSectionMatches = (
