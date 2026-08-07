@@ -1,12 +1,12 @@
 # Documentation Index
 
-Last reviewed: 2026-08-07 during Sprint 13 Resume rebuild
+Last reviewed: 2026-08-07 after Sprint 13 Resume rebuild
 
 ## Active project documents
 
 - `TINA_AUDIT.md` - Sprint 8 field/consumer inventory, disposition map, stored-data findings, and migration gates
 - `TINA_FEASIBILITY.md` - Sprint 8B Markdown, external-media, and deliberate-publishing feasibility findings
-- `RESUME_DESIGN.md` - Sprint 13 Resume purpose, source model, public hierarchy, content rules, PDF decision, and acceptance criteria
+- `RESUME_DESIGN.md` - Sprint 13 Resume purpose, source model, public hierarchy, content rules, PDF decision, acceptance results, and Sprint 14 compatibility hold
 
 | Document | Purpose |
 | --- | --- |
@@ -20,7 +20,7 @@ Last reviewed: 2026-08-07 during Sprint 13 Resume rebuild
 | `CONTENT_PORTABILITY.md` | Redesign and migration guardrails |
 | `PUBLISHING_GUIDE.md` | Deliberate publishing setup, owner workflow, security, and recovery |
 | `IMPORT_GUIDE.md` | Markdown/MDX import mapping, validation, draft workflow, and troubleshooting |
-| `RESUME_DESIGN.md` | Resume-specific design intent, source ownership, content rules, and Sprint 13 verification gates |
+| `RESUME_DESIGN.md` | Resume-specific design intent, source ownership, content rules, Sprint 13 acceptance results, and deferred schema cleanup |
 
 ## Project instructions
 
@@ -41,6 +41,16 @@ When documents disagree, use this order:
 5. `PROJECT_LOG.md` for historical decisions and verification
 6. Feature-specific design/implementation records such as `RESUME_DESIGN.md`
 7. Files under `AI notes/` for design history
+
+## Sprint 14 documentation checkpoint
+
+Sprint 13's deployed Resume implementation is complete and owner-verified. The
+first Sprint 14 documentation task is to reconcile the large historical/status
+documents (`BUILD_ORDER.md`, `Roadmap.md`, `PROJECT_LOG.md`, and
+`SITE_MAINTENANCE_GUIDE.md`) against the deployed Sprint 13 state before the
+final migration/QA pass. This checkpoint also owns removal of the legacy Tina
+Resume body field only if the schema and generated Tina lock can be regenerated
+and validated together.
 
 ## Documentation maintenance
 
