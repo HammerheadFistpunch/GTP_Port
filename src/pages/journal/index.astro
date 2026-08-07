@@ -1,17 +1,12 @@
 ---
 import { getCollection, getEntry } from "astro:content";
-import JournalLanding, {
-  type JournalPostSummary,
-} from "../../components/journal/JournalLanding.astro";
-import { getJournalSection } from "../../lib/journal-sections";
+import JournalLanding, { type JournalPostSummary } from "../../components/journal/JournalLanding.astro";
+import { createJournalSectionRegistry, resolveJournalSection } from "../../lib/journal-sections";
 import { createTagRegistry, resolveTagReferences } from "../../lib/tags";
 
-const entries = (await getCollection("entries", ({ data }) =>
-  !data.draft && (data.placement === "journal" || data.placement === "both")
-)).sort(
+const entries = (await getCollection("entries", ({ data }) => !data.draft)).sort(
   (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
 );
-
 const journalPage = await getEntry("pages", "journal");
 
 if (!journalPage || journalPage.data.pageType !== "archive") {
@@ -19,18 +14,16 @@ if (!journalPage || journalPage.data.pageType !== "archive") {
 }
 
 const page = journalPage.data;
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  dateStyle: "long",
-  timeZone: "UTC",
-});
+const dateFormatter = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" });
 const tagRegistry = createTagRegistry(await getCollection("tags"));
+const sectionRegistry = createJournalSectionRegistry(await getCollection("journalSections"));
 
 const summarize = (entry: (typeof entries)[number]): JournalPostSummary => ({
   title: entry.data.title,
   excerpt: entry.data.description,
   image: entry.data.coverImage,
   date: entry.data.date ? dateFormatter.format(entry.data.date) : "Date pending",
-  section: getJournalSection(entry.data.journalSection)?.label ?? "Journal",
+  section: resolveJournalSection(entry.data.journalSection, sectionRegistry)?.label ?? "Latest",
   href: `/archive/${entry.id}/`,
   tags: resolveTagReferences(entry.data.tags, tagRegistry, entry.data.title),
 });
@@ -39,9 +32,7 @@ const featuredEntry = entries.find(
   (entry) => `src/content/entries/${entry.id}.mdx` === page.featuredEntry,
 );
 const featuredPost = featuredEntry ? summarize(featuredEntry) : undefined;
-const posts = entries
-  .filter((entry) => entry.id !== featuredEntry?.id)
-  .map(summarize);
+const posts = entries.filter((entry) => entry.id !== featuredEntry?.id).map(summarize);
 ---
 
 <JournalLanding
@@ -53,4 +44,5 @@ const posts = entries
   emptyMessage={page.emptyMessage}
   featuredPost={featuredPost}
   posts={posts}
+  sections={sectionRegistry.active}
 />
