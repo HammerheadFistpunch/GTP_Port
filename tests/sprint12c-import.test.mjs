@@ -31,23 +31,25 @@ An [absolute link](https://angrysquirrel.org/) and an ordinary image:
 <YouTube url="https://www.youtube.com/watch?v=8rckrqsaZjk" title="Example" />
 `;
 
-test("the importer maps known frontmatter and preserves portable body source", () => {
+test("the importer maps current Journal fields and discards deprecated metadata", () => {
     const result = parseEntryImport(portableSource, "Imported field note.md");
 
     assert.equal(result.errors.length, 0);
     assert.equal(result.entry.filename, "imported-field-note");
     assert.equal(result.entry.title, "Imported field note");
     assert.equal(result.entry.description, "A portable entry imported from another Markdown system.");
-    assert.equal(result.entry.entryType, "Article");
-    assert.equal(result.entry.placement, "journal");
-    assert.equal(result.entry.primaryTopic, "Writing");
     assert.equal(result.entry.journalSection, "field-notes");
     assert.deepEqual(result.entry.tagTokens, ["Engineering", "cars"]);
-    assert.deepEqual(result.entry.technologies, ["Astro", "TinaCMS"]);
     assert.match(result.entry.body, /<YouTube url=/);
     assert.match(result.entry.body, /!\[Example\]\(\.\/images\/example\.webp\)/);
     assert.deepEqual(result.entry.omittedFields, ["customSourceId"]);
-    assert.match(result.warnings[0].message, /customSourceId/);
+    assert.ok(result.warnings.some((warning) => warning.message.includes("Legacy fields were intentionally discarded")));
+    assert.ok(result.warnings.some((warning) => warning.message.includes("customSourceId")));
+    assert.equal("placement" in result.entry, false);
+    assert.equal("entryType" in result.entry, false);
+    assert.equal("primaryTopic" in result.entry, false);
+    assert.equal("technologies" in result.entry, false);
+    assert.equal("links" in result.entry, false);
 });
 
 test("missing metadata, malformed frontmatter, unsafe media, and unsupported MDX are actionable", () => {
@@ -57,7 +59,6 @@ test("missing metadata, malformed frontmatter, unsafe media, and unsupported MDX
     const unsafe = parseEntryImport(`---
 title: Unsafe import
 description: Safety fixture
-primaryTopic: Testing
 ---
 
 ![Bad](javascript:alert(1))
@@ -87,7 +88,7 @@ Body.
     assert.ok(brokenYaml.errors.some((issue) => issue.field === "frontmatter"));
 });
 
-test("safe defaults and missing-field completion do not silently publish", () => {
+test("import defaults remain draft-safe without obsolete classification requirements", () => {
     const result = parseEntryImport(`---
 title: Minimal entry
 ---
@@ -96,10 +97,9 @@ Body copy.
 `, "../Minimal Entry.mdx");
 
     assert.equal(result.entry.filename, "minimal-entry");
-    assert.equal(result.entry.entryType, "Article");
-    assert.equal(result.entry.placement, "journal");
+    assert.equal(result.entry.journalSection, "");
     assert.ok(result.errors.some((issue) => issue.field === "description"));
-    assert.ok(result.errors.some((issue) => issue.field === "primaryTopic"));
+    assert.equal(result.errors.some((issue) => issue.field === "primaryTopic"), false);
     assert.equal(validateImportFilename("../../escape"), "Use lowercase letters, numbers, and single hyphens only.");
 });
 
