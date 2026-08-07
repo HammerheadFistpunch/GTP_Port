@@ -3,6 +3,7 @@ import { getCollection, getEntry } from "astro:content";
 import JournalLanding, { type JournalPostSummary } from "../../components/journal/JournalLanding.astro";
 import {
   createJournalSectionRegistry,
+  journalSectionHref,
   journalSectionMatches,
   type ResolvedJournalSection,
 } from "../../lib/journal-sections";
@@ -12,16 +13,21 @@ export async function getStaticPaths() {
   const registry = createJournalSectionRegistry(await getCollection("journalSections"));
   return registry.active.flatMap((section) => [section.slug, ...section.aliases].map((route) => ({
     params: { section: route },
-    props: { section, sections: registry.active },
+    props: {
+      section,
+      sections: registry.active,
+      canonicalPath: route === section.slug ? undefined : journalSectionHref(section.slug),
+    },
   })));
 }
 
 interface Props {
   section: ResolvedJournalSection;
   sections: ResolvedJournalSection[];
+  canonicalPath?: string;
 }
 
-const { section, sections } = Astro.props;
+const { section, sections, canonicalPath } = Astro.props;
 const journalPage = await getEntry("pages", "journal");
 
 if (!journalPage || journalPage.data.pageType !== "archive") {
@@ -56,4 +62,5 @@ const posts: JournalPostSummary[] = entries.map((entry) => ({
   posts={posts}
   sections={sections}
   activeSection={section.slug}
+  {canonicalPath}
 />
