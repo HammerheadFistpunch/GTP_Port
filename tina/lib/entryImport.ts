@@ -5,37 +5,32 @@ import {
 } from "../../src/lib/image-sources.ts";
 import { getYouTubeEmbedUrl } from "./youtubeEmbed.ts";
 
-export const entryTypes = ["Article", "Project", "Case Study", "Gallery"] as const;
-export const entryPlacements = ["journal", "both", "portfolio"] as const;
-export const entrySections = ["automotive", "projects", "field-notes", "off-topic"] as const;
-
-export type EntryType = typeof entryTypes[number];
-export type EntryPlacement = typeof entryPlacements[number];
-export type EntrySection = typeof entrySections[number];
-
 export interface ImportIssue {
     field: string;
     message: string;
+}
+
+export interface ImportedMediaItem {
+    type: "image" | "video";
+    src: string;
+    alt?: string;
+    caption?: string;
 }
 
 export interface ImportedEntry {
     filename: string;
     title: string;
     description: string;
-    entryType: EntryType;
-    placement: EntryPlacement;
     date: string;
-    updatedDate: string;
-    primaryTopic: string;
-    journalSection: EntrySection | "";
+    journalSection: string;
     tagTokens: string[];
     coverImage: string;
-    technologies: string[];
-    links?: {
-        repository?: string;
-        demo?: string;
-        external?: string;
+    immichGallery?: {
+        shareUrl: string;
+        title?: string;
+        imageAltPrefix?: string;
     };
+    media: ImportedMediaItem[];
     body: string;
     omittedFields: string[];
 }
@@ -46,8 +41,6 @@ export interface ImportResult {
     warnings: ImportIssue[];
 }
 
-type ImportedLinks = ImportedEntry["links"];
-
 const knownFrontmatterFields = new Set([
     "title",
     "description",
@@ -56,14 +49,6 @@ const knownFrontmatterFields = new Set([
     "date",
     "publishedDate",
     "published_at",
-    "updatedDate",
-    "updated_at",
-    "entryType",
-    "type",
-    "placement",
-    "primaryTopic",
-    "topic",
-    "category",
     "journalSection",
     "section",
     "tags",
@@ -71,9 +56,31 @@ const knownFrontmatterFields = new Set([
     "cover",
     "image",
     "featured_image",
+    "immichGallery",
+    "media",
+    "draft",
+    // Accepted only so old exports import cleanly; these values are intentionally discarded.
+    "entryType",
+    "type",
+    "placement",
+    "primaryTopic",
+    "topic",
+    "category",
     "technologies",
     "links",
-    "draft",
+    "updatedDate",
+    "updated_at",
+]);
+
+const deprecatedFrontmatterFields = new Set([
+    "entryType",
+    "type",
+    "placement",
+    "primaryTopic",
+    "topic",
+    "category",
+    "technologies",
+    "links",
 ]);
 
 const stringValue = (value: unknown) => typeof value === "string" ? value.trim() : "";
@@ -98,18 +105,15 @@ const stringList = (value: unknown) => {
             })
             .filter(Boolean);
     }
-
     if (typeof value === "string") {
         return value.split(",").map((item) => item.trim()).filter(Boolean);
     }
-
     return [];
 };
 
 const dateValue = (value: unknown) => {
     if (value instanceof Date && !Number.isNaN(value.valueOf())) return value.toISOString();
     if (typeof value !== "string" || !value.trim()) return "";
-
     const parsed = new Date(value);
     return Number.isNaN(parsed.valueOf()) ? "" : parsed.toISOString();
 };
@@ -138,17 +142,10 @@ const splitFrontmatter = (source: string):
     if (!normalized.startsWith("---\n")) {
         return { error: "The file must begin with YAML frontmatter between --- lines." };
     }
-
     const match = normalized.slice(4).match(/^((?:.|\n)*?)\n(?:---|\.\.\.)[ \t]*\n?/);
-    if (!match) {
-        return { error: "The opening frontmatter has no closing --- line." };
-    }
-
+    if (!match) return { error: "The opening frontmatter has no closing --- line." };
     const bodyStart = 4 + match[0].length;
-    return {
-        yaml: match[1],
-        body: normalized.slice(bodyStart).replace(/^\n+/, ""),
-    };
+    return { yaml: match[1], body: normalized.slice(bodyStart).replace(/^\n+/, "") };
 };
 
 const maskMarkdownCode = (body: string) => body
@@ -167,7 +164,6 @@ const safeLink = (value: string) => {
     const normalized = value.trim();
     if (/^(#|\/[^/]|\.\/)/.test(normalized)) return !normalized.includes("\\");
     if (/^(mailto:|tel:)/i.test(normalized)) return true;
-
     try {
         const url = new URL(normalized);
         return (url.protocol === "https:" || url.protocol === "http:") && !url.username && !url.password;
@@ -236,54 +232,59 @@ export const validateImportedBody = (body: string): ImportIssue[] => {
             errors.push({ field: "body", message: `Unsafe or unsupported Markdown link: ${link}` });
         }
     }
-
     return errors;
 };
 
-export const validateImportedLinks = (links?: ImportedLinks): ImportIssue[] => {
-    if (!links) return [];
-    return Object.entries(links).flatMap(([name, value]) =>
-        value && !safeLink(value) ? [{
-            field: `links.${name}`,
-            message: `Entry link must be an HTTP(S), site-relative, mailto, or tel URL without embedded credentials: ${value}`,
-        }] : [],
-    );
+const parseMedia = (value: unknown): ImportedMediaItem[] => {
+    if (!Array.isArray(value)) return [];
+    return value.flatMap((item) => {
+        if (!item || typeof item !== "object") return [];
+        const record = item as Record<string, unknown>;
+        const type = stringValue(record.type);
+        const src = stringValue(record.src);
+        if ((type !== "image" && type !== "video") || !src) return [];
+        return [{
+            type,
+            src,
+            alt: stringValue(record.alt) || undefined,
+            caption: stringValue(record.caption) || undefined,
+        } as ImportedMediaItem];
+    });
 };
 
-const normalizeEntryType = (value: string): EntryType => {
-    const match = entryTypes.find((option) => option.toLowerCase() === value.toLowerCase());
-    return match || "Article";
+const parseImmichGallery = (value: unknown): ImportedEntry["immichGallery"] => {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+    const record = value as Record<string, unknown>;
+    const shareUrl = stringValue(record.shareUrl);
+    if (!shareUrl) return undefined;
+    return {
+        shareUrl,
+        title: stringValue(record.title) || undefined,
+        imageAltPrefix: stringValue(record.imageAltPrefix) || undefined,
+    };
 };
-
-const normalizePlacement = (value: string): EntryPlacement =>
-    entryPlacements.includes(value as EntryPlacement) ? value as EntryPlacement : "journal";
-
-const normalizeSection = (value: string): EntrySection | "" =>
-    entrySections.includes(value as EntrySection) ? value as EntrySection : "";
 
 export const parseEntryImport = (source: string, sourceName = "imported-entry.mdx"): ImportResult => {
     const errors: ImportIssue[] = [];
     const warnings: ImportIssue[] = [];
     const split = splitFrontmatter(source);
 
+    const emptyEntry: ImportedEntry = {
+        filename: slugify(sourceName) || "imported-entry",
+        title: "",
+        description: "",
+        date: "",
+        journalSection: "",
+        tagTokens: [],
+        coverImage: "",
+        media: [],
+        body: "",
+        omittedFields: [],
+    };
+
     if ("error" in split) {
         return {
-            entry: {
-                filename: slugify(sourceName) || "imported-entry",
-                title: "",
-                description: "",
-                entryType: "Article",
-                placement: "journal",
-                date: "",
-                updatedDate: "",
-                primaryTopic: "",
-                journalSection: "",
-                tagTokens: [],
-                coverImage: "",
-                technologies: [],
-                body: "",
-                omittedFields: [],
-            },
+            entry: emptyEntry,
             errors: [{ field: "frontmatter", message: split.error }],
             warnings,
         };
@@ -291,17 +292,13 @@ export const parseEntryImport = (source: string, sourceName = "imported-entry.md
 
     let document;
     try {
-        document = parseDocument(split.yaml, {
-            prettyErrors: false,
-            uniqueKeys: true,
-        });
+        document = parseDocument(split.yaml, { prettyErrors: false, uniqueKeys: true });
     } catch (error) {
         errors.push({
             field: "frontmatter",
             message: error instanceof Error ? error.message : "Frontmatter could not be parsed.",
         });
     }
-
     for (const error of document?.errors || []) {
         errors.push({ field: "frontmatter", message: error.message });
     }
@@ -325,40 +322,28 @@ export const parseEntryImport = (source: string, sourceName = "imported-entry.md
 
     const title = firstString(frontmatter, ["title"]);
     const description = firstString(frontmatter, ["description", "summary", "excerpt"]);
-    const primaryTopic = firstString(frontmatter, ["primaryTopic", "topic", "category"]);
-    const rawEntryType = firstString(frontmatter, ["entryType", "type"]);
-    const rawPlacement = firstString(frontmatter, ["placement"]);
     const rawSection = firstString(frontmatter, ["journalSection", "section"]);
     const coverImage = firstString(frontmatter, ["coverImage", "cover", "image", "featured_image"]);
     const filename = slugify(sourceName) || slugify(title) || "imported-entry";
+    const dateSource = firstString(frontmatter, ["date", "publishedDate", "published_at"]);
+    const date = dateValue(dateSource);
 
     if (!title) errors.push({ field: "title", message: "Add a title before creating the draft." });
     if (!description) errors.push({ field: "description", message: "Add a short description before creating the draft." });
-    if (!primaryTopic) errors.push({ field: "primaryTopic", message: "Add a broad primary topic before creating the draft." });
+    if (dateSource && !date) warnings.push({ field: "date", message: `Could not map invalid date “${dateSource}”; enter a valid date in Tina.` });
     errors.push(...validateImportedBody(split.body));
-
-    if (rawEntryType && !entryTypes.some((option) => option.toLowerCase() === rawEntryType.toLowerCase())) {
-        warnings.push({ field: "entryType", message: `Unknown entry type “${rawEntryType}” was mapped to Article.` });
-    }
-    if (rawPlacement && !entryPlacements.includes(rawPlacement as EntryPlacement)) {
-        warnings.push({ field: "placement", message: `Unknown placement “${rawPlacement}” was mapped to Journal.` });
-    }
-    if (rawSection && !entrySections.includes(rawSection as EntrySection)) {
-        warnings.push({ field: "journalSection", message: `Unknown Journal section “${rawSection}” needs a valid selection.` });
-    }
-
-    for (const [key, value] of [
-        ["date", firstString(frontmatter, ["date", "publishedDate", "published_at"])],
-        ["updatedDate", firstString(frontmatter, ["updatedDate", "updated_at"])],
-    ] as const) {
-        if (value && !dateValue(value)) {
-            warnings.push({ field: key, message: `Could not map invalid date “${value}”; enter a valid date in Tina.` });
-        }
-    }
 
     if (coverImage) {
         const imageError = getImageSourceError(coverImage);
         if (imageError) errors.push({ field: "coverImage", message: imageError });
+    }
+
+    const deprecated = Object.keys(frontmatter).filter((key) => deprecatedFrontmatterFields.has(key));
+    if (deprecated.length) {
+        warnings.push({
+            field: "frontmatter",
+            message: `Legacy fields were intentionally discarded: ${deprecated.join(", ")}. Every imported Content Entry is now a Journal entry.`,
+        });
     }
 
     const omittedFields = Object.keys(frontmatter).filter((key) => !knownFrontmatterFields.has(key));
@@ -369,32 +354,17 @@ export const parseEntryImport = (source: string, sourceName = "imported-entry.md
         });
     }
 
-    const rawLinks = frontmatter.links && typeof frontmatter.links === "object" && !Array.isArray(frontmatter.links)
-        ? frontmatter.links as Record<string, unknown>
-        : undefined;
-    const links = rawLinks ? {
-        repository: stringValue(rawLinks.repository) || undefined,
-        demo: stringValue(rawLinks.demo) || undefined,
-        external: stringValue(rawLinks.external) || undefined,
-    } : undefined;
-
-    errors.push(...validateImportedLinks(links));
-
     return {
         entry: {
             filename,
             title,
             description,
-            entryType: normalizeEntryType(rawEntryType),
-            placement: normalizePlacement(rawPlacement),
-            date: dateValue(firstString(frontmatter, ["date", "publishedDate", "published_at"])),
-            updatedDate: dateValue(firstString(frontmatter, ["updatedDate", "updated_at"])),
-            primaryTopic,
-            journalSection: normalizeSection(rawSection),
+            date,
+            journalSection: rawSection,
             tagTokens: stringList(frontmatter.tags),
             coverImage,
-            technologies: stringList(frontmatter.technologies),
-            links,
+            immichGallery: parseImmichGallery(frontmatter.immichGallery),
+            media: parseMedia(frontmatter.media),
             body: split.body,
             omittedFields,
         },
