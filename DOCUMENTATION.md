@@ -1,11 +1,12 @@
 # Documentation Index
 
-Last reviewed: 2026-08-06 session wrap after Sprint 12
+Last reviewed: 2026-08-07 during Sprint 13 Resume rebuild
 
 ## Active project documents
 
 - `TINA_AUDIT.md` - Sprint 8 field/consumer inventory, disposition map, stored-data findings, and migration gates
 - `TINA_FEASIBILITY.md` - Sprint 8B Markdown, external-media, and deliberate-publishing feasibility findings
+- `RESUME_DESIGN.md` - Sprint 13 Resume purpose, source model, public hierarchy, content rules, PDF decision, and acceptance criteria
 
 | Document | Purpose |
 | --- | --- |
@@ -19,6 +20,7 @@ Last reviewed: 2026-08-06 session wrap after Sprint 12
 | `CONTENT_PORTABILITY.md` | Redesign and migration guardrails |
 | `PUBLISHING_GUIDE.md` | Deliberate publishing setup, owner workflow, security, and recovery |
 | `IMPORT_GUIDE.md` | Markdown/MDX import mapping, validation, draft workflow, and troubleshooting |
+| `RESUME_DESIGN.md` | Resume-specific design intent, source ownership, content rules, and Sprint 13 verification gates |
 
 ## Project instructions
 
@@ -37,7 +39,8 @@ When documents disagree, use this order:
 4. `README.md`, `SITE_MAINTENANCE_GUIDE.md`, and the content guides for
    current workflows
 5. `PROJECT_LOG.md` for historical decisions and verification
-6. Files under `AI notes/` for design history
+6. Feature-specific design/implementation records such as `RESUME_DESIGN.md`
+7. Files under `AI notes/` for design history
 
 ## Documentation maintenance
 
