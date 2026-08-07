@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
-import { journalSections } from "../lib/journal-sections";
+import { createJournalSectionRegistry } from "../lib/journal-sections";
 
 export const prerender = true;
 
@@ -21,6 +21,7 @@ export const GET: APIRoute = async ({ site }) => {
     ({ data }) => !data.draft,
   );
   const tags = await getCollection("tags");
+  const sectionRegistry = createJournalSectionRegistry(await getCollection("journalSections"));
 
   const routes = new Map<string, string | undefined>();
   const add = (path: string, lastmod?: Date) => {
@@ -32,7 +33,7 @@ export const GET: APIRoute = async ({ site }) => {
     add(path),
   );
 
-  journalSections.forEach(({ slug }) => add(`/journal/${slug}/`));
+  sectionRegistry.active.forEach(({ slug }) => add(`/journal/${slug}/`));
   tags.forEach((tag) => add(`/tags/${tag.data.slug}/`));
   flexiblePages.forEach((page) => add(`/${page.data.path.replace(/^\/+|\/+$/g, "")}/`));
   entries.forEach((entry) =>
