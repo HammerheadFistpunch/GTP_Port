@@ -1,17 +1,18 @@
 ---
-import {
-  getCollection,
-  render,
-  type CollectionEntry,
-} from "astro:content";
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import EntryLayout from "../../layouts/EntryLayout.astro";
 import YouTubeEmbed from "../../components/content/YouTubeEmbed.astro";
+import {
+  createJournalSectionRegistry,
+  resolveJournalSection,
+} from "../../lib/journal-sections";
 import { createTagRegistry, resolveTagReferences, tagReferenceId } from "../../lib/tags";
 
 export async function getStaticPaths() {
   const entries = await getCollection("entries");
   const publishedEntries = entries.filter((entry) => !entry.data.draft);
   const tagRegistry = createTagRegistry(await getCollection("tags"));
+  const sectionRegistry = createJournalSectionRegistry(await getCollection("journalSections"));
 
   const resolvedEntryTags = new Map(
     publishedEntries.map((entry) => [
@@ -21,30 +22,36 @@ export async function getStaticPaths() {
   );
 
   return publishedEntries.map((entry) => {
+    const entrySection = resolveJournalSection(entry.data.journalSection, sectionRegistry);
     const relatedEntries = publishedEntries
       .filter((candidate) => candidate.id !== entry.id)
-      .map((candidate) => ({
-        candidate,
-        score:
-          (candidate.data.primaryTopic === entry.data.primaryTopic ? 3 : 0) +
-          (candidate.data.entryType === entry.data.entryType ? 2 : 0) +
-          candidate.data.tags.filter((tag) =>
-            entry.data.tags.some(
-              (entryTag) => tagReferenceId(entryTag) === tagReferenceId(tag),
-            )
-          ).length,
-      }))
+      .map((candidate) => {
+        const sharedTags = candidate.data.tags.filter((tag) =>
+          entry.data.tags.some(
+            (entryTag) => tagReferenceId(entryTag) === tagReferenceId(tag),
+          )
+        ).length;
+        const candidateSection = resolveJournalSection(candidate.data.journalSection, sectionRegistry);
+        const sameSection = Boolean(entrySection && candidateSection?.id === entrySection.id);
+
+        return {
+          candidate,
+          candidateSection,
+          score: sharedTags * 3 + (sameSection ? 1 : 0),
+        };
+      })
+      .filter(({ score }) => score > 0)
       .sort((a, b) =>
         b.score - a.score ||
         (b.candidate.data.date?.getTime() ?? 0) -
           (a.candidate.data.date?.getTime() ?? 0)
       )
       .slice(0, 3)
-      .map(({ candidate }) => ({
+      .map(({ candidate, candidateSection }) => ({
         title: candidate.data.title,
         description: candidate.data.description,
         image: candidate.data.coverImage,
-        primaryTopic: candidate.data.primaryTopic,
+        section: candidateSection?.label ?? "Latest",
         href: `/archive/${candidate.id}/`,
       }));
 
@@ -54,6 +61,7 @@ export async function getStaticPaths() {
         entry,
         relatedEntries,
         tags: resolvedEntryTags.get(entry.id) ?? [],
+        sectionLabel: entrySection?.label ?? "Latest",
       },
     };
   });
@@ -65,16 +73,17 @@ interface Props {
     title: string;
     description: string;
     image?: string;
-    primaryTopic: string;
+    section: string;
     href: string;
   }>;
   tags: ReturnType<typeof resolveTagReferences>;
+  sectionLabel: string;
 }
 
-const { entry, relatedEntries, tags } = Astro.props;
+const { entry, relatedEntries, tags, sectionLabel } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<EntryLayout {...entry.data} {tags} {relatedEntries}>
+<EntryLayout {...entry.data} {tags} {relatedEntries} {sectionLabel}>
   <Content components={{ YouTube: YouTubeEmbed }} />
 </EntryLayout>
