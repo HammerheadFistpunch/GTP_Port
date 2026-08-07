@@ -16,10 +16,7 @@ export const GET: APIRoute = async ({ site }) => {
   const entries = (
     await getCollection(
       "entries",
-      ({ data }) =>
-        !data.draft &&
-        (data.placement === "journal" || data.placement === "both") &&
-        Boolean(data.date),
+      ({ data }) => !data.draft && Boolean(data.date),
     )
   ).sort(
     (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
