@@ -3,7 +3,7 @@ import type { TinaCMS } from "tinacms";
 import { PublishSiteScreen } from "./PublishSite";
 import { ImportEntryScreen } from "./ImportEntryScreen";
 
-type NavigationCategory = "Settings" | "Pages" | "Content" | "Site";
+type NavigationCategory = "Settings" | "Pages" | "Content" | "Media" | "Site";
 
 interface NavigationItem {
     name: string;
@@ -12,51 +12,17 @@ interface NavigationItem {
 }
 
 const navigationItems: NavigationItem[] = [
-    {
-        name: "Site Settings",
-        category: "Settings",
-        target: "#/collections/edit/settings/~/site",
-    },
-    {
-        name: "Tags",
-        category: "Settings",
-        target: "#/collections/tags/~",
-    },
-    {
-        name: "Main Homepage",
-        category: "Pages",
-        target: "#/collections/edit/homepage/~/home",
-    },
-    {
-        name: "Journal Homepage",
-        category: "Pages",
-        target: "#/collections/edit/archivePage/~/journal",
-    },
-    {
-        name: "About",
-        category: "Pages",
-        target: "#/collections/edit/standardPage/~/about",
-    },
-    {
-        name: "Contact",
-        category: "Pages",
-        target: "#/collections/edit/standardPage/~/contact",
-    },
-    {
-        name: "Resume",
-        category: "Pages",
-        target: "#/collections/edit/resumePage/~/resume",
-    },
-    {
-        name: "New Pages",
-        category: "Pages",
-        target: "#/collections/flexiblePages/~",
-    },
-    {
-        name: "Journal Entries",
-        category: "Content",
-        target: "#/collections/entries/~",
-    },
+    { name: "Site Settings", category: "Settings", target: "#/collections/edit/settings/~/site" },
+    { name: "Tags", category: "Settings", target: "#/collections/tags/~" },
+    { name: "Main Homepage", category: "Pages", target: "#/collections/edit/homepage/~/home" },
+    { name: "Journal Homepage", category: "Pages", target: "#/collections/edit/archivePage/~/journal" },
+    { name: "About", category: "Pages", target: "#/collections/edit/standardPage/~/about" },
+    { name: "Contact", category: "Pages", target: "#/collections/edit/standardPage/~/contact" },
+    { name: "Resume", category: "Pages", target: "#/collections/edit/resumePage/~/resume" },
+    { name: "Custom Pages", category: "Pages", target: "#/collections/flexiblePages/~" },
+    { name: "Journal", category: "Content", target: "#/collections/entries/~" },
+    { name: "Journal Sections", category: "Content", target: "#/collections/journalSections/~" },
+    { name: "Media Manager", category: "Media", target: "#/media" },
 ];
 
 const NavigationIcon = ({ className = "" }: { className?: string }) =>
@@ -114,29 +80,24 @@ const organizeSidebar = () => {
             heading.parentElement === navigation,
     );
 
-    if (!siteHeading) return;
-
-    const categoryGroups = ["Settings", "Pages", "Content"].map((category) => {
+    const groups = ["Settings", "Pages", "Content", "Media"].map((category) => {
         const categoryHeading = headings.find(
             (heading) => normalizeHeading(heading) === category.toLowerCase(),
         );
         const categoryGroup = categoryHeading?.parentElement;
-
         return categoryGroup?.parentElement === navigation ? categoryGroup : undefined;
     });
 
-    if (categoryGroups.some((group) => !group)) return;
+    if (groups.some((group) => !group)) return;
 
-    const [settingsGroup, pagesGroup, contentGroup] = categoryGroups as HTMLElement[];
-    const isOrdered =
-        pagesGroup.previousElementSibling === settingsGroup &&
-        contentGroup.previousElementSibling === pagesGroup &&
-        siteHeading.previousElementSibling === contentGroup;
+    const [settingsGroup, pagesGroup, contentGroup, mediaGroup] = groups as HTMLElement[];
+    const anchor = siteHeading?.parentElement === navigation ? siteHeading : null;
 
-    if (!isOrdered) {
-        navigation.insertBefore(settingsGroup, siteHeading);
-        navigation.insertBefore(pagesGroup, siteHeading);
-        navigation.insertBefore(contentGroup, siteHeading);
+    if (anchor) {
+        navigation.insertBefore(settingsGroup, anchor);
+        navigation.insertBefore(pagesGroup, anchor);
+        navigation.insertBefore(contentGroup, anchor);
+        navigation.insertBefore(mediaGroup, anchor);
     }
 };
 
@@ -167,16 +128,14 @@ export const installAdminNavigation = (cms: TinaCMS) => {
             Component: createRedirectScreen(item.target),
             Icon: NavigationIcon,
             layout: "fullscreen",
-            // Tina renders arbitrary screen categories even though its public
-            // type currently lists only the built-in category names.
             navCategory: item.category,
         } as never);
     }
 
-    if (!screens.some((screen) => screen.name === "Import Entry")) {
+    if (!screens.some((screen) => screen.name === "Import")) {
         cms.plugins.add({
             __type: "screen",
-            name: "Import Entry",
+            name: "Import",
             Component: ImportEntryScreen,
             Icon: NavigationIcon,
             layout: "fullscreen",
@@ -191,7 +150,7 @@ export const installAdminNavigation = (cms: TinaCMS) => {
             Component: PublishSiteScreen,
             Icon: NavigationIcon,
             layout: "fullscreen",
-            navCategory: "Site",
+            navCategory: "Settings",
         } as never);
     }
 
