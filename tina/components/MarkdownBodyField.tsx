@@ -1,5 +1,7 @@
 import React from "react";
 import type { CSSProperties, ChangeEvent, FocusEvent } from "react";
+import { useCMS } from "tinacms";
+import type { Media } from "tinacms";
 import { marked } from "marked";
 import { getYouTubeEmbedUrl } from "../lib/youtubeEmbed";
 import {
@@ -28,60 +30,22 @@ interface MarkdownBodyFieldProps {
 }
 
 const allowedTags = new Set([
-    "a",
-    "blockquote",
-    "br",
-    "code",
-    "del",
-    "div",
-    "em",
-    "figcaption",
-    "figure",
-    "h1",
-    "h2",
-    "h3",
-    "h4",
-    "h5",
-    "h6",
-    "hr",
-    "iframe",
-    "img",
-    "li",
-    "ol",
-    "p",
-    "pre",
-    "span",
-    "strong",
-    "table",
-    "tbody",
-    "td",
-    "th",
-    "thead",
-    "tr",
-    "ul",
+    "a", "blockquote", "br", "code", "del", "div", "em", "figcaption",
+    "figure", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "iframe",
+    "img", "li", "ol", "p", "pre", "span", "strong", "table", "tbody",
+    "td", "th", "thead", "tr", "ul",
 ]);
-
-const blockedTags = new Set([
-    "embed",
-    "link",
-    "meta",
-    "object",
-    "script",
-    "style",
-]);
+const blockedTags = new Set(["embed", "link", "meta", "object", "script", "style"]);
 
 const safeUrl = (value: string, image = false) => {
     const normalized = value.trim();
-
     if (image) {
         if (isSupportedImageSource(normalized)) return normalized;
         if (isSafeRelativeMarkdownImage(normalized)) return normalized;
         return "";
     }
-
     if (/^(https?:\/\/|\/|\.\/|\.\.\/|#)/i.test(normalized)) return normalized;
-    if (!image && /^(mailto:|tel:)/i.test(normalized)) return normalized;
-
+    if (/^(mailto:|tel:)/i.test(normalized)) return normalized;
     return "";
 };
 
@@ -91,6 +55,10 @@ const escapeHtml = (value: string) => value
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+
+const escapeMdxAttribute = (value: string) => value
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;");
 
 const mdxAttribute = (source: string, name: string) => {
     const match = source.match(new RegExp(`${name}\\s*=\\s*(["'])(.*?)\\1`, "i"));
@@ -138,15 +106,12 @@ const unsafeMarkdownImages = (markdown: string) => Array.from(
 
 const sanitizePreview = (html: string) => {
     const document = new DOMParser().parseFromString(html, "text/html");
-
     for (const element of Array.from(document.body.querySelectorAll("*"))) {
         const tag = element.tagName.toLowerCase();
-
         if (blockedTags.has(tag)) {
             element.remove();
             continue;
         }
-
         if (!allowedTags.has(tag)) {
             element.replaceWith(...Array.from(element.childNodes));
             continue;
@@ -155,10 +120,7 @@ const sanitizePreview = (html: string) => {
         const originalAttributes = new Map(
             Array.from(element.attributes).map((attribute) => [attribute.name, attribute.value]),
         );
-
-        for (const attribute of Array.from(element.attributes)) {
-            element.removeAttribute(attribute.name);
-        }
+        for (const attribute of Array.from(element.attributes)) element.removeAttribute(attribute.name);
 
         if (tag === "a") {
             const href = safeUrl(originalAttributes.get("href") || "");
@@ -199,153 +161,149 @@ const sanitizePreview = (html: string) => {
 
         if (tag === "code") {
             const className = originalAttributes.get("class") || "";
-            if (/^language-[a-z0-9_-]+$/i.test(className)) {
-                element.setAttribute("class", className);
-            }
+            if (/^language-[a-z0-9_-]+$/i.test(className)) element.setAttribute("class", className);
         }
-
         if (tag === "figure" && originalAttributes.get("class") === "markdown-youtube-preview") {
             element.setAttribute("class", "markdown-youtube-preview");
         }
-
         if (tag === "div" && originalAttributes.get("class") === "markdown-youtube-frame") {
             element.setAttribute("class", "markdown-youtube-frame");
         } else if (tag === "div" && originalAttributes.get("class") === "markdown-youtube-preview") {
             element.setAttribute("class", "markdown-youtube-preview");
         }
     }
-
     return document.body.innerHTML;
 };
 
 const renderPreview = (markdown: string) => {
     const prepared = replaceYouTubeEmbeds(markdown);
-    const rendered = marked.parse(prepared, {
-        async: false,
-        gfm: true,
-    }) as string;
-
+    const rendered = marked.parse(prepared, { async: false, gfm: true }) as string;
     return sanitizePreview(rendered);
 };
 
 const styles: Record<string, CSSProperties> = {
-    editor: {
-        width: "100%",
-        maxWidth: "100%",
-        minWidth: 0,
-        containerType: "inline-size",
-    },
-    toolbar: {
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 6,
-        marginBottom: 10,
-    },
+    editor: { width: "100%", maxWidth: "100%", minWidth: 0, containerType: "inline-size" },
+    toolbar: { display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 },
+    toolDivider: { width: 1, alignSelf: "stretch", margin: "2px 3px", background: "#d1d5db" },
     button: {
-        padding: "7px 12px",
-        background: "#ffffff",
-        border: "1px solid #d1d5db",
-        borderRadius: 6,
-        color: "#374151",
-        cursor: "pointer",
-        fontSize: 13,
-        fontWeight: 600,
+        padding: "7px 10px", background: "#ffffff", border: "1px solid #d1d5db",
+        borderRadius: 6, color: "#374151", cursor: "pointer", fontSize: 13, fontWeight: 600,
     },
-    activeButton: {
-        background: "#eff6ff",
-        borderColor: "#2563eb",
-        color: "#1d4ed8",
-    },
-    grid: {
-        display: "grid",
-        gap: 12,
-        width: "100%",
-        maxWidth: "100%",
-        minWidth: 0,
-    },
-    pane: {
-        minWidth: 0,
-        maxWidth: "100%",
-        overflow: "hidden",
-    },
+    activeButton: { background: "#eff6ff", borderColor: "#2563eb", color: "#1d4ed8" },
+    grid: { display: "grid", gap: 12, width: "100%", maxWidth: "100%", minWidth: 0 },
+    pane: { minWidth: 0, maxWidth: "100%", overflow: "hidden" },
     paneLabel: {
-        display: "block",
-        marginBottom: 6,
-        color: "#4b5563",
-        fontSize: 12,
-        fontWeight: 700,
-        letterSpacing: "0.04em",
-        textTransform: "uppercase",
+        display: "block", marginBottom: 6, color: "#4b5563", fontSize: 12,
+        fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase",
     },
     textarea: {
-        width: "100%",
-        boxSizing: "border-box",
-        minHeight: 520,
-        padding: 16,
-        border: "1px solid #d1d5db",
-        borderRadius: 8,
-        background: "#111827",
-        color: "#f9fafb",
-        fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
-        fontSize: 14,
-        lineHeight: 1.65,
-        resize: "vertical",
-        tabSize: 4,
+        width: "100%", boxSizing: "border-box", minHeight: 520, padding: 16,
+        border: "1px solid #d1d5db", borderRadius: 8, background: "#111827",
+        color: "#f9fafb", fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+        fontSize: 14, lineHeight: 1.65, resize: "vertical", tabSize: 4,
     },
     preview: {
-        width: "100%",
-        maxWidth: "100%",
-        boxSizing: "border-box",
-        minHeight: 520,
-        padding: 20,
-        overflowX: "auto",
-        overflowWrap: "anywhere",
-        border: "1px solid #d1d5db",
-        borderRadius: 8,
-        background: "#ffffff",
-        color: "#1f2937",
-        fontFamily: "Georgia, Cambria, 'Times New Roman', serif",
-        fontSize: 16,
-        lineHeight: 1.7,
+        width: "100%", maxWidth: "100%", boxSizing: "border-box", minHeight: 520,
+        padding: 20, overflowX: "auto", overflowWrap: "anywhere", border: "1px solid #d1d5db",
+        borderRadius: 8, background: "#ffffff", color: "#1f2937",
+        fontFamily: "Georgia, Cambria, 'Times New Roman', serif", fontSize: 16, lineHeight: 1.7,
     },
     warning: {
-        margin: "0 0 12px",
-        padding: "10px 12px",
-        border: "1px solid #f59e0b",
-        borderRadius: 6,
-        background: "#fffbeb",
-        color: "#92400e",
-        fontSize: 13,
-        lineHeight: 1.45,
+        margin: "0 0 12px", padding: "10px 12px", border: "1px solid #f59e0b",
+        borderRadius: 6, background: "#fffbeb", color: "#92400e", fontSize: 13, lineHeight: 1.45,
     },
-    heading: {
-        margin: "24px 0 4px",
-        color: "#111827",
-        fontSize: 16,
-        fontWeight: 600,
-    },
-    help: {
-        margin: "0 0 12px",
-        color: "#6b7280",
-        fontSize: 13,
-        lineHeight: 1.5,
-    },
-    error: {
-        margin: "8px 0 0",
-        color: "#b91c1c",
-        fontSize: 12,
-    },
+    heading: { margin: "24px 0 4px", color: "#111827", fontSize: 16, fontWeight: 600 },
+    help: { margin: "0 0 12px", color: "#6b7280", fontSize: 13, lineHeight: 1.5 },
+    error: { margin: "8px 0 0", color: "#b91c1c", fontSize: 12 },
 };
 
 export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFieldProps) {
+    const cms = useCMS();
     const [mode, setMode] = React.useState<EditorMode>("split");
     const markdown = typeof input.value === "string" ? input.value : "";
     const html = React.useMemo(() => renderPreview(markdown), [markdown]);
     const unsupported = React.useMemo(() => unsupportedMdxComponents(markdown), [markdown]);
     const unsafeImages = React.useMemo(() => unsafeMarkdownImages(markdown), [markdown]);
     const editorId = React.useId();
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
     const showEditor = mode !== "preview";
     const showPreview = mode !== "write";
+
+    const setMarkdown = React.useCallback((next: string, selectionStart?: number, selectionEnd?: number) => {
+        input.onChange(next as unknown as ChangeEvent<string>);
+        window.requestAnimationFrame(() => {
+            const textarea = textareaRef.current;
+            if (!textarea) return;
+            textarea.focus();
+            if (selectionStart !== undefined) {
+                textarea.setSelectionRange(selectionStart, selectionEnd ?? selectionStart);
+            }
+        });
+    }, [input]);
+
+    const replaceSelection = React.useCallback((replacement: (selected: string) => string) => {
+        const textarea = textareaRef.current;
+        const start = textarea?.selectionStart ?? markdown.length;
+        const end = textarea?.selectionEnd ?? markdown.length;
+        const selected = markdown.slice(start, end);
+        const inserted = replacement(selected);
+        const next = `${markdown.slice(0, start)}${inserted}${markdown.slice(end)}`;
+        setMarkdown(next, start, start + inserted.length);
+    }, [markdown, setMarkdown]);
+
+    const wrap = (before: string, after = before, placeholder = "text") => {
+        replaceSelection((selected) => `${before}${selected || placeholder}${after}`);
+    };
+
+    const transformLines = (numbered = false) => {
+        replaceSelection((selected) => {
+            const source = selected || "List item";
+            return source.split("\n").map((line, index) =>
+                `${numbered ? `${index + 1}.` : "-"} ${line.replace(/^\s*(?:[-*+] |\d+\. )/, "")}`
+            ).join("\n");
+        });
+    };
+
+    const insertLink = () => {
+        const textarea = textareaRef.current;
+        const selected = textarea
+            ? markdown.slice(textarea.selectionStart, textarea.selectionEnd)
+            : "";
+        const url = window.prompt("Link URL", "https://");
+        if (!url) return;
+        replaceSelection(() => `[${selected || "link text"}](${url.trim()})`);
+    };
+
+    const insertImage = (source: string) => {
+        if (!source) return;
+        const alt = window.prompt("Image alt text", "") ?? "";
+        replaceSelection(() => `![${alt.replaceAll("]", "\\]")}](${source.trim()})`);
+    };
+
+    const insertImageUrl = () => {
+        const url = window.prompt("Image URL", "https://");
+        if (!url) return;
+        insertImage(url);
+    };
+
+    const insertManagedImage = () => {
+        cms.media.open({
+            allowDelete: true,
+            onSelect: (media: Media) => {
+                const source = cms.media.store.parse?.(media) || media.src || "";
+                if (source) insertImage(source);
+            },
+        });
+    };
+
+    const insertYouTube = () => {
+        const url = window.prompt("YouTube URL", "https://www.youtube.com/watch?v=");
+        if (!url) return;
+        const title = window.prompt("Accessible video title", "YouTube video") || "YouTube video";
+        const caption = window.prompt("Caption (optional)", "") || "";
+        const captionAttribute = caption ? ` caption="${escapeMdxAttribute(caption)}"` : "";
+        replaceSelection(() => `<YouTube url="${escapeMdxAttribute(url)}" title="${escapeMdxAttribute(title)}"${captionAttribute} />`);
+    };
 
     return (
         <div style={styles.editor}>
@@ -354,16 +312,28 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
             </div>
             {field.description && <p style={styles.help}>{field.description}</p>}
 
+            <div style={styles.toolbar} role="group" aria-label="Markdown formatting toolbar">
+                <button type="button" style={styles.button} onClick={() => wrap("**")}>Bold</button>
+                <button type="button" style={styles.button} onClick={() => wrap("*")}>Italic</button>
+                <button type="button" style={styles.button} onClick={() => wrap("~~")}>Strike</button>
+                <button type="button" style={styles.button} onClick={() => wrap("`", "`", "code")}>Code</button>
+                <span style={styles.toolDivider} aria-hidden="true" />
+                <button type="button" style={styles.button} onClick={() => transformLines(false)}>Bullets</button>
+                <button type="button" style={styles.button} onClick={() => transformLines(true)}>Numbered</button>
+                <button type="button" style={styles.button} onClick={insertLink}>Link</button>
+                <span style={styles.toolDivider} aria-hidden="true" />
+                <button type="button" style={styles.button} onClick={insertManagedImage}>Media image</button>
+                <button type="button" style={styles.button} onClick={insertImageUrl}>Image URL</button>
+                <button type="button" style={styles.button} onClick={insertYouTube}>YouTube</button>
+            </div>
+
             <div style={styles.toolbar} role="group" aria-label="Markdown editor view">
                 {(["write", "split", "preview"] as EditorMode[]).map((option) => (
                     <button
                         key={option}
                         type="button"
                         aria-pressed={mode === option}
-                        style={{
-                            ...styles.button,
-                            ...(mode === option ? styles.activeButton : {}),
-                        }}
+                        style={{ ...styles.button, ...(mode === option ? styles.activeButton : {}) }}
                         onClick={() => setMode(option)}
                     >
                         {option[0].toUpperCase() + option.slice(1)}
@@ -390,15 +360,14 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
                 data-mode={mode}
                 style={{
                     ...styles.grid,
-                    gridTemplateColumns: mode === "split"
-                        ? "repeat(2, minmax(0, 1fr))"
-                        : "minmax(0, 1fr)",
+                    gridTemplateColumns: mode === "split" ? "repeat(2, minmax(0, 1fr))" : "minmax(0, 1fr)",
                 }}
             >
                 {showEditor && (
                     <div style={styles.pane}>
                         <label htmlFor={editorId} style={styles.paneLabel}>Markdown source</label>
                         <textarea
+                            ref={textareaRef}
                             id={editorId}
                             name={input.name}
                             value={markdown}
