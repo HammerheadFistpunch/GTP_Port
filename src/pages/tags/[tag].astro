@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import TagArchive from "../../components/content/TagArchive.astro";
 import type { JournalPostSummary } from "../../components/journal/JournalLanding.astro";
+import { createJournalSectionRegistry, resolveJournalSection } from "../../lib/journal-sections";
 import {
   createTagRegistry,
   resolveTagReferences,
@@ -13,6 +14,7 @@ export async function getStaticPaths() {
   const tagDocuments = await getCollection("tags");
   const entries = await getCollection("entries", ({ data }) => !data.draft);
   const registry = createTagRegistry(tagDocuments);
+  const sectionRegistry = createJournalSectionRegistry(await getCollection("journalSections"));
   const dateFormatter = new Intl.DateTimeFormat("en-US", {
     dateStyle: "long",
     timeZone: "UTC",
@@ -20,11 +22,7 @@ export async function getStaticPaths() {
 
   const summaries = entries.map((entry) => {
     const tags = resolveTagReferences(entry.data.tags, registry, entry.data.title);
-    const placement = entry.data.placement === "both"
-      ? "Journal + Portfolio"
-      : entry.data.placement === "journal"
-        ? "Journal"
-        : "Portfolio";
+    const section = resolveJournalSection(entry.data.journalSection, sectionRegistry);
 
     return {
       entry,
@@ -35,8 +33,8 @@ export async function getStaticPaths() {
         image: entry.data.coverImage,
         date: entry.data.date
           ? dateFormatter.format(entry.data.date)
-          : entry.data.entryType,
-        section: placement,
+          : "Date pending",
+        section: section?.label ?? "Latest",
         href: `/archive/${entry.id}/`,
         tags,
       } satisfies JournalPostSummary,
