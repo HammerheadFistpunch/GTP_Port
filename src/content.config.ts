@@ -10,18 +10,25 @@ const imageSource = z.string().superRefine((value, context) => {
     if (error) context.addIssue({ code: "custom", message: error });
 });
 
+const topicReference = z.string().regex(
+    /^src\/content\/tags\/[a-z0-9]+(?:-[a-z0-9]+)*\.md$/,
+    "Topics must reference a document in src/content/tags.",
+);
+
 const tags = defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/tags" }),
     schema: z.object({
         label: z.string().min(1),
         slug: z.string().regex(
             /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-            "Tag slugs must use lowercase letters, numbers, and single hyphens.",
+            "Topic slugs must use lowercase letters, numbers, and single hyphens.",
         ),
         description: z.string().optional(),
+        active: z.boolean().default(true),
+        replacement: topicReference.optional(),
         aliases: z.array(z.string().regex(
             /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-            "Tag aliases must use lowercase letters, numbers, and single hyphens.",
+            "Topic aliases must use lowercase letters, numbers, and single hyphens.",
         )).default([]),
     }),
 });
@@ -43,12 +50,7 @@ const journalSections = defineCollection({
     }),
 });
 
-const entryTags = z.array(z.object({
-    tag: z.string().regex(
-        /^src\/content\/tags\/[a-z0-9]+(?:-[a-z0-9]+)*\.md$/,
-        "Tags must reference a document in src/content/tags.",
-    ),
-})).default([]);
+const entryTopics = z.array(z.object({ tag: topicReference })).default([]);
 
 const mediaItem = z.object({
     type: z.enum(["image", "video"]),
@@ -75,7 +77,7 @@ const entries = defineCollection({
         date: z.coerce.date().optional(),
         updatedDate: z.coerce.date().optional(),
         journalSection: z.string().optional(),
-        tags: entryTags,
+        tags: entryTopics,
         coverImage: imageSource.optional(),
         draft: z.boolean().default(false),
         immichGallery: immichGallery.optional(),
