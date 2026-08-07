@@ -50,11 +50,6 @@ const entryTags = z.array(z.object({
     ),
 })).default([]);
 
-const journalSectionReference = z.string().regex(
-    /^src\/content\/journal-sections\/[a-z0-9]+(?:-[a-z0-9]+)*\.md$/,
-    "Journal sections must reference a document in src/content/journal-sections.",
-);
-
 const mediaItem = z.object({
     type: z.enum(["image", "video"]),
     src: z.string(),
@@ -79,7 +74,7 @@ const entries = defineCollection({
         description: z.string(),
         date: z.coerce.date().optional(),
         updatedDate: z.coerce.date().optional(),
-        journalSection: journalSectionReference.optional(),
+        journalSection: z.string().optional(),
         tags: entryTags,
         coverImage: imageSource.optional(),
         draft: z.boolean().default(false),
