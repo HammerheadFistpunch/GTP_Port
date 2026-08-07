@@ -1,19 +1,27 @@
 ---
 import { getCollection, getEntry } from "astro:content";
-import JournalLanding, {
-  type JournalPostSummary,
-} from "../../components/journal/JournalLanding.astro";
-import { journalSections } from "../../lib/journal-sections";
+import JournalLanding, { type JournalPostSummary } from "../../components/journal/JournalLanding.astro";
+import {
+  createJournalSectionRegistry,
+  journalSectionReferenceId,
+  type ResolvedJournalSection,
+} from "../../lib/journal-sections";
 import { createTagRegistry, resolveTagReferences } from "../../lib/tags";
 
-export function getStaticPaths() {
-  return journalSections.map((section) => ({
-    params: { section: section.slug },
-    props: { section },
-  }));
+export async function getStaticPaths() {
+  const registry = createJournalSectionRegistry(await getCollection("journalSections"));
+  return registry.active.flatMap((section) => [section.slug, ...section.aliases].map((route) => ({
+    params: { section: route },
+    props: { section, sections: registry.active },
+  })));
 }
 
-const { section } = Astro.props;
+interface Props {
+  section: ResolvedJournalSection;
+  sections: ResolvedJournalSection[];
+}
+
+const { section, sections } = Astro.props;
 const journalPage = await getEntry("pages", "journal");
 
 if (!journalPage || journalPage.data.pageType !== "archive") {
@@ -22,17 +30,10 @@ if (!journalPage || journalPage.data.pageType !== "archive") {
 
 const page = journalPage.data;
 const tagRegistry = createTagRegistry(await getCollection("tags"));
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  dateStyle: "long",
-  timeZone: "UTC",
-});
+const dateFormatter = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" });
 const entries = (await getCollection("entries", ({ data }) =>
-  !data.draft &&
-  (data.placement === "journal" || data.placement === "both") &&
-  data.journalSection === section.slug
-)).sort(
-  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
-);
+  !data.draft && journalSectionReferenceId(data.journalSection) === section.id
+)).sort((a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0));
 
 const posts: JournalPostSummary[] = entries.map((entry) => ({
   title: entry.data.title,
@@ -53,5 +54,6 @@ const posts: JournalPostSummary[] = entries.map((entry) => ({
   sectionTitle={`${section.label} entries`}
   emptyMessage={`No published ${section.label} entries yet.`}
   posts={posts}
+  sections={sections}
   activeSection={section.slug}
 />
