@@ -2,16 +2,15 @@
 
 Last updated: 2026-08-06
 Working branch: `gpt-handoff`
-Verified baseline: unified Content Entries architecture and TinaCloud editor
+Verified baseline: completed Sprint 12 Markdown authoring and import rollout
 
 ## Current phase
 
-> Publishing-system simplification implementation
+> Resume rebuild planning
 
-The site is operational and publishable. The next phase removes unnecessary
-Portfolio indirection, simplifies Tina around real owner workflows, adds
-Markdown-first authoring and deliberate deployment, and rebuilds Resume after
-the content system is stable.
+The site is operational and publishable. The content system now has a verified
+Markdown-first editor, external-image workflow, and safe import path. Sprint 13
+begins with a separate Resume content and design review before implementation.
 
 ## Active sprint order
 
@@ -343,7 +342,7 @@ Stop and verify:
 Sprint 10 is pushed. Hosted Tina verification remains grouped with the next
 hosted checkpoint.
 
-## Active sprint - Sprint 11 deliberate publishing workflow
+## Hosted follow-up - Sprint 11 deliberate publishing workflow
 
 - [x] add a Tina **Site → Publish Site** screen
 - [x] compare the latest saved `gpt-handoff` commit with the live build commit
@@ -354,11 +353,11 @@ hosted checkpoint.
 - [x] add a static deployment manifest with no-store cache behavior
 - [x] document Cloudflare setup, cutoff sequence, and failed-build recovery
 - [x] compile TypeScript, Tina admin, Astro routes, and the Pages Function locally
-- [ ] deploy the Sprint 11 code while automatic production builds remain enabled
-- [ ] configure the Access application, environment values, encrypted hook, and KV binding
-- [ ] smoke-test the deploy hook before disabling automatic production builds
+- [x] deploy the Sprint 11 code while automatic production builds remain enabled
+- [x] configure the Access application, environment values, encrypted hook, and KV binding
+- [x] smoke-test the deploy hook before disabling automatic production builds
 - [ ] confirm a Tina save creates no deployment after automatic builds are disabled
-- [ ] publish one saved session through Tina and verify the live commit changes
+- [x] publish one saved session through Tina and verify the live commit changes
 - [ ] confirm a failed build leaves the current public deployment intact
 
 Stop and verify:
@@ -369,11 +368,12 @@ Stop and verify:
 - [ ] the hosted endpoint rejects unauthenticated and wrong-identity requests
 - [ ] the complete deliberate-publishing workflow passes from Tina save to live deployment
 
-Do not disable automatic production builds until the deployed relay and branch-specific
-deploy hook have successfully triggered a build. Full configuration is in
-`PUBLISHING_GUIDE.md`.
+The protected Publish Site action and branch-specific hook have triggered a
+successful deployment. Automatic production builds are still enabled and were
+observed triggering on a Tina save, so the cutoff and its negative test remain
+open. Full configuration is in `PUBLISHING_GUIDE.md`.
 
-## Active sprint - Sprint 12 Markdown-first authoring and external media
+## Completed sprint - Sprint 12 Markdown-first authoring and external media
 
 ### Chunk 12A - Markdown editor proof
 
@@ -397,8 +397,7 @@ Stop and verify:
 - [x] hosted Tina displays the editor, sanitized preview, and responsive YouTube player
 - [x] a hosted save/reopen preserves the fixture body
 
-Chunk 12A is locally complete. The owner approved proceeding to 12B while the
-hosted save/reopen checks remain grouped into the next deployed checkpoint.
+Chunk 12A is deployed and owner-verified.
 
 ### Chunk 12B - External image authoring
 
@@ -417,9 +416,8 @@ hosted save/reopen checks remain grouped into the next deployed checkpoint.
 - [x] save/reopen the external cover URL without rewriting it
 - [x] verify the external cover and inline image previews in the hosted editor
 
-Chunk 12B is deployed and owner-verified. The proof entry was published during
-the hosted save/reopen check, so it now supplies the published-content renderer
-proof that had previously been assigned to 12D.
+Chunk 12B is deployed and owner-verified. The proof entry supplied the
+published-content renderer check and returned to draft during 12D rollout.
 
 ### Chunk 12C - Markdown/MDX import workflow
 
@@ -442,16 +440,23 @@ Stop and verify:
 - [x] local Tina indexing and the custom admin bundle compile
 - [x] a disposable local import creates canonical frontmatter and an unchanged body
 - [x] Astro produces 51 pages, including the now-published Sprint 12 proof
-- [ ] hosted Tina loads Content → Import Entry and the controlled tag registry
-- [ ] a disposable hosted `.md` import opens as a draft and saves/reopens unchanged
-- [ ] duplicate filename, unsafe URL, and unsupported MDX errors are actionable in hosted Tina
+- [x] hosted Tina loads Content → Import Entry and the controlled tag registry
+- [x] a disposable hosted `.md` import opens as a draft and saves/reopens unchanged
+- [x] duplicate filename, unsafe URL, and unsupported MDX errors are actionable in hosted Tina
 
-Chunk 12C is locally complete. Do not begin 12D until the hosted import checks pass.
+Chunk 12C is deployed and owner-verified.
 
-### Remaining Sprint 12 chunk
+### Chunk 12D - Rollout and documentation
 
-- [ ] **12D Rollout and documentation** — existing-content verification,
-  Sprint 11 hosted-status reconciliation, owner rollout, and final guide updates
+- [x] verify every existing Content Entry survives Tina parse/serialize/reopen
+- [x] verify every existing body satisfies the final link, image, and MDX policy
+- [x] retain both verification entries as drafts and remove the proof from public routes
+- [x] reconcile the hosted Sprint 11 publish result and remaining automatic-build cutoff
+- [x] update the owner, import, portability, maintenance, roadmap, and status documentation
+- [x] pass authoring tests, TypeScript, Tina schema/admin, and Astro production builds
+
+Sprint 12 is complete. The next sprint is Sprint 13 Resume rebuild, beginning
+with the documented Resume content and design review rather than implementation.
 
 ## Decision gates
 

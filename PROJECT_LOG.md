@@ -1,5 +1,36 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Sprint 12D authoring rollout completed
+
+- Recorded the owner's hosted Sprint 12C import approval and preserved the
+  resulting canonical `imported-entry.mdx` draft as a regression fixture.
+- Audited all 11 Content Entries through Tina's MDX parser, serializer, and
+  reopen path. Every Markdown body is preserved after delimiter normalization.
+- Verified every existing body against the final safe link, image, HTML, and
+  supported-MDX policy.
+- Added whole-collection regression tests so later Tina or schema changes fail
+  visibly if an existing body would be rewritten or rejected.
+- Returned the Sprint 12A proof entry to draft after its deployed renderer check;
+  both Sprint 12 verification documents remain available without publishing
+  test content.
+- Reconciled Sprint 11's hosted status: the protected Publish Site action and
+  deploy hook successfully triggered a deployment, while automatic production
+  builds remain enabled and still trigger on Tina saves. The cutoff, negative
+  save test, wrong-identity rejection, and failed-build exercise remain open.
+- Updated the build order, roadmap, README, documentation index, publishing,
+  import, content, portability, and maintenance guidance for owner rollout.
+
+Validation:
+
+- all authoring, media, import, and rollout tests pass.
+- strict TypeScript checking and `git diff --check` pass.
+- Tina local indexing, schema generation, and the custom admin bundle compile.
+- the Tina-aware Astro production build excludes both draft verification
+  entries and preserves the expected real-content routes.
+
+Sprint 12 is complete. Sprint 13 begins with a separate Resume content and
+design review.
+
 ## 2026-08-06 - Sprint 12C Markdown/MDX import implemented
 
 - Added a dedicated **Content → Import Entry** Tina screen for `.md`, `.mdx`,
@@ -31,7 +62,7 @@ Validation:
   the owner's hosted publication of the Sprint 12 proof entry.
 
 Hosted Import Entry, tag-registry, create/save/reopen, duplicate-name, unsafe
-URL, and unsupported-MDX checks remain required before Sprint 12D.
+URL, and unsupported-MDX checks passed owner review before Sprint 12D.
 
 ## 2026-08-06 - Sprint 12B external image authoring implemented
 

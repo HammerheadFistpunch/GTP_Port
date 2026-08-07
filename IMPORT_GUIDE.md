@@ -82,3 +82,8 @@ build, and publishing path as entries created normally.
 After a Tina or GraphQL package update, verify one disposable draft import
 locally before relying on hosted import. The parser and mutation tests live in
 `tests/sprint12c-import.test.mjs`.
+
+The initial hosted rollout is verified. Its draft is retained as
+`src/content/entries/imported-entry.mdx` so the whole-collection Sprint 12D
+tests can confirm future Tina changes still preserve imported content. Keep it
+drafted; it is verification content, not a public Journal article.

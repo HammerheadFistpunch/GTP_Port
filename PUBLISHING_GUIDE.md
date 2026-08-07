@@ -5,6 +5,11 @@ should rebuild only when the editing session is complete. The **Site → Publish
 Site** screen compares the latest saved commit with the commit embedded in the
 live build and triggers Cloudflare through a protected server relay.
 
+Current rollout status: the protected action and deploy hook have successfully
+triggered a production deployment. Automatic production branch deployments are
+still enabled and were observed rebuilding after a Tina save. Complete the
+cutoff below before relying on batched, deliberate-only deployment behavior.
+
 ## Security model
 
 - `/admin/` and `/admin/api/publish` are covered by the same Cloudflare Access

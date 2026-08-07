@@ -87,6 +87,23 @@ blocked with an actionable message.
 
 See `IMPORT_GUIDE.md` for the complete mapping, validation, and owner workflow.
 
+## Write or revise a Content Entry
+
+Open **Content → Journal Entries** and use **Entry Content (Markdown)** as the
+primary body editor. Write mode edits the stored `.mdx` source; Split and
+Preview show sanitized output without executing arbitrary MDX. Ordinary
+Markdown is preferred. The supported self-closing `<YouTube ... />` element is
+the only custom body component.
+
+Choose a managed `/uploads/...` image or enter a complete credential-free HTTPS
+URL in image fields. Inline Markdown images may additionally use safe relative
+paths. Keep the entry drafted while editing, save and reopen it once before
+publication, then clear Draft and use **Site → Publish Site** once the complete
+editing session is ready.
+
+The two Sprint 12 verification entries remain drafted for future compatibility
+checks and should not be used as public content.
+
 ## Flexible Pages
 
 `src/content/flexible-pages/` stores pages that do not need a hand-authored

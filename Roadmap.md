@@ -392,9 +392,11 @@ it. Hosted Tina navigation/save/create checks and TinaCloud reindexing remain.
 
 ### Sprint 11 - Deliberate publishing workflow
 
-Status: Implemented locally on 2026-08-06; awaiting Cloudflare bindings,
-Access policy, deploy-hook smoke test, automatic-build cutoff, and hosted
-end-to-end verification.
+Status: Deployed on 2026-08-06. The Cloudflare bindings, Access policy,
+protected relay, deploy hook, and a Tina-triggered production publish are
+working. Automatic production builds remain enabled and were observed running
+after a Tina save, so the cutoff, no-automatic-build check, wrong-identity
+rejection, and failed-build exercise remain open.
 
 Goal: let multiple Tina saves accumulate without rebuilding the public site
 until the editor chooses **Publish Site**.
@@ -422,12 +424,11 @@ Depends on: Sprint 8 feasibility findings; may be implemented alongside Sprint
 
 ### Sprint 12 - Markdown-first content authoring and external media
 
-Status: Chunks 12A and 12B are deployed and owner-verified. Chunk 12C is
-implemented locally on 2026-08-06 with a dedicated Import Entry screen,
-frontmatter mapping, missing-field completion, controlled-tag resolution,
-portable-body validation, safe draft creation, canonical Tina serialization,
-and nine passing authoring/media/import tests. Hosted import verification is
-required before 12D begins.
+Status: Complete on 2026-08-06. The Markdown editor, external-image workflow,
+and safe Markdown/MDX import are deployed and owner-verified. Sprint 12D added
+whole-collection round-trip and body-policy regression coverage, returned the
+verification content to draft, reconciled Sprint 11's hosted state, and updated
+the owner documentation.
 
 Goal: replace the clunky Content Entry workflow with a focused Markdown editor
 and a safe import path.

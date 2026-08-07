@@ -770,10 +770,12 @@ validates and renders the saved source. Do not add general-purpose MDX component
 to entry bodies. Tina warns about unsupported capitalized component names but
 preserves their source so an editor can remove them deliberately.
 
-After changing the editor or body schema, run `npm run test:authoring`, regenerate
-`tina/tina-lock.json` through the Tina local development build, run TypeScript
-and Astro production checks, then save/reopen the draft proof entry in hosted
-Tina before applying the editor to additional content models.
+After changing the editor or body schema, run `npm run test:authoring`. The
+Sprint 12D suite parses, serializes, reopens, and safety-checks every existing
+Content Entry, while the earlier suites cover focused editor, media, and import
+behavior. Regenerate `tina/tina-lock.json` through the Tina local development
+build, run TypeScript and Astro production checks, then save/reopen one of the
+draft verification entries in hosted Tina before rollout.
 
 ## Package and dependency changes
 

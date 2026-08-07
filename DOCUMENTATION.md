@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-06 after Sprint 12C Markdown/MDX import implementation
+Last reviewed: 2026-08-06 after Sprint 12D authoring rollout
 
 ## Active project documents
 

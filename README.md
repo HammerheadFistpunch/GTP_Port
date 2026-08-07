@@ -10,8 +10,8 @@ The site is operational and ready for real content. It includes:
 
 - a static Astro site deployed through Cloudflare Pages
 - Git-backed Markdown and MDX content
-- TinaCloud editing at `/admin/`, with Cloudflare Access protection prepared
-  for the Sprint 11 hosted setup
+- TinaCloud editing at `/admin/`, with Cloudflare Access protecting the
+  deliberate publishing workflow
 - one unified Journal Entries collection with Portfolio and Journal placement
 - neutral `/archive/[slug]/` detail pages shared by every entry type
 - a label-only Portfolio menu with direct Video, Photography, Projects, Case
@@ -40,14 +40,13 @@ The site is operational and ready for real content. It includes:
 - shared Tina image fields with Media Manager upload/selection, direct HTTPS
   URLs, previews, public Immich-asset support, and matching Astro validation
 
-Sprints 1 through 6 are deployed and owner-accepted. Sprints 7 through 9 are
-implemented, Sprint 10 is pushed, and Sprint 11's deliberate publishing code
-passes local TypeScript, Tina, Astro, and Pages Function compilation. Hosted
-Cloudflare configuration and end-to-end verification remain tracked in
-`BUILD_ORDER.md`. Sprint 12A's Markdown editor and Sprint 12B's external-image
-authoring are deployed and owner-verified. Sprint 12C's Markdown/MDX import
-screen is locally complete and awaiting hosted import verification before the
-12D rollout; the separate Resume rebuild follows Sprint 12.
+Sprints 1 through 12 are implemented. Sprint 12's Markdown editor,
+external-image fields, and Markdown/MDX import are deployed and owner-verified,
+with whole-collection round-trip coverage protecting every existing Content
+Entry. Sprint 11's protected Publish Site action has successfully triggered a
+deployment, but automatic production builds remain enabled; the cutoff and its
+negative test remain tracked in `BUILD_ORDER.md`. Sprint 13 is the separate
+Resume content and design review.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and

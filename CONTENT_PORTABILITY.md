@@ -26,6 +26,12 @@ ordinary Markdown links/images to maximize automatic mapping. The importer
 creates a canonical draft, reports unmapped keys, and blocks executable MDX or
 unsafe media rather than silently rewriting the body. See `IMPORT_GUIDE.md`.
 
+`tests/sprint12d-content-rollout.test.mjs` reopens every existing Content Entry
+through Tina's serializer and applies the same body safety policy used by the
+importer. Keep that whole-collection check when changing Tina, MDX, or the
+Content Entry schema; it protects existing work rather than only a synthetic
+fixture.
+
 ## Where blocks are appropriate
 
 Structured or reorderable Tina blocks are reasonable for the small number of
