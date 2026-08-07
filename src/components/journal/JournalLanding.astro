@@ -4,11 +4,7 @@ import Container from "../ui/Container.astro";
 import CategoryNav from "./CategoryNav.astro";
 import FeaturedArticle from "./FeaturedArticle.astro";
 import JournalCard from "./JournalCard.astro";
-import {
-  journalSections,
-  journalSectionHref,
-  type JournalSectionSlug,
-} from "../../lib/journal-sections";
+import { journalSectionHref, type ResolvedJournalSection } from "../../lib/journal-sections";
 import type { ResolvedTag } from "../../lib/tags";
 
 export interface JournalPostSummary {
@@ -29,8 +25,9 @@ interface Props {
   sectionTitle: string;
   emptyMessage: string;
   posts: JournalPostSummary[];
+  sections: ResolvedJournalSection[];
   featuredPost?: JournalPostSummary;
-  activeSection?: JournalSectionSlug;
+  activeSection?: string;
 }
 
 const {
@@ -41,17 +38,14 @@ const {
   sectionTitle,
   emptyMessage,
   posts,
+  sections,
   featuredPost,
   activeSection,
 } = Astro.props;
 
 const sectionLinks = [
-  {
-    label: "Latest",
-    href: "/journal/",
-    active: !activeSection,
-  },
-  ...journalSections.map((section) => ({
+  { label: "Latest", href: "/journal/", active: !activeSection },
+  ...sections.map((section) => ({
     label: section.label,
     href: journalSectionHref(section.slug),
     active: activeSection === section.slug,
@@ -60,7 +54,7 @@ const sectionLinks = [
 ---
 
 <BaseLayout title={title} description={description}>
-  <main class="journal-shell">
+  <div class="journal-shell">
     <Container>
       <header class="journal-header">
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
@@ -87,7 +81,6 @@ const sectionLinks = [
 
       <section class="latest-stories" aria-labelledby="journal-entries">
         <h2 id="journal-entries">{sectionTitle}</h2>
-
         {posts.length > 0 ? (
           <div class="story-list">
             {posts.map((post) => (
@@ -108,19 +101,12 @@ const sectionLinks = [
         )}
       </section>
     </Container>
-  </main>
+  </div>
 </BaseLayout>
 
 <style>
-  .journal-shell {
-    padding: clamp(2.5rem, 6vw, 5rem) 0 var(--space-xl);
-  }
-
-  .journal-header {
-    max-width: 52rem;
-    margin-bottom: var(--space-md);
-  }
-
+  .journal-shell { padding: clamp(2.5rem, 6vw, 5rem) 0 var(--space-xl); }
+  .journal-header { max-width: 52rem; margin-bottom: var(--space-md); }
   .eyebrow {
     margin-bottom: var(--space-sm);
     color: var(--accent);
@@ -130,28 +116,18 @@ const sectionLinks = [
     letter-spacing: .1em;
     text-transform: uppercase;
   }
-
-  .journal-header h1 {
-    max-width: 24ch;
-    font-size: clamp(2.15rem, 5vw, 3.8rem);
-  }
-
+  .journal-header h1 { max-width: 24ch; font-size: clamp(2.15rem, 5vw, 3.8rem); }
   .introduction {
     max-width: 44rem;
     margin-bottom: 0;
     color: var(--text-secondary);
     font-size: 1.15rem;
   }
-
   .featured-story {
     padding: clamp(2rem, 5vw, 4rem) 0;
     border-bottom: 1px solid var(--border-color);
   }
-
-  .latest-stories {
-    padding-top: var(--space-md);
-  }
-
+  .latest-stories { padding-top: var(--space-md); }
   .latest-stories > h2 {
     margin-bottom: var(--space-sm);
     font-family: var(--font-ui);
@@ -159,14 +135,6 @@ const sectionLinks = [
     letter-spacing: .1em;
     text-transform: uppercase;
   }
-
-  .story-list {
-    max-width: 68rem;
-  }
-
-  @media (max-width: 800px) {
-    .journal-shell {
-      padding-top: var(--space-md);
-    }
-  }
+  .story-list { max-width: 68rem; }
+  @media (max-width: 800px) { .journal-shell { padding-top: var(--space-md); } }
 </style>
