@@ -5,7 +5,7 @@ interface RelatedEntry {
   title: string;
   description: string;
   image?: string;
-  primaryTopic: string;
+  section: string;
   href: string;
 }
 
@@ -14,20 +14,19 @@ interface Props {
   title?: string;
 }
 
-const { entries, title = "Related entries" } = Astro.props;
+const { entries, title = "Related stories" } = Astro.props;
 ---
 
 {entries.length > 0 && (
   <aside class="related" aria-labelledby="related-entries-heading">
     <h2 id="related-entries-heading">{title}</h2>
-
     <div class="entry-grid">
       {entries.map((entry) => (
         <PortfolioCard
           title={entry.title}
           description={entry.description}
           image={entry.image}
-          category={entry.primaryTopic}
+          category={entry.section}
           href={entry.href}
         />
       ))}
@@ -41,11 +40,7 @@ const { entries, title = "Related entries" } = Astro.props;
     padding-top: var(--space-lg);
     border-top: 1px solid var(--border-color);
   }
-
-  .related h2 {
-    margin-bottom: var(--space-md);
-  }
-
+  .related h2 { margin-bottom: var(--space-md); }
   .entry-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
