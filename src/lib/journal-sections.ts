@@ -1,40 +1,61 @@
-export const journalSections = [
-  {
-    slug: "automotive",
-    label: "Automotive",
-    description: "Vehicles, engineering, maintenance, and the systems that move us.",
-  },
-  {
-    slug: "projects",
-    label: "Projects",
-    description: "Things built, tested, revised, and learned from along the way.",
-  },
-  {
-    slug: "field-notes",
-    label: "Field Notes",
-    description: "Observations from technology, photography, travel, and the wider world.",
-  },
-  {
-    slug: "off-topic",
-    label: "Off-topic",
-    description: "Useful detours that do not fit neatly anywhere else.",
-  },
-] as const;
+import type { CollectionEntry } from "astro:content";
 
-export const journalSectionSlugs = journalSections.map(({ slug }) => slug) as [
-  (typeof journalSections)[number]["slug"],
-  ...(typeof journalSections)[number]["slug"][],
-];
+export type JournalSectionEntry = CollectionEntry<"journalSections">;
 
-export type JournalSectionSlug = (typeof journalSections)[number]["slug"];
+export interface ResolvedJournalSection {
+  id: string;
+  label: string;
+  slug: string;
+  description: string;
+  active: boolean;
+  aliases: string[];
+}
 
-export const journalSectionOptions = journalSections.map(({ slug, label }) => ({
-  value: slug,
-  label,
-}));
+export interface JournalSectionRegistry {
+  byId: Map<string, ResolvedJournalSection>;
+  byRoute: Map<string, ResolvedJournalSection>;
+  active: ResolvedJournalSection[];
+}
 
-export const getJournalSection = (slug?: string) =>
-  journalSections.find((section) => section.slug === slug);
+export const journalSectionReferenceId = (reference?: string) => {
+  if (!reference) return "";
+  const normalized = reference.replaceAll("\\", "/");
+  const match = normalized.match(/(?:^|\/)journal-sections\/([^/]+)\.md$/);
+  return match?.[1] || "";
+};
 
-export const journalSectionHref = (slug: JournalSectionSlug) =>
-  `/journal/${slug}/`;
+export const createJournalSectionRegistry = (
+  documents: JournalSectionEntry[],
+): JournalSectionRegistry => {
+  const sections = documents.map((document) => ({
+    id: document.id,
+    label: document.data.label,
+    slug: document.data.slug,
+    description: document.data.description || "",
+    active: document.data.active,
+    aliases: document.data.aliases,
+  }));
+
+  const byId = new Map(sections.map((section) => [section.id, section]));
+  const byRoute = new Map<string, ResolvedJournalSection>();
+
+  for (const section of sections) {
+    byRoute.set(section.slug, section);
+    for (const alias of section.aliases) byRoute.set(alias, section);
+  }
+
+  return {
+    byId,
+    byRoute,
+    active: sections
+      .filter((section) => section.active)
+      .sort((a, b) => a.label.localeCompare(b.label)),
+  };
+};
+
+export const resolveJournalSection = (
+  reference: string | undefined,
+  registry: JournalSectionRegistry,
+) => registry.byId.get(journalSectionReferenceId(reference));
+
+export const journalSectionHref = (slug: string) => `/journal/${slug}/`;
