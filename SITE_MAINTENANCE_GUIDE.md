@@ -543,6 +543,29 @@ import React from "react";
 
 Type-only imports do not create the runtime `React` value.
 
+### Markdown/MDX import workflow
+
+The owner-facing import feature spans:
+
+- `tina/components/ImportEntryScreen.tsx` — file/paste, review, completion,
+  tag lookup, and Tina create-mutation interface
+- `tina/lib/entryImport.ts` — pure parsing, alias mapping, filename, link,
+  image, MDX, YouTube, and controlled-tag rules
+- `tina/components/AdminNavigation.tsx` — Content → Import Entry registration
+- `src/lib/image-sources.ts` — shared managed/external image policy
+- `tests/sprint12c-import.test.mjs` — mapping and security regression coverage
+- `IMPORT_GUIDE.md` — owner workflow and accepted frontmatter
+
+Imports must remain create-only and draft-only. Do not change the create
+mutation into an update/upsert workflow: filename collisions are the safeguard
+against accidental replacement. If canonical Entry fields change, update the
+import mapping and mutation payload in the same change, then run a disposable
+local mutation and inspect the generated `.mdx` before hosted rollout.
+
+The YAML parser is a direct production dependency. Keep it pinned and review
+its release notes before upgrading because parsing behavior is part of the
+content-ingestion boundary.
+
 ### Portfolio destinations
 
 Portfolio no longer has a landing page or a separate tile board. The header

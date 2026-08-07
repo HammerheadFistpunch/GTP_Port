@@ -20,7 +20,8 @@
     "@tinacms/cli": "^2.5.3",
     "astro": "^6.4.6",
     "marked": "16.4.2",
-    "tinacms": "^3.10.0"
+    "tinacms": "^3.10.0",
+    "yaml": "2.9.0"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",

@@ -386,7 +386,7 @@ deploy hook have successfully triggered a build. Full configuration is in
 - [x] add Tina parse/serialize/reopen round-trip tests
 - [x] regenerate the Tina lock and pass local schema/content validation
 - [x] contain split panes and preview media within Tina's editor canvas
-- [ ] verify the deployed Tina editor can save and reopen the draft fixture unchanged
+- [x] verify the deployed Tina editor can save and reopen the draft fixture unchanged
 
 Stop and verify:
 
@@ -394,8 +394,8 @@ Stop and verify:
 - [x] strict TypeScript checking passes
 - [x] Tina local indexing and custom admin compilation pass
 - [x] Astro produces the existing 50 public routes and excludes the draft fixture
-- [ ] hosted Tina displays the editor, sanitized preview, and responsive YouTube player
-- [ ] a hosted no-op save does not rewrite or lose the fixture body
+- [x] hosted Tina displays the editor, sanitized preview, and responsive YouTube player
+- [x] a hosted save/reopen preserves the fixture body
 
 Chunk 12A is locally complete. The owner approved proceeding to 12B while the
 hosted save/reopen checks remain grouped into the next deployed checkpoint.
@@ -413,18 +413,43 @@ hosted save/reopen checks remain grouped into the next deployed checkpoint.
 - [x] warn when the Markdown preview omits an unsafe inline-image source
 - [x] add media-source tests and an external cover to the draft proof entry
 - [x] pass Tina indexing/schema/admin, TypeScript, tests, and Astro production build
-- [ ] verify managed selection/upload and external URL preview in hosted Tina
-- [ ] save/reopen the external cover URL without rewriting it
-- [ ] verify the external cover and inline image previews in the hosted draft editor
+- [x] verify managed selection/upload and external URL preview in hosted Tina
+- [x] save/reopen the external cover URL without rewriting it
+- [x] verify the external cover and inline image previews in the hosted editor
 
-Chunk 12B is locally complete. Do not begin 12C until the hosted media checks pass.
-Published-content renderer review remains part of the 12D rollout because the
-proof fixture is intentionally draft-only and has no public route.
+Chunk 12B is deployed and owner-verified. The proof entry was published during
+the hosted save/reopen check, so it now supplies the published-content renderer
+proof that had previously been assigned to 12D.
 
-### Remaining Sprint 12 chunks
+### Chunk 12C - Markdown/MDX import workflow
 
-- [ ] **12C Import workflow** — `.md`/`.mdx` parsing, metadata mapping,
-  validation, missing-field completion, and canonical output
+- [x] add a dedicated Content → Import Entry screen
+- [x] accept a `.md`/`.mdx` file or pasted source without overwriting entries
+- [x] parse YAML frontmatter and map documented aliases
+- [x] show unmapped metadata and missing required fields before creation
+- [x] map controlled tag labels, slugs, aliases, and stored references
+- [x] validate cover images plus Markdown links and images
+- [x] reject unsafe paths, credential-bearing URLs, executable MDX, unsupported components, and malformed YouTube elements
+- [x] force every import to create a draft through Tina's Entries mutation
+- [x] preserve portable Markdown in canonical `.mdx` output
+- [x] add parser, security, mapping, tag, and local mutation verification
+- [x] document the owner import workflow and maintenance contract
+
+Stop and verify:
+
+- [x] all nine authoring/media/import tests pass
+- [x] strict TypeScript checking and `git diff --check` pass
+- [x] local Tina indexing and the custom admin bundle compile
+- [x] a disposable local import creates canonical frontmatter and an unchanged body
+- [x] Astro produces 51 pages, including the now-published Sprint 12 proof
+- [ ] hosted Tina loads Content → Import Entry and the controlled tag registry
+- [ ] a disposable hosted `.md` import opens as a draft and saves/reopens unchanged
+- [ ] duplicate filename, unsafe URL, and unsupported MDX errors are actionable in hosted Tina
+
+Chunk 12C is locally complete. Do not begin 12D until the hosted import checks pass.
+
+### Remaining Sprint 12 chunk
+
 - [ ] **12D Rollout and documentation** — existing-content verification,
   Sprint 11 hosted-status reconciliation, owner rollout, and final guide updates
 

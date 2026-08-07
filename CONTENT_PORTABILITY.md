@@ -20,6 +20,12 @@ remains separate from presentation.
   authored content.
 - Avoid turning every article into a page-builder made from custom Tina blocks.
 
+Portable `.md` and `.mdx` documents can be brought back through Tina's
+**Content → Import Entry** workflow. Keep conventional YAML frontmatter and
+ordinary Markdown links/images to maximize automatic mapping. The importer
+creates a canonical draft, reports unmapped keys, and blocks executable MDX or
+unsafe media rather than silently rewriting the body. See `IMPORT_GUIDE.md`.
+
 ## Where blocks are appropriate
 
 Structured or reorderable Tina blocks are reasonable for the small number of

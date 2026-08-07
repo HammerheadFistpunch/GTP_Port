@@ -1,5 +1,38 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Sprint 12C Markdown/MDX import implemented
+
+- Added a dedicated **Content → Import Entry** Tina screen for `.md`, `.mdx`,
+  and pasted-source ingestion.
+- Added safe YAML frontmatter parsing with documented aliases for description,
+  dates, entry type, placement, topic, section, tags, cover, technologies, and
+  entry links.
+- Added review-time completion for canonical filename, title, description,
+  topic, placement, type, date, section, tags, cover, and body.
+- Added controlled-tag matching by label, permanent slug, alias, or stored
+  reference; unresolved tags block creation with an owner-facing resolution.
+- Added validation for malformed frontmatter, empty bodies, unsafe link/image
+  sources, embedded credentials, path-like filenames, executable MDX,
+  unsupported components, and malformed YouTube elements.
+- Made import create-only and draft-only. Filename collisions fail rather than
+  overwriting an existing document.
+- Routed creation through Tina's current `EntriesMutation`, producing canonical
+  `.mdx` frontmatter while preserving the portable Markdown body.
+- Added `IMPORT_GUIDE.md` and maintenance/portability guidance.
+
+Validation:
+
+- all nine authoring, media, and import tests pass.
+- strict TypeScript checking and `git diff --check` pass.
+- Tina local indexing and the custom admin bundle compile.
+- a disposable local GraphQL import created the expected draft frontmatter and
+  byte-preserved body, then was removed from the worktree.
+- the Tina-aware Astro build produces 51 pages; the increase from 50 reflects
+  the owner's hosted publication of the Sprint 12 proof entry.
+
+Hosted Import Entry, tag-registry, create/save/reopen, duplicate-name, unsafe
+URL, and unsupported-MDX checks remain required before Sprint 12D.
+
 ## 2026-08-06 - Sprint 12B external image authoring implemented
 
 - Added one reusable Tina image control that retains Media Manager selection and

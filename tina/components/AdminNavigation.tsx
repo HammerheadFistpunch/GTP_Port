@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import type { TinaCMS } from "tinacms";
 import { PublishSiteScreen } from "./PublishSite";
+import { ImportEntryScreen } from "./ImportEntryScreen";
 
 type NavigationCategory = "Settings" | "Pages" | "Content" | "Site";
 
@@ -169,6 +170,17 @@ export const installAdminNavigation = (cms: TinaCMS) => {
             // Tina renders arbitrary screen categories even though its public
             // type currently lists only the built-in category names.
             navCategory: item.category,
+        } as never);
+    }
+
+    if (!screens.some((screen) => screen.name === "Import Entry")) {
+        cms.plugins.add({
+            __type: "screen",
+            name: "Import Entry",
+            Component: ImportEntryScreen,
+            Icon: NavigationIcon,
+            layout: "fullscreen",
+            navCategory: "Content",
         } as never);
     }
 

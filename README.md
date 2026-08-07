@@ -44,10 +44,10 @@ Sprints 1 through 6 are deployed and owner-accepted. Sprints 7 through 9 are
 implemented, Sprint 10 is pushed, and Sprint 11's deliberate publishing code
 passes local TypeScript, Tina, Astro, and Pages Function compilation. Hosted
 Cloudflare configuration and end-to-end verification remain tracked in
-`BUILD_ORDER.md`. Sprint 12A's Markdown editor proof passes local schema,
-round-trip, TypeScript, Tina, and Astro validation. Sprint 12B's external-image
-authoring also passes locally; the combined hosted save/reopen/media gate comes
-next, followed by import and the separate Resume rebuild.
+`BUILD_ORDER.md`. Sprint 12A's Markdown editor and Sprint 12B's external-image
+authoring are deployed and owner-verified. Sprint 12C's Markdown/MDX import
+screen is locally complete and awaiting hosted import verification before the
+12D rollout; the separate Resume rebuild follows Sprint 12.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence, and

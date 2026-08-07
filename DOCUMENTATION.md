@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-06 after Sprint 12B external-image authoring
+Last reviewed: 2026-08-06 after Sprint 12C Markdown/MDX import implementation
 
 ## Active project documents
 
@@ -17,6 +17,7 @@ Last reviewed: 2026-08-06 after Sprint 12B external-image authoring
 | `CONTENT_GUIDE.md` | Editable content locations and publishing behavior |
 | `CONTENT_PORTABILITY.md` | Redesign and migration guardrails |
 | `PUBLISHING_GUIDE.md` | Deliberate publishing setup, owner workflow, security, and recovery |
+| `IMPORT_GUIDE.md` | Markdown/MDX import mapping, validation, draft workflow, and troubleshooting |
 
 ## Project instructions
 

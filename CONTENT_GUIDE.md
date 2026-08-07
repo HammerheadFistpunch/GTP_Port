@@ -69,12 +69,23 @@ is not assignable to an entry.
 - **Settings** → Site Settings and Tags
 - **Pages** → Main Homepage, Journal Homepage, About, Contact, Resume, and New
   Pages
-- **Content** → Journal Entries
+- **Content** → Journal Entries and Import Entry
 - **Site** → Publish Site and Media Manager
 
 The grouped links are the only owner-facing entry points. Tina's underlying
 collection names remain stable so existing references and generated queries do
 not need a content migration.
+
+## Import a Markdown or MDX entry
+
+Use **Content → Import Entry** to upload or paste a portable document, review
+its mapped metadata, complete required fields, resolve controlled tags, and
+create a new draft. Import never overwrites an existing entry and never
+publishes immediately. Standard Markdown and the established self-closing
+`<YouTube ... />` element are supported; executable or unsupported MDX is
+blocked with an actionable message.
+
+See `IMPORT_GUIDE.md` for the complete mapping, validation, and owner workflow.
 
 ## Flexible Pages
 
