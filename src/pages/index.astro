@@ -3,6 +3,7 @@ import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Button from "../components/ui/Button.astro";
 import Container from "../components/ui/Container.astro";
+import { createJournalSectionRegistry, resolveJournalSection } from "../lib/journal-sections";
 
 const homeEntry = await getEntry("pages", "home");
 
@@ -11,18 +12,10 @@ if (!homeEntry || homeEntry.data.pageType !== "home") {
 }
 
 const page = homeEntry.data;
-const defaultSectionOrder = [
-  "intro",
-  "about",
-  "capabilities",
-  "technology",
-  "portfolio",
-] as const;
+const defaultSectionOrder = ["intro", "about", "capabilities", "technology", "portfolio"] as const;
 const orderedSections = [...new Set([...page.sectionOrder, ...defaultSectionOrder])];
-
-const journalEntries = (await getCollection("entries", ({ data }) =>
-  !data.draft && (data.placement === "journal" || data.placement === "both")
-)).sort(
+const sectionRegistry = createJournalSectionRegistry(await getCollection("journalSections"));
+const journalEntries = (await getCollection("entries", ({ data }) => !data.draft)).sort(
   (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
 );
 
@@ -36,8 +29,7 @@ function referencedEntryId(reference?: string) {
 
 const selectedJournalId = referencedEntryId(page.journalPreview.featuredEntry);
 const featuredArticle =
-  journalEntries.find((entry) => entry.id.toLowerCase() === selectedJournalId) ??
-  journalEntries[0];
+  journalEntries.find((entry) => entry.id.toLowerCase() === selectedJournalId) ?? journalEntries[0];
 const recentArticles = journalEntries
   .filter((entry) => entry.id !== featuredArticle?.id)
   .slice(0, page.journalPreview.recentLimit);
@@ -48,8 +40,10 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
   timeZone: "UTC",
 });
-const formatDate = (date?: Date) =>
-  date ? dateFormatter.format(date) : "Date pending";
+const formatDate = (date?: Date) => date ? dateFormatter.format(date) : "Date pending";
+const featuredSection = featuredArticle
+  ? resolveJournalSection(featuredArticle.data.journalSection, sectionRegistry)?.label ?? "Latest"
+  : "Latest";
 ---
 
 <BaseLayout description={page.description} image={page.hero.image}>
@@ -69,9 +63,7 @@ const formatDate = (date?: Date) =>
                     <h1>{page.hero.title}</h1>
                     <p class="hero-description">{page.hero.description}</p>
                     <div class="hero-buttons">
-                      <Button href={page.hero.primaryCta.href}>
-                        {page.hero.primaryCta.label}
-                      </Button>
+                      <Button href={page.hero.primaryCta.href}>{page.hero.primaryCta.label}</Button>
                       <Button href={page.hero.secondaryCta.href} variant="secondary">
                         {page.hero.secondaryCta.label}
                       </Button>
@@ -111,7 +103,7 @@ const formatDate = (date?: Date) =>
                       </a>
                       <div>
                         <p class="story-meta">
-                          {featuredArticle.data.journalSection ?? featuredArticle.data.primaryTopic}
+                          {featuredSection}
                           <span>·</span>
                           {formatDate(featuredArticle.data.date)}
                         </p>
@@ -176,9 +168,7 @@ const formatDate = (date?: Date) =>
               {page.capabilitiesSection.items.map((item, index) => (
                 <article class="capability-card">
                   <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                  <h3>
-                    {item.href ? <a href={item.href}>{item.title}</a> : item.title}
-                  </h3>
+                  <h3>{item.href ? <a href={item.href}>{item.title}</a> : item.title}</h3>
                   <p>{item.description}</p>
                 </article>
               ))}
@@ -225,7 +215,7 @@ const formatDate = (date?: Date) =>
                   <span class="portfolio-link-shade" aria-hidden="true"></span>
                   <h3>{link.label}</h3>
                   <span class="portfolio-link-arrow" aria-hidden="true">→</span>
-                  </a>
+                </a>
               ))}
             </div>
           </Container>
@@ -236,21 +226,14 @@ const formatDate = (date?: Date) =>
 </BaseLayout>
 
 <style>
-  .home-intro {
-    padding: clamp(2rem, 5vw, 4.5rem) 0;
-  }
-
+  .home-intro { padding: clamp(2rem, 5vw, 4.5rem) 0; }
   .intro-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.02fr) minmax(380px, .98fr);
     gap: clamp(1.25rem, 3vw, 2.5rem);
     align-items: stretch;
   }
-
-  .intro-grid--single {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
+  .intro-grid--single { grid-template-columns: minmax(0, 1fr); }
   .compact-hero,
   .journal-panel {
     min-width: 0;
@@ -258,7 +241,6 @@ const formatDate = (date?: Date) =>
     border-radius: var(--radius-md);
     background: var(--bg-surface);
   }
-
   .compact-hero {
     position: relative;
     display: grid;
@@ -266,44 +248,22 @@ const formatDate = (date?: Date) =>
     overflow: hidden;
     padding: clamp(1.75rem, 4vw, 3.5rem);
   }
-
-  .hero-copy {
-    position: relative;
-    z-index: 1;
-    align-self: center;
-  }
-
+  .hero-copy { position: relative; z-index: 1; align-self: center; }
   .hero-copy h1 {
     max-width: 13ch;
     margin: 0 0 1rem;
     font-size: clamp(2.35rem, 5vw, 4.7rem);
     line-height: .98;
   }
-
   .hero-description {
     max-width: 58ch;
     margin: 0 0 1.5rem;
     color: var(--text-secondary);
     font-size: clamp(1rem, 1.5vw, 1.12rem);
   }
-
-  .hero-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .75rem;
-  }
-
-  .hero-mark {
-    align-self: end;
-    opacity: .52;
-    transform: translate(18%, 12%);
-  }
-
-  .hero-mark img {
-    width: min(100%, 240px);
-    margin-left: auto;
-  }
-
+  .hero-buttons { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .hero-mark { align-self: end; opacity: .52; transform: translate(18%, 12%); }
+  .hero-mark img { width: min(100%, 240px); margin-left: auto; }
   .eyebrow,
   .story-meta,
   .portfolio-copy > p {
@@ -314,21 +274,9 @@ const formatDate = (date?: Date) =>
     letter-spacing: .09em;
     text-transform: uppercase;
   }
-
-  .eyebrow {
-    margin: 0 0 .65rem;
-  }
-
-  .journal-panel {
-    padding: clamp(1.4rem, 3vw, 2rem);
-  }
-
-  .journal-intro {
-    margin: -.25rem 0 1.15rem;
-    color: var(--text-secondary);
-    font-size: .92rem;
-  }
-
+  .eyebrow { margin: 0 0 .65rem; }
+  .journal-panel { padding: clamp(1.4rem, 3vw, 2rem); }
+  .journal-intro { margin: -.25rem 0 1.15rem; color: var(--text-secondary); font-size: .92rem; }
   .section-heading {
     display: flex;
     justify-content: space-between;
@@ -336,29 +284,16 @@ const formatDate = (date?: Date) =>
     align-items: end;
     margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
   }
-
-  .section-heading--compact {
-    align-items: center;
-    margin-bottom: .75rem;
-  }
-
+  .section-heading--compact { align-items: center; margin-bottom: .75rem; }
   .section-heading h1,
-  .section-heading h2 {
-    margin: 0;
-  }
-
+  .section-heading h2 { margin: 0; }
   .section-heading > div > p:last-child {
     max-width: 70ch;
     margin: .75rem 0 0;
     color: var(--text-secondary);
   }
-
   .section-heading > a,
-  .text-link {
-    flex: 0 0 auto;
-    font-weight: 700;
-  }
-
+  .text-link { flex: 0 0 auto; font-weight: 700; }
   .journal-feature {
     display: grid;
     grid-template-columns: minmax(120px, .72fr) minmax(0, 1fr);
@@ -366,7 +301,6 @@ const formatDate = (date?: Date) =>
     padding: 1rem 0;
     border-block: 1px solid var(--border-color);
   }
-
   .feature-image {
     display: block;
     min-height: 116px;
@@ -375,13 +309,7 @@ const formatDate = (date?: Date) =>
     background: var(--bg-elevated);
     color: var(--text-secondary);
   }
-
-  .feature-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
+  .feature-image img { width: 100%; height: 100%; object-fit: cover; }
   .feature-image span {
     display: grid;
     height: 100%;
@@ -392,36 +320,21 @@ const formatDate = (date?: Date) =>
     letter-spacing: .08em;
     text-transform: uppercase;
   }
-
-  .story-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .35rem;
-    margin: 0 0 .35rem;
-  }
-
+  .story-meta { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0 0 .35rem; }
   .journal-feature h3 {
     margin: 0 0 .4rem;
     font-size: clamp(1.15rem, 2.1vw, 1.55rem);
     line-height: 1.12;
   }
-
   .journal-feature h3 a,
   .recent-stories a,
-  .capability-card h3 a {
-    color: inherit;
-    text-decoration: none;
-  }
-
+  .capability-card h3 a { color: inherit; text-decoration: none; }
   .journal-feature h3 a:hover,
   .journal-feature h3 a:focus-visible,
   .recent-stories a:hover span,
   .recent-stories a:focus-visible span,
   .capability-card h3 a:hover,
-  .capability-card h3 a:focus-visible {
-    color: var(--accent);
-  }
-
+  .capability-card h3 a:focus-visible { color: var(--accent); }
   .journal-feature > div > p:last-child {
     display: -webkit-box;
     overflow: hidden;
@@ -431,39 +344,17 @@ const formatDate = (date?: Date) =>
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
-
-  .recent-stories {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .recent-stories li + li {
-    border-top: 1px solid var(--border-color);
-  }
-
+  .recent-stories { margin: 0; padding: 0; list-style: none; }
+  .recent-stories li + li { border-top: 1px solid var(--border-color); }
   .recent-stories a {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
     padding: .8rem 0;
   }
-
-  .recent-stories span {
-    font-weight: 700;
-  }
-
-  .recent-stories small {
-    flex: 0 0 auto;
-    color: var(--text-secondary);
-    font-size: .72rem;
-  }
-
-  .home-section {
-    padding: clamp(3rem, 7vw, 6rem) 0;
-    border-top: 1px solid var(--border-color);
-  }
-
+  .recent-stories span { font-weight: 700; }
+  .recent-stories small { flex: 0 0 auto; color: var(--text-secondary); font-size: .72rem; }
+  .home-section { padding: clamp(3rem, 7vw, 6rem) 0; border-top: 1px solid var(--border-color); }
   .about-grid,
   .technology-grid {
     display: grid;
@@ -471,56 +362,38 @@ const formatDate = (date?: Date) =>
     gap: clamp(2rem, 7vw, 7rem);
     align-items: start;
   }
-
   .about-grid h2,
   .technology-grid h2 {
     margin: 0;
     font-size: clamp(2rem, 4vw, 3.5rem);
     line-height: 1.08;
   }
-
   .section-copy > p,
   .technology-grid > div > p {
     margin-top: 0;
     color: var(--text-secondary);
     font-size: clamp(1.05rem, 2vw, 1.25rem);
   }
-
   .capability-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
   }
-
   .capability-card {
     padding: 1.35rem;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
     background: var(--bg-surface);
   }
-
   .capability-card > span {
     color: var(--accent);
     font-size: .72rem;
     font-weight: 700;
     letter-spacing: .08em;
   }
-
-  .capability-card h3 {
-    margin: 1.2rem 0 .65rem;
-    font-size: 1.15rem;
-  }
-
-  .capability-card p {
-    margin: 0;
-    color: var(--text-secondary);
-    font-size: .92rem;
-  }
-
-  .technology {
-    background: var(--bg-surface);
-  }
-
+  .capability-card h3 { margin: 1.2rem 0 .65rem; font-size: 1.15rem; }
+  .capability-card p { margin: 0; color: var(--text-secondary); font-size: .92rem; }
+  .technology { background: var(--bg-surface); }
   .technology-list {
     display: flex;
     flex-wrap: wrap;
@@ -529,7 +402,6 @@ const formatDate = (date?: Date) =>
     padding: 0;
     list-style: none;
   }
-
   .technology-list li {
     padding: .62rem .85rem;
     border: 1px solid var(--border-color);
@@ -538,13 +410,11 @@ const formatDate = (date?: Date) =>
     font-size: .86rem;
     font-weight: 700;
   }
-
   .portfolio-link-grid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 1rem;
   }
-
   .portfolio-link {
     position: relative;
     display: grid;
@@ -558,77 +428,36 @@ const formatDate = (date?: Date) =>
     color: var(--text-primary);
     text-decoration: none;
   }
-
   .portfolio-link img,
-  .portfolio-link-shade {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
+  .portfolio-link-shade { position: absolute; inset: 0; width: 100%; height: 100%; }
   .portfolio-link img {
     object-fit: cover;
     opacity: .58;
     transition: opacity .2s ease, transform .2s ease;
   }
-
   .portfolio-link-shade {
     background:
       linear-gradient(transparent 20%, rgba(8, 11, 14, .92)),
       radial-gradient(circle at 82% 18%, rgba(76, 136, 181, .16), transparent 40%);
   }
-
   .portfolio-link h3,
-  .portfolio-link-arrow {
-    position: relative;
-    z-index: 1;
-  }
-
-  .portfolio-link h3 {
-    margin: 0;
-    font-size: 1.05rem;
-    line-height: 1.2;
-  }
-
-  .portfolio-link-arrow {
-    margin-top: .45rem;
-    color: var(--accent);
-    font-size: 1.15rem;
-  }
-
+  .portfolio-link-arrow { position: relative; z-index: 1; }
+  .portfolio-link h3 { margin: 0; font-size: 1.05rem; line-height: 1.2; }
+  .portfolio-link-arrow { margin-top: .45rem; color: var(--accent); font-size: 1.15rem; }
   .portfolio-link:hover,
-  .portfolio-link:focus-visible {
-    border-color: var(--accent);
-    text-decoration: none;
-  }
-
+  .portfolio-link:focus-visible { border-color: var(--accent); text-decoration: none; }
   .portfolio-link:hover img,
-  .portfolio-link:focus-visible img {
-    opacity: .74;
-    transform: scale(1.02);
-  }
-
-  .empty-state {
-    color: var(--text-secondary);
-  }
+  .portfolio-link:focus-visible img { opacity: .74; transform: scale(1.02); }
+  .empty-state { color: var(--text-secondary); }
 
   @media (max-width: 1050px) {
-    .intro-grid {
-      grid-template-columns: 1fr;
-    }
-
+    .intro-grid { grid-template-columns: 1fr; }
     .capability-grid,
-    .portfolio-link-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    .portfolio-link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   @media (max-width: 720px) {
-    .compact-hero {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
+    .compact-hero { grid-template-columns: minmax(0, 1fr); }
     .hero-mark {
       position: absolute;
       right: -1.5rem;
@@ -636,38 +465,15 @@ const formatDate = (date?: Date) =>
       width: 42%;
       opacity: .16;
     }
-
     .journal-feature,
     .about-grid,
-    .technology-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .feature-image {
-      aspect-ratio: 16 / 8;
-    }
-
-    .section-heading {
-      display: block;
-    }
-
-    .section-heading > a {
-      display: inline-block;
-      margin-top: 1rem;
-    }
-
+    .technology-grid { grid-template-columns: 1fr; }
+    .feature-image { aspect-ratio: 16 / 8; }
+    .section-heading { display: block; }
+    .section-heading > a { display: inline-block; margin-top: 1rem; }
     .capability-grid,
-    .portfolio-link-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .recent-stories a {
-      display: block;
-    }
-
-    .recent-stories small {
-      display: block;
-      margin-top: .25rem;
-    }
+    .portfolio-link-grid { grid-template-columns: 1fr; }
+    .recent-stories a { display: block; }
+    .recent-stories small { display: block; margin-top: .25rem; }
   }
 </style>
