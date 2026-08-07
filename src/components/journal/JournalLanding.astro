@@ -28,6 +28,7 @@ interface Props {
   sections: ResolvedJournalSection[];
   featuredPost?: JournalPostSummary;
   activeSection?: string;
+  canonicalPath?: string;
 }
 
 const {
@@ -41,6 +42,7 @@ const {
   sections,
   featuredPost,
   activeSection,
+  canonicalPath,
 } = Astro.props;
 
 const sectionLinks = [
@@ -53,7 +55,7 @@ const sectionLinks = [
 ];
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} {canonicalPath}>
   <div class="journal-shell">
     <Container>
       <header class="journal-header">
