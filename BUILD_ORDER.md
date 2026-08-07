@@ -12,6 +12,21 @@ The site is operational and publishable. The content system now has a verified
 Markdown-first editor, external-image workflow, and safe import path. Sprint 13
 begins with a separate Resume content and design review before implementation.
 
+## Next-session checkpoint
+
+Start the next development session from the latest remote `gpt-handoff` tip.
+Sprint 12 is complete and owner-verified. Sprint 13 begins with a Resume content
+and design review; do not implement the Resume rebuild until that review defines
+its source model, public-page goals, and acceptance criteria.
+
+The separate Sprint 11 hosted follow-up remains open: automatic Cloudflare
+production builds are still enabled. Do not treat deliberate-only publishing as
+complete until a Tina save causes no deployment, unauthenticated/wrong-identity
+requests are rejected, and a failed-build recovery exercise is recorded.
+
+Use `STARTUP_PROMPT.md` to begin the next session. It includes the GitHub CLI
+bootstrap and authentication safeguards required in fresh agent workspaces.
+
 ## Active sprint order
 
 8. Tina and content-model audit

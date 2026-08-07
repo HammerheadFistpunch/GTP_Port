@@ -827,6 +827,62 @@ git status --short
 git diff --check
 ```
 
+## GitHub CLI in a fresh agent workspace
+
+Agent workspaces may start without the previous checkout, `gh` binary, shell
+`PATH`, or GitHub CLI configuration. Treat CLI availability and authentication
+as session-local until they are verified from a fresh shell.
+
+Before editing or promising an exact-SHA push:
+
+1. Confirm the repository, branch, remote, worktree, and remote tip.
+2. Run `gh --version` and `gh auth status`. If `gh` is unavailable, install or
+   expose it before using a CLI-only publishing workflow; the connected GitHub
+   integration may inspect or publish repository objects but can create a
+   different commit SHA from a local commit.
+3. Put `GH_CONFIG_DIR` in a workspace-persistent directory outside the
+   repository, and export it in every shell that runs `gh` or Git's GitHub
+   credential helper. Never place `hosts.yml` or a token inside the repository.
+4. Resolve the absolute `gh` path and configure the repository-local HTTPS
+   credential helper with both that path and `GH_CONFIG_DIR`. A helper that says
+   only `!gh auth git-credential` can fail when a later shell has a different
+   `PATH`.
+5. If device authorization is required, start it in a live PTY and keep that
+   exact process open. Give the owner only the newest active code, poll the same
+   terminal session after approval, and wait for a successful exit before
+   starting another shell.
+6. Verify `gh auth status` again from a fresh shell using the same config
+   directory. Authentication is not durable merely because the browser said the
+   device was approved.
+7. Fetch `origin/gpt-handoff` again immediately before committing and pushing.
+   Tina saves can advance the branch during a coding session. Preserve those
+   commits with a fast-forward update or a reviewed rebase; never force-push.
+
+A robust shell setup uses task-specific paths rather than global environment
+locations:
+
+```bash
+GH_BIN="$(command -v gh)"
+GH_WORK_CONFIG="$(cd .. && pwd)/gh-config"
+mkdir -p "$GH_WORK_CONFIG"
+export GH_CONFIG_DIR="$GH_WORK_CONFIG"
+
+"$GH_BIN" auth status
+
+git config --local credential.https://github.com.helper ""
+git config --local --add credential.https://github.com.helper \
+  "!GH_CONFIG_DIR='$GH_WORK_CONFIG' '$GH_BIN' auth git-credential"
+
+git fetch origin gpt-handoff
+git status -sb
+git rev-list --left-right --count HEAD...origin/gpt-handoff
+```
+
+If authentication is missing, run the device flow only after
+`GH_CONFIG_DIR` is set, keep the terminal process alive until it completes, and
+then rerun the fresh-shell checks above. Do not print, copy, or commit the
+contents of the GitHub CLI config directory.
+
 ## Common failures and what they usually mean
 
 ### `React is not defined`

@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-06 after Sprint 12D authoring rollout
+Last reviewed: 2026-08-06 session wrap after Sprint 12
 
 ## Active project documents
 
@@ -13,6 +13,7 @@ Last reviewed: 2026-08-06 after Sprint 12D authoring rollout
 | `BUILD_ORDER.md` | Active sprint, next executable chunk, and decision gates |
 | `Roadmap.md` | Full sprint scope, dependencies, and acceptance criteria |
 | `PROJECT_LOG.md` | Chronological decisions, completed work, and verification |
+| `STARTUP_PROMPT.md` | Copy-ready next-session handoff, baseline checks, and GitHub CLI safeguards |
 | `SITE_MAINTENANCE_GUIDE.md` | Owner guide to visual, Astro, Tina, schema, route, and dependency changes |
 | `CONTENT_GUIDE.md` | Editable content locations and publishing behavior |
 | `CONTENT_PORTABILITY.md` | Redesign and migration guardrails |

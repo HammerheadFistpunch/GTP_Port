@@ -1,5 +1,22 @@
 # GTP_Port Project Log
 
+## 2026-08-06 - Session wrap after Sprint 12
+
+- Confirmed Sprint 12A through 12D are complete, deployed, and owner-verified.
+- Confirmed remote `gpt-handoff` baseline `4a88fef` contains the reviewed Sprint
+  12D tree before this documentation-only wrap-up.
+- Kept Sprint 13 Resume content and design review as the next planned work.
+- Kept Sprint 11's automatic-build cutoff and negative/security/recovery checks
+  explicitly open.
+- Added `STARTUP_PROMPT.md` as the copy-ready next-session handoff.
+- Documented a durable GitHub CLI setup for fresh workspaces, including a
+  persistent config directory, absolute credential-helper path, live device-flow
+  polling, fresh-shell verification, remote fast-forward checks, and no-force
+  publishing.
+
+No application code, Tina schema, site content, or deployment configuration was
+changed in this wrap-up.
+
 ## 2026-08-06 - Sprint 12D authoring rollout completed
 
 - Recorded the owner's hosted Sprint 12C import approval and preserved the
