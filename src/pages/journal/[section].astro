@@ -3,7 +3,7 @@ import { getCollection, getEntry } from "astro:content";
 import JournalLanding, { type JournalPostSummary } from "../../components/journal/JournalLanding.astro";
 import {
   createJournalSectionRegistry,
-  journalSectionReferenceId,
+  journalSectionMatches,
   type ResolvedJournalSection,
 } from "../../lib/journal-sections";
 import { createTagRegistry, resolveTagReferences } from "../../lib/tags";
@@ -32,7 +32,7 @@ const page = journalPage.data;
 const tagRegistry = createTagRegistry(await getCollection("tags"));
 const dateFormatter = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" });
 const entries = (await getCollection("entries", ({ data }) =>
-  !data.draft && journalSectionReferenceId(data.journalSection) === section.id
+  !data.draft && journalSectionMatches(data.journalSection, section)
 )).sort((a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0));
 
 const posts: JournalPostSummary[] = entries.map((entry) => ({
