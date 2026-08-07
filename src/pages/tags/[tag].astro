@@ -5,9 +5,9 @@ import type { JournalPostSummary } from "../../components/journal/JournalLanding
 import { createJournalSectionRegistry, resolveJournalSection } from "../../lib/journal-sections";
 import {
   createTagRegistry,
+  resolveEffectiveTag,
   resolveTagReferences,
   tagHref,
-  tagReferenceId,
 } from "../../lib/tags";
 
 export async function getStaticPaths() {
@@ -26,7 +26,7 @@ export async function getStaticPaths() {
 
     return {
       entry,
-      tagIds: new Set(entry.data.tags.map(tagReferenceId)),
+      topicIds: new Set(tags.map((tag) => tag.id)),
       summary: {
         title: entry.data.title,
         excerpt: entry.data.description,
@@ -41,21 +41,24 @@ export async function getStaticPaths() {
     };
   });
 
-  return [...registry.byRoute.entries()].map(([route, tag]) => ({
-    params: { tag: route },
-    props: {
-      tag,
-      posts: summaries
-        .filter(({ tagIds }) => tagIds.has(tag.id))
-        .sort((a, b) =>
-          (b.entry.data.date?.getTime() ?? 0) -
-          (a.entry.data.date?.getTime() ?? 0) ||
-          a.entry.data.title.localeCompare(b.entry.data.title)
-        )
-        .map(({ summary }) => summary),
-      canonicalPath: route === tag.slug ? undefined : tagHref(tag.slug),
-    },
-  }));
+  return [...registry.byRoute.entries()].map(([route, storedTag]) => {
+    const tag = resolveEffectiveTag(storedTag, registry);
+    return {
+      params: { tag: route },
+      props: {
+        tag,
+        posts: summaries
+          .filter(({ topicIds }) => topicIds.has(tag.id))
+          .sort((a, b) =>
+            (b.entry.data.date?.getTime() ?? 0) -
+            (a.entry.data.date?.getTime() ?? 0) ||
+            a.entry.data.title.localeCompare(b.entry.data.title)
+          )
+          .map(({ summary }) => summary),
+        canonicalPath: route === tag.slug ? undefined : tagHref(tag.slug),
+      },
+    };
+  });
 }
 
 const { tag, posts, canonicalPath } = Astro.props;
