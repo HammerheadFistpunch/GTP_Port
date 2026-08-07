@@ -40,6 +40,8 @@ The site is operational and ready for real content. It includes:
   sanitized preview output, responsive YouTube previews, and preserved MDX
 - shared Tina image fields with Media Manager upload/selection, direct HTTPS
   URLs, previews, public Immich-asset support, and matching Astro validation
+- dependency-free `/robots.txt`, `/sitemap.xml`, and `/rss.xml` routes generated
+  from the same published content model, with RSS autodiscovery in the shared head
 
 Sprints 1 through 13 are implemented. Sprint 13 rebuilt `/resume/` as an
 editorial professional-background page, populated its structured Tina source,
@@ -48,15 +50,22 @@ components. `RESUME_DESIGN.md` records the source model, content rules, PDF
 decision, acceptance results, and the one Tina body-field compatibility hold
 reserved for Sprint 14's schema/QA pass.
 
-Sprint 14 is the final Phase 2 migration, QA, and documentation pass. Sprint 11's
-protected Publish Site action has successfully triggered a deployment, but
-automatic production builds remain enabled; the cutoff and its negative test
-remain part of the final operational QA.
+Sprint 14 is the final Phase 2 migration, QA, and documentation pass. Its source
+audit has confirmed that the retired Services proof pages, retired Portfolio
+category pages, and Test content are gone while their redirects remain.
+`SPRINT14_QA.md` distinguishes source-verified work from the hosted Tina,
+Cloudflare, browser, Lighthouse, and full local build checks that still need
+recorded evidence.
+
+Sprint 11's protected Publish Site action has successfully triggered a
+deployment, but automatic production builds remain enabled; the cutoff and its
+negative test remain part of the final operational QA.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence,
-`RESUME_DESIGN.md` for the Resume-specific design and source rules, and
-`SITE_MAINTENANCE_GUIDE.md` for owner-directed code and Tina changes.
+`SPRINT14_QA.md` for final migration/QA evidence, `RESUME_DESIGN.md` for the
+Resume-specific design and source rules, and `SITE_MAINTENANCE_GUIDE.md` for
+owner-directed code and Tina changes.
 
 ## Source of truth
 
@@ -108,6 +117,8 @@ secrets and must never be committed.
 With TinaCloud credentials available:
 
 ```bash
+npm run test:authoring
+npx tsc --noEmit
 npm run build
 git diff --check
 git status --short
@@ -119,6 +130,11 @@ For an Astro-only local check without TinaCloud credentials:
 npm run build:astro
 ```
 
+Sprint 14 additionally verifies redirects, crawl/feed endpoints, metadata,
+internal links, accessibility, responsive layouts, browser compatibility, and
+Lighthouse results. Record that evidence in `SPRINT14_QA.md` rather than marking
+checks complete from source inspection alone.
+
 ## Unified content workflow
 
 All published articles, projects, galleries, and case studies live under
@@ -127,17 +143,32 @@ entry appears in Portfolio, Journal, or both. **Archive to Journal** removes an
 entry from Portfolio without moving its Markdown file or changing its detail
 URL.
 
+`placement` remains an active compatibility field because Journal filters, tag
+archives, Homepage behavior, entry layout/back-links, import tooling, and tests
+still consume it. It is not a dead field and should not be removed as Sprint 14
+cleanup without a replacement publication model.
+
 Homepage Portfolio ordering comes from an explicit Tina destination list that
-links to existing content without owning it. Journal entries use one controlled primary section;
-`/journal/` remains chronological and excludes its explicitly selected feature
-from the remaining feed. Descriptive subjects come from referenced Tag
-documents and publish separately at `/tags/[slug]/`.
+links to existing content without owning it. Journal entries use one controlled
+primary section; `/journal/` remains chronological and excludes its explicitly
+selected feature from the remaining feed. Descriptive subjects come from
+referenced Tag documents and publish separately at `/tags/[slug]/`.
 
 The Homepage has a separate drag-order list for its five major blocks. Each
 block has an explicit visibility switch. Its Journal feature is selected in
 Tina and falls back to the newest published Journal entry when the selection is
 missing, drafted, or no longer Journal-placed; that feature is always excluded
 from the compact recent-story list.
+
+## Crawl and feed endpoints
+
+- `/robots.txt` allows public crawling and advertises the sitemap.
+- `/sitemap.xml` is generated from fixed pages, Journal sections, tag archives,
+  published Flexible Pages, and non-draft archive entries.
+- `/rss.xml` contains dated, non-draft Journal entries and preserves their
+  canonical `/archive/` detail URLs.
+
+These endpoints are implemented in Astro with no additional package dependency.
 
 ## Resume workflow
 
