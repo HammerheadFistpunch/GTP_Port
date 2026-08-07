@@ -41,16 +41,17 @@ The site is operational and ready for real content. It includes:
 - shared Tina image fields with Media Manager upload/selection, direct HTTPS
   URLs, previews, public Immich-asset support, and matching Astro validation
 
-Sprints 1 through 12 are complete. Sprint 13 Resume implementation is in
-progress: the public Resume has been rebuilt around a professional-profile
-layout and the structured source has been populated with current career facts.
-`RESUME_DESIGN.md` records the source model, content rules, PDF decision, and
-remaining verification gates. Sprint 13 is not complete until the normal
-Tina-aware build/editor checks and deployed visual review pass.
+Sprints 1 through 13 are implemented. Sprint 13 rebuilt `/resume/` as an
+editorial professional-background page, populated its structured Tina source,
+was deployed and owner-verified, and removed the superseded Resume rendering
+components. `RESUME_DESIGN.md` records the source model, content rules, PDF
+decision, acceptance results, and the one Tina body-field compatibility hold
+reserved for Sprint 14's schema/QA pass.
 
-Sprint 11's protected Publish Site action has successfully triggered a
-deployment, but automatic production builds remain enabled; the cutoff and its
-negative test remain tracked in `BUILD_ORDER.md`.
+Sprint 14 is the final Phase 2 migration, QA, and documentation pass. Sprint 11's
+protected Publish Site action has successfully triggered a deployment, but
+automatic production builds remain enabled; the cutoff and its negative test
+remain part of the final operational QA.
 
 See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
 active work queue, `Roadmap.md` for the full sprint sequence,
@@ -148,6 +149,10 @@ The structured Resume fields own the professional profile, capabilities,
 experience, highlights, education, and public links. Presentation belongs in
 `src/components/resume/ResumeProfile.astro`. Private application-only contact
 information should not be added to the public Resume source.
+
+The legacy Tina `Additional Resume Content` field is a documented compatibility
+hold only; the public Resume does not render it. Remove it only with a regenerated
+and validated Tina lock during Sprint 14.
 
 PDF generation is deliberately excluded until it can be produced from the same
 structured source without creating a parallel dataset. See `RESUME_DESIGN.md`.
