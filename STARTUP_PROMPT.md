@@ -8,25 +8,28 @@ Continue development of `angrysquirrel.org` using
 `HammerheadFistpunch/GTP_Port` on branch `gpt-handoff`.
 
 Start by reading `AGENTS.md`, `DOCUMENTATION.md`, `BUILD_ORDER.md`,
-`Roadmap.md`, `PROJECT_LOG.md`, and the relevant owner guides. Verify the
-current remote branch tip before making changes; the known pre-wrap Sprint 12D
-baseline was `4a88fefcf71dc5cd93206b48d3eb78a72d35ddad`, but the remote is the
-source of truth and should now include the documentation-only session wrap.
-Preserve any later Tina-generated commits.
+`Roadmap.md`, `PROJECT_LOG.md`, `RESUME_DESIGN.md`, and the relevant owner
+guides. Verify the current remote branch tip before making changes and preserve
+any later Tina-generated commits.
 
 Current project status:
 
-- Sprint 12A-12D is complete, deployed, and owner-verified.
-- The Markdown editor, sanitized live preview, playable privacy-enhanced YouTube
-  preview, external HTTPS/Immich image workflow, and safe Markdown/MDX importer
-  are working.
-- All 11 existing Content Entries passed parse/serialize/reopen and body-policy
-  checks; both verification entries are retained as drafts.
-- The last full validation passed 12/12 authoring tests, TypeScript, Tina
-  indexing/schema/admin compilation, and a 50-page Astro production build.
-- Sprint 13 is next and must begin with a Resume content and design review. Read
-  the current Resume source/model, present the review findings and a reviewable
-  Sprint 13 scope, and wait for approval before implementation.
+- Sprints 1-13 are implemented.
+- Sprint 12's Markdown editor, sanitized live preview, external HTTPS/Immich
+  image workflow, and safe Markdown/MDX importer are deployed and verified.
+- Sprint 13 rebuilt `/resume/` as a structured professional-background page.
+  The deployed page is owner-approved, its source is populated in
+  `src/content/pages/resume.md`, and the superseded `ResumeOverview.astro` and
+  `Timeline.astro` components were removed.
+- `RESUME_DESIGN.md` is the Resume-specific source/design record. PDF generation
+  remains deliberately excluded until it can use the same structured source.
+- The Tina Resume `Additional Resume Content` body field remains only as a
+  compatibility hold. Remove it only when `tina/config.ts` and
+  `tina/tina-lock.json` can be regenerated and validated together.
+- Sprint 14 is next: final migration, QA, and documentation reconciliation.
+  Begin by reconciling `BUILD_ORDER.md`, `Roadmap.md`, `PROJECT_LOG.md`, and
+  `SITE_MAINTENANCE_GUIDE.md` against the deployed Sprint 13 state before
+  destructive schema cleanup.
 - Sprint 11 has an open operational follow-up: automatic Cloudflare production
   builds remain enabled. The protected Publish Site action works, but the
   no-automatic-build test, wrong-identity/unauthenticated rejection checks, and
@@ -65,7 +68,8 @@ credential helper:
 Continue the established workflow: keep changes in reviewable chunks, preserve
 unrelated Tina/content edits, update every applicable document automatically,
 run the smallest relevant checks plus the full sprint gate, commit intentionally,
-and push directly to `gpt-handoff`. Stop after presenting Sprint 13's Resume
-review and proposed scope unless I approve implementation.
+and push directly to `gpt-handoff`. Sprint 14 should finish the outstanding
+schema compatibility holds, hosted/editor checks, publishing cutoff checks,
+route/link/accessibility/responsive QA, and final documentation reconciliation.
 
 ---
