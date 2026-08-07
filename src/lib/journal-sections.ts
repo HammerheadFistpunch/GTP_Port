@@ -56,6 +56,19 @@ export const createJournalSectionRegistry = (
 export const resolveJournalSection = (
   reference: string | undefined,
   registry: JournalSectionRegistry,
-) => registry.byId.get(journalSectionReferenceId(reference));
+) => {
+  if (!reference) return undefined;
+  const id = journalSectionReferenceId(reference);
+  if (id) return registry.byId.get(id);
+  return registry.byRoute.get(reference);
+};
+
+export const journalSectionMatches = (
+  reference: string | undefined,
+  section: ResolvedJournalSection,
+) => {
+  const id = journalSectionReferenceId(reference);
+  return id ? id === section.id : reference === section.slug || section.aliases.includes(reference || "");
+};
 
 export const journalSectionHref = (slug: string) => `/journal/${slug}/`;
