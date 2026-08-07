@@ -3,7 +3,6 @@ import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { validateFlexiblePagePath } from "./lib/flexible-pages";
 import { flexiblePageBlockSchema } from "./lib/page-blocks";
-import { journalSectionSlugs } from "./lib/journal-sections";
 import { getImageSourceError } from "./lib/image-sources";
 
 const imageSource = z.string().superRefine((value, context) => {
@@ -11,24 +10,8 @@ const imageSource = z.string().superRefine((value, context) => {
     if (error) context.addIssue({ code: "custom", message: error });
 });
 
-const sharedFields = {
-    title: z.string(),
-    description: z.string(),
-    tags: z.array(z.object({
-        tag: z.string().regex(
-            /^src\/content\/tags\/[a-z0-9]+(?:-[a-z0-9]+)*\.md$/,
-            "Tags must reference a document in src/content/tags.",
-        ),
-    })).default([]),
-    coverImage: imageSource.optional(),
-    draft: z.boolean().default(false),
-};
-
 const tags = defineCollection({
-    loader: glob({
-        pattern: "**/*.md",
-        base: "./src/content/tags",
-    }),
+    loader: glob({ pattern: "**/*.md", base: "./src/content/tags" }),
     schema: z.object({
         label: z.string().min(1),
         slug: z.string().regex(
@@ -42,6 +25,35 @@ const tags = defineCollection({
         )).default([]),
     }),
 });
+
+const journalSections = defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/journal-sections" }),
+    schema: z.object({
+        label: z.string().min(1),
+        slug: z.string().regex(
+            /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+            "Journal section slugs must use lowercase letters, numbers, and single hyphens.",
+        ),
+        description: z.string().default(""),
+        active: z.boolean().default(true),
+        aliases: z.array(z.string().regex(
+            /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+            "Journal section aliases must use lowercase letters, numbers, and single hyphens.",
+        )).default([]),
+    }),
+});
+
+const entryTags = z.array(z.object({
+    tag: z.string().regex(
+        /^src\/content\/tags\/[a-z0-9]+(?:-[a-z0-9]+)*\.md$/,
+        "Tags must reference a document in src/content/tags.",
+    ),
+})).default([]);
+
+const journalSectionReference = z.string().regex(
+    /^src\/content\/journal-sections\/[a-z0-9]+(?:-[a-z0-9]+)*\.md$/,
+    "Journal sections must reference a document in src/content/journal-sections.",
+);
 
 const mediaItem = z.object({
     type: z.enum(["image", "video"]),
@@ -60,10 +72,23 @@ const immichGallery = z.object({
     imageAltPrefix: z.string().optional(),
 });
 
-const link = z.object({
-    label: z.string(),
-    href: z.string(),
+const entries = defineCollection({
+    loader: glob({ pattern: "**/*.mdx", base: "./src/content/entries" }),
+    schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        date: z.coerce.date().optional(),
+        updatedDate: z.coerce.date().optional(),
+        journalSection: journalSectionReference.optional(),
+        tags: entryTags,
+        coverImage: imageSource.optional(),
+        draft: z.boolean().default(false),
+        immichGallery: immichGallery.optional(),
+        media: z.array(mediaItem).default([]),
+    }),
 });
+
+const link = z.object({ label: z.string(), href: z.string() });
 
 const navigationDestination = z.object({
     label: z.string(),
@@ -93,14 +118,8 @@ const homepageSectionOrder = z.array(z.enum(homepageSectionKeys)).default([
     "portfolio",
 ]);
 
-const homepageLink = z.object({
-    label: z.string(),
-    href: z.string(),
-});
-
-const homepagePortfolioLink = homepageLink.extend({
-    image: imageSource.optional(),
-});
+const homepageLink = z.object({ label: z.string(), href: z.string() });
+const homepagePortfolioLink = homepageLink.extend({ image: imageSource.optional() });
 
 const timelineItem = z.object({
     period: z.string(),
@@ -111,10 +130,7 @@ const timelineItem = z.object({
     highlights: z.array(z.string()).default([]),
 });
 
-const competency = z.object({
-    title: z.string(),
-    description: z.string(),
-});
+const competency = z.object({ title: z.string(), description: z.string() });
 
 const educationItem = z.object({
     degree: z.string(),
@@ -123,56 +139,8 @@ const educationItem = z.object({
     period: z.string().optional(),
 });
 
-const entries = defineCollection({
-    loader: glob({
-        pattern: "**/*.mdx",
-        base: "./src/content/entries",
-    }),
-    schema: z.object({
-        ...sharedFields,
-        entryType: z.enum([
-            "Article",
-            "Project",
-            "Case Study",
-            "Gallery",
-        ]),
-        placement: z.enum([
-            "portfolio",
-            "both",
-            "journal",
-        ]),
-        date: z.coerce.date().optional(),
-        updatedDate: z.coerce.date().optional(),
-        primaryTopic: z.string(),
-        journalSection: z.enum(journalSectionSlugs).optional(),
-        technologies: z.array(z.string()).default([]),
-        links: z.object({
-            repository: z.url().optional(),
-            demo: z.url().optional(),
-            external: z.url().optional(),
-        }).optional(),
-        immichGallery: immichGallery.optional(),
-        media: z.array(mediaItem).default([]),
-    }).superRefine((entry, context) => {
-        const isPublishedInJournal =
-            !entry.draft &&
-            (entry.placement === "journal" || entry.placement === "both");
-
-        if (isPublishedInJournal && !entry.journalSection) {
-            context.addIssue({
-                code: "custom",
-                path: ["journalSection"],
-                message: "Published Journal entries require a primary Journal section.",
-            });
-        }
-    }),
-});
-
 const pages = defineCollection({
-    loader: glob({
-        pattern: "**/*.md",
-        base: "./src/content/pages",
-    }),
+    loader: glob({ pattern: "**/*.md", base: "./src/content/pages" }),
     schema: z.discriminatedUnion("pageType", [
         z.object({
             pageType: z.literal("home"),
@@ -236,7 +204,6 @@ const pages = defineCollection({
             eyebrow: z.string().optional(),
             headline: z.string(),
             description: z.string(),
-            headerStyle,
             sectionTitle: z.string(),
             emptyMessage: z.string(),
             featuredEntry: z.string().optional(),
@@ -258,21 +225,12 @@ const pages = defineCollection({
 });
 
 const flexiblePages = defineCollection({
-    loader: glob({
-        pattern: "**/*.md",
-        base: "./src/content/flexible-pages",
-    }),
+    loader: glob({ pattern: "**/*.md", base: "./src/content/flexible-pages" }),
     schema: z.object({
         title: z.string(),
         path: z.string().superRefine((value, context) => {
             const error = validateFlexiblePagePath(value);
-
-            if (error) {
-                context.addIssue({
-                    code: "custom",
-                    message: error,
-                });
-            }
+            if (error) context.addIssue({ code: "custom", message: error });
         }),
         description: z.string(),
         eyebrow: z.string().optional(),
@@ -288,10 +246,7 @@ const flexiblePages = defineCollection({
 });
 
 const settings = defineCollection({
-    loader: glob({
-        pattern: "**/*.md",
-        base: "./src/content/settings",
-    }),
+    loader: glob({ pattern: "**/*.md", base: "./src/content/settings" }),
     schema: z.object({
         siteName: z.string(),
         logoText: z.string(),
@@ -307,6 +262,7 @@ const settings = defineCollection({
 export const collections = {
     entries,
     flexiblePages,
+    journalSections,
     pages,
     settings,
     tags,
