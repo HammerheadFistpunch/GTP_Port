@@ -1,120 +1,112 @@
 # GTP_Port
 
-Astro source for AngrySquirrel.org: a dark, editorial-first personal website
-combining long-form publishing with a professional portfolio of software,
-photography, video, writing, engineering, and case-study work.
+Astro source for AngrySquirrel.org: a dark, editorial-first personal website combining long-form publishing with a professional portfolio of software, photography, video, writing, engineering, and case-study work.
 
 ## Current status
 
-The site is operational and ready for real content. It includes:
+Sprints 1-14 are complete. Phase 2 is closed and the deployed site is owner-accepted.
 
-- a static Astro site deployed through Cloudflare Pages
-- Git-backed Markdown and MDX content
-- TinaCloud editing at `/admin/`, with Cloudflare Access protecting the
-  deliberate publishing workflow
-- one unified Journal Entries collection with Portfolio and Journal placement
-- neutral `/archive/[slug]/` detail pages shared by every entry type
-- a label-only Portfolio menu with direct Video, Photography, Projects, Case
-  Studies/Research, and Writing destinations
-- two surviving Portfolio Flexible Pages for Video and Photography, with
-  Journal-backed destinations for the other work types
-- a compact Journal landing page with an explicit featured story, chronological
-  feed, and four static section routes
-- a controlled Tina tag registry with 29 static subject archives shared by
-  Journal and Portfolio entries
-- a compact Homepage with side-by-side Hero and Journal panels, editable About,
-  capabilities, technology, and compact Portfolio destination links
-- Tina-controlled Homepage visibility, section order, copy, links, Journal
-  feature, recent-story count, and Portfolio destination ordering
-- native media, video, lightboxes, and shared Immich galleries
-- a structured professional-background Resume page with profile, capabilities,
-  experience, quantified highlights, education, and intentional public links
-- guarded Flexible Pages with top-level and nested static routes
-- reorderable Flexible Page blocks for Markdown text, images, YouTube, Immich
-  galleries, child-page tiles, and calls to action
-- Tina-controlled nested primary navigation with accessible desktop disclosure,
-  mobile expansion, internal page references, and custom/external URLs
-- deliberate production publishing through a protected Tina **Publish Site**
-  screen, a server-only Cloudflare deploy hook, and saved/live commit checks
-- a Markdown-source Journal Entry editor with Write/Split/Preview modes,
-  sanitized preview output, responsive YouTube previews, and preserved MDX
-- shared Tina image fields with Media Manager upload/selection, direct HTTPS
-  URLs, previews, public Immich-asset support, and matching Astro validation
-- dependency-free `/robots.txt`, `/sitemap.xml`, and `/rss.xml` routes generated
-  from the same published content model, with RSS autodiscovery in the shared head
+The site currently includes:
 
-Sprints 1 through 13 are implemented. Sprint 13 rebuilt `/resume/` as an
-editorial professional-background page, populated its structured Tina source,
-was deployed and owner-verified, and removed the superseded Resume rendering
-components. `RESUME_DESIGN.md` records the source model, content rules, PDF
-decision, acceptance results, and the one Tina body-field compatibility hold
-reserved for Sprint 14's schema/QA pass.
-
-Sprint 14 is the final Phase 2 migration, QA, and documentation pass. Its source
-audit has confirmed that the retired Services proof pages, retired Portfolio
-category pages, and Test content are gone while their redirects remain.
-`SPRINT14_QA.md` distinguishes source-verified work from the hosted Tina,
-Cloudflare, browser, Lighthouse, and full local build checks that still need
-recorded evidence.
-
-Sprint 11's protected Publish Site action has successfully triggered a
-deployment, but automatic production builds remain enabled; the cutoff and its
-negative test remain part of the final operational QA.
-
-See `DOCUMENTATION.md` for the documentation index, `BUILD_ORDER.md` for the
-active work queue, `Roadmap.md` for the full sprint sequence,
-`SPRINT14_QA.md` for final migration/QA evidence, `RESUME_DESIGN.md` for the
-Resume-specific design and source rules, and `SITE_MAINTENANCE_GUIDE.md` for
-owner-directed code and Tina changes.
+- Astro 6 static rendering on Cloudflare Pages
+- Git-backed Markdown/MDX as the durable content source
+- TinaCloud editing at `/admin/`
+- deliberate production publishing through **Settings → Publish Site**
+- automatic Cloudflare production branch deployments disabled
+- one unified Journal content model; every Content Entry is a Journal entry
+- durable `/archive/[slug]/` detail URLs
+- Portfolio composed from dedicated Custom Pages plus direct Journal destinations
+- Tina-managed Journal Sections with stable slugs, aliases, and Active/Retired state
+- owner-facing **Topics** taxonomy with stable `/tags/[slug]/` archives, Active/Retired state, aliases, and optional replacement-topic migration
+- related-story ranking based primarily on shared Topics, then same Journal Section
+- Markdown-first Journal authoring with Write/Split/Preview, formatting controls, inline code, links, Media Manager image insertion, external images, and YouTube insertion
+- safe Markdown/MDX Import that creates the same simplified Journal model as manual authoring
+- a compact structured Homepage
+- Tina-managed navigation/footer settings
+- guarded Custom Pages with reorderable content blocks
+- a structured professional-background Resume maintained from one Tina-backed source
+- shared media/lightbox and Immich gallery support
+- dependency-free `/robots.txt`, `/sitemap.xml`, and `/rss.xml`
+- canonical/Open Graph/Twitter metadata in the shared layout
 
 ## Source of truth
 
 - Repository branch: `gpt-handoff`
-- Content: Markdown and MDX under `src/content/`
-- Layout and presentation: Astro under `src/pages/`, `src/layouts/`,
-  `src/components/`, and `src/styles/`
-- CMS schema: `tina/config.ts`
-- Astro content validation: `src/content.config.ts`
+- Content: `src/content/`
+- Layout/presentation: `src/pages/`, `src/layouts/`, `src/components/`, `src/styles/`
+- Tina schema: `tina/config.ts`
+- Astro validation: `src/content.config.ts`
+- Generated Tina lock: `tina/tina-lock.json`
 
-TinaCloud is an editing interface. GitHub Markdown/MDX remains the durable
-source of truth.
+TinaCloud is the editing interface; GitHub Markdown/MDX remains the durable source of truth.
 
-## Editing workflow
-
-### Hosted editing
+## Owner editing workflow
 
 ```text
-Open https://angrysquirrel.org/admin/
--> edit content in TinaCloud
--> save the entry
--> Tina commits the content change to gpt-handoff
--> continue editing without rebuilding the public site
--> open Site > Publish Site once the session is complete
--> Cloudflare builds the latest gpt-handoff commit
--> review the deployed page
+Open /admin/
+→ edit and save content in TinaCloud
+→ Tina commits to gpt-handoff
+→ continue editing without a production rebuild
+→ open Settings > Publish Site when the session is ready
+→ publish once
+→ review the deployed site
 ```
 
-### Local code or schema work
+Draft content remains stored in Git/Tina but does not receive a public route.
 
-```text
-Pull gpt-handoff
--> copy .env.example to .env and add the TinaCloud read-only token
--> npm install
--> npm run dev
--> make and review changes
--> npm run build
--> commit and push in VS Code
--> open Tina Site > Publish Site when the complete change set is ready
+## Journal model
+
+Current Journal fields:
+
+- Title
+- Description
+- Publication Date
+- Status (Draft/Published)
+- Journal Section
+- Topics
+- Cover Image
+- optional Immich Gallery
+- optional structured media
+- Markdown body
+
+Deprecated placement/type/project metadata was removed during Sprint 14.
+
+## Topics and Sections
+
+**Journal Section = where the story belongs.**
+
+**Topics = what the story is about.**
+
+Sections are managed under **Content → Journal Sections**. Topics are managed under **Settings → Topics**.
+
+Topics are normally retired rather than deleted. Direct Topic deletion is disabled in Tina. A retired Topic may optionally point to a replacement when two subjects are deliberately consolidated.
+
+The underlying collection remains named `tags` and public subject routes remain `/tags/[slug]/` for compatibility.
+
+## Markdown authoring
+
+Journal bodies are semantic Markdown/MDX. The editor toolbar supports:
+
+- bold
+- italic
+- strikethrough
+- inline code
+- bulleted and numbered lists
+- hyperlinks
+- Media Manager image insertion
+- external HTTPS images
+- YouTube insertion
+
+Underline is intentionally unsupported. The only approved custom body element is the constrained self-closing `<YouTube ... />` element documented in `CONTENT_GUIDE.md`.
+
+## Local development
+
+```bash
+npm install
+npm run dev
 ```
 
-Cloudflare Pages must define `TINA_PUBLIC_CLIENT_ID`, `TINA_TOKEN`, and
-`GITHUB_BRANCH`. The deliberate workflow additionally requires the bindings and
-Access policy in `PUBLISHING_GUIDE.md`. Tokens and the deploy-hook URL are
-secrets and must never be committed.
-
-## Verification
-
-With TinaCloud credentials available:
+For a full Tina-aware validation with credentials available:
 
 ```bash
 npm run test:authoring
@@ -124,75 +116,39 @@ git diff --check
 git status --short
 ```
 
-For an Astro-only local check without TinaCloud credentials:
+For Astro-only validation without TinaCloud credentials:
 
 ```bash
 npm run build:astro
 ```
 
-Sprint 14 additionally verifies redirects, crawl/feed endpoints, metadata,
-internal links, accessibility, responsive layouts, browser compatibility, and
-Lighthouse results. Record that evidence in `SPRINT14_QA.md` rather than marking
-checks complete from source inspection alone.
+## Tina schema rule
 
-## Unified content workflow
+A schema change is incomplete until all of these agree:
 
-All published articles, projects, galleries, and case studies live under
-`src/content/entries/`. The `placement` control in Tina determines whether an
-entry appears in Portfolio, Journal, or both. **Archive to Journal** removes an
-entry from Portfolio without moving its Markdown file or changing its detail
-URL.
+- `tina/config.ts`
+- `src/content.config.ts`
+- stored Markdown/MDX
+- every route/layout/component consumer
+- generated `tina/tina-lock.json`
+- TinaCloud reindex/admin behavior
+- production build
 
-`placement` remains an active compatibility field because Journal filters, tag
-archives, Homepage behavior, entry layout/back-links, import tooling, and tests
-still consume it. It is not a dead field and should not be removed as Sprint 14
-cleanup without a replacement publication model.
+Do not hand-edit `tina/tina-lock.json`.
 
-Homepage Portfolio ordering comes from an explicit Tina destination list that
-links to existing content without owning it. Journal entries use one controlled
-primary section; `/journal/` remains chronological and excludes its explicitly
-selected feature from the remaining feed. Descriptive subjects come from
-referenced Tag documents and publish separately at `/tags/[slug]/`.
+## Documentation
 
-The Homepage has a separate drag-order list for its five major blocks. Each
-block has an explicit visibility switch. Its Journal feature is selected in
-Tina and falls back to the newest published Journal entry when the selection is
-missing, drafted, or no longer Journal-placed; that feature is always excluded
-from the compact recent-story list.
+- `DOCUMENTATION.md` — documentation index
+- `BUILD_ORDER.md` — current maintenance/future-work queue
+- `Roadmap.md` — completed Sprints 1-14 and future candidates
+- `SPRINT14_QA.md` — Phase 2 closeout evidence and explicitly un-run formal checks
+- `SITE_MAINTENANCE_GUIDE.md` — owner code/CMS maintenance guide
+- `CONTENT_GUIDE.md` — content and taxonomy workflow
+- `PUBLISHING_GUIDE.md` — deliberate publishing/security/recovery
+- `IMPORT_GUIDE.md` — import behavior
+- `RESUME_DESIGN.md` — Resume source/design rules
+- `STARTUP_PROMPT.md` — next-session handoff and GitHub safeguards
 
-## Crawl and feed endpoints
+## Future work
 
-- `/robots.txt` allows public crawling and advertises the sitemap.
-- `/sitemap.xml` is generated from fixed pages, Journal sections, tag archives,
-  published Flexible Pages, and non-draft archive entries.
-- `/rss.xml` contains dated, non-draft Journal entries and preserves their
-  canonical `/archive/` detail URLs.
-
-These endpoints are implemented in Astro with no additional package dependency.
-
-## Resume workflow
-
-The public Resume source is `src/content/pages/resume.md`, edited through the
-fixed Resume destination in Tina. Maintain durable career facts there rather
-than copying application-specific resume variants into the site.
-
-The structured Resume fields own the professional profile, capabilities,
-experience, highlights, education, and public links. Presentation belongs in
-`src/components/resume/ResumeProfile.astro`. Private application-only contact
-information should not be added to the public Resume source.
-
-The legacy Tina `Additional Resume Content` field is a documented compatibility
-hold only; the public Resume does not render it. Remove it only with a regenerated
-and validated Tina lock during Sprint 14.
-
-PDF generation is deliberately excluded until it can be produced from the same
-structured source without creating a parallel dataset. See `RESUME_DESIGN.md`.
-
-## Content portability
-
-Content Entry bodies remain semantic Markdown inside `.mdx` files. The only
-approved custom body element is the constrained YouTube embed. Presentation
-belongs in Astro components, while frontmatter should describe the content
-rather than a specific visual layout.
-
-See `CONTENT_PORTABILITY.md` for the short redesign and migration guide.
+No Sprint 15 is currently defined. Deferred candidates include Pagefind search, Giscus comments, generated Resume PDF from the same structured source, more advanced related-content ranking, and broader visual page-builder controls. See `Roadmap.md`.
