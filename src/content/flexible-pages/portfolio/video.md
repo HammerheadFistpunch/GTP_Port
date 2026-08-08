@@ -20,6 +20,10 @@ blocks:
     url: 'https://youtu.be/wf7JeA2pjk8'
     title: Intermountain Diabetes Tech
     _template: youtube
+  - heading: Intermountain LifeFlight Jet
+    url: 'https://youtu.be/Y7_yJByrgdQ'
+    title: Intermountain LifeFlight Jet
+    _template: youtube
 ---
 
 Video portfolio projects will be collected here as they are published.
