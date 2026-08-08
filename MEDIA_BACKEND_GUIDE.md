@@ -2,6 +2,20 @@
 
 Sprint 16 adds a protected Cloudflare Pages Functions service that lets the Tina editor browse private Immich images and publish durable website copies to Cloudflare R2. Sprint 17 will add the Tina picker and connect image fields to these endpoints.
 
+## Current activation checkpoint (2026-08-08)
+
+Completed:
+
+- least-privilege Immich API key created
+- `cloudflared` running beside Immich in Docker on Windows
+- `immich-origin.angrysquirrel.org` routed through the Tunnel and restricted by a Service Auth policy
+- ordinary-browser ping returns `Forbidden`, as expected
+- `angrysquirrel-media` R2 bucket created
+- `media.angrysquirrel.org` custom domain active with `r2.dev` disabled
+- Pages `MEDIA_BUCKET` binding, public media URL, and encrypted Immich/Access values configured
+
+Resume at **Activation and verification** below. The authenticated status, asset browse, protected preview, first R2 publish, duplicate-reuse, public-delivery, and offline-origin checks have not yet been recorded as passing.
+
 ## Architecture
 
 ```text

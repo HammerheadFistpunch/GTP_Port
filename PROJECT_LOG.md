@@ -1,5 +1,35 @@
 # GTP_Port Project Log
 
+## 2026-08-08 - Sprint 16 infrastructure configured; hosted acceptance pending
+
+Completed:
+
+- created the least-privilege Immich media API key
+- created the Cloudflare Access service token and Service Auth application for
+  `immich-origin.angrysquirrel.org`
+- installed a persistent `cloudflared` connector beside Immich in Docker on
+  Windows and added it to the owner's Compose configuration using an
+  environment-supplied tunnel token
+- routed the protected origin to Immich and confirmed an ordinary/incognito
+  browser receives `Forbidden`, proving DNS, Tunnel connectivity, and Access
+  enforcement are active
+- created the `angrysquirrel-media` R2 bucket, activated
+  `media.angrysquirrel.org`, and kept `r2.dev` disabled
+- bound the bucket to Pages as `MEDIA_BUCKET` and configured the production
+  media URL plus encrypted Immich and Access service-token values
+- reached the live browser-console acceptance-test stage
+
+Still in progress:
+
+- confirm the authenticated status endpoint returns HTTP 200 with
+  `configured: true`
+- browse one Immich asset and verify its protected preview
+- publish the first `thumbnail` and `web` variants to R2
+- confirm a repeated publish reports `reused: true` for both variants
+- confirm the public R2 URL works without an Access session and remains
+  available while Immich or its Tunnel is temporarily offline
+- begin Sprint 17 only after all hosted checks pass
+
 ## 2026-08-08 - Sprint 16 Immich-to-R2 backend implemented
 
 - Added an Access-protected `/admin/api/media/*` Pages Functions subtree with

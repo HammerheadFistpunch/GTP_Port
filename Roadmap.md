@@ -120,11 +120,20 @@ Key outcomes:
 Replaced only the Standard Page and Custom Page body controls with the same Markdown Write/Split/Preview editor used by Journal entries. Existing body files and Astro Markdown rendering remain unchanged. Homepage section fields, Journal landing fields, Resume structured fields, SEO descriptions, and Custom Page block fields remain structured or plain-text controls.
 
 ### Sprint 16 - Immich-to-R2 media backend
-**Status:** Backend implemented; infrastructure activation and hosted verification pending.
+**Status:** Backend and one-time infrastructure configured; hosted acceptance testing in progress.
 
-Build the protected Cloudflare service for server-side Immich browsing, optimized asset publication to R2, deterministic reuse, private credentials, and public delivery through `media.angrysquirrel.org`.
+The protected Cloudflare service is implemented for server-side Immich browsing, optimized asset publication to R2, deterministic reuse, private credentials, and public delivery through `media.angrysquirrel.org`.
 
-Implemented the Access-protected status, album, asset search/browse, private preview, and R2 publish endpoints. The free-only implementation copies Immich's generated thumbnail and preview variants, uses deterministic source-revision keys, and reuses existing R2 objects. Complete `MEDIA_BACKEND_GUIDE.md` activation and the offline-origin acceptance test before starting Sprint 17.
+Completed infrastructure:
+
+- created a least-privilege Immich API key
+- created the Cloudflare Access service token and Service Auth application for `immich-origin.angrysquirrel.org`
+- installed the `cloudflared` connector beside Immich in Docker on Windows and confirmed the protected origin returns `Forbidden` to an ordinary browser
+- created and bound the `angrysquirrel-media` R2 bucket
+- activated the public `media.angrysquirrel.org` R2 custom domain
+- configured the Pages production media variable, Immich secrets, Access service-token secrets, and `MEDIA_BUCKET` binding
+
+The code and infrastructure are now test-ready. Still open: run the authenticated status, browse, and preview checks; publish the first `thumbnail` and `web` variants; confirm a second publish reports `reused: true`; and prove the public R2 URL remains available while Immich or its Tunnel is temporarily offline. Do not start Sprint 17 until those hosted acceptance checks pass.
 
 ### Sprint 17 - site-wide Immich/R2 integration
 **Status:** Planned.

@@ -28,9 +28,9 @@ The durable source of truth remains Git-backed Markdown/MDX on `gpt-handoff`. Us
 
 ## Active build sequence
 
-### Sprint 16 - Immich-to-R2 media backend (activation next)
+### Sprint 16 - Immich-to-R2 media backend (hosted acceptance next)
 
-The protected Cloudflare publishing layer is implemented and locally verified. Complete the one-time Immich API, Tunnel/Access, R2 binding/custom-domain, secret, deliberate deployment, and offline-origin checks in `MEDIA_BACKEND_GUIDE.md` before beginning Sprint 17.
+The protected Cloudflare publishing layer is implemented and locally verified. The one-time Immich API, Cloudflare Tunnel/Access, R2 bucket/custom-domain, Pages binding, and production variable/secret configuration are complete. Finish the live endpoint, publication, reuse, and offline-origin checks in `MEDIA_BACKEND_GUIDE.md` before beginning Sprint 17.
 
 Required outcomes:
 
@@ -50,11 +50,22 @@ Implementation evidence:
 - Immich-generated thumbnail/preview variants preserve the free-only constraint
 - all 24 authoring/backend tests and the Pages Functions bundle pass
 
-Activation still required:
+Infrastructure completed:
 
-- create/bind the R2 bucket and activate `media.angrysquirrel.org`
-- configure the read-only Immich key, private Tunnel origin, optional Access service token, and Pages secrets
-- deliberately deploy and run the hosted publish/reuse/offline-origin checks
+- read-only Immich API key created
+- `cloudflared` connector running beside the Windows Docker Immich stack
+- dedicated `immich-origin.angrysquirrel.org` Tunnel route protected by a Service Auth policy
+- ordinary-browser ping correctly blocked as `Forbidden`
+- `angrysquirrel-media` R2 bucket, active `media.angrysquirrel.org` custom domain, and `MEDIA_BUCKET` Pages binding configured
+- Pages production media variable and encrypted Immich/Access secrets configured
+
+Hosted acceptance still required:
+
+- confirm `/admin/api/media` returns HTTP 200 with `configured: true`
+- browse one Immich asset and open its protected preview
+- publish the first `thumbnail` and `web` R2 variants and open the public `web` URL
+- publish the same asset again and confirm both variants report `reused: true`
+- temporarily stop Immich or the Tunnel and confirm the public R2 URL still loads, then restore service and recheck browsing
 
 ### Sprint 17 - site-wide Immich/R2 integration
 

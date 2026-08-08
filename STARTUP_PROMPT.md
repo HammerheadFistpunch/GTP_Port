@@ -6,13 +6,21 @@ Copy everything below into a new ChatGPT Work/Codex conversation.
 
 Continue maintenance and feature development of `angrysquirrel.org` using `HammerheadFistpunch/GTP_Port` on branch `gpt-handoff`.
 
-Start by reading `AGENTS.md`, `DOCUMENTATION.md`, `BUILD_ORDER.md`, `Roadmap.md`, `SPRINT14_QA.md`, `SITE_MAINTENANCE_GUIDE.md`, and any feature guide relevant to the requested work. Verify the current remote branch tip before making changes and preserve any later Tina-generated commits.
+Mandatory GitHub startup gate — complete this before reading local project files or editing anything:
+
+1. Confirm the connected GitHub app/connector is available and can read `HammerheadFistpunch/GTP_Port`. Confirm a supported write path is available before making changes. If the connector is unavailable, stop and restore the connection instead of working from a stale workspace.
+2. Fetch the latest remote `gpt-handoff` tip and record its SHA. GitHub's remote branch is the source of truth; conversation history, uploaded copies, and leftover workspace files are only context.
+3. If a local checkout exists, verify its remote and branch, run a fresh fetch, and fast-forward it to remote `gpt-handoff`. If it cannot fast-forward cleanly, inspect and preserve the local and remote changes rather than overwriting either. If no valid checkout exists, create/materialize one from the latest remote branch.
+4. Re-read the repository instructions and planning documents from that synchronized tree. Preserve any newer Tina-generated content commits.
+5. Immediately before publishing, fetch/verify the remote tip again. Publish only as a fast-forward child of that exact commit; never force-push. Re-read the branch after publishing and confirm the new SHA and expected changed files.
+
+After the GitHub startup gate passes, read `AGENTS.md`, `DOCUMENTATION.md`, `BUILD_ORDER.md`, `Roadmap.md`, `SPRINT14_QA.md`, `SITE_MAINTENANCE_GUIDE.md`, and any feature guide relevant to the requested work from the synchronized repository tree.
 
 Current project status:
 
 - Sprints 1-15 are complete; Phase 2 is closed and Phase 3 is underway.
 - Sprint 15 applied the Journal Markdown editor only to Standard Page and Custom Page body fields. Other page fields intentionally keep their existing controls.
-- Sprint 16's protected Immich-to-R2 backend is implemented. Complete `MEDIA_BACKEND_GUIDE.md` infrastructure activation and hosted publish/reuse/offline-origin verification before Sprint 17. Sprints 17 and 18 cover site-wide integration and gallery architecture/security.
+- Sprint 16's protected Immich-to-R2 backend and one-time Cloudflare/Immich/R2 infrastructure are configured. The ordinary-browser request to `immich-origin.angrysquirrel.org` correctly returns `Forbidden`. Complete the authenticated status/browse/preview, first publish, duplicate-reuse, public URL, and offline-origin checks in `MEDIA_BACKEND_GUIDE.md` before Sprint 17. Sprints 17 and 18 cover site-wide integration and gallery architecture/security.
 - Every Content Entry is a Journal entry. Portfolio is composed from dedicated Custom Pages plus direct Journal destinations.
 - Deprecated Journal fields (`placement`, `entryType`, `primaryTopic`, `technologies`, manual entry links) are removed from the current authoring/runtime model.
 - Journal Sections are Tina-managed documents with stable slugs, aliases, and Active/Retired behavior.

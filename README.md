@@ -4,7 +4,7 @@ Astro source for AngrySquirrel.org: a dark, editorial-first personal website com
 
 ## Current status
 
-Sprints 1-15 are complete. Phase 2 is closed and Phase 3 is underway. Sprint 16 backend implementation is complete; infrastructure activation and hosted verification are next.
+Sprints 1-15 are complete. Phase 2 is closed and Phase 3 is underway. Sprint 16's backend and one-time Immich/Cloudflare/R2 infrastructure are configured; hosted status, browse, preview, publish, reuse, and offline-origin verification remain in progress.
 
 The site currently includes:
 
@@ -154,4 +154,4 @@ Do not hand-edit `tina/tina-lock.json`.
 
 ## Next work
 
-Activate and verify Sprint 16 using `MEDIA_BACKEND_GUIDE.md`. Sprint 17 then integrates the backend across applicable site media fields and Import. Sprint 18 revisits gallery delivery and security. Deferred candidates such as Pagefind, Giscus, and generated Resume PDF remain outside Phase 3. See `Roadmap.md`.
+Finish Sprint 16's hosted acceptance checks in `MEDIA_BACKEND_GUIDE.md`: authenticated status/browse/preview, first R2 publish, duplicate reuse, public delivery, and offline-origin independence. Sprint 17 then integrates the verified backend across applicable site media fields and Import. Sprint 18 revisits gallery delivery and security. Deferred candidates such as Pagefind, Giscus, and generated Resume PDF remain outside Phase 3. See `Roadmap.md`.
