@@ -1,392 +1,173 @@
 # Editable Content Guide
 
-The site separates editable information from Astro layout and behavior.
-
-## Global settings
-
-`src/content/settings/site.md`
-
-Controls:
-
-- Site name and logo text
-- Default site description
-- Primary navigation labels and destinations
-- Optional primary-navigation child links and their order
-- Footer title and description
-- Footer navigation
-- Copyright name
-
-## Landing and supporting pages
-
-`src/content/pages/`
-
-- `home.md` — Homepage section order; Hero; Journal feature and recent count;
-  About Me; What I Do; Technology Stack; and Portfolio destination links
-- `journal.md` — Journal archive header, explicit featured story, section title,
-  and empty state
-- `about.md` — About header and Markdown body
-- `resume.md` — Resume header, links, and Markdown body
-- `contact.md` — Contact header, links, and Markdown body
-
-Page headers support two predefined styles:
-
-- `compact`
-- `featured`
-
-The CMS may select a variant, but Astro owns the actual typography, spacing,
-responsiveness, and component structure.
-
-### Homepage sections and selections
-
-The Tina **Main Homepage** page contains one drag-reorderable **Homepage
-Section Order** list. Use each option once. Removing or duplicating an option
-does not delete content; Astro normalizes the list and restores omitted blocks.
-Use each section's **Show** switch to hide it intentionally.
-
-The **Hero + Journal** item is one responsive top block. Hero and Journal have
-independent visibility controls; when both are visible they sit side by side on
-desktop and stack Hero-first on mobile. The Journal feature is an explicit
-Journal Entry reference. A missing, drafted, or non-Journal selection falls
-back to the newest published Journal entry, and the feature is excluded from
-the configured recent-story count.
-
-The Homepage **Portfolio Links Section** contains compact direct links for
-Video, Photography, Software/Ideation, Case Studies/Research, and Writing.
-Each item stores a label, URL, and optional image. Drag the list to reorder it;
-removing a Homepage item never deletes its destination.
-
-Section titles, descriptions, links, capability items, technology items,
-visibility, Portfolio destinations, and Journal selections are editable in Tina.
-The expanded `/about/` page remains separate and is linked from the Homepage
-and footer rather than the primary header.
-
-Journal navigation uses the controlled Automotive, Projects, Field Notes, and
-Off-topic section registry. Latest links to the complete `/journal/` feed and
-is not assignable to an entry.
+The site separates editable information from Astro layout and behavior. Git-backed Markdown/MDX remains the source of truth; Tina is the owner-facing editor.
 
 ## Tina navigation
 
-- **Settings** → Site Settings and Tags
-- **Pages** → Main Homepage, Journal Homepage, About, Contact, Resume, and New
-  Pages
-- **Content** → Journal Entries and Import Entry
-- **Site** → Publish Site and Media Manager
+- **Settings** → Site Settings, Topics, Publish Site
+- **Pages** → Main Homepage, Journal Homepage, About, Contact, Resume, Custom Pages
+- **Content** → Journal, Journal Sections, Import
+- **Media** → Media Manager
 
-The grouped links are the only owner-facing entry points. Tina's underlying
-collection names remain stable so existing references and generated queries do
-not need a content migration.
+## Global settings
 
-## Import a Markdown or MDX entry
+`src/content/settings/site.md` controls the site name, logo text, default description, primary navigation, footer links/text, and copyright name.
 
-Use **Content → Import Entry** to upload or paste a portable document, review
-its mapped metadata, complete required fields, resolve controlled tags, and
-create a new draft. Import never overwrites an existing entry and never
-publishes immediately. Standard Markdown and the established self-closing
-`<YouTube ... />` element are supported; executable or unsupported MDX is
-blocked with an actionable message.
+## Pages
 
-See `IMPORT_GUIDE.md` for the complete mapping, validation, and owner workflow.
+`src/content/pages/` contains the fixed editable pages:
 
-## Write or revise a Content Entry
+- `home.md` — Homepage sections, ordering, visibility, Journal feature, and Portfolio destinations
+- `journal.md` — Journal landing copy and featured story
+- `about.md` — About page
+- `contact.md` — Contact page
+- `resume.md` — structured Resume profile, capabilities, experience, education, and links
 
-Open **Content → Journal Entries** and use **Entry Content (Markdown)** as the
-primary body editor. Write mode edits the stored `.mdx` source; Split and
-Preview show sanitized output without executing arbitrary MDX. Ordinary
-Markdown is preferred. The supported self-closing `<YouTube ... />` element is
-the only custom body component.
+Custom standalone/nested pages live under `src/content/flexible-pages/` and use their explicit `path` field for public routing. Physical folders are editorial organization only; do not use folders as publication state or Journal taxonomy.
 
-Choose a managed `/uploads/...` image or enter a complete credential-free HTTPS
-URL in image fields. Inline Markdown images may additionally use safe relative
-paths. Keep the entry drafted while editing, save and reopen it once before
-publication, then clear Draft and use **Site → Publish Site** once the complete
-editing session is ready.
+## Journal entries
 
-The two Sprint 12 verification entries remain drafted for future compatibility
-checks and should not be used as public content.
+Every file in `src/content/entries/*.mdx` is a Journal entry. There is no separate Portfolio placement state.
 
-## Flexible Pages
+Current Journal model:
 
-`src/content/flexible-pages/` stores pages that do not need a hand-authored
-Astro route. The Tina **New Pages** collection can create and delete these
-documents. A page's explicit **URL Path** controls its static URL:
+- Title
+- Description
+- Publication Date
+- Status (Draft/Published)
+- Journal Section
+- Topics
+- Cover Image
+- optional Immich Gallery
+- optional structured media
+- Markdown body
 
-```text
-path: resources
--> /resources/
+Portfolio uses dedicated Custom Pages and direct Journal destinations. Durable entry URLs remain `/archive/[slug]/`.
 
-path: resources/video-production
--> /resources/video-production/
+### Status
+
+Use **Draft** while editing. Draft entries remain in Git/Tina but do not receive a public article route. Change to **Published** when ready for the next deliberate site publish.
+
+### Journal Sections
+
+Journal Section answers **where the story belongs**. Sections are Tina-managed documents under **Content → Journal Sections**.
+
+A section has:
+
+- Section Name
+- permanent slug
+- description
+- Active/Retired state
+- previous slugs
+
+Changing the visible name is safe. Retiring a section removes it from normal section navigation/selection while stories remain reachable through Latest. Previous slugs preserve intentional section URL migrations.
+
+### Topics
+
+Topics answer **what the story is about** and power related-story relevance plus `/tags/[slug]/` subject archives.
+
+The underlying collection remains `tags` and public URLs remain `/tags/.../` for compatibility, but Tina labels the owner-facing concept **Topics**.
+
+A Topic has:
+
+- Topic Name
+- Description
+- Active/Retired state
+- optional Replacement Topic
+- permanent URL slug
+- previous URL slugs
+
+Safe Topic management:
+
+1. Add Topics freely when they represent reusable subjects.
+2. Rename the Topic Name freely; leave the permanent slug alone unless intentionally migrating the URL.
+3. Retire a Topic instead of deleting it. Retired Topics disappear from normal new-entry selection but remain valid on existing stories.
+4. Use Replacement Topic only when two Topics are deliberately being consolidated.
+5. Direct Topic deletion is disabled in Tina.
+
+Distinct concepts should remain distinct. A name similarity is not a reason to merge Topics.
+
+## Markdown body editor
+
+The Journal body editor stores portable Markdown/MDX source and provides Write/Split/Preview modes plus toolbar insertion for:
+
+- bold
+- italic
+- strikethrough
+- inline code
+- bulleted lists
+- numbered lists
+- hyperlinks
+- Media Manager images
+- external HTTPS images
+- YouTube
+
+Underline is intentionally unsupported.
+
+Use standard Markdown wherever possible. The approved inline video source element is:
+
+```mdx
+<YouTube url="https://www.youtube.com/watch?v=VIDEO_ID" title="Descriptive video title" caption="Optional caption" />
 ```
 
-Use lowercase, kebab-case path segments without a leading slash. Draft pages
-remain in Git but do not receive a public route. The build rejects malformed,
-duplicate, and reserved paths before deployment.
+The preview is sanitized and does not execute arbitrary MDX/scripts.
 
-### Flexible Page fields
+## Images and media
 
-- **Page Title** is the public heading and the fallback browser/SEO title.
-- **URL Path** is the public route and may contain nested segments.
-- **Page Description** is the visible introduction and fallback SEO
-  description.
-- **Eyebrow** is an optional short label above the page title.
-- **Header Image** is an optional responsive image between the header and body.
-  Choose/upload a managed image or paste a complete public HTTPS image URL.
-- **Header Image Alt Text** describes a meaningful image; leave it blank only
-  when the image is decorative.
-- **Navigation Label** is an optional shorter breadcrumb label. The page title
-  is the fallback.
-- **Draft** removes the route at the next deployment while retaining the file.
-- The SEO fields override the title, description, and social image only when
-  populated.
+Use the Journal toolbar's **Media image** action when inserting repository-managed images into Markdown. External images must use safe credential-free HTTPS URLs. Keep important narrative/cover assets in the repository when long-term portability matters.
 
-### Flexible Page blocks
+Immich galleries use public `share.angrysquirrel.org` links and remain live-backed; changes to the public album do not require rewriting the Journal body.
 
-The **Page Blocks** list is the modular page-builder area. Add a block with the
-plus control, open it to edit its fields, and drag the list handle to change
-the public order. Existing **Legacy Page Content** remains supported and always
-renders after the ordered blocks.
+## Import
 
-Available blocks:
+Use **Content → Import** to upload or paste Markdown/MDX. Import maps into the same current Journal model, validates supported body syntax/media, resolves active Topics and Journal Sections, and always creates a Draft. It never overwrites an existing entry and never publishes immediately.
 
-| Block | Stored content |
-| --- | --- |
-| Rich Text | Optional heading plus portable Markdown text |
-| Image | Optional heading, managed path or public HTTPS image URL, alt text, and caption |
-| YouTube Video | Optional heading, YouTube URL, accessible title, and caption |
-| Immich Gallery | Heading, public share URL, and image-alt prefix |
-| Child Page Tiles | Heading, introduction, and an ordered list of Flexible Page paths |
-| Call to Action | Heading, supporting text, button label/link, and button style |
+See `IMPORT_GUIDE.md` for detailed mapping and validation behavior.
 
-Child-page paths use the same format as the page's **URL Path**, without a
-leading slash. Drafted, deleted, missing, or mistyped page paths are omitted
-from the public tile list. The paths inside the block determine tile order
-independently of the explicit primary-navigation order in Site Settings.
+## Custom Pages
 
-Image blocks open in the shared keyboard-accessible lightbox. Missing or invalid
-image, gallery, video, tile, and link values are skipped or replaced with a
-readable fallback rather than breaking the page.
+Custom Pages live under `src/content/flexible-pages/` and use an explicit **URL Path**. New pages default to Draft.
 
-Published nested pages automatically show breadcrumbs for each published
-Flexible Page ancestor. If an ancestor path has no corresponding published
-page, the child route still works and the missing ancestor is omitted from the
-breadcrumb.
+Approved blocks include:
 
-### Create and publish
+- Rich Text
+- Image
+- YouTube Video
+- Immich Gallery
+- Child Page Tiles
+- Call to Action
 
-1. Open **Pages → New Pages** in Tina and choose **Create New**.
-2. Enter the title, description, and a lowercase URL path without leading or
-   trailing slashes.
-3. Keep **Draft** enabled while editing. New pages default to draft.
-4. Add optional presentation, navigation, and SEO fields, then save.
-5. Clear **Draft** and save when ready to include the page in the next release.
-6. Continue any other edits for the session.
-7. Open **Site → Publish Site**, confirm that saved and live commits differ,
-   and choose **Publish Site** once.
-8. Wait for the screen to report that the saved changes are live, then open the
-   exact public path and refresh it directly.
+Changing a Custom Page title does not change its URL. Changing `path` does. Add a redirect before moving an established public path.
 
-For a nested page, use the complete path. For example,
-`resources/audio-production` publishes at `/resources/audio-production/`.
-Creating a nested page does not require a matching parent, but creating and
-publishing the parent gives visitors a complete breadcrumb trail.
+## Homepage
 
-### Rename or move
+The Homepage remains a structured landing page. Use Tina to edit section content, visibility, ordering, Journal feature/recent count, and compact Portfolio destinations. The reorder control is editorial presentation only and does not delete section data.
 
-Changing **Page Title** changes the heading but does not change the URL.
-Changing **URL Path** renames or moves the public route on the next deployment.
-Before saving a new path:
+## Publishing
 
-1. Check that it is not reserved and does not duplicate another Flexible Page.
-2. Update links in parent pages, navigation settings, and other content.
-3. Add a redirect before changing an established public URL; otherwise the old
-   address will show the 404 page.
-4. Keep the Markdown filename/folder aligned with the route when practical,
-   but remember that `path`—not the filename—is the routing contract.
+Automatic Cloudflare production branch deployments are disabled.
 
-### Unpublish or delete
+Normal workflow:
 
-Enable **Draft** to temporarily remove a route while keeping its content.
-Use Tina's document menu to delete a page permanently. Deleting a parent does
-not delete its children; review and separately move, draft, or delete every
-descendant. After the deployment, the removed route should show the site's 404
-page rather than the Homepage.
+1. Edit/save content in Tina.
+2. Keep unfinished content Draft.
+3. Finish the editing session.
+4. Open **Settings → Publish Site**.
+5. Publish once when Saved and Live differ.
+6. Review the deployed pages after the saved commit is reported live.
 
-## Published content
+See `PUBLISHING_GUIDE.md` for the security model and recovery workflow.
 
-`src/content/entries/*.mdx` is the single source for articles, projects,
-galleries, case studies, and other published material.
+## Schema safety
 
-The Tina **Placement** control determines where an entry appears:
+A Tina field change is incomplete until all of these agree:
 
-- **Portfolio only** — persistent curated projects
-- **Portfolio + Journal** — visible in both presentations
-- **Archive to Journal** — removed from Portfolio and retained chronologically
+- `tina/config.ts`
+- `src/content.config.ts`
+- stored Markdown/MDX
+- route/layout/component consumers
+- generated `tina/tina-lock.json`
+- TinaCloud reindex/admin behavior
+- production build
 
-Archiving changes metadata rather than moving or converting the Markdown file.
-Every entry keeps the same `/archive/[slug]/` detail URL.
-
-Portfolio has no landing page. Video and Photography remain direct New Pages;
-the other work types use Journal destinations. The Homepage uses a small
-ordered link list rather than copying Journal Entries or storing bento layout
-metadata. Journal order uses `date`.
-
-### Journal sections and featured story
-
-Every published entry whose Placement includes Journal must select one
-**Primary Journal Section** in Tina:
-
-- Automotive
-- Projects
-- Field Notes
-- Off-topic
-
-Changing a section changes only where the entry appears in the Journal index;
-its `/archive/[slug]/` URL does not change. Use **Pages → Journal Homepage →
-Featured Journal Story** to choose the landing-page feature. Tina stores a
-reference to the existing Journal Entry, not a copy. A draft or non-Journal
-selection is skipped safely, and the selected feature is omitted from the
-remaining chronological feed.
-
-The static section routes are `/journal/automotive/`, `/journal/projects/`,
-`/journal/field-notes/`, and `/journal/off-topic/`. The legacy `primaryTopic`
-field remains available as a broad descriptive label and is separate from the
-controlled section used for routing.
-
-### Tags and subject archives
-
-Tags are controlled references, not free-text labels. In Tina, open **Settings
-→ Tags**
-to create a reusable subject, then select it from the **Tags** list on any
-Journal Entry. Published Journal and Portfolio entries are collected together
-at `/tags/[slug]/`; drafts never appear.
-
-Each Tag document has:
-
-- **Public Label** — visible text; safe to revise without changing the URL
-- **Permanent URL Slug** — lowercase kebab-case routing key
-- **Archive Description** — optional introduction on the subject page
-- **Previous URL Slugs** — old slugs that must continue resolving
-
-For a new tag, keep the Tina document filename aligned with its slug. To rename
-only the visible text, change **Public Label** and leave the slug alone. To
-intentionally change a published slug, add the old slug to **Previous URL
-Slugs** in the same save. Duplicate slugs or aliases stop the build. Deleting a
-tag still referenced by an entry also stops the build with the affected entry
-name, so remove or replace every reference first.
-
-An unused Tag document still publishes a readable empty archive. This makes a
-new subject safe to create before its first entry is ready.
-
-Portfolio links resolve directly as follows:
-
-- `/portfolio/video/`
-- `/portfolio/photography/`
-- Software/Ideation → `/journal/projects/`
-- Case Studies/Research → `/journal/projects/`
-- Writing → `/journal/`
-
-`/portfolio/` and the retired category/proof paths redirect through
-`public/_redirects`. Do not recreate those retired paths as Flexible Pages.
-
-### Publishing conventions
-
-- Use lowercase, kebab-case filenames and avoid renaming published entries
-  without adding a redirect.
-- Keep article and project narratives in semantic Markdown.
-- Use frontmatter for facts about the entry, not for font, color, spacing, or
-  other presentation instructions.
-- Use relative local paths such as `/uploads/example.jpg`; never publish a
-  `localhost` media URL.
-- Give meaningful images useful alt text.
-- Keep critical cover and narrative images in the repository even when an
-  expanded Immich gallery is also present.
-- Use `draft: true` until the deployed entry has been reviewed.
-
-### Markdown body editor
-
-Journal Entry bodies use Tina's **Entry Content (Markdown)** editor. **Write**
-shows the portable source, **Preview** shows sanitized rendered Markdown, and
-**Split** shows both. The preview does not execute scripts, iframes, raw MDX,
-or unsafe link/image protocols; it is an authoring aid rather than the final
-Astro page renderer.
-
-Ordinary Markdown headings, paragraphs, emphasis, links, images, lists,
-blockquotes, tables, and fenced code remain readable in the `.mdx` source. Use
-standard Markdown wherever possible. Save the entry, reopen it, and compare
-the source before publishing whenever it contains an existing custom element.
-
-### Inline YouTube video
-
-Content Entry files use MDX, which preserves ordinary Markdown and adds one
-approved source element for inline YouTube video. In Tina:
-
-1. Open **Content → Journal Entries** and switch the body to **Write** or
-   **Split**.
-2. Place a self-closing element where the video belongs:
-
-   ```mdx
-   <YouTube url="https://www.youtube.com/watch?v=VIDEO_ID" title="Descriptive video title" caption="Optional caption" />
-   ```
-
-3. Confirm the preview shows a YouTube compatibility card with the expected
-   title, URL, and caption.
-4. Save, reopen the entry, and confirm the element remains in the source.
-5. Publish the saved session and verify the actual player at desktop and phone
-   width.
-
-The stored source is a readable `<YouTube ... />` element surrounded by normal
-Markdown. A valid URL renders through YouTube's privacy-enhanced
-`youtube-nocookie.com` domain. An invalid or incomplete URL shows a safe text
-fallback instead of breaking the entry. Do not add arbitrary React or Astro
-components to entry bodies. Tina warns when it detects an unsupported capitalized
-MDX component name; the warning does not rewrite the source.
-
-### Immich galleries
-
-Content Entries include an optional **Immich Gallery**
-group. Paste a non-password-protected public link from
-`https://share.angrysquirrel.org`, then set the visible gallery title and a
-short image-description prefix. Journal galleries appear after the article;
-inline images remain available for narrative placement within the story.
-
-The gallery reads the current public album when a visitor opens the page, so
-adding or removing Immich photos does not require a site rebuild. If the share
-server is unavailable, the project displays a direct link to the public album.
-Revoking the Immich public link also removes the gallery's access.
-
-To keep long albums compact, the gallery initially displays four photos. A
-visitor can expand the complete grid and collapse it back to four. The
-lightbox always includes the full album, even while the grid is collapsed.
-
-## TinaCMS connection
-
-TinaCMS and TinaCloud map their collections to:
-
-- `src/content/settings`
-- `src/content/pages`
-- `src/content/flexible-pages`
-- `src/content/entries`
-
-Tina should edit these content files. Astro should continue to own files under
-`src/pages`, `src/layouts`, `src/components`, and `src/styles`.
-
-Schema changes must remain aligned across:
-
-- `tina/config.ts` - fields exposed in Tina
-- `src/content.config.ts` - fields accepted and validated by Astro
-- the relevant Markdown or MDX frontmatter - stored values
-- the page, layout, or component that renders the values
-
-Regenerate `tina/tina-lock.json` after Tina schema changes; do not edit the
-lock file manually.
-
-## Redesign and migration safety
-
-Use structured editable sections for the small number of landing pages. Keep
-Journal and Portfolio bodies as ordinary Markdown inside MDX and limit custom
-body elements to the approved YouTube embed. Use structured page blocks only
-when narrative Markdown cannot express the content.
-
-This preserves the ability to restyle the site by replacing Astro components
-and to migrate the content to another Markdown-capable system without rewriting
-each entry. See `CONTENT_PORTABILITY.md` for the concise policy.
+Never hand-edit `tina/tina-lock.json`.
