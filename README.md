@@ -4,7 +4,7 @@ Astro source for AngrySquirrel.org: a dark, editorial-first personal website com
 
 ## Current status
 
-Sprints 1-14 are complete. Phase 2 is closed and the deployed site is owner-accepted.
+Sprints 1-15 are complete. Phase 2 is closed and Phase 3 is underway; Sprint 16 is next.
 
 The site currently includes:
 
@@ -20,6 +20,7 @@ The site currently includes:
 - owner-facing **Topics** taxonomy with stable `/tags/[slug]/` archives, Active/Retired state, aliases, and optional replacement-topic migration
 - related-story ranking based primarily on shared Topics, then same Journal Section
 - Markdown-first Journal authoring with Write/Split/Preview, formatting controls, inline code, links, Media Manager image insertion, external images, and YouTube insertion
+- the same Markdown editor on Standard Page and Custom Page body fields, without changing their structured metadata or page-block controls
 - safe Markdown/MDX Import that accepts body-only Google Docs exports, fills the body during review, lists selectable active Topics, and creates the same simplified Journal model as manual authoring
 - a compact structured Homepage
 - Tina-managed navigation/footer settings
@@ -140,7 +141,7 @@ Do not hand-edit `tina/tina-lock.json`.
 
 - `DOCUMENTATION.md` — documentation index
 - `BUILD_ORDER.md` — current maintenance/future-work queue
-- `Roadmap.md` — completed Sprints 1-14 and future candidates
+- `Roadmap.md` — completed Sprints 1-15 and planned Sprints 16-18
 - `SPRINT14_QA.md` — Phase 2 closeout evidence and explicitly un-run formal checks
 - `SITE_MAINTENANCE_GUIDE.md` — owner code/CMS maintenance guide
 - `CONTENT_GUIDE.md` — content and taxonomy workflow
@@ -149,6 +150,6 @@ Do not hand-edit `tina/tina-lock.json`.
 - `RESUME_DESIGN.md` — Resume source/design rules
 - `STARTUP_PROMPT.md` — next-session handoff and GitHub safeguards
 
-## Future work
+## Next work
 
-No Sprint 15 is currently defined. Deferred candidates include Pagefind search, Giscus comments, generated Resume PDF from the same structured source, more advanced related-content ranking, and broader visual page-builder controls. See `Roadmap.md`.
+Sprint 16 builds the protected Immich-to-R2 media backend. Sprint 17 integrates that workflow across applicable site media fields and Import. Sprint 18 revisits gallery delivery and security. Deferred candidates such as Pagefind, Giscus, and generated Resume PDF remain outside Phase 3. See `Roadmap.md`.

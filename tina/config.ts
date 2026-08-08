@@ -310,7 +310,7 @@ export default defineConfig({
                     { type: "string", name: "description", label: "Description", required: true, ui: { component: "textarea" } },
                     { type: "string", name: "headerStyle", label: "Header Style", required: true, options: [{ value: "compact", label: "Compact" }, { value: "featured", label: "Featured" }] },
                     { type: "object", name: "links", label: "Page Links", list: true, fields: linkFields },
-                    { type: "rich-text", name: "body", label: "Page Content", isBody: true },
+                    { type: "string", name: "body", label: "Page Content (Markdown)", description: "Write portable Markdown with the same editor used for Journal entries.", isBody: true, ui: { component: MarkdownBodyField } },
                 ],
             },
             {
@@ -360,7 +360,7 @@ export default defineConfig({
                     { type: "string", name: "seoDescription", label: "SEO Description", ui: { component: "textarea" } },
                     { type: "image", name: "seoImage", label: "Social Sharing Image", ui: externalImageUi },
                     { type: "object", name: "blocks", label: "Page Blocks", list: true, templates: flexiblePageBlockTemplates, description: "Add, remove, and drag blocks to control the page order.", openFormOnCreate: true },
-                    { type: "rich-text", name: "body", label: "Legacy Page Content", description: "Existing Markdown remains supported and renders after Page Blocks. New modular page sections should use Page Blocks.", isBody: true },
+                    { type: "string", name: "body", label: "Legacy Page Content (Markdown)", description: "Existing Markdown remains supported and renders after Page Blocks. New modular page sections should use Page Blocks.", isBody: true, ui: { component: MarkdownBodyField } },
                 ],
             },
             {

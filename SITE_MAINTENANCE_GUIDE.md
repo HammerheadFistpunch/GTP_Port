@@ -168,6 +168,12 @@ Normal owner workflow:
 
 Do not re-enable automatic production branch deployments unless intentionally abandoning the deliberate publishing model.
 
-## Future work
+## Page body editing
 
-No Sprint 15 is currently defined. Deferred candidates live in `Roadmap.md` and should become a new sprint only when there is a concrete need.
+Journal entries, Standard Pages (About/Contact), and the legacy body region on Custom Pages use the shared Markdown Write/Split/Preview editor. These fields remain raw Markdown/MDX body content in Git; Astro renders them through the existing collection `render()` path.
+
+Do not automatically apply the Markdown field to every textarea. Homepage section copy, Journal landing copy, Resume records, SEO descriptions, captions, and Custom Page block controls are intentionally separate structured/plain-text fields.
+
+## Active roadmap
+
+Sprint 15 is complete. Sprint 16 builds the protected Immich-to-R2 backend, followed by site-wide editor integration in Sprint 17 and gallery architecture/security in Sprint 18. See `BUILD_ORDER.md` and `Roadmap.md`.

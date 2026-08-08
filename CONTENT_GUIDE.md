@@ -89,7 +89,7 @@ Distinct concepts should remain distinct. A name similarity is not a reason to m
 
 ## Markdown body editor
 
-The Journal body editor stores portable Markdown/MDX source and provides Write/Split/Preview modes plus toolbar insertion for:
+Journal, Standard Page, and Custom Page body fields store portable Markdown/MDX source and provide Write/Split/Preview modes plus toolbar insertion for:
 
 - bold
 - italic
@@ -111,6 +111,8 @@ Use standard Markdown wherever possible. The approved inline video source elemen
 ```
 
 The preview is sanitized and does not execute arbitrary MDX/scripts.
+
+This applies only to body fields. Structured Homepage, Journal landing, Resume, metadata, and Custom Page block fields keep their purpose-specific controls.
 
 ## Images and media
 

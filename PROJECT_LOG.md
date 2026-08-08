@@ -1,5 +1,37 @@
 # GTP_Port Project Log
 
+## 2026-08-08 - Sprint 15 unified page-body editor completed
+
+- Replaced the Standard Page and Custom Page `rich-text` body controls with the
+  same source-preserving Markdown Write/Split/Preview field used by Journal
+  entries.
+- Kept the scope strictly to body fields. Homepage sections, Journal landing
+  copy, Resume fields, descriptions, SEO fields, and Custom Page blocks retain
+  their existing structured/plain-text controls.
+- Preserved the existing `.md` body storage and Astro rendering path, so About,
+  Contact, and existing Custom Page content require no migration.
+- Regenerated `tina/tina-lock.json` through local Tina indexing.
+- Added regression coverage proving the About and Contact Markdown bodies
+  survive Tina parse/serialize/reopen and that all three body schemas share the
+  same editor.
+- Established Phase 3 Sprints 16-18 for the Immich-to-R2 backend, site-wide
+  media integration, and later gallery security work.
+
+Validation:
+
+- all 18 authoring tests pass.
+- Astro builds 50 static pages successfully.
+- `git diff --check` passes.
+- Tina local indexing and schema-lock generation succeed.
+- standalone strict TypeScript remains blocked by the pre-existing `TopicField`
+  generic mismatch; Sprint 15 introduced no new TypeScript diagnostic.
+
+Deployment follow-up:
+
+- reindex `gpt-handoff` in TinaCloud after publication.
+- verify Write/Split/Preview on About, Contact, and a Custom Page body in hosted
+  `/admin/`.
+
 ## 2026-08-08 - Google Docs importer maintenance fix
 
 - Removed the incorrect requirement that every imported `.md`/`.mdx` source

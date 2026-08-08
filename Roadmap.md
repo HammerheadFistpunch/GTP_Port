@@ -1,6 +1,6 @@
 # GTP_Port Roadmap
 
-Last updated: 2026-08-07
+Last updated: 2026-08-08
 Working branch: `gpt-handoff`
 
 ## Vision
@@ -112,9 +112,27 @@ Key outcomes:
 
 `SPRINT14_QA.md` records source evidence, owner verification, and any formal checks intentionally left as maintenance hardening rather than blockers to Phase 2 acceptance.
 
-## Current maintenance state
+## Phase 3 - unified authoring and Cloudflare media delivery
 
-No numbered Sprint 15 is defined. The site is in maintenance/content-growth mode. New development should begin only when a concrete feature need justifies another roadmap phase.
+### Sprint 15 - unified page-body Markdown editing
+**Status:** Complete; TinaCloud reindex and hosted editor verification remain deployment follow-up.
+
+Replaced only the Standard Page and Custom Page body controls with the same Markdown Write/Split/Preview editor used by Journal entries. Existing body files and Astro Markdown rendering remain unchanged. Homepage section fields, Journal landing fields, Resume structured fields, SEO descriptions, and Custom Page block fields remain structured or plain-text controls.
+
+### Sprint 16 - Immich-to-R2 media backend
+**Status:** Next.
+
+Build the protected Cloudflare service for server-side Immich browsing, optimized asset publication to R2, deterministic reuse, private credentials, and public delivery through `media.angrysquirrel.org`.
+
+### Sprint 17 - site-wide Immich/R2 integration
+**Status:** Planned.
+
+Wire applicable Tina image fields, Markdown image insertion, and Import into one browse/publish/reuse workflow so ordinary page media no longer depends on visitor requests to Immich.
+
+### Sprint 18 - gallery architecture and security
+**Status:** Planned.
+
+Revisit R2-mirrored galleries, a restricted live-gallery Worker facade, or a deliberate hybrid after the shared asset pipeline is operating. No share token should remain in page content and no gallery route should reveal the home origin.
 
 ## Deferred / future candidates
 
@@ -128,7 +146,7 @@ These are intentionally outside the completed Phase 2 roadmap:
 
 ## Document roles
 
-- `BUILD_ORDER.md` - current maintenance/future work queue
+- `BUILD_ORDER.md` - current Phase 3 sequence and implementation gates
 - `Roadmap.md` - completed milestones and future candidates
 - `PROJECT_LOG.md` - chronological implementation and verification history
 - `SPRINT14_QA.md` - Phase 2 closeout evidence
