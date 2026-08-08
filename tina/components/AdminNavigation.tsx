@@ -101,6 +101,40 @@ const organizeSidebar = () => {
     }
 };
 
+const clarifyTopicStatus = () => {
+    if (!window.location.hash.includes("/collections/edit/tags/")) return;
+
+    const labels = Array.from(document.querySelectorAll("label, p, span, div"))
+        .filter((element) => element.textContent?.trim() === "Active");
+
+    for (const label of labels) {
+        let fieldContainer: Element | null = label.parentElement;
+
+        for (let depth = 0; fieldContainer && depth < 5; depth += 1) {
+            if (fieldContainer.querySelector('input[type="checkbox"], [role="switch"]')) break;
+            fieldContainer = fieldContainer.parentElement;
+        }
+
+        if (!fieldContainer || fieldContainer.querySelector("[data-topic-status-legend]")) continue;
+
+        const legend = document.createElement("p");
+        legend.dataset.topicStatusLegend = "true";
+        legend.textContent = "Off = Retired · On = Active";
+        Object.assign(legend.style, {
+            color: "#64748b",
+            fontSize: "12px",
+            lineHeight: "1.4",
+            margin: "6px 0 0",
+        });
+        fieldContainer.appendChild(legend);
+    }
+};
+
+const organizeAdmin = () => {
+    organizeSidebar();
+    clarifyTopicStatus();
+};
+
 const installSidebarOrganizer = () => {
     if (typeof window === "undefined") return;
 
@@ -111,9 +145,10 @@ const installSidebarOrganizer = () => {
     if (navigationWindow.__angrySquirrelNavigationInstalled) return;
     navigationWindow.__angrySquirrelNavigationInstalled = true;
 
-    const observer = new MutationObserver(organizeSidebar);
+    const observer = new MutationObserver(organizeAdmin);
     observer.observe(document.body, { childList: true, subtree: true });
-    organizeSidebar();
+    window.addEventListener("hashchange", organizeAdmin);
+    organizeAdmin();
 };
 
 export const installAdminNavigation = (cms: TinaCMS) => {
