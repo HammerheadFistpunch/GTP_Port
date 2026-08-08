@@ -39,12 +39,12 @@ Built the original Tina-curated Portfolio landing/category model and reusable se
 ### Sprint 4 - Journal sections and landing page
 **Status:** Complete and deployed.
 
-Established Automotive, Projects, Field Notes, and Off-topic as primary Journal sections, with explicit featured-story selection and chronological feeds.
+Established Journal sections and an explicit featured-story workflow. Sprint 14 later moved those sections from a hard-coded enum to Tina-managed Journal Section documents.
 
 ### Sprint 5 - Tags and subject archives
-**Status:** Complete and deployed.
+**Status:** Complete and deployed; refined in Sprint 14.
 
-Added controlled tag documents, stable slugs/aliases, entry references, and static `/tags/[slug]/` archives.
+Added controlled subject documents, stable slugs/aliases, entry references, and static `/tags/[slug]/` archives. Sprint 14 renamed the owner-facing concept to **Topics** and added Active/Retired and replacement-topic management without changing the durable `/tags/` public URLs.
 
 ### Sprint 6 - Homepage redesign
 **Status:** Complete, deployed, and owner-accepted.
@@ -52,7 +52,7 @@ Added controlled tag documents, stable slugs/aliases, entry references, and stat
 Created the compact Homepage with Hero, Journal preview, About, capabilities, technology, and curated Portfolio destinations with editable visibility/order/content.
 
 ### Sprint 7 - Navigation and information architecture
-**Status:** Implemented and deployed; final interaction checks are carried into Sprint 14.
+**Status:** Complete and deployed.
 
 Added nested editable navigation, removed About from the primary header, and kept Journal section navigation local to the Journal experience.
 
@@ -64,19 +64,19 @@ Added nested editable navigation, removed About from the primary header, and kep
 Produced the field/consumer migration map and feasibility decisions in `TINA_AUDIT.md` and `TINA_FEASIBILITY.md` before deleting compatibility data.
 
 ### Sprint 9 - Public Portfolio/Homepage simplification
-**Status:** Implemented and deployed; redirect/interaction verification closes in Sprint 14.
+**Status:** Complete and deployed.
 
-Removed the Portfolio landing dependency, kept Video and Photography as direct Flexible Pages, routed Projects/Research/Writing into Journal-backed destinations, retired old proof/category content, and installed redirects.
+Removed the Portfolio landing dependency, kept Video and Photography as direct Custom Pages, routed Projects/Research/Writing into Journal-backed destinations, retired old proof/category content, and installed redirects.
 
 ### Sprint 10 - Tina navigation and schema cleanup
-**Status:** Implemented; remaining hosted/editor checks close in Sprint 14.
+**Status:** Complete; final cleanup superseded by Sprint 14.
 
-Grouped Tina around owner tasks, removed dead/transitional fields proven safe to remove, and preserved active compatibility fields such as `placement`.
+Grouped Tina around owner tasks and removed dead/transitional fields proven safe to remove.
 
 ### Sprint 11 - Deliberate publishing workflow
-**Status:** Partially complete operationally.
+**Status:** Complete and operational.
 
-The protected Tina **Publish Site** action, Access validation, server-only Cloudflare deploy hook, deployment-state UI, and duplicate-publish protection work. Automatic Cloudflare production builds remain enabled, so deliberate-only publishing is not complete until Sprint 14 verifies the cutoff, negative authorization cases, and recovery behavior.
+The protected Tina **Publish Site** action, Access validation, server-only Cloudflare deploy hook, deployment-state UI, duplicate-publish protection, and deployment manifest are operational. Automatic production branch deployments have been disabled so ordinary Tina saves no longer publish the site automatically.
 
 ### Sprint 12 - Markdown-first authoring and external media
 **Status:** Complete, deployed, and owner-verified.
@@ -86,72 +86,50 @@ Added the Markdown-first editor with sanitized live preview, external HTTPS/Immi
 ### Sprint 13 - Resume rebuild
 **Status:** Complete, deployed, and owner-verified.
 
-Rebuilt `/resume/` as an editorial professional-background page backed by structured Tina fields for profile, capabilities, experience/highlights, education, and public links. The superseded renderers were removed. `RESUME_DESIGN.md` defines the source model and records the deliberate decision not to create a second PDF dataset.
-
-The Tina `Additional Resume Content` body field remains a compatibility hold only because deleting it requires a synchronized Tina schema/lock validation pass.
+Rebuilt `/resume/` as an editorial professional-background page backed by structured Tina fields for profile, capabilities, experience/highlights, education, and public links. The superseded renderers were removed. `RESUME_DESIGN.md` defines the source model and records the decision not to maintain a second PDF dataset.
 
 ### Sprint 14 - Migration, QA, and documentation
-**Status:** Active.
+**Status:** Complete and owner-accepted.
 
-**Goal:** finish Phase 2 as a reliable publishing system rather than a collection of partially verified migrations.
+Sprint 14 closed Phase 2 by reconciling the public architecture, Tina editor, Journal model, publishing workflow, and documentation.
 
-#### Scope
+Key outcomes:
 
-- verify retired-route redirects and remaining public references
-- identify and remove only compatibility fields/components proven to have no active consumer
-- run the complete Tina/schema/content/build gate after any schema cleanup
-- finish the hosted Tina checks intentionally deferred from earlier sprints
-- finish the Sprint 11 deliberate-publishing cutoff, authorization-negative, and failed-build recovery checks
-- verify canonical metadata, internal links, redirects, accessibility, responsive behavior, and current major browsers
-- verify robots/sitemap/RSS behavior
-- perform Lighthouse accessibility, SEO, performance, and best-practices review
-- reconcile owner and maintenance documentation with the deployed site
+- removed deprecated `placement`, `entryType`, `primaryTopic`, `technologies`, and manual entry-link metadata from Journal authoring/runtime behavior
+- deleted deprecated `Photography-Samples.mdx` and preserved its old public route with a redirect
+- standardized every Content Entry as a Journal entry; Portfolio is now composed from dedicated Custom Pages and direct Journal destinations
+- replaced hard-coded Journal Section options with Tina-managed section documents supporting stable slugs, aliases, and Active/Retired state
+- renamed owner-facing Tags to **Topics** while preserving underlying references and `/tags/` routes
+- added safe Topic retirement and optional replacement-topic behavior; direct Topic deletion is disabled in Tina
+- updated related-story ranking to favor shared Topics with same Journal Section as a secondary signal
+- upgraded the Markdown editor toolbar with bold, italic, strikethrough, inline code, lists, links, Media Manager image insertion, external-image insertion, and YouTube insertion
+- mirrored the simplified Journal model and active Topic/Section registries in Import
+- simplified Tina navigation to Settings, Pages, Content, and Media owner workflows
+- removed the unused Resume body field during a synchronized Tina schema/lock migration
+- added `/robots.txt`, `/sitemap.xml`, `/rss.xml`, and RSS autodiscovery
+- disabled Cloudflare automatic production deployments and retained **Publish Site** as the deliberate production trigger
+- completed hosted Tina review of the new Journal, Journal Sections, Topics, Import, Media, Resume, and page-editor structure
 
-#### Sprint 14A implementation
+`SPRINT14_QA.md` records source evidence, owner verification, and any formal checks intentionally left as maintenance hardening rather than blockers to Phase 2 acceptance.
 
-Source audit confirmed that Services proof pages, old Portfolio category pages, and `Test-content.mdx` are gone while their intentional redirects remain. Homepage and primary navigation no longer depend on a Portfolio landing page.
+## Current maintenance state
 
-The crawl/feed gap identified by the roadmap is now implemented without new dependencies:
+No numbered Sprint 15 is defined. The site is in maintenance/content-growth mode. New development should begin only when a concrete feature need justifies another roadmap phase.
 
-- `/robots.txt`
-- `/sitemap.xml`
-- `/rss.xml`
-- RSS autodiscovery in the shared document head
+## Deferred / future candidates
 
-`SPRINT14_QA.md` records exact evidence and separates source inspection from checks that still require a hosted or networked environment.
+These are intentionally outside the completed Phase 2 roadmap:
 
-#### Acceptance
-
-Sprint 14 is complete only when:
-
-- all intended published content is reachable through the approved hierarchy
-- retired URLs redirect to their documented targets
-- no transitional field remains without a documented active purpose or compatibility reason
-- Tina create/edit/reorder/save behavior works for retained content models
-- ordinary Tina saves no longer trigger production builds and Publish Site remains the deliberate deployment action
-- negative publishing authorization tests and failed-build recovery are recorded
-- TypeScript, authoring tests, Tina indexing/admin compilation, Astro production build, and diff checks pass
-- metadata, internal links, robots, sitemap, RSS, keyboard behavior, responsive layouts, browser sampling, and Lighthouse review pass or have explicitly documented exceptions
-- `README.md`, `BUILD_ORDER.md`, `Roadmap.md`, `PROJECT_LOG.md`, `SITE_MAINTENANCE_GUIDE.md`, and affected feature guides match the deployed system
-
-Depends on: Sprints 8-13
-
-## Deferred integrations
-
-These are intentionally outside Phase 2 unless a future need justifies them:
-
-- Pagefind until content volume warrants search
-- Giscus until comments are desired
-- generated Resume PDF until it can use the same structured Resume source without parallel maintenance
-- advanced related-content ranking
-- unrestricted visual page-builder controls
+- **Pagefind search** — add when Journal/content volume makes search materially useful
+- **Giscus comments** — add when public discussion is desired
+- **generated Resume PDF** — only if it can consume the same structured Resume source without parallel maintenance
+- **advanced related-content ranking** — current shared-Topic/Section scoring is intentionally simple and predictable
+- **expanded visual page-builder controls** — only if the constrained Custom Page blocks become limiting
 
 ## Document roles
 
-- `BUILD_ORDER.md` - only the current executable queue
-- `Roadmap.md` - milestones, dependencies, and acceptance criteria
+- `BUILD_ORDER.md` - current maintenance/future work queue
+- `Roadmap.md` - completed milestones and future candidates
 - `PROJECT_LOG.md` - chronological implementation and verification history
-- `SPRINT14_QA.md` - current Phase 2 closeout evidence
+- `SPRINT14_QA.md` - Phase 2 closeout evidence
 - feature/owner guides - operating and maintenance instructions
-
-This separation is intentional so completed sprint checklists do not drift across multiple status documents.
