@@ -16,6 +16,10 @@ blocks:
     url: 'https://youtu.be/WRK1JkX83ZQ'
     title: LiveWell
     _template: youtube
+  - heading: Intermountain Diabetes Tech
+    url: 'https://youtu.be/wf7JeA2pjk8'
+    title: Intermountain Diabetes Tech
+    _template: youtube
 ---
 
 Video portfolio projects will be collected here as they are published.
