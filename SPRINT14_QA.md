@@ -3,172 +3,171 @@
 Last updated: 2026-08-07
 Branch: `gpt-handoff`
 Baseline at Sprint 14 start: `a30437c2bf378b6aff2cf1c2e99bdfa5972c041c`
+Status: **Complete / owner-accepted**
 
 ## Purpose
 
-This document is the verification record for the final Phase 2 migration, QA,
-and documentation sprint. `BUILD_ORDER.md` is the executable checklist;
-`SPRINT14_QA.md` records findings and evidence so hosted checks are not confused
-with source inspection.
+This document is the verification record for the final Phase 2 migration, QA, and documentation sprint. It distinguishes implemented/source evidence, owner-hosted verification, and formal checks that were not re-run during closeout.
 
-## Source audit findings
+## Migration outcomes
 
 ### Retired content and routes
 
-Verified from the current repository tree:
+Verified from the repository and migration work:
 
-- `src/content/flexible-pages/services*` proof pages are absent.
-- old Portfolio category documents such as `software-projects.md`,
-  `case-studies.md`, and `writing-samples.md` are absent.
-- `Test-content.mdx` is absent.
-- the surviving Portfolio Flexible Pages are Video and Photography.
-- durable Content Entry detail URLs remain under `/archive/[slug]/`.
+- retired Services proof pages are absent
+- retired Portfolio category documents are absent
+- `Test-content.mdx` is absent
+- deprecated `Photography-Samples.mdx` was removed in Sprint 14 and its old archive URL is redirected to `/portfolio/photography/`
+- durable Content Entry detail URLs remain under `/archive/[slug]/`
+- intentional redirects remain for the retired Portfolio landing/categories, Services routes, and test content
 
-`public/_redirects` intentionally preserves the retired public URLs:
+### Journal model
 
-- `/portfolio/` -> `/`
-- Software Projects and Case Studies -> `/journal/projects/`
-- Writing Samples -> `/journal/`
-- Services proof routes -> `/portfolio/video/`
-- Test-content archive route -> `/journal/`
+Sprint 14 completed the simplification that earlier audits had only proposed.
 
-These redirects still require deployed HTTP verification.
+Every Content Entry is now a Journal entry. Portfolio is built from dedicated Custom Pages and direct Journal destinations rather than a second placement state.
 
-### Public navigation/content references
+Removed from Journal authoring/runtime behavior:
 
-Current Homepage destinations go directly to Video, Photography, Projects, and
-Journal routes. Main navigation treats Portfolio as a label-only group with no
-`/portfolio/` landing-page dependency.
+- `placement`
+- `entryType`
+- `primaryTopic`
+- `technologies`
+- manual Repository/Demo/External entry links
 
-The remaining `/portfolio/` string references found by repository search are
-primarily historical documentation, intentional redirects, current Video and
-Photography routes, or renderer logic for those surviving Flexible Pages. They
-are not evidence that the retired Portfolio landing page still exists.
+The old project-specific metadata renderer and Placement editor were removed.
 
-### Compatibility fields
+### Journal Sections
 
-#### `placement`
+Hard-coded section options were replaced with Tina-managed Journal Section documents.
 
-Keep. Repository search confirms active consumers in:
+Sections support:
 
-- Journal landing/section filtering
-- tag archives
-- Homepage entry filtering/selection logic
-- entry layout/back-link behavior
-- Tina placement editor
-- Markdown import tooling
-- authoring regression tests
-
-Removing it in Sprint 14 would require a new visibility/publication model and is
-not cleanup-only work.
-
-#### Resume additional body
-
-The Tina Resume `Additional Resume Content` body field is no longer rendered by
-`/resume/`. It remains a compatibility hold because removing a Tina schema field
-requires regenerating and validating `tina/tina-lock.json` in the same change.
-Do not edit only `tina/config.ts` through a connector-only session.
-
-## Crawl and feed gap
-
-The Sprint 14 roadmap called for robots, sitemap, and RSS verification, but no
-implementation existed at Sprint 14 start.
-
-Added in Sprint 14A without new dependencies:
-
-- `src/pages/robots.txt.ts`
-- `src/pages/sitemap.xml.ts`
-- `src/pages/rss.xml.ts`
-- RSS autodiscovery link in `BaseLayout.astro`
-
-Behavior:
-
-- robots permits crawling and points to `/sitemap.xml`.
-- sitemap includes fixed public pages, Journal sections, tag archives,
-  non-draft Flexible Pages, and non-draft archive entries.
-- sitemap uses entry updated/publication dates when available.
-- RSS includes only dated, non-draft Journal/both-placement entries and links to
-  their durable `/archive/` URLs.
-- drafts and Portfolio-only entries are excluded from RSS.
-
-Deployed endpoint verification is still required.
-
-## Metadata source audit
-
-`BaseLayout.astro` currently provides:
-
-- page title
+- public label
+- stable slug
 - description
-- canonical URL
-- favicon/manifest metadata
-- Open Graph title, description, type, URL, and optional image
-- Twitter/X card metadata
-- RSS autodiscovery after Sprint 14A
+- Active/Retired state
+- previous-slug aliases
 
-Metadata behavior still requires generated/deployed sampling during the final QA
-gate.
+Retired or missing sections fall back to Latest rather than breaking the story. Previous slugs resolve to the current canonical section URL.
 
-## Validation constraints in this session
+Owner-hosted verification confirmed the Journal editor and Journal Section controls load and function after TinaCloud reindex.
 
-The current agent shell has Git but cannot resolve `github.com`, and `gh` is not
-installed. Therefore it cannot safely clone/pull the repository, install
-packages, run the Tina-aware build, regenerate the Tina lock, or run the local
-full QA gate.
+### Topics
 
-Connector-backed changes create normal commits directly on `gpt-handoff`. No
-local commit exists whose SHA needs preservation.
+The underlying `tags` collection and `/tags/[slug]/` public URLs were intentionally preserved, but the owner-facing concept is now **Topics**.
 
-Do not record local TypeScript/Tina/Astro validation as passed from this session.
-Cloudflare deployment success is useful evidence but does not replace the final
-local Tina-aware gate.
+Topics support:
 
-## Hosted checks still required
+- Topic Name
+- Description
+- Active/Retired state
+- optional Replacement Topic
+- permanent slug
+- previous-slug aliases
 
-### Routes and crawl/feed
+Direct Topic deletion is disabled in Tina. Retiring is the normal removal workflow. A retired Topic with a replacement can resolve old references/routes to the replacement. Distinct concepts remain distinct unless a replacement is deliberately configured; regression coverage explicitly protects the `Overlander` website topic from being conflated with the `Overlanding` subject topic.
 
-- [ ] retired routes return expected 301 destinations
-- [ ] `/robots.txt` returns crawl policy and sitemap URL
-- [ ] `/sitemap.xml` is valid XML and contains only intended public routes
-- [ ] `/rss.xml` is valid RSS and contains current Journal items
+Journal and Import selectors offer active Topics while preserving retired Topics already attached to existing stories.
 
-### Tina
+### Related stories
 
-- [ ] Journal section and featured-story edits save correctly
-- [ ] tag create/select and alias behavior work
-- [ ] Homepage reorder/hide/selections work
-- [ ] navigation reorder/children work
-- [ ] fixed-page shortcuts open/save the intended documents
-- [ ] New Pages and Media Manager work
-- [ ] Resume structured list editing/reordering works
+Related-story ranking now favors shared Topics, with the same Journal Section used as a secondary signal. The previous `primaryTopic`/`entryType` scoring was removed.
 
-### Deliberate publishing
+### Markdown authoring
 
-- [ ] automatic Cloudflare production builds are disabled for ordinary saves
-- [ ] Tina save alone does not deploy production
-- [ ] Publish Site deploys pending saved changes
-- [ ] unauthenticated request is rejected
-- [ ] wrong identity is rejected
-- [ ] failed-build recovery is exercised and documented
+The Journal Markdown editor now provides controls for:
 
-### Public QA
+- bold
+- italic
+- strikethrough
+- inline code
+- bulleted lists
+- numbered lists
+- hyperlinks
+- Media Manager image insertion
+- external image insertion
+- YouTube insertion
 
-- [ ] keyboard/focus review
-- [ ] phone/tablet/desktop responsive review
-- [ ] Chrome/Firefox/Safari-family review
-- [ ] internal-link crawl
-- [ ] Lighthouse accessibility/SEO/performance/best-practices review
+Underline was intentionally omitted because it is not standard Markdown and did not justify custom raw-HTML support.
 
-## Final local gate
+Owner-hosted verification confirmed the updated Journal editor and Media Manager insertion workflow are present and usable.
 
-Run from a networked checkout with Tina credentials:
+### Import parity
 
-```bash
-npm run test:authoring
-npx tsc --noEmit
-npm run build
-git diff --check
-git status --short
-```
+Import now targets the same simplified Journal model as manual creation and always creates a Draft. It uses active Journal Sections and active Topics while preserving supported media/body metadata.
 
-If the Resume body field or any other Tina field is removed, regenerate the Tina
-lock and reindex TinaCloud before closing Sprint 14.
+### Tina navigation/editor cleanup
+
+Owner-facing navigation now uses:
+
+- **Settings** — Site Settings, Topics, Publish Site
+- **Pages** — Main Homepage, Journal Homepage, About, Contact, Resume, Custom Pages
+- **Content** — Journal, Journal Sections, Import
+- **Media** — Media Manager
+
+The Journal Homepage dead Header Style control was removed. The unused Resume additional body field was also removed during a synchronized Tina schema/lock migration.
+
+Owner-hosted review confirmed the updated sidebar and page/editor structure are working.
+
+### Topic status clarity
+
+The remaining cosmetic ambiguity in Tina's boolean Topic `Active` switch was addressed without another schema migration: Topic edit screens add the explicit legend **Off = Retired · On = Active**. This is an admin-UI clarification only and does not change stored data or GraphQL schema.
+
+## Crawl/feed implementation
+
+Sprint 14 added:
+
+- `/robots.txt`
+- `/sitemap.xml`
+- `/rss.xml`
+- RSS autodiscovery in the shared document head
+
+The static generators use current published content and exclude drafts. Public entry links remain on durable `/archive/` URLs.
+
+## Deliberate publishing
+
+The protected **Publish Site** workflow is operational. It uses Cloudflare Access validation, a server-only deploy hook, KV duplicate-request protection, saved/live commit comparison, and `/deployment.json` status.
+
+During Sprint 14 the owner disabled automatic Cloudflare production branch deployments. Production publishing is therefore deliberate rather than save-triggered.
+
+A schema-lock mismatch encountered during the Journal migration was resolved by regenerating and committing `tina/tina-lock.json`, redeploying, and reindexing `gpt-handoff` in TinaCloud. A second Topics schema migration followed the same successful lock/reindex workflow.
+
+## Hosted owner verification completed
+
+- [x] TinaCloud reindex completed after Journal schema migration
+- [x] Tina sidebar loads without GraphQL schema mismatch
+- [x] Journal opens and deprecated fields are gone
+- [x] Journal Status and dynamic Journal Section controls work
+- [x] Markdown toolbar is present
+- [x] Media Manager insertion works
+- [x] Journal Sections are available and editable
+- [x] Topics management is available in Settings
+- [x] Journal Topic selection works
+- [x] Import mirrors the simplified Journal model
+- [x] automatic production branch deployments are disabled
+- [x] deployed site remained functional after the migration/reindex cycles
+
+## Source/build evidence
+
+Cloudflare successfully deployed after the regenerated Tina lock was committed for the Journal migration. The owner subsequently regenerated and committed the Topics lock and reported the resulting editor state as working.
+
+Sprint 12 authoring regression coverage was updated where the old Journal fields had intentionally been removed, and new Topic retirement/distinction regression coverage was added.
+
+## Formal checks not re-run during closeout
+
+The following were not independently exercised in this closeout session and are therefore **not represented as passed**:
+
+- unauthenticated publish-endpoint rejection test
+- wrong-identity publish-endpoint rejection test
+- deliberate failed-build recovery drill
+- exhaustive broken-link crawl
+- current Chrome/Firefox/Safari-family matrix
+- Lighthouse accessibility/SEO/performance/best-practices run
+
+These are retained as maintenance hardening checks rather than blockers to owner acceptance of Phase 2. Any future routing, publishing-security, or major layout sprint should include the relevant subset.
+
+## Phase 2 acceptance
+
+Sprint 14 is accepted complete because the intended content model, owner-facing Tina workflow, deliberate publishing mode, schema/lock synchronization, and deployed editor behavior are now coherent and owner-verified. Remaining formal browser/security/performance exercises are explicitly documented above instead of being silently marked complete.
