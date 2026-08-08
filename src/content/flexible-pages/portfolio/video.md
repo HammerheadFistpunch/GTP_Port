@@ -12,6 +12,10 @@ blocks:
     title: Jiffy Lube
     caption: Created for an MBA project with help from Jiffy Lube
     _template: youtube
+  - heading: LiveWell
+    url: 'https://youtu.be/WRK1JkX83ZQ'
+    title: LiveWell
+    _template: youtube
 ---
 
 Video portfolio projects will be collected here as they are published.
