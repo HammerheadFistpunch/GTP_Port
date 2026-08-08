@@ -120,9 +120,11 @@ Key outcomes:
 Replaced only the Standard Page and Custom Page body controls with the same Markdown Write/Split/Preview editor used by Journal entries. Existing body files and Astro Markdown rendering remain unchanged. Homepage section fields, Journal landing fields, Resume structured fields, SEO descriptions, and Custom Page block fields remain structured or plain-text controls.
 
 ### Sprint 16 - Immich-to-R2 media backend
-**Status:** Next.
+**Status:** Backend implemented; infrastructure activation and hosted verification pending.
 
 Build the protected Cloudflare service for server-side Immich browsing, optimized asset publication to R2, deterministic reuse, private credentials, and public delivery through `media.angrysquirrel.org`.
+
+Implemented the Access-protected status, album, asset search/browse, private preview, and R2 publish endpoints. The free-only implementation copies Immich's generated thumbnail and preview variants, uses deterministic source-revision keys, and reuses existing R2 objects. Complete `MEDIA_BACKEND_GUIDE.md` activation and the offline-origin acceptance test before starting Sprint 17.
 
 ### Sprint 17 - site-wide Immich/R2 integration
 **Status:** Planned.

@@ -28,9 +28,9 @@ The durable source of truth remains Git-backed Markdown/MDX on `gpt-handoff`. Us
 
 ## Active build sequence
 
-### Sprint 16 - Immich-to-R2 media backend (next)
+### Sprint 16 - Immich-to-R2 media backend (activation next)
 
-Build the protected Cloudflare publishing layer that lets Tina browse private Immich assets and publish durable optimized copies to R2 without exposing credentials or the home origin.
+The protected Cloudflare publishing layer is implemented and locally verified. Complete the one-time Immich API, Tunnel/Access, R2 binding/custom-domain, secret, deliberate deployment, and offline-origin checks in `MEDIA_BACKEND_GUIDE.md` before beginning Sprint 17.
 
 Required outcomes:
 
@@ -41,6 +41,20 @@ Required outcomes:
 - optimized public variants stored in R2
 - no Immich API key, R2 credential, share secret, or home origin in browser-delivered code/content
 - independent verification that a published R2 asset works while Immich is unavailable
+
+Implementation evidence:
+
+- Access and exact-owner middleware covers the entire media endpoint subtree
+- album browse, smart/filename search, date filters, private previews, and image-only publishing are implemented
+- deterministic checksum-revision keys and R2 `HEAD` checks prevent duplicate writes
+- Immich-generated thumbnail/preview variants preserve the free-only constraint
+- all 24 authoring/backend tests and the Pages Functions bundle pass
+
+Activation still required:
+
+- create/bind the R2 bucket and activate `media.angrysquirrel.org`
+- configure the read-only Immich key, private Tunnel origin, optional Access service token, and Pages secrets
+- deliberately deploy and run the hosted publish/reuse/offline-origin checks
 
 ### Sprint 17 - site-wide Immich/R2 integration
 

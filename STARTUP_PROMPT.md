@@ -12,7 +12,7 @@ Current project status:
 
 - Sprints 1-15 are complete; Phase 2 is closed and Phase 3 is underway.
 - Sprint 15 applied the Journal Markdown editor only to Standard Page and Custom Page body fields. Other page fields intentionally keep their existing controls.
-- Sprint 16 is next: build the protected Immich-to-R2 media backend. Sprints 17 and 18 cover site-wide integration and gallery architecture/security.
+- Sprint 16's protected Immich-to-R2 backend is implemented. Complete `MEDIA_BACKEND_GUIDE.md` infrastructure activation and hosted publish/reuse/offline-origin verification before Sprint 17. Sprints 17 and 18 cover site-wide integration and gallery architecture/security.
 - Every Content Entry is a Journal entry. Portfolio is composed from dedicated Custom Pages plus direct Journal destinations.
 - Deprecated Journal fields (`placement`, `entryType`, `primaryTopic`, `technologies`, manual entry links) are removed from the current authoring/runtime model.
 - Journal Sections are Tina-managed documents with stable slugs, aliases, and Active/Retired behavior.

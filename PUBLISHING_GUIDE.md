@@ -13,6 +13,8 @@ Tina saves content changes to `gpt-handoff` immediately, but the public site reb
 - The latest `gpt-handoff` SHA is read from GitHub's public API; no GitHub token is stored in Cloudflare or Tina for this workflow.
 - `/deployment.json` contains only the public branch, commit SHA, and build time. It is deliberately uncached so the editor can detect a completed build.
 
+The separate `/admin/api/media/*` backend reuses the same Access domain/audience and exact-owner model. Its Immich, Tunnel service-token, and R2 configuration is documented in `MEDIA_BACKEND_GUIDE.md`; those values do not belong in the publishing relay.
+
 ## Cloudflare configuration
 
 Production runtime values:

@@ -48,8 +48,11 @@ Automatic production branch deployments are disabled; a Tina save should not pub
 | `src/components/` | reusable UI/content components |
 | `src/styles/` | global visual system |
 | `functions/admin/api/publish.js` | Access-validated deploy-hook relay |
+| `functions/admin/api/media/` | Access-validated private Immich browse and R2 publish endpoints |
+| `src/server/media-backend.js` | Immich request validation, response minimization, deterministic R2 publication |
 | `src/pages/deployment.json.ts` | saved/live deployment comparison manifest |
 | `PUBLISHING_GUIDE.md` | deliberate publishing operation/security/recovery |
+| `MEDIA_BACKEND_GUIDE.md` | media backend activation, endpoint contract, security, and recovery |
 
 ## Current content model
 
@@ -174,6 +177,14 @@ Journal entries, Standard Pages (About/Contact), and the legacy body region on C
 
 Do not automatically apply the Markdown field to every textarea. Homepage section copy, Journal landing copy, Resume records, SEO descriptions, captions, and Custom Page block controls are intentionally separate structured/plain-text fields.
 
+## Media backend maintenance
+
+The Sprint 16 backend keeps Immich credentials and its private origin in server-only Cloudflare secrets. `/admin/api/media/*` is protected by the same Access JWT validation used for publishing plus an exact-owner identity check.
+
+Do not put `IMMICH_BASE_URL`, `IMMICH_API_KEY`, or Access service-token values in Tina code, `PUBLIC_` variables, content frontmatter, or client-delivered JavaScript. R2 is accessed through the `MEDIA_BUCKET` binding; no S3 credential belongs in the application.
+
+Published object keys are revisioned and immutable. Do not overwrite or automatically delete old revisions because existing Markdown may still reference them. See `MEDIA_BACKEND_GUIDE.md` before changing endpoints, bindings, retention, caching, or origin protection.
+
 ## Active roadmap
 
-Sprint 15 is complete. Sprint 16 builds the protected Immich-to-R2 backend, followed by site-wide editor integration in Sprint 17 and gallery architecture/security in Sprint 18. See `BUILD_ORDER.md` and `Roadmap.md`.
+Sprint 15 is complete. Sprint 16's backend code is implemented; infrastructure activation and hosted verification are next. Site-wide editor integration follows in Sprint 17, then gallery architecture/security in Sprint 18. See `BUILD_ORDER.md`, `Roadmap.md`, and `MEDIA_BACKEND_GUIDE.md`.

@@ -4,7 +4,7 @@ Astro source for AngrySquirrel.org: a dark, editorial-first personal website com
 
 ## Current status
 
-Sprints 1-15 are complete. Phase 2 is closed and Phase 3 is underway; Sprint 16 is next.
+Sprints 1-15 are complete. Phase 2 is closed and Phase 3 is underway. Sprint 16 backend implementation is complete; infrastructure activation and hosted verification are next.
 
 The site currently includes:
 
@@ -27,6 +27,7 @@ The site currently includes:
 - guarded Custom Pages with reorderable content blocks
 - a structured professional-background Resume maintained from one Tina-backed source
 - shared media/lightbox and Immich gallery support
+- an Access-protected Immich browse/search/preview service with duplicate-safe R2 publishing
 - dependency-free `/robots.txt`, `/sitemap.xml`, and `/rss.xml`
 - canonical/Open Graph/Twitter metadata in the shared layout
 
@@ -146,10 +147,11 @@ Do not hand-edit `tina/tina-lock.json`.
 - `SITE_MAINTENANCE_GUIDE.md` — owner code/CMS maintenance guide
 - `CONTENT_GUIDE.md` — content and taxonomy workflow
 - `PUBLISHING_GUIDE.md` — deliberate publishing/security/recovery
+- `MEDIA_BACKEND_GUIDE.md` — Immich/Tunnel/Access/R2 setup, API contract, and verification
 - `IMPORT_GUIDE.md` — import behavior
 - `RESUME_DESIGN.md` — Resume source/design rules
 - `STARTUP_PROMPT.md` — next-session handoff and GitHub safeguards
 
 ## Next work
 
-Sprint 16 builds the protected Immich-to-R2 media backend. Sprint 17 integrates that workflow across applicable site media fields and Import. Sprint 18 revisits gallery delivery and security. Deferred candidates such as Pagefind, Giscus, and generated Resume PDF remain outside Phase 3. See `Roadmap.md`.
+Activate and verify Sprint 16 using `MEDIA_BACKEND_GUIDE.md`. Sprint 17 then integrates the backend across applicable site media fields and Import. Sprint 18 revisits gallery delivery and security. Deferred candidates such as Pagefind, Giscus, and generated Resume PDF remain outside Phase 3. See `Roadmap.md`.

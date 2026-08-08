@@ -1,5 +1,48 @@
 # GTP_Port Project Log
 
+## 2026-08-08 - Sprint 16 Immich-to-R2 backend implemented
+
+- Added an Access-protected `/admin/api/media/*` Pages Functions subtree with
+  exact-owner authorization and same-origin mutation checks.
+- Added server-side Immich album browsing, smart/filename asset search, date
+  filters, private editor previews, image-only validation, and minimized editor
+  responses that omit origin paths, GPS details, credentials, and the Immich
+  hostname.
+- Added optional Cloudflare Access service-token forwarding for a dedicated
+  Tunnel-protected Immich origin.
+- Added duplicate-safe R2 publishing with deterministic asset/checksum revision
+  keys, `HEAD` reuse, immutable cache metadata, and separate `thumbnail` and
+  `web` variants.
+- Kept the workflow free by storing Immich's generated thumbnail/preview files;
+  the current Cloudflare Images raw-byte binding requires a paid Images
+  subscription.
+- Added `MEDIA_BACKEND_GUIDE.md` covering least-privilege Immich permissions,
+  Tunnel/Access service authentication, R2/custom-domain binding, secrets,
+  endpoint behavior, retention, and hosted acceptance checks.
+
+Validation:
+
+- all 24 authoring and media-backend tests pass.
+- the complete Cloudflare Pages Functions worker compiles with Wrangler 4.120.0.
+- Astro builds all 50 static pages successfully.
+- `git diff --check` passes.
+- standalone strict TypeScript still reports only the pre-existing `TopicField`
+  generic mismatch.
+- the full Tina-aware build reaches TinaCloud code generation but cannot run in
+  this workspace without `TINA_PUBLIC_CLIENT_ID` and `TINA_TOKEN`; no schema was
+  changed in Sprint 16.
+
+Activation follow-up:
+
+- create and bind the `angrysquirrel-media` R2 bucket and activate
+  `media.angrysquirrel.org`.
+- configure the private Immich origin, read-only API key, optional Access
+  service token, owner identity, and Pages variables/secrets.
+- deliberately deploy, publish one image, confirm repeat publication reports
+  both variants as reused, and confirm its R2 URL still loads while Immich is
+  temporarily unavailable.
+- begin Sprint 17 only after this hosted acceptance gate passes.
+
 ## 2026-08-08 - Sprint 15 unified page-body editor completed
 
 - Replaced the Standard Page and Custom Page `rich-text` body controls with the

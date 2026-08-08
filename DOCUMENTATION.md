@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-08 after Sprint 15
+Last reviewed: 2026-08-08 during Sprint 16 activation
 
 ## Active project documents
 
@@ -8,6 +8,7 @@ Last reviewed: 2026-08-08 after Sprint 15
 - `TINA_FEASIBILITY.md` - Sprint 8B Markdown, external-media, and publishing feasibility findings
 - `RESUME_DESIGN.md` - Sprint 13 Resume purpose, source model, hierarchy, and maintenance decisions
 - `SPRINT14_QA.md` - Phase 2 closeout evidence, owner verification, and explicitly un-run formal checks
+- `MEDIA_BACKEND_GUIDE.md` - Immich/R2 architecture, Cloudflare setup, endpoint contract, security, and activation checks
 
 | Document | Purpose |
 | --- | --- |
@@ -21,6 +22,7 @@ Last reviewed: 2026-08-08 after Sprint 15
 | `CONTENT_PORTABILITY.md` | Redesign and migration guardrails |
 | `PUBLISHING_GUIDE.md` | Deliberate publishing setup, owner workflow, security, and recovery |
 | `IMPORT_GUIDE.md` | Markdown/MDX import mapping, validation, draft workflow, and troubleshooting |
+| `MEDIA_BACKEND_GUIDE.md` | Immich API, Tunnel/Access, R2, Pages binding, endpoint, and verification workflow |
 | `RESUME_DESIGN.md` | Resume-specific design intent and source ownership |
 | `SPRINT14_QA.md` | Final Phase 2 migration/QA evidence and maintenance exceptions |
 
@@ -37,6 +39,7 @@ Phase 2 is complete and Phase 3 is underway. The owner-facing model is now:
 - Standard Page and Custom Page bodies use the same Markdown editor; other page fields retain their structured/plain-text controls
 - Import writes the same simplified Journal model
 - production deployment is deliberate through **Publish Site**; automatic production branch deployments are disabled
+- the Sprint 16 Access-protected Immich-to-R2 backend is implemented; Cloudflare/Immich activation and hosted offline-origin verification remain before Sprint 17
 
 ## Source hierarchy
 
