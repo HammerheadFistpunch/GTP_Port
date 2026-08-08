@@ -20,7 +20,7 @@ The site currently includes:
 - owner-facing **Topics** taxonomy with stable `/tags/[slug]/` archives, Active/Retired state, aliases, and optional replacement-topic migration
 - related-story ranking based primarily on shared Topics, then same Journal Section
 - Markdown-first Journal authoring with Write/Split/Preview, formatting controls, inline code, links, Media Manager image insertion, external images, and YouTube insertion
-- safe Markdown/MDX Import that creates the same simplified Journal model as manual authoring
+- safe Markdown/MDX Import that accepts body-only Google Docs exports, fills the body during review, lists selectable active Topics, and creates the same simplified Journal model as manual authoring
 - a compact structured Homepage
 - Tina-managed navigation/footer settings
 - guarded Custom Pages with reorderable content blocks

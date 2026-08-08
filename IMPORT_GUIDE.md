@@ -8,11 +8,13 @@ the body by hand.
 
 1. Open `/admin/` and choose **Content → Import Entry**.
 2. Choose a `.md` or `.mdx` file smaller than 2 MB, or paste its complete
-   source including frontmatter.
+   source. YAML frontmatter is optional; body-only Google Docs Markdown exports
+   are supported directly.
 3. Choose **Review import**.
 4. Review mapped metadata, warnings, and blocking errors.
-5. Complete the filename, title, description, primary topic, and any other
-   missing fields. Resolve tags against **Settings → Tags**.
+5. Complete the filename, title, description, Topics, and any other missing
+   fields. Active Topics are listed as selectable choices in the review screen;
+   they can also be entered by label or slug.
 6. Choose **Create imported draft**.
 7. Tina creates a new `.mdx` document and opens the ordinary Journal Entry
    editor. Review the preview, cover, section, tags, date, and body there.
@@ -23,6 +25,12 @@ The import action always creates a draft and never overwrites an existing
 filename. A duplicate filename produces an error instead of replacing content.
 
 ## Frontmatter mapping
+
+If the source has no frontmatter, **Review Import** places the entire document
+in the body, derives a safe filename and editable title from the source
+filename, and leaves the remaining metadata fields for review. Tina generates
+canonical YAML frontmatter when it creates the draft. If frontmatter is
+present, the importer maps the supported keys below.
 
 | Canonical field | Accepted import keys |
 | --- | --- |

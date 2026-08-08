@@ -82,6 +82,9 @@ const styles: Record<string, React.CSSProperties> = {
     textarea: { boxSizing: "border-box", minHeight: "10rem", minWidth: 0, width: "100%", border: "1px solid #94a3b8", borderRadius: "0.4rem", padding: "0.75rem", fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", lineHeight: 1.5, resize: "vertical" },
     button: { background: "#2563eb", border: 0, borderRadius: "0.45rem", color: "white", cursor: "pointer", fontWeight: 700, padding: "0.75rem 1rem" },
     secondaryButton: { background: "white", border: "1px solid #64748b", borderRadius: "0.45rem", color: "#334155", cursor: "pointer", fontWeight: 700, padding: "0.75rem 1rem" },
+    topicList: { display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "0.25rem" },
+    topicButton: { background: "white", border: "1px solid #94a3b8", borderRadius: "999px", color: "#334155", cursor: "pointer", fontSize: "0.82rem", padding: "0.4rem 0.7rem" },
+    selectedTopicButton: { background: "#dbeafe", borderColor: "#2563eb", color: "#1e3a8a" },
     issue: { borderRadius: "0.4rem", fontSize: "0.9rem", lineHeight: 1.5, margin: "0.5rem 0 0", padding: "0.65rem 0.75rem" },
     help: { color: "#64748b", fontSize: "0.82rem", lineHeight: 1.45, margin: 0 },
 };
@@ -128,7 +131,7 @@ export const ImportEntryScreen = () => {
                 slug: edge.node.slug,
                 aliases: edge.node.aliases || [],
                 reference: edge.node._sys.path,
-            }] : []);
+            }] : []).sort((a, b) => a.label.localeCompare(b.label));
             const journalSections = (result.journalSectionsConnection.edges || [])
                 .flatMap((edge) => edge.node && edge.node.active !== false ? [{ label: edge.node.label, slug: edge.node.slug }] : [])
                 .sort((a, b) => a.label.localeCompare(b.label));
@@ -223,11 +226,20 @@ export const ImportEntryScreen = () => {
         }
     };
 
+    const toggleTopic = (topic: TagRecord) => {
+        if (!entry) return;
+        const selected = resolveImportedTags(entry.tagTokens, tagRegistry).references.includes(topic.reference);
+        const tagTokens = selected
+            ? entry.tagTokens.filter((token) => !resolveImportedTags([token], tagRegistry).references.includes(topic.reference))
+            : [...entry.tagTokens, topic.label];
+        setEntry(updateEntry(entry, "tagTokens", tagTokens));
+    };
+
     return (
         <main style={styles.main}>
             <p style={styles.eyebrow}>Content</p>
             <h1 style={{ fontSize: "2rem", margin: "0.4rem 0 0.75rem" }}>Import</h1>
-            <p style={styles.intro}>Import portable Markdown or supported MDX, review the same metadata used by Journal entries, and create a safe draft. Import never publishes immediately.</p>
+            <p style={styles.intro}>Import a Google Docs Markdown export, portable Markdown, or supported MDX. Review Import fills the body and prepares the same metadata used by Journal entries; Tina generates the final frontmatter when it creates the safe draft. Import never publishes immediately.</p>
 
             <section style={styles.section}>
                 <h2 style={{ marginTop: 0 }}>1. Choose or paste source</h2>
@@ -242,7 +254,7 @@ export const ImportEntryScreen = () => {
                     </label>
                     <label style={styles.fullField}>
                         <span style={styles.label}>Markdown/MDX source</span>
-                        <textarea style={{ ...styles.textarea, minHeight: "18rem" }} value={source} onChange={(event) => { setSource(event.target.value); setPhase("source"); }} placeholder={'---\ntitle: Example\ndescription: A short summary\ndate: 2026-08-07\njournalSection: projects\ntags: [astro]\n---\n\n## Article body'} />
+                        <textarea style={{ ...styles.textarea, minHeight: "18rem" }} value={source} onChange={(event) => { setSource(event.target.value); setPhase("source"); }} placeholder={'Paste ordinary Markdown from Google Docs here. Existing YAML frontmatter is optional and will be mapped when present.\n\n## Article body'} />
                     </label>
                 </div>
                 <div style={{ marginTop: "1rem" }}><button type="button" style={styles.button} onClick={review} disabled={!source.trim()}>Review import</button></div>
@@ -260,7 +272,17 @@ export const ImportEntryScreen = () => {
                         <label style={styles.fullField}><span style={styles.label}>Description</span><textarea style={{ ...styles.textarea, minHeight: "6rem", fontFamily: "inherit" }} value={entry.description} onChange={(event) => setEntry(updateEntry(entry, "description", event.target.value))} /></label>
                         <label style={styles.field}><span style={styles.label}>Publication date</span><input style={styles.input} type="datetime-local" value={entry.date ? entry.date.slice(0, 16) : ""} onChange={(event) => setEntry(updateEntry(entry, "date", event.target.value ? new Date(event.target.value).toISOString() : ""))} /></label>
                         <label style={styles.field}><span style={styles.label}>Journal Section</span><select style={styles.input} value={entry.journalSection} onChange={(event) => setEntry(updateEntry(entry, "journalSection", event.target.value))}><option value="">Latest only / no section</option>{sections.map((section) => <option key={section.slug} value={section.slug}>{section.label}</option>)}</select></label>
-                        <label style={styles.fullField}><span style={styles.label}>Topics</span><input style={styles.input} value={entry.tagTokens.join(", ")} onChange={(event) => setEntry(updateEntry(entry, "tagTokens", event.target.value.split(",").map((token) => token.trim()).filter(Boolean)))} /><span style={styles.help}>{registryStatus} Use Topic labels or slugs separated by commas.</span></label>
+                        <div style={styles.fullField}>
+                            <label style={styles.field}><span style={styles.label}>Topics</span><input style={styles.input} value={entry.tagTokens.join(", ")} onChange={(event) => setEntry(updateEntry(entry, "tagTokens", event.target.value.split(",").map((token) => token.trim()).filter(Boolean)))} /><span style={styles.help}>{registryStatus} Type labels/slugs separated by commas or select from the active Topics below.</span></label>
+                            {tagRegistry.length > 0 && (
+                                <div style={styles.topicList} aria-label="Active Topics">
+                                    {tagRegistry.map((topic) => {
+                                        const selected = resolveImportedTags(entry.tagTokens, tagRegistry).references.includes(topic.reference);
+                                        return <button key={topic.reference} type="button" aria-pressed={selected} style={{ ...styles.topicButton, ...(selected ? styles.selectedTopicButton : {}) }} onClick={() => toggleTopic(topic)}>{topic.label}</button>;
+                                    })}
+                                </div>
+                            )}
+                        </div>
                         <label style={styles.fullField}><span style={styles.label}>Cover image</span><input style={styles.input} value={entry.coverImage} onChange={(event) => setEntry(updateEntry(entry, "coverImage", event.target.value))} placeholder="/uploads/image.jpg or https://…" /></label>
                         <label style={styles.fullField}><span style={styles.label}>Imported body</span><textarea style={{ ...styles.textarea, minHeight: "24rem" }} value={entry.body} onChange={(event) => setEntry(updateEntry(entry, "body", event.target.value))} /><span style={styles.help}>After import, use the Journal Markdown toolbar for formatting, links, Media Manager images, external images, and YouTube.</span></label>
                     </div>

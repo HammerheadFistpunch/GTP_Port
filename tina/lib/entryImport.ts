@@ -127,6 +127,14 @@ const slugify = (value: string) => value
     .replace(/^-+|-+$/g, "")
     .slice(0, 96);
 
+const titleFromSourceName = (value: string) => value
+    .split(/[\\/]/)
+    .pop()
+    ?.replace(/\.(md|mdx)$/i, "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim() || "";
+
 export const validateImportFilename = (value: string) => {
     if (!value) return "Enter a filename.";
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)) {
@@ -137,15 +145,15 @@ export const validateImportFilename = (value: string) => {
 
 const splitFrontmatter = (source: string):
     | { error: string }
-    | { yaml: string; body: string } => {
+    | { yaml: string; body: string; hasFrontmatter: boolean } => {
     const normalized = source.replace(/^\uFEFF/, "").replace(/\r\n?/g, "\n");
     if (!normalized.startsWith("---\n")) {
-        return { error: "The file must begin with YAML frontmatter between --- lines." };
+        return { yaml: "", body: normalized, hasFrontmatter: false };
     }
     const match = normalized.slice(4).match(/^((?:.|\n)*?)\n(?:---|\.\.\.)[ \t]*\n?/);
     if (!match) return { error: "The opening frontmatter has no closing --- line." };
     const bodyStart = 4 + match[0].length;
-    return { yaml: match[1], body: normalized.slice(bodyStart).replace(/^\n+/, "") };
+    return { yaml: match[1], body: normalized.slice(bodyStart).replace(/^\n+/, ""), hasFrontmatter: true };
 };
 
 const maskMarkdownCode = (body: string) => body
@@ -291,16 +299,18 @@ export const parseEntryImport = (source: string, sourceName = "imported-entry.md
     }
 
     let document;
-    try {
-        document = parseDocument(split.yaml, { prettyErrors: false, uniqueKeys: true });
-    } catch (error) {
-        errors.push({
-            field: "frontmatter",
-            message: error instanceof Error ? error.message : "Frontmatter could not be parsed.",
-        });
-    }
-    for (const error of document?.errors || []) {
-        errors.push({ field: "frontmatter", message: error.message });
+    if (split.hasFrontmatter) {
+        try {
+            document = parseDocument(split.yaml, { prettyErrors: false, uniqueKeys: true });
+        } catch (error) {
+            errors.push({
+                field: "frontmatter",
+                message: error instanceof Error ? error.message : "Frontmatter could not be parsed.",
+            });
+        }
+        for (const error of document?.errors || []) {
+            errors.push({ field: "frontmatter", message: error.message });
+        }
     }
 
     let parsed: unknown;
@@ -320,7 +330,7 @@ export const parseEntryImport = (source: string, sourceName = "imported-entry.md
         errors.push({ field: "frontmatter", message: "Frontmatter must be a YAML key/value object." });
     }
 
-    const title = firstString(frontmatter, ["title"]);
+    const title = firstString(frontmatter, ["title"]) || (!split.hasFrontmatter ? titleFromSourceName(sourceName) : "");
     const description = firstString(frontmatter, ["description", "summary", "excerpt"]);
     const rawSection = firstString(frontmatter, ["journalSection", "section"]);
     const coverImage = firstString(frontmatter, ["coverImage", "cover", "image", "featured_image"]);
@@ -328,6 +338,12 @@ export const parseEntryImport = (source: string, sourceName = "imported-entry.md
     const dateSource = firstString(frontmatter, ["date", "publishedDate", "published_at"]);
     const date = dateValue(dateSource);
 
+    if (!split.hasFrontmatter) {
+        warnings.push({
+            field: "frontmatter",
+            message: "No YAML frontmatter was found. Review Import generated the filename and title from the source filename and placed the complete document in the body. Tina will generate canonical frontmatter when it creates the draft.",
+        });
+    }
     if (!title) errors.push({ field: "title", message: "Add a title before creating the draft." });
     if (!description) errors.push({ field: "description", message: "Add a short description before creating the draft." });
     if (dateSource && !date) warnings.push({ field: "date", message: `Could not map invalid date “${dateSource}”; enter a valid date in Tina.` });

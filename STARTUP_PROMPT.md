@@ -33,16 +33,15 @@ Deferred future candidates, not active commitments:
 - more advanced related-content ranking
 - broader visual page-builder controls
 
-GitHub CLI setup is a required first checkpoint because fresh workspaces have repeatedly lost the binary, `PATH`, config, live device-auth process, or Git credential helper:
+The connected GitHub app is the default repository and publishing path. Its account-level authorization persists across fresh workspaces; do not block ordinary publishing on a missing `gh` binary or an ephemeral CLI login:
 
-1. Check whether the repository is already present. If not, restore a clean checkout of the latest `gpt-handoff` branch through the connected GitHub integration or an authenticated clone.
-2. Run `gh --version` and resolve its absolute path. Do not assume a CLI downloaded in an earlier conversation still exists or is on `PATH`.
-3. Set a task-specific `GH_CONFIG_DIR` in a persistent workspace directory outside the repository before authentication, and use that same value in every later shell.
-4. Run `gh auth status`. If device authorization is needed, start `gh auth login --hostname github.com --git-protocol https --web` in one live PTY, keep that exact session running, provide only the newest active code, and poll the same process after approval.
-5. From a fresh shell using the same `GH_CONFIG_DIR`, rerun `gh auth status`.
-6. Configure the repository-local Git HTTPS credential helper with the absolute `gh` path and explicit `GH_CONFIG_DIR`.
-7. Verify `git status -sb`, branch name, remote URL, HEAD SHA, remote SHA, and ahead/behind count before edits and again before pushing. Tina may add content commits during the session; preserve them. Never force-push.
-8. If the connected GitHub integration must publish because the local CLI path is unavailable, state whether it preserves the exact local commit SHA or creates an identical-tree replacement commit before changing the ref.
+1. Check whether the repository is already present. If not, restore a clean checkout of the latest `gpt-handoff` branch through the connected GitHub app or an authenticated clone.
+2. Verify that the GitHub app can read `HammerheadFistpunch/GTP_Port` and has write access before making changes.
+3. Verify `git status -sb`, branch name, remote URL, local HEAD SHA, remote `gpt-handoff` SHA, and ahead/behind count before edits and again immediately before publishing. Tina may add content commits during the session; preserve them. Never force-push.
+4. Use the GitHub app's Git data operations to publish: create blobs for changed files, create a tree based on the verified remote tree, create one commit whose parent is the verified remote tip, then fast-forward `refs/heads/gpt-handoff` to that commit.
+5. If local commits are being consolidated into a GitHub-created commit, compare the complete resulting tree/diff before updating the branch. State beforehand that the canonical GitHub commit will have a different SHA even when its tree is identical to the local work.
+6. Re-read the remote branch after the ref update and confirm its new SHA and expected changed files.
+7. Use `gh` only when a requested operation is not supported by the connected GitHub app. If CLI fallback is genuinely necessary, then check `gh --version`, use a task-specific `GH_CONFIG_DIR` outside the repository, complete one live `gh auth login` session if needed, and configure the repository-local HTTPS credential helper with the resolved `gh` path and that same config directory.
 
 Continue the established workflow: keep changes in reviewable chunks, preserve unrelated Tina/content edits, update every applicable document automatically, run the smallest relevant checks plus the full gate when warranted, commit intentionally, and push directly to `gpt-handoff`.
 

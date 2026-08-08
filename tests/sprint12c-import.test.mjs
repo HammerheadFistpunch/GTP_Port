@@ -53,8 +53,8 @@ test("the importer maps current Journal fields and discards deprecated metadata"
 });
 
 test("missing metadata, malformed frontmatter, unsafe media, and unsupported MDX are actionable", () => {
-    const malformed = parseEntryImport("title: Missing delimiters\n\nBody", "unsafe.md");
-    assert.match(malformed.errors[0].message, /must begin with YAML frontmatter/);
+    const malformed = parseEntryImport("---\ntitle: Missing closing delimiter\n\nBody", "unsafe.md");
+    assert.match(malformed.errors[0].message, /no closing --- line/);
 
     const unsafe = parseEntryImport(`---
 title: Unsafe import
@@ -86,6 +86,22 @@ title: Duplicate
 Body.
 `, "broken.md");
     assert.ok(brokenYaml.errors.some((issue) => issue.field === "frontmatter"));
+});
+
+test("body-only Google Docs Markdown is mapped into Review Import without requiring frontmatter", () => {
+    const source = `Camping in Utah was getting a little old for my wife.
+
+**Tent or Trailer**
+
+The complete Google Docs export remains in the body.`;
+    const result = parseEntryImport(source, "Big Sir_ Pt1.md");
+
+    assert.equal(result.entry.filename, "big-sir-pt1");
+    assert.equal(result.entry.title, "Big Sir Pt1");
+    assert.equal(result.entry.body, source);
+    assert.equal(result.errors.some((issue) => issue.field === "frontmatter"), false);
+    assert.ok(result.errors.some((issue) => issue.field === "description"));
+    assert.ok(result.warnings.some((warning) => warning.message.includes("No YAML frontmatter was found")));
 });
 
 test("import defaults remain draft-safe without obsolete classification requirements", () => {

@@ -100,6 +100,12 @@ Journal bodies are Markdown-first. The custom editor provides Write/Split/Previe
 
 Use standard Markdown wherever possible. The only approved custom inline body element is the self-closing YouTube element documented in `CONTENT_GUIDE.md`.
 
+## Import maintenance
+
+The Tina **Content → Import** screen accepts both canonical Markdown/MDX with YAML frontmatter and body-only Google Docs Markdown exports. Body-only input must remain entirely intact in the review body field; Tina owns final frontmatter serialization when the draft is created. Keep active Topics visible and selectable in review so importing never depends on remembering taxonomy labels.
+
+Importer parsing, safety, filename/title inference, and Topic resolution coverage lives in `tests/sprint12c-import.test.mjs`. Run `npm run test:authoring` after importer or Journal schema changes.
+
 ## Custom Pages
 
 Custom Pages use explicit `path` frontmatter for routing. Physical folders are editorial organization only.

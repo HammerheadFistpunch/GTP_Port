@@ -120,7 +120,9 @@ Immich galleries use public `share.angrysquirrel.org` links and remain live-back
 
 ## Import
 
-Use **Content → Import** to upload or paste Markdown/MDX. Import maps into the same current Journal model, validates supported body syntax/media, resolves active Topics and Journal Sections, and always creates a Draft. It never overwrites an existing entry and never publishes immediately.
+Use **Content → Import** to upload or paste Markdown/MDX. Body-only Google Docs exports do not need YAML frontmatter: Review Import fills the complete body, derives an editable title and filename from the source filename, and Tina generates canonical frontmatter when the draft is created. Existing frontmatter is mapped when present.
+
+The review screen lists every active Topic as a selectable choice and also accepts Topic labels/slugs typed as a comma-separated list. Import maps into the same current Journal model, validates supported body syntax/media, resolves active Topics and Journal Sections, and always creates a Draft. It never overwrites an existing entry and never publishes immediately.
 
 See `IMPORT_GUIDE.md` for detailed mapping and validation behavior.
 

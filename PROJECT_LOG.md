@@ -1,5 +1,29 @@
 # GTP_Port Project Log
 
+## 2026-08-08 - Google Docs importer maintenance fix
+
+- Removed the incorrect requirement that every imported `.md`/`.mdx` source
+  already contain YAML frontmatter.
+- Made Review Import treat body-only Google Docs Markdown as the complete body,
+  derive an editable title and safe filename from the uploaded filename, and
+  leave canonical frontmatter generation to Tina when the draft is created.
+- Preserved blocking validation for a source that starts a YAML header but does
+  not close it, malformed YAML, unsafe body content, and other existing import
+  safeguards.
+- Sorted active Topics alphabetically and exposed all of them as visible,
+  selectable review controls while retaining comma-separated label/slug input.
+- Added a regression test modeled on the owner's `Big Sir_ Pt1.md` Google Docs
+  export and updated owner/maintenance import guidance.
+
+Validation:
+
+- all 16 authoring, media, import, rollout, and Topic-migration tests pass.
+- the focused importer suite passes all five tests.
+- the Astro production build succeeds and generates 49 static pages.
+- `git diff --check` passes.
+- standalone strict TypeScript remains blocked by the existing `TopicField`
+  schema typing mismatch; no Import screen TypeScript errors were reported.
+
 ## 2026-08-06 - Session wrap after Sprint 12
 
 - Confirmed Sprint 12A through 12D are complete, deployed, and owner-verified.
