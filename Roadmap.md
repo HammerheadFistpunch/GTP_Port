@@ -149,6 +149,12 @@ working across a structured image field, Markdown insertion, and Import review.
 Saved content uses permanent `media.angrysquirrel.org` URLs and renders
 publicly through R2.
 
+**Open maintenance follow-up:** The Immich picker needs additional fixes on
+mobile devices. Desktop acceptance does not close mobile UX acceptance. Capture
+the exact device/browser reproduction steps and affected interactions during the
+next mobile test pass, then address them before treating the picker as fully
+polished across form factors.
+
 ### Sprint 18 - gallery architecture and security
 **Status:** Planned; paused until the owner returns to gallery work.
 
