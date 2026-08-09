@@ -2,19 +2,28 @@
 
 Sprint 16 adds a protected Cloudflare Pages Functions service that lets the Tina editor browse private Immich images and publish durable website copies to Cloudflare R2. Sprint 17 will add the Tina picker and connect image fields to these endpoints.
 
-## Current activation checkpoint (2026-08-08)
+## Hosted acceptance record (2026-08-09)
 
-Completed:
+Sprint 16 is complete and owner-accepted.
 
-- least-privilege Immich API key created
-- `cloudflared` running beside Immich in Docker on Windows
-- `immich-origin.angrysquirrel.org` routed through the Tunnel and restricted by a Service Auth policy
-- ordinary-browser ping returns `Forbidden`, as expected
-- `angrysquirrel-media` R2 bucket created
-- `media.angrysquirrel.org` custom domain active with `r2.dev` disabled
-- Pages `MEDIA_BUCKET` binding, public media URL, and encrypted Immich/Access values configured
+Passed:
 
-Resume at **Activation and verification** below. The authenticated status, asset browse, protected preview, first R2 publish, duplicate-reuse, public-delivery, and offline-origin checks have not yet been recorded as passing.
+- authenticated status returned HTTP 200 with `configured: true`
+- asset browsing returned an Immich image and its protected preview displayed
+- first publication returned HTTP 201 with `thumbnail` and `web` variants
+  on `media.angrysquirrel.org`
+- the public `web` image loaded in an incognito session without admin access
+- repeat publication returned HTTP 200 and `reused: true` for both variants
+  with unchanged URLs and sizes
+- the uncached public R2 image remained available while only the Immich
+  `cloudflared` service was stopped
+- after restarting `cloudflared`, Immich browsing recovered with HTTP 200
+
+Verified asset:
+
+- Immich asset ID: `9df7eba8-7414-473c-8adb-cbb4c375bcdc`
+- thumbnail: WebP, 13,452 bytes
+- web: JPEG, 356,635 bytes
 
 ## Architecture
 
@@ -128,6 +137,8 @@ The object URLs are extensionless. R2 already removes home-origin traffic; for e
 This repository intentionally does not add a partial `wrangler` configuration. The production Pages project already uses dashboard-managed bindings, and adopting a Wrangler configuration would make that file the complete configuration source of truth. If configuration-as-code is adopted later, first download and review the entire existing Pages configuration.
 
 ## Activation and verification
+
+The procedure below passed hosted owner acceptance on 2026-08-09. Re-run it after rotating credentials, changing bindings/hostnames, changing the variant recipe, or materially changing the media backend.
 
 After the R2 binding, variables, secrets, Tunnel hostname, and Access policy are set, deliberately publish the latest `gpt-handoff` commit.
 

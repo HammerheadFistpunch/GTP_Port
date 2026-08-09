@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-08 during Sprint 16 activation
+Last reviewed: 2026-08-09 after Sprint 16 acceptance
 
 ## Active project documents
 
@@ -39,7 +39,7 @@ Phase 2 is complete and Phase 3 is underway. The owner-facing model is now:
 - Standard Page and Custom Page bodies use the same Markdown editor; other page fields retain their structured/plain-text controls
 - Import writes the same simplified Journal model
 - production deployment is deliberate through **Publish Site**; automatic production branch deployments are disabled
-- the Sprint 16 Access-protected Immich-to-R2 backend is implemented; Cloudflare/Immich activation and hosted offline-origin verification remain before Sprint 17
+- the Sprint 16 Access-protected Immich-to-R2 backend, private origin, R2 publication workflow, public delivery, duplicate reuse, offline-origin independence, and Tunnel recovery are deployed and owner-accepted; Sprint 17 site-wide integration is active
 
 ## Source hierarchy
 

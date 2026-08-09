@@ -1,5 +1,28 @@
 # GTP_Port Project Log
 
+## 2026-08-09 - Sprint 16 hosted acceptance completed
+
+Completed and owner-verified against the deployed site:
+
+- authenticated media status returned HTTP 200 with `configured: true`
+- Immich browsing returned the expected image asset and its protected preview
+  opened successfully through the admin endpoint
+- published both deterministic R2 variants for asset
+  `9df7eba8-7414-473c-8adb-cbb4c375bcdc`
+- confirmed the public `thumbnail` WebP (13,452 bytes) and `web` JPEG
+  (356,635 bytes) load from `media.angrysquirrel.org`
+- repeated publication returned HTTP 200 with `reused: true` for both
+  variants and unchanged URLs/sizes
+- confirmed the public `web` image loads in an incognito session without an
+  admin/Access session
+- stopped only the `cloudflared` Immich Tunnel, disabled browser cache, and
+  confirmed the public R2 image remained available
+- restarted `cloudflared` and confirmed Immich browsing recovered with
+  HTTP 200 and one returned item
+
+Sprint 16 is complete. Sprint 17 is now the active build step for site-wide
+Immich/R2 media selection and publication integration.
+
 ## 2026-08-08 - Sprint 16 infrastructure configured; hosted acceptance pending
 
 Completed:

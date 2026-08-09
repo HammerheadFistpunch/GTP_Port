@@ -1,6 +1,6 @@
 # GTP_Port Roadmap
 
-Last updated: 2026-08-08
+Last updated: 2026-08-09
 Working branch: `gpt-handoff`
 
 ## Vision
@@ -120,20 +120,19 @@ Key outcomes:
 Replaced only the Standard Page and Custom Page body controls with the same Markdown Write/Split/Preview editor used by Journal entries. Existing body files and Astro Markdown rendering remain unchanged. Homepage section fields, Journal landing fields, Resume structured fields, SEO descriptions, and Custom Page block fields remain structured or plain-text controls.
 
 ### Sprint 16 - Immich-to-R2 media backend
-**Status:** Backend and one-time infrastructure configured; hosted acceptance testing in progress.
+**Status:** Complete, deployed, and owner-accepted.
 
-The protected Cloudflare service is implemented for server-side Immich browsing, optimized asset publication to R2, deterministic reuse, private credentials, and public delivery through `media.angrysquirrel.org`.
+Implemented the Access-protected Cloudflare service for server-side Immich
+browsing, private previews, deterministic publication of Immich-generated
+`thumbnail` and `web` variants to R2, duplicate-safe reuse, private
+credentials, and public delivery through `media.angrysquirrel.org`.
 
-Completed infrastructure:
-
-- created a least-privilege Immich API key
-- created the Cloudflare Access service token and Service Auth application for `immich-origin.angrysquirrel.org`
-- installed the `cloudflared` connector beside Immich in Docker on Windows and confirmed the protected origin returns `Forbidden` to an ordinary browser
-- created and bound the `angrysquirrel-media` R2 bucket
-- activated the public `media.angrysquirrel.org` R2 custom domain
-- configured the Pages production media variable, Immich secrets, Access service-token secrets, and `MEDIA_BUCKET` binding
-
-The code and infrastructure are now test-ready. Still open: run the authenticated status, browse, and preview checks; publish the first `thumbnail` and `web` variants; confirm a second publish reports `reused: true`; and prove the public R2 URL remains available while Immich or its Tunnel is temporarily offline. Do not start Sprint 17 until those hosted acceptance checks pass.
+The least-privilege Immich API key, Cloudflare Tunnel/Access service identity,
+R2 bucket/custom domain, Pages binding, and production variables/secrets are
+configured. Hosted acceptance confirmed authenticated status/browse/preview,
+first publication, public delivery without an admin session, repeat
+`reused: true` behavior, continued uncached R2 delivery while the Immich
+Tunnel was stopped, and successful Immich browsing after Tunnel recovery.
 
 ### Sprint 17 - site-wide Immich/R2 integration
 **Status:** Planned.

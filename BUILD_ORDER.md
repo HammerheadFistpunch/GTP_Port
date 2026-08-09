@@ -1,12 +1,12 @@
 # GTP_Port Build Order
 
-Last updated: 2026-08-08
+Last updated: 2026-08-09
 Working branch: `gpt-handoff`
 Current phase: Phase 3 - unified authoring and Cloudflare media delivery
 
 ## Current baseline
 
-Sprints 1-15 are complete. Phase 2 is closed and Phase 3 is underway.
+Sprints 1-16 are complete. Phase 2 is closed and Phase 3 is underway.
 
 The durable source of truth remains Git-backed Markdown/MDX on `gpt-handoff`. Use `STARTUP_PROMPT.md` for fresh-session GitHub safeguards and always verify the remote branch tip before editing.
 
@@ -28,48 +28,26 @@ The durable source of truth remains Git-backed Markdown/MDX on `gpt-handoff`. Us
 
 ## Active build sequence
 
-### Sprint 16 - Immich-to-R2 media backend (hosted acceptance next)
+### Sprint 16 - Immich-to-R2 media backend (complete)
 
-The protected Cloudflare publishing layer is implemented and locally verified. The one-time Immich API, Cloudflare Tunnel/Access, R2 bucket/custom-domain, Pages binding, and production variable/secret configuration are complete. Finish the live endpoint, publication, reuse, and offline-origin checks in `MEDIA_BACKEND_GUIDE.md` before beginning Sprint 17.
+The protected backend, private Immich origin, Cloudflare Access service
+identity, R2 publication store, and public custom domain are operational.
+Hosted acceptance passed status, browse, preview, first publish, public
+delivery, duplicate reuse, offline-origin independence, and Tunnel recovery.
 
-Required outcomes:
+### Sprint 17 - site-wide Immich/R2 integration (active)
 
-- R2 bucket and `media.angrysquirrel.org`
-- authenticated Worker/API endpoints
-- server-side Immich browse/search/preview
-- deterministic object keys, source metadata, and duplicate-safe publishing
-- optimized public variants stored in R2
-- no Immich API key, R2 credential, share secret, or home origin in browser-delivered code/content
-- independent verification that a published R2 asset works while Immich is unavailable
+Connect all applicable image fields, Markdown insertion, and Import to the
+verified shared browse/publish/reuse workflow.
 
-Implementation evidence:
+Required planning gate:
 
-- Access and exact-owner middleware covers the entire media endpoint subtree
-- album browse, smart/filename search, date filters, private previews, and image-only publishing are implemented
-- deterministic checksum-revision keys and R2 `HEAD` checks prevent duplicate writes
-- Immich-generated thumbnail/preview variants preserve the free-only constraint
-- all 24 authoring/backend tests and the Pages Functions bundle pass
-
-Infrastructure completed:
-
-- read-only Immich API key created
-- `cloudflared` connector running beside the Windows Docker Immich stack
-- dedicated `immich-origin.angrysquirrel.org` Tunnel route protected by a Service Auth policy
-- ordinary-browser ping correctly blocked as `Forbidden`
-- `angrysquirrel-media` R2 bucket, active `media.angrysquirrel.org` custom domain, and `MEDIA_BUCKET` Pages binding configured
-- Pages production media variable and encrypted Immich/Access secrets configured
-
-Hosted acceptance still required:
-
-- confirm `/admin/api/media` returns HTTP 200 with `configured: true`
-- browse one Immich asset and open its protected preview
-- publish the first `thumbnail` and `web` R2 variants and open the public `web` URL
-- publish the same asset again and confirm both variants report `reused: true`
-- temporarily stop Immich or the Tunnel and confirm the public R2 URL still loads, then restore service and recheck browsing
-
-### Sprint 17 - site-wide Immich/R2 integration
-
-Connect all applicable image fields, Markdown insertion, and Import to the shared publish/reuse workflow.
+- inventory every applicable Tina image field, Markdown insertion path, Import
+  path, stored source shape, and public renderer
+- define one owner-facing picker flow before changing schemas
+- preserve existing repository-managed and external HTTPS image support
+- keep Immich credentials/origin details server-only
+- store only permanent R2 URLs in durable content
 
 ### Sprint 18 - gallery architecture and security
 
