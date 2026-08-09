@@ -2,6 +2,12 @@
 
 Last reviewed: 2026-08-09
 
+**Status:** Complete, deployed, and owner-accepted.
+
+Hosted acceptance confirmed the shared picker works in structured fields,
+Markdown insertion, and Import review; durable content stores permanent
+`media.angrysquirrel.org` URLs that render publicly through R2.
+
 ## Shared authoring contract
 
 All applicable owner-facing image controls use one flow:

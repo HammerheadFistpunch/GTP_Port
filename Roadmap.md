@@ -135,18 +135,22 @@ first publication, public delivery without an admin session, repeat
 Tunnel was stopped, and successful Immich browsing after Tunnel recovery.
 
 ### Sprint 17 - site-wide Immich/R2 integration
-**Status:** Implemented; hosted owner acceptance pending.
+**Status:** Complete, deployed, and owner-accepted.
 
 Inventoried applicable image fields, Markdown insertion, Import, stored source
 shapes, and public renderers. Added one reusable Tina picker that privately
 browses/searches Immich, publishes or reuses the selected asset, and inserts
 only its permanent R2 `web` URL. Structured image fields, Journal/Page
 Markdown, and Import review share this flow while existing `/uploads/...` and
-external HTTPS sources remain supported. Hosted editor and saved-content
-verification remain before closeout.
+external HTTPS sources remain supported.
+
+Hosted owner acceptance confirmed the deployed connector and editor flow are
+working across a structured image field, Markdown insertion, and Import review.
+Saved content uses permanent `media.angrysquirrel.org` URLs and renders
+publicly through R2.
 
 ### Sprint 18 - gallery architecture and security
-**Status:** Planned.
+**Status:** Planned; paused until the owner returns to gallery work.
 
 Revisit R2-mirrored galleries, a restricted live-gallery Worker facade, or a deliberate hybrid after the shared asset pipeline is operating. No share token should remain in page content and no gallery route should reveal the home origin.
 

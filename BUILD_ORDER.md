@@ -6,9 +6,9 @@ Current phase: Phase 3 - unified authoring and Cloudflare media delivery
 
 ## Current baseline
 
-Sprints 1-16 are complete. Phase 2 is closed and Phase 3 is underway.
+Sprints 1-17 are complete. Phase 2 is closed and Phase 3 is underway.
 
-The durable source of truth remains Git-backed Markdown/MDX on `gpt-handoff`. Use `STARTUP_PROMPT.md` for fresh-session GitHub safeguards and always verify the remote branch tip before editing.
+The durable source of truth remains Git-backed Markdown/MDX on `gpt-handoff`. Use the installed GitHub App/connector as the persistent authentication source and always verify the remote branch tip before editing.
 
 ## Current operating model
 
@@ -35,34 +35,21 @@ identity, R2 publication store, and public custom domain are operational.
 Hosted acceptance passed status, browse, preview, first publish, public
 delivery, duplicate reuse, offline-origin independence, and Tunnel recovery.
 
-### Sprint 17 - site-wide Immich/R2 integration (active)
+### Sprint 17 - site-wide Immich/R2 integration (complete)
 
-Connect all applicable image fields, Markdown insertion, and Import to the
-verified shared browse/publish/reuse workflow.
+The shared picker is connected to structured image fields, Journal/Page
+Markdown insertion, and Import review. Selecting an asset publishes or reuses
+it first and stores only the returned permanent R2 `web` URL.
 
-Required planning gate:
+Hosted owner acceptance confirmed the deployed connector and editor paths are
+working, saved content uses `media.angrysquirrel.org`, and public rendering
+delivers the R2-backed asset. The inventory and shared-flow contract remain
+recorded in `SPRINT17_MEDIA_INVENTORY.md`.
 
-- inventory every applicable Tina image field, Markdown insertion path, Import
-  path, stored source shape, and public renderer
-- define one owner-facing picker flow before changing schemas
-- preserve existing repository-managed and external HTTPS image support
-- keep Immich credentials/origin details server-only
-- store only permanent R2 URLs in durable content
+### Sprint 18 - gallery architecture and security (planned; paused)
 
-Implementation status:
-
-- inventory and shared flow are recorded in `SPRINT17_MEDIA_INVENTORY.md`
-- the reusable picker is connected to structured image fields, Journal/Page
-  Markdown insertion, and Import review
-- selecting an asset publishes/reuses first and inserts only the returned
-  permanent `web` URL
-- all 28 authoring tests and the local Tina admin build pass
-- hosted deployment and owner acceptance are the remaining gate before Sprint
-  17 closes and Sprint 18 becomes active
-
-### Sprint 18 - gallery architecture and security
-
-Revisit live and mirrored gallery delivery after the shared media pipeline is operational.
+Revisit live and mirrored gallery delivery when the owner returns to gallery
+work. Sprint 18 is not active development yet.
 
 ## Deferred feature candidates
 

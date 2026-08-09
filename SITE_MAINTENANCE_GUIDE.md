@@ -194,4 +194,4 @@ Sprint 18 exclusions are in `SPRINT17_MEDIA_INVENTORY.md`.
 
 ## Active roadmap
 
-Sprint 16 is complete and owner-accepted. Sprint 17 site-wide editor integration is implemented with hosted acceptance pending. Gallery architecture/security remains Sprint 18. See `BUILD_ORDER.md`, `Roadmap.md`, `SPRINT17_MEDIA_INVENTORY.md`, and `MEDIA_BACKEND_GUIDE.md`.
+Sprints 16 and 17 are complete, deployed, and owner-accepted. Gallery architecture/security remains planned as Sprint 18 and is intentionally paused. See `BUILD_ORDER.md`, `Roadmap.md`, `SPRINT17_MEDIA_INVENTORY.md`, and `MEDIA_BACKEND_GUIDE.md`.

@@ -1,5 +1,20 @@
 # GTP_Port Project Log
 
+## 2026-08-09 - Sprint 17 hosted acceptance completed
+
+Completed and owner-verified against the deployed site:
+
+- confirmed the deployed Immich/R2 connector built successfully and is working
+- verified Immich selection in a structured image field
+- verified Immich insertion into Markdown
+- verified Immich selection/insertion during Import review
+- confirmed durable content stores permanent `media.angrysquirrel.org` URLs
+- confirmed the selected R2-backed image renders publicly
+
+Sprint 17 is complete. Sprint 18 gallery architecture/security remains planned
+and intentionally paused until the owner returns to that work.
+
+
 ## 2026-08-09 - Sprint 17 site-wide media integration implemented
 
 Implemented:

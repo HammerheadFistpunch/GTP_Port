@@ -4,7 +4,7 @@ Astro source for AngrySquirrel.org: a dark, editorial-first personal website com
 
 ## Current status
 
-Sprints 1-16 are complete. Phase 2 is closed and Phase 3 is underway. The Immich-to-R2 backend, private origin, and public media delivery are deployed and owner-accepted. Sprint 17 site-wide media integration is implemented and awaiting hosted owner acceptance.
+Sprints 1-17 are complete. Phase 2 is closed and Phase 3 is underway. The Immich-to-R2 backend, private origin, public media delivery, and site-wide Tina integration are deployed and owner-accepted. Sprint 18 gallery architecture/security is planned and intentionally paused.
 
 The site currently includes:
 
@@ -153,8 +153,7 @@ Do not hand-edit `tina/tina-lock.json`.
 - `MEDIA_BACKEND_GUIDE.md` — Immich/Tunnel/Access/R2 setup, API contract, and verification
 - `IMPORT_GUIDE.md` — import behavior
 - `RESUME_DESIGN.md` — Resume source/design rules
-- `STARTUP_PROMPT.md` — next-session handoff and GitHub safeguards
 
 ## Next work
 
-Deploy and owner-verify the Sprint 17 picker in structured fields, Markdown, and Import. Sprint 18 revisits gallery delivery and security after acceptance. Deferred candidates such as Pagefind, Giscus, and generated Resume PDF remain outside Phase 3. See `Roadmap.md`.
+Sprint 17 is closed. Sprint 18 will revisit gallery delivery and security when work resumes; it is planned but not active. Deferred candidates such as Pagefind, Giscus, and generated Resume PDF remain outside Phase 3. See `Roadmap.md`.

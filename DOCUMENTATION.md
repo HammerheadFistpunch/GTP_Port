@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-09 after Sprint 17 implementation
+Last reviewed: 2026-08-09 after Sprint 17 hosted acceptance
 
 ## Active project documents
 
@@ -15,9 +15,8 @@ Last reviewed: 2026-08-09 after Sprint 17 implementation
 | --- | --- |
 | `README.md` | Concise current status, architecture, setup, and workflows |
 | `BUILD_ORDER.md` | Current Phase 3 sequence, next sprint, gates, and constraints |
-| `Roadmap.md` | Completed Sprints 1-15, planned Sprints 16-18, and deferred candidates |
+| `Roadmap.md` | Completed Sprints 1-17, planned Sprint 18, and deferred candidates |
 | `PROJECT_LOG.md` | Chronological decisions, completed work, and verification |
-| `STARTUP_PROMPT.md` | Copy-ready next-session maintenance handoff and GitHub safeguards |
 | `SITE_MAINTENANCE_GUIDE.md` | Owner guide to visual, Astro, Tina, schema, route, and dependency changes |
 | `CONTENT_GUIDE.md` | Editable content locations and publishing behavior |
 | `CONTENT_PORTABILITY.md` | Redesign and migration guardrails |
@@ -41,7 +40,7 @@ Phase 2 is complete and Phase 3 is underway. The owner-facing model is now:
 - Standard Page and Custom Page bodies use the same Markdown editor; other page fields retain their structured/plain-text controls
 - Import writes the same simplified Journal model
 - production deployment is deliberate through **Publish Site**; automatic production branch deployments are disabled
-- the Sprint 16 Access-protected Immich-to-R2 backend is deployed and owner-accepted; Sprint 17's shared structured-field/Markdown/Import picker is implemented with hosted owner acceptance pending
+- the Sprint 16 Access-protected Immich-to-R2 backend and Sprint 17 shared structured-field/Markdown/Import picker are deployed and owner-accepted; Sprint 18 gallery architecture/security is planned and paused
 
 ## Source hierarchy
 

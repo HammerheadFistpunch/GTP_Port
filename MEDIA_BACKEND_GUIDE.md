@@ -1,6 +1,6 @@
 # Immich-to-R2 Media Backend Guide
 
-Sprint 16 added the protected Cloudflare Pages Functions service that lets the Tina editor browse private Immich images and publish durable website copies to Cloudflare R2. Sprint 17 adds the shared Tina picker across structured image fields, Markdown insertion, and Import review.
+Sprint 16 added the protected Cloudflare Pages Functions service that lets the Tina editor browse private Immich images and publish durable website copies to Cloudflare R2. Sprint 17 added the shared Tina picker across structured image fields, Markdown insertion, and Import review. Both sprints are deployed and owner-accepted.
 
 ## Tina selection workflow
 
@@ -34,6 +34,10 @@ Verified asset:
 - Immich asset ID: `9df7eba8-7414-473c-8adb-cbb4c375bcdc`
 - thumbnail: WebP, 13,452 bytes
 - web: JPEG, 356,635 bytes
+
+Sprint 17 hosted acceptance also confirmed the deployed connector works in a
+structured field, Markdown insertion, and Import review; saved content uses
+permanent `media.angrysquirrel.org` URLs and renders publicly.
 
 ## Architecture
 
