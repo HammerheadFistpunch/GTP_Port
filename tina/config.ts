@@ -388,11 +388,11 @@ export default defineConfig({
                     ] },
                     { type: "object", name: "media", label: "Additional Media", list: true, fields: [
                         { type: "string", name: "type", label: "Media Type", required: true, options: [{ value: "image", label: "Image" }, { value: "video", label: "Video" }] },
-                        { type: "string", name: "src", label: "Source", required: true },
+                        { type: "string", name: "src", label: "Source", required: true, description: "For images, choose an Immich/R2 or managed image. Video sources may use a complete HTTPS URL.", ui: externalImageUi },
                         { type: "string", name: "alt", label: "Alternative Text / Video Title" },
                         { type: "string", name: "caption", label: "Caption" },
                     ] },
-                    { type: "string", name: "body", label: "Entry Content (Markdown)", description: "Write portable Markdown. Use the toolbar for formatting, links, managed/external images, and YouTube embeds.", required: true, isBody: true, ui: { component: MarkdownBodyField } },
+                    { type: "string", name: "body", label: "Entry Content (Markdown)", description: "Write portable Markdown. Use the toolbar for formatting, links, Immich/R2, managed/external images, and YouTube embeds.", required: true, isBody: true, ui: { component: MarkdownBodyField } },
                 ],
             },
         ],

@@ -4,7 +4,7 @@ Astro source for AngrySquirrel.org: a dark, editorial-first personal website com
 
 ## Current status
 
-Sprints 1-16 are complete. Phase 2 is closed and Phase 3 is underway. The Immich-to-R2 backend, private origin, and public media delivery are deployed and owner-accepted. Sprint 17 site-wide media integration is next.
+Sprints 1-16 are complete. Phase 2 is closed and Phase 3 is underway. The Immich-to-R2 backend, private origin, and public media delivery are deployed and owner-accepted. Sprint 17 site-wide media integration is implemented and awaiting hosted owner acceptance.
 
 The site currently includes:
 
@@ -19,7 +19,7 @@ The site currently includes:
 - Tina-managed Journal Sections with stable slugs, aliases, and Active/Retired state
 - owner-facing **Topics** taxonomy with stable `/tags/[slug]/` archives, Active/Retired state, aliases, and optional replacement-topic migration
 - related-story ranking based primarily on shared Topics, then same Journal Section
-- Markdown-first Journal authoring with Write/Split/Preview, formatting controls, inline code, links, Media Manager image insertion, external images, and YouTube insertion
+- Markdown-first Journal authoring with Write/Split/Preview, formatting controls, inline code, links, Immich/R2 selection, Media Manager image insertion, external images, and YouTube insertion
 - the same Markdown editor on Standard Page and Custom Page body fields, without changing their structured metadata or page-block controls
 - safe Markdown/MDX Import that accepts body-only Google Docs exports, fills the body during review, lists selectable active Topics, and creates the same simplified Journal model as manual authoring
 - a compact structured Homepage
@@ -28,6 +28,7 @@ The site currently includes:
 - a structured professional-background Resume maintained from one Tina-backed source
 - shared media/lightbox and Immich gallery support
 - an Access-protected Immich browse/search/preview service with duplicate-safe R2 publishing
+- one shared Tina Immich picker across structured image fields, Markdown insertion, and Import review
 - dependency-free `/robots.txt`, `/sitemap.xml`, and `/rss.xml`
 - canonical/Open Graph/Twitter metadata in the shared layout
 
@@ -96,6 +97,7 @@ Journal bodies are semantic Markdown/MDX. The editor toolbar supports:
 - bulleted and numbered lists
 - hyperlinks
 - Media Manager image insertion
+- Immich/R2 image selection
 - external HTTPS images
 - YouTube insertion
 
@@ -142,7 +144,8 @@ Do not hand-edit `tina/tina-lock.json`.
 
 - `DOCUMENTATION.md` — documentation index
 - `BUILD_ORDER.md` — current maintenance/future-work queue
-- `Roadmap.md` — completed Sprints 1-15 and planned Sprints 16-18
+- `Roadmap.md` — completed milestones and active/planned Phase 3 work
+- `SPRINT17_MEDIA_INVENTORY.md` — image-field, Markdown, Import, storage, and renderer integration map
 - `SPRINT14_QA.md` — Phase 2 closeout evidence and explicitly un-run formal checks
 - `SITE_MAINTENANCE_GUIDE.md` — owner code/CMS maintenance guide
 - `CONTENT_GUIDE.md` — content and taxonomy workflow
@@ -154,4 +157,4 @@ Do not hand-edit `tina/tina-lock.json`.
 
 ## Next work
 
-Begin Sprint 17 by inventorying applicable Tina image fields, Markdown insertion, Import, stored source shapes, and renderers, then connect them to the verified Immich browse/publish/reuse workflow. Sprint 18 revisits gallery delivery and security. Deferred candidates such as Pagefind, Giscus, and generated Resume PDF remain outside Phase 3. See `Roadmap.md`.
+Deploy and owner-verify the Sprint 17 picker in structured fields, Markdown, and Import. Sprint 18 revisits gallery delivery and security after acceptance. Deferred candidates such as Pagefind, Giscus, and generated Resume PDF remain outside Phase 3. See `Roadmap.md`.

@@ -14,7 +14,9 @@ the body by hand.
 4. Review mapped metadata, warnings, and blocking errors.
 5. Complete the filename, title, description, Topics, and any other missing
    fields. Active Topics are listed as selectable choices in the review screen;
-   they can also be entered by label or slug.
+   they can also be entered by label or slug. Use **Choose from Immich** for a
+   cover and **Immich image** in the body toolbar when an imported document
+   needs a permanent R2 website copy.
 6. Choose **Create imported draft**.
 7. Tina creates a new `.mdx` document and opens the ordinary Journal Entry
    editor. Review the preview, cover, section, tags, date, and body there.
@@ -37,20 +39,15 @@ present, the importer maps the supported keys below.
 | Title | `title` |
 | Description | `description`, `summary`, or `excerpt` |
 | Publication date | `date`, `publishedDate`, or `published_at` |
-| Updated date | `updatedDate` or `updated_at` |
-| Entry type | `entryType` or `type` |
-| Placement | `placement` |
-| Primary topic | `primaryTopic`, `topic`, or `category` |
 | Journal section | `journalSection` or `section` |
 | Tags | YAML list, comma-separated string, or existing Tina tag references |
 | Cover image | `coverImage`, `cover`, `image`, or `featured_image` |
-| Technologies | `technologies` list or comma-separated string |
-| Entry links | `links.repository`, `links.demo`, and `links.external` |
 
-Missing entry type defaults to **Article** and missing placement defaults to
-**Journal**. The importer reports unknown values and lists frontmatter keys it
-will not copy. Unmapped values remain visible in the original source area so
-they are not discarded silently.
+Deprecated entry type, placement, primary topic, technology, and manual-link
+fields are accepted only so older exports can be reviewed; they are discarded
+from the current unified Journal model with a warning. The importer reports
+unknown values and lists frontmatter keys it will not copy. Unmapped values
+remain visible in the original source area so they are not discarded silently.
 
 Tags must already exist in the controlled Tags collection. The importer
 matches a tag's public label, permanent slug, previous-slug alias, or full
@@ -70,7 +67,7 @@ the site's established self-closing YouTube form:
 Imported image sources may be:
 
 - a managed `/uploads/...` path;
-- a credential-free public HTTPS URL, including public Immich assets; or
+- a credential-free public HTTPS URL, including permanent R2 website assets; or
 - a safe relative Markdown image such as `./images/example.webp`.
 
 The importer blocks malformed frontmatter, empty bodies, unsafe image or link
@@ -78,6 +75,11 @@ destinations, credential-bearing URLs, executable MDX expressions,
 `import`/`export` statements, unsupported custom components, and malformed
 YouTube components. Fenced and inline code examples are excluded from MDX
 execution checks.
+
+During Review Import, the shared picker can browse private Immich previews and
+publish/reuse an asset. Only the returned permanent R2 `web` URL is placed in
+the cover or Markdown body; private preview URLs and Immich credentials are
+never stored.
 
 ## Canonical output
 

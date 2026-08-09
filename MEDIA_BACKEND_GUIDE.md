@@ -1,6 +1,16 @@
 # Immich-to-R2 Media Backend Guide
 
-Sprint 16 adds a protected Cloudflare Pages Functions service that lets the Tina editor browse private Immich images and publish durable website copies to Cloudflare R2. Sprint 17 will add the Tina picker and connect image fields to these endpoints.
+Sprint 16 added the protected Cloudflare Pages Functions service that lets the Tina editor browse private Immich images and publish durable website copies to Cloudflare R2. Sprint 17 adds the shared Tina picker across structured image fields, Markdown insertion, and Import review.
+
+## Tina selection workflow
+
+Use **Choose from Immich** on structured image fields or **Immich image** in a
+Markdown toolbar. The shared picker supports smart/filename search, albums,
+protected previews, and pagination. Selecting an asset calls the publish
+endpoint, reuses existing variants when available, and inserts only the
+permanent `web` URL. Existing Media Manager uploads and external HTTPS URLs
+remain available. The full field/renderer map is in
+`SPRINT17_MEDIA_INVENTORY.md`.
 
 ## Hosted acceptance record (2026-08-09)
 

@@ -49,6 +49,17 @@ Required planning gate:
 - keep Immich credentials/origin details server-only
 - store only permanent R2 URLs in durable content
 
+Implementation status:
+
+- inventory and shared flow are recorded in `SPRINT17_MEDIA_INVENTORY.md`
+- the reusable picker is connected to structured image fields, Journal/Page
+  Markdown insertion, and Import review
+- selecting an asset publishes/reuses first and inserts only the returned
+  permanent `web` URL
+- all 28 authoring tests and the local Tina admin build pass
+- hosted deployment and owner acceptance are the remaining gate before Sprint
+  17 closes and Sprint 18 becomes active
+
 ### Sprint 18 - gallery architecture and security
 
 Revisit live and mirrored gallery delivery after the shared media pipeline is operational.

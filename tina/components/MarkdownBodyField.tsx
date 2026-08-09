@@ -3,6 +3,8 @@ import type { CSSProperties, ChangeEvent, FocusEvent } from "react";
 import { useCMS } from "tinacms";
 import type { Media } from "tinacms";
 import { marked } from "marked";
+import ImmichImagePicker from "./ImmichImagePicker";
+import { createMarkdownImage } from "../lib/immichMedia";
 import { getYouTubeEmbedUrl } from "../lib/youtubeEmbed";
 import {
     isSafeRelativeMarkdownImage,
@@ -277,7 +279,7 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
     const insertImage = (source: string) => {
         if (!source) return;
         const alt = window.prompt("Image alt text", "") ?? "";
-        replaceSelection(() => `![${alt.replaceAll("]", "\\]")}](${source.trim()})`);
+        replaceSelection(() => createMarkdownImage(source, alt));
     };
 
     const insertImageUrl = () => {
@@ -323,6 +325,7 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
                 <button type="button" style={styles.button} onClick={insertLink}>Link</button>
                 <span style={styles.toolDivider} aria-hidden="true" />
                 <button type="button" style={styles.button} onClick={insertManagedImage}>Media image</button>
+                <ImmichImagePicker buttonLabel="Immich image" onSelect={(url) => insertImage(url)} />
                 <button type="button" style={styles.button} onClick={insertImageUrl}>Image URL</button>
                 <button type="button" style={styles.button} onClick={insertYouTube}>YouTube</button>
             </div>

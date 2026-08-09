@@ -8,6 +8,8 @@ import {
 } from "../lib/entryImport";
 import type { ImportIssue, ImportedEntry, TagRecord } from "../lib/entryImport";
 import { getImageSourceError } from "../../src/lib/image-sources";
+import ImmichImagePicker from "./ImmichImagePicker";
+import MarkdownBodyField from "./MarkdownBodyField";
 
 interface RegistryQueryResult {
     tagsConnection: {
@@ -283,8 +285,25 @@ export const ImportEntryScreen = () => {
                                 </div>
                             )}
                         </div>
-                        <label style={styles.fullField}><span style={styles.label}>Cover image</span><input style={styles.input} value={entry.coverImage} onChange={(event) => setEntry(updateEntry(entry, "coverImage", event.target.value))} placeholder="/uploads/image.jpg or https://…" /></label>
-                        <label style={styles.fullField}><span style={styles.label}>Imported body</span><textarea style={{ ...styles.textarea, minHeight: "24rem" }} value={entry.body} onChange={(event) => setEntry(updateEntry(entry, "body", event.target.value))} /><span style={styles.help}>After import, use the Journal Markdown toolbar for formatting, links, Media Manager images, external images, and YouTube.</span></label>
+                        <div style={styles.fullField}>
+                            <span style={styles.label}>Cover image</span>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                                <input style={{ ...styles.input, flex: "1 1 20rem" }} value={entry.coverImage} onChange={(event) => setEntry(updateEntry(entry, "coverImage", event.target.value))} placeholder="/uploads/image.jpg or https://…" />
+                                <ImmichImagePicker onSelect={(url) => setEntry(updateEntry(entry, "coverImage", url))} />
+                            </div>
+                        </div>
+                        <div style={styles.fullField}>
+                            <MarkdownBodyField
+                                input={{
+                                    name: "body",
+                                    value: entry.body,
+                                    onChange: (value) => setEntry(updateEntry(entry, "body", value as unknown as string)),
+                                    onBlur: () => undefined,
+                                    onFocus: () => undefined,
+                                }}
+                                field={{ label: "Imported body", description: "Review the complete imported body. The same Markdown and Immich/R2 tools are available here as in normal Journal authoring." }}
+                            />
+                        </div>
                     </div>
                     {entry.immichGallery && <p style={styles.help}>Immich gallery metadata from the source will be preserved.</p>}
                     {entry.media.length > 0 && <p style={styles.help}>{entry.media.length} structured media item{entry.media.length === 1 ? "" : "s"} will be preserved.</p>}

@@ -99,13 +99,13 @@ Manage them under **Settings → Topics**.
 
 ## Markdown authoring
 
-Journal bodies are Markdown-first. The custom editor provides Write/Split/Preview plus toolbar insertion for bold, italic, strikethrough, inline code, lists, hyperlinks, Media Manager images, external images, and YouTube.
+Journal bodies are Markdown-first. The custom editor provides Write/Split/Preview plus toolbar insertion for bold, italic, strikethrough, inline code, lists, hyperlinks, Immich/R2 images, Media Manager images, external images, and YouTube.
 
 Use standard Markdown wherever possible. The only approved custom inline body element is the self-closing YouTube element documented in `CONTENT_GUIDE.md`.
 
 ## Import maintenance
 
-The Tina **Content → Import** screen accepts both canonical Markdown/MDX with YAML frontmatter and body-only Google Docs Markdown exports. Body-only input must remain entirely intact in the review body field; Tina owns final frontmatter serialization when the draft is created. Keep active Topics visible and selectable in review so importing never depends on remembering taxonomy labels.
+The Tina **Content → Import** screen accepts both canonical Markdown/MDX with YAML frontmatter and body-only Google Docs Markdown exports. Body-only input must remain entirely intact in the review body field; Tina owns final frontmatter serialization when the draft is created. Keep active Topics visible and selectable in review so importing never depends on remembering taxonomy labels. Import review reuses the ordinary Markdown editor and shared Immich picker.
 
 Importer parsing, safety, filename/title inference, and Topic resolution coverage lives in `tests/sprint12c-import.test.mjs`. Run `npm run test:authoring` after importer or Journal schema changes.
 
@@ -185,6 +185,13 @@ Do not put `IMMICH_BASE_URL`, `IMMICH_API_KEY`, or Access service-token values i
 
 Published object keys are revisioned and immutable. Do not overwrite or automatically delete old revisions because existing Markdown may still reference them. See `MEDIA_BACKEND_GUIDE.md` before changing endpoints, bindings, retention, caching, or origin protection.
 
+`ImmichImagePicker.tsx` is the shared owner-facing client. It calls only the
+protected same-origin endpoints, shows protected thumbnails, then inserts the
+returned `web` variant after publication/reuse succeeds. `ExternalImageField`
+uses it for structured sources; `MarkdownBodyField` uses it for portable image
+syntax; Import reuses both paths. The field/renderer inventory and deliberate
+Sprint 18 exclusions are in `SPRINT17_MEDIA_INVENTORY.md`.
+
 ## Active roadmap
 
-Sprint 15 is complete. Sprint 16's backend code is implemented; infrastructure activation and hosted verification are next. Site-wide editor integration follows in Sprint 17, then gallery architecture/security in Sprint 18. See `BUILD_ORDER.md`, `Roadmap.md`, and `MEDIA_BACKEND_GUIDE.md`.
+Sprint 16 is complete and owner-accepted. Sprint 17 site-wide editor integration is implemented with hosted acceptance pending. Gallery architecture/security remains Sprint 18. See `BUILD_ORDER.md`, `Roadmap.md`, `SPRINT17_MEDIA_INVENTORY.md`, and `MEDIA_BACKEND_GUIDE.md`.

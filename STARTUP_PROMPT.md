@@ -20,14 +20,14 @@ Current project status:
 
 - Sprints 1-16 are complete; Phase 2 is closed and Phase 3 is underway.
 - Sprint 15 applied the Journal Markdown editor only to Standard Page and Custom Page body fields. Other page fields intentionally keep their existing controls.
-- Sprint 16 is complete, deployed, and owner-accepted. Hosted verification passed authenticated status/browse/preview, first R2 publication, public delivery without an admin session, duplicate-safe reuse, continued uncached R2 delivery while the Immich Tunnel was stopped, and browsing recovery after restart. Sprint 17 site-wide image-field/Markdown/Import integration is now active; Sprint 18 covers gallery architecture/security.
+- Sprint 16 is complete, deployed, and owner-accepted. Sprint 17's inventory and shared Immich picker are implemented across structured image fields, Markdown, and Import; the local Tina build and all 28 authoring tests pass. Hosted editor/saved-content owner acceptance is the remaining Sprint 17 gate. Sprint 18 covers gallery architecture/security.
 - Every Content Entry is a Journal entry. Portfolio is composed from dedicated Custom Pages plus direct Journal destinations.
 - Deprecated Journal fields (`placement`, `entryType`, `primaryTopic`, `technologies`, manual entry links) are removed from the current authoring/runtime model.
 - Journal Sections are Tina-managed documents with stable slugs, aliases, and Active/Retired behavior.
 - Owner-facing Tags are now **Topics**. The underlying `tags` collection and `/tags/` public routes remain intentionally stable.
 - Topics support Active/Retired state and optional Replacement Topic migration; direct deletion is disabled in Tina.
-- Journal authoring is Markdown-first with formatting, links, inline code, Media Manager image insertion, external images, and YouTube insertion.
-- Import writes the same simplified Journal model as manual creation.
+- Journal authoring is Markdown-first with formatting, links, inline code, Immich/R2, Media Manager image insertion, external images, and YouTube insertion.
+- Import writes the same simplified Journal model as manual creation and reuses the shared Markdown/Immich controls during review.
 - The Resume uses structured Tina-backed content and no longer carries the unused legacy body field.
 - `/robots.txt`, `/sitemap.xml`, and `/rss.xml` are part of the static site.
 - Automatic Cloudflare production branch deployments are disabled. Production publishing is deliberate through **Settings → Publish Site**.
@@ -52,7 +52,7 @@ The connected GitHub app is the default repository and publishing path. Its acco
 6. Re-read the remote branch after the ref update and confirm its new SHA and expected changed files.
 7. Use `gh` only when a requested operation is not supported by the connected GitHub app. If CLI fallback is genuinely necessary, then check `gh --version`, use a task-specific `GH_CONFIG_DIR` outside the repository, complete one live `gh auth login` session if needed, and configure the repository-local HTTPS credential helper with the resolved `gh` path and that same config directory.
 
-Begin Sprint 17 with a synchronized inventory of applicable Tina image fields, Markdown insertion, Import, stored source shapes, and public renderers. Define the shared owner-facing browse/publish/reuse flow before schema changes, preserve existing repository-managed and external HTTPS image support, and keep Immich credentials/origin details server-only.
+Resume Sprint 17 at hosted acceptance. Deliberately publish the implementation, verify the picker in one structured image field, Markdown insertion, and Import review, confirm only permanent `media.angrysquirrel.org` URLs are saved, and verify the rendered image. Then record owner acceptance, close Sprint 17, and activate Sprint 18.
 
 Continue the established workflow: keep changes in reviewable chunks, preserve unrelated Tina/content edits, update every applicable document automatically, run the smallest relevant checks plus the full gate when warranted, commit intentionally, and push directly to `gpt-handoff`.
 

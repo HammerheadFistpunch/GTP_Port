@@ -99,6 +99,7 @@ Journal, Standard Page, and Custom Page body fields store portable Markdown/MDX 
 - numbered lists
 - hyperlinks
 - Media Manager images
+- Immich/R2 images
 - external HTTPS images
 - YouTube
 
@@ -116,7 +117,16 @@ This applies only to body fields. Structured Homepage, Journal landing, Resume, 
 
 ## Images and media
 
-Use the Journal toolbar's **Media image** action when inserting repository-managed images into Markdown. External images must use safe credential-free HTTPS URLs. Keep important narrative/cover assets in the repository when long-term portability matters.
+Use **Immich image** to browse the private Immich library and select an image.
+Selection publishes or reuses permanent `thumbnail` and `web` copies in R2;
+the editor inserts only the public `web` URL. Use **Media image** for a
+repository-managed upload, or **Image URL** for a credential-free external
+HTTPS source.
+
+The same **Choose from Immich** control is available on structured image
+fields such as Journal covers, Homepage images, Custom Page headers/social
+images, image blocks, and image-type Additional Media. Existing `/uploads/...`
+and HTTPS values remain valid.
 
 Immich galleries use public `share.angrysquirrel.org` links and remain live-backed; changes to the public album do not require rewriting the Journal body.
 
@@ -124,7 +134,7 @@ Immich galleries use public `share.angrysquirrel.org` links and remain live-back
 
 Use **Content → Import** to upload or paste Markdown/MDX. Body-only Google Docs exports do not need YAML frontmatter: Review Import fills the complete body, derives an editable title and filename from the source filename, and Tina generates canonical frontmatter when the draft is created. Existing frontmatter is mapped when present.
 
-The review screen lists every active Topic as a selectable choice and also accepts Topic labels/slugs typed as a comma-separated list. Import maps into the same current Journal model, validates supported body syntax/media, resolves active Topics and Journal Sections, and always creates a Draft. It never overwrites an existing entry and never publishes immediately.
+The review screen lists every active Topic as a selectable choice and also accepts Topic labels/slugs typed as a comma-separated list. Its Cover Image field and Markdown body use the same Immich/R2 controls as ordinary Journal authoring. Import maps into the same current Journal model, validates supported body syntax/media, resolves active Topics and Journal Sections, and always creates a Draft. It never overwrites an existing entry and never publishes immediately.
 
 See `IMPORT_GUIDE.md` for detailed mapping and validation behavior.
 

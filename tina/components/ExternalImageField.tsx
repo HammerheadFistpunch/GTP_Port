@@ -2,6 +2,7 @@ import React from "react";
 import type { CSSProperties, ChangeEvent, FocusEvent } from "react";
 import { useCMS } from "tinacms";
 import type { Media, TinaField } from "tinacms";
+import ImmichImagePicker from "./ImmichImagePicker";
 import {
     getImageSourceError,
     getImageSourceKind,
@@ -141,7 +142,7 @@ export default function ExternalImageField({ input, field, meta }: ExternalImage
                 {field.required ? " *" : ""}
             </label>
             <p style={styles.help}>
-                {field.description || "Choose or upload a managed image, or paste a complete HTTPS image URL."}
+                {field.description || "Choose an Immich website copy, choose/upload a managed image, or paste a complete HTTPS image URL."}
             </p>
             <div style={styles.controls}>
                 <input
@@ -158,6 +159,7 @@ export default function ExternalImageField({ input, field, meta }: ExternalImage
                     onBlur={() => input.onBlur?.()}
                     onFocus={() => input.onFocus?.()}
                 />
+                <ImmichImagePicker onSelect={(url) => input.onChange(url as unknown as ChangeEvent<string>)} />
                 <button type="button" style={styles.button} onClick={selectManagedImage}>
                     Choose or upload
                 </button>
@@ -176,7 +178,7 @@ export default function ExternalImageField({ input, field, meta }: ExternalImage
                         <p style={styles.status}>Preview unavailable. Verify that the image is publicly reachable.</p>
                     )}
                     <p style={styles.status}>
-                        {sourceKind === "managed" ? "Managed upload" : "External HTTPS image"}<br />
+                        {sourceKind === "managed" ? "Managed upload" : value.startsWith("https://media.angrysquirrel.org/") ? "Published Immich/R2 image" : "External HTTPS image"}<br />
                         {value.trim()}
                     </p>
                 </div>

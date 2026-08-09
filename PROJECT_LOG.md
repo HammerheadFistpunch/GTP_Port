@@ -1,5 +1,48 @@
 # GTP_Port Project Log
 
+## 2026-08-09 - Sprint 17 site-wide media integration implemented
+
+Implemented:
+
+- completed and documented the required inventory of structured image fields,
+  Markdown insertion, Import, stored source shapes, and public renderers
+- added one shared Tina Immich picker with smart/filename search, albums,
+  protected previews, pagination, and explicit selection
+- made selection publish or reuse the asset through the protected backend and
+  insert only the returned permanent R2 `web` URL
+- connected the picker to Homepage, Custom Page, Journal cover, image block,
+  and image-type Additional Media source controls through the shared structured
+  image field
+- added **Immich image** to Journal, Standard Page, Custom Page, and Import
+  Markdown editing
+- reused the picker for Import cover selection while preserving draft-only
+  import behavior
+- preserved Media Manager `/uploads/...`, safe relative Markdown, and external
+  HTTPS sources; no stored schema or public renderer migration was required
+- kept live `immichGallery` delivery explicitly deferred to Sprint 18
+
+Validation:
+
+- all 28 authoring/media tests pass
+- focused strict TypeScript for every changed/new Tina component passes
+- local Tina admin production bundle compiles successfully with cloud checks
+  and indexing disabled; `tina/tina-lock.json` is unchanged because stored
+  schema shapes did not change
+- `git diff --check` passes
+- standalone repository TypeScript still reaches only the pre-existing
+  `TopicField` generic mismatch after Astro types are available
+- the Astro-only build could not start in this workspace because its network
+  approval was cancelled by the runtime; this is recorded as an environment
+  limitation, not a successful build
+
+Remaining acceptance:
+
+- deliberately publish the implementation
+- verify one structured field, Markdown insertion, and Import review in hosted
+  `/admin/`
+- save a draft using a permanent `media.angrysquirrel.org` URL and verify its
+  public renderer before closing Sprint 17
+
 ## 2026-08-09 - Sprint 16 hosted acceptance completed
 
 Completed and owner-verified against the deployed site:

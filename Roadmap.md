@@ -135,9 +135,15 @@ first publication, public delivery without an admin session, repeat
 Tunnel was stopped, and successful Immich browsing after Tunnel recovery.
 
 ### Sprint 17 - site-wide Immich/R2 integration
-**Status:** Planned.
+**Status:** Implemented; hosted owner acceptance pending.
 
-Wire applicable Tina image fields, Markdown image insertion, and Import into one browse/publish/reuse workflow so ordinary page media no longer depends on visitor requests to Immich.
+Inventoried applicable image fields, Markdown insertion, Import, stored source
+shapes, and public renderers. Added one reusable Tina picker that privately
+browses/searches Immich, publishes or reuses the selected asset, and inserts
+only its permanent R2 `web` URL. Structured image fields, Journal/Page
+Markdown, and Import review share this flow while existing `/uploads/...` and
+external HTTPS sources remain supported. Hosted editor and saved-content
+verification remain before closeout.
 
 ### Sprint 18 - gallery architecture and security
 **Status:** Planned.

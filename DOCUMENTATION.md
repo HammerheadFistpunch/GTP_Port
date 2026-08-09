@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-09 after Sprint 16 acceptance
+Last reviewed: 2026-08-09 after Sprint 17 implementation
 
 ## Active project documents
 
@@ -9,6 +9,7 @@ Last reviewed: 2026-08-09 after Sprint 16 acceptance
 - `RESUME_DESIGN.md` - Sprint 13 Resume purpose, source model, hierarchy, and maintenance decisions
 - `SPRINT14_QA.md` - Phase 2 closeout evidence, owner verification, and explicitly un-run formal checks
 - `MEDIA_BACKEND_GUIDE.md` - Immich/R2 architecture, Cloudflare setup, endpoint contract, security, and activation checks
+- `SPRINT17_MEDIA_INVENTORY.md` - applicable Tina image fields, Markdown/Import paths, stored shapes, renderers, and shared picker contract
 
 | Document | Purpose |
 | --- | --- |
@@ -23,6 +24,7 @@ Last reviewed: 2026-08-09 after Sprint 16 acceptance
 | `PUBLISHING_GUIDE.md` | Deliberate publishing setup, owner workflow, security, and recovery |
 | `IMPORT_GUIDE.md` | Markdown/MDX import mapping, validation, draft workflow, and troubleshooting |
 | `MEDIA_BACKEND_GUIDE.md` | Immich API, Tunnel/Access, R2, Pages binding, endpoint, and verification workflow |
+| `SPRINT17_MEDIA_INVENTORY.md` | Sprint 17 field/renderer inventory and durable-media integration contract |
 | `RESUME_DESIGN.md` | Resume-specific design intent and source ownership |
 | `SPRINT14_QA.md` | Final Phase 2 migration/QA evidence and maintenance exceptions |
 
@@ -39,7 +41,7 @@ Phase 2 is complete and Phase 3 is underway. The owner-facing model is now:
 - Standard Page and Custom Page bodies use the same Markdown editor; other page fields retain their structured/plain-text controls
 - Import writes the same simplified Journal model
 - production deployment is deliberate through **Publish Site**; automatic production branch deployments are disabled
-- the Sprint 16 Access-protected Immich-to-R2 backend, private origin, R2 publication workflow, public delivery, duplicate reuse, offline-origin independence, and Tunnel recovery are deployed and owner-accepted; Sprint 17 site-wide integration is active
+- the Sprint 16 Access-protected Immich-to-R2 backend is deployed and owner-accepted; Sprint 17's shared structured-field/Markdown/Import picker is implemented with hosted owner acceptance pending
 
 ## Source hierarchy
 
