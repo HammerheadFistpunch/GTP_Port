@@ -1,5 +1,29 @@
 # GTP_Port Project Log
 
+## 2026-08-10 - Immich picker infinite scrolling implemented
+
+Completed:
+
+- Replaced the shared Immich picker's manual **Load more** control with
+  automatic pagination as the editor approaches the bottom of the image grid.
+- Applied the behavior to every authoring path that uses the shared picker,
+  including cover images, structured galleries, Markdown insertion, and
+  Import review.
+- Added a synchronous request guard to prevent duplicate page requests and
+  kept pagination tied to the submitted search rather than unfinished search
+  text.
+- Added a focused regression test for the scroll observer, scroll container,
+  pagination sentinel, and duplicate-request guard.
+
+Media-quality note:
+
+- R2 publication still copies Immich's generated `thumbnail` and `preview`
+  variants without additional recompression; the larger `preview` becomes the
+  website's `web` variant.
+- After changing Immich thumbnail quality or size, increment
+  `MEDIA_VARIANT_VERSION` in Cloudflare Pages before selecting images again so
+  new immutable R2 object URLs are created.
+
 ## 2026-08-10 - Immich v3 album browsing compatibility fix
 
 Corrected the follow-up album-opening failure in the shared Immich picker:

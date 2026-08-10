@@ -74,6 +74,21 @@ test("the shared picker exposes real album navigation and a mobile-first dialog"
     assert.match(picker, /repeat\(2, minmax\(0, 1fr\)\)/);
 });
 
+test("the shared picker loads additional asset pages with infinite scroll", async () => {
+    const picker = await readFile(
+        new URL("../tina/components/ImmichImagePicker.tsx", import.meta.url),
+        "utf8",
+    );
+
+    assert.match(picker, /new IntersectionObserver/);
+    assert.match(picker, /rootMargin: "400px 0px"/);
+    assert.match(picker, /ref=\{bodyRef\}/);
+    assert.match(picker, /ref=\{loadMoreRef\}/);
+    assert.match(picker, /loadAssets\(nextPage, true\)/);
+    assert.match(picker, /loadingRef\.current/);
+    assert.doesNotMatch(picker, />Load more</);
+});
+
 test("Journal creation is body-first and omits the redundant Additional Media control", async () => {
     const [config, editor, topics] = await Promise.all([
         readFile(new URL("../tina/config.ts", import.meta.url), "utf8"),

@@ -113,18 +113,25 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
     const [albums, setAlbums] = React.useState<Album[]>([]);
     const [query, setQuery] = React.useState("");
     const [search, setSearch] = React.useState<"smart" | "filename">("smart");
+    const [appliedQuery, setAppliedQuery] = React.useState("");
+    const [appliedSearch, setAppliedSearch] = React.useState<"smart" | "filename">("smart");
     const [albumId, setAlbumId] = React.useState("");
     const [albumName, setAlbumName] = React.useState("");
     const [nextPage, setNextPage] = React.useState<number | null>(null);
     const [loading, setLoading] = React.useState(false);
     const [publishingId, setPublishingId] = React.useState("");
     const [error, setError] = React.useState("");
+    const bodyRef = React.useRef<HTMLDivElement>(null);
+    const loadMoreRef = React.useRef<HTMLDivElement>(null);
+    const loadingRef = React.useRef(false);
 
     const loadAssets = React.useCallback(async (page = 1, append = false) => {
+        if (loadingRef.current) return;
+        loadingRef.current = true;
         setLoading(true);
         setError("");
         try {
-            const response = await fetch(buildImmichAssetsUrl({ page, query, search, albumId }), {
+            const response = await fetch(buildImmichAssetsUrl({ page, query: appliedQuery, search: appliedSearch, albumId }), {
                 credentials: "same-origin",
                 headers: { accept: "application/json" },
             });
@@ -137,9 +144,10 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
         } catch (caught) {
             setError(caught instanceof Error ? caught.message : "Immich images could not be loaded.");
         } finally {
+            loadingRef.current = false;
             setLoading(false);
         }
-    }, [albumId, query, search]);
+    }, [albumId, appliedQuery, appliedSearch]);
 
     React.useEffect(() => {
         if (!open) return;
@@ -157,7 +165,27 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
     React.useEffect(() => {
         if (!open || view !== "photos") return;
         void loadAssets();
-    }, [open, view, albumId]);
+    }, [open, view, loadAssets]);
+
+    React.useEffect(() => {
+        if (!open || view !== "photos" || !nextPage || publishingId) return;
+        const root = bodyRef.current;
+        const target = loadMoreRef.current;
+        if (!root || !target) return;
+
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry?.isIntersecting && !loadingRef.current) {
+                void loadAssets(nextPage, true);
+            }
+        }, {
+            root,
+            rootMargin: "400px 0px",
+            threshold: 0,
+        });
+
+        observer.observe(target);
+        return () => observer.disconnect();
+    }, [loadAssets, nextPage, open, publishingId, view]);
 
     React.useEffect(() => {
         if (!open) return;
@@ -170,11 +198,17 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
 
     const searchAssets = (event: FormEvent) => {
         event.preventDefault();
-        void loadAssets();
+        if (query === appliedQuery && search === appliedSearch) {
+            void loadAssets();
+            return;
+        }
+        setAppliedQuery(query);
+        setAppliedSearch(search);
     };
 
     const openAlbum = (album: Album) => {
         setQuery("");
+        setAppliedQuery("");
         setAlbumId(album.id);
         setAlbumName(album.albumName);
         setView("photos");
@@ -182,6 +216,7 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
 
     const showAllPhotos = () => {
         setQuery("");
+        setAppliedQuery("");
         setAlbumId("");
         setAlbumName("");
         setView("photos");
@@ -240,7 +275,7 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
                             </select>
                             <button type="submit" style={styles.secondary} disabled={loading || Boolean(publishingId)}>Search</button>
                         </form>}
-                        <div className="immich-picker-body" style={styles.body}>
+                        <div ref={bodyRef} className="immich-picker-body" style={styles.body}>
                             <nav style={styles.navigation} aria-label="Immich library">
                                 <button type="button" style={view === "albums" ? styles.secondary : styles.close} onClick={() => setView("albums")}>Albums</button>
                                 <button type="button" style={view === "photos" && !albumId ? styles.secondary : styles.close} onClick={showAllPhotos}>All photos</button>
@@ -275,8 +310,11 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
                                 ))}
                             </div>}
                             {view === "photos" && <div style={styles.footer}>
-                                {nextPage && <button type="button" style={styles.secondary} disabled={loading || Boolean(publishingId)} onClick={() => void loadAssets(nextPage, true)}>{loading ? "Loading…" : "Load more"}</button>}
-                                {loading && !nextPage && <span style={styles.help}>Loading images…</span>}
+                                <div ref={loadMoreRef} aria-live="polite" style={{ minHeight: 24 }}>
+                                    {loading && <span style={styles.help}>{assets.length ? "Loading more images…" : "Loading images…"}</span>}
+                                    {!loading && nextPage && <span style={styles.help}>Scroll for more images</span>}
+                                    {!loading && !nextPage && assets.length > 0 && <span style={styles.help}>All images loaded</span>}
+                                </div>
                             </div>}
                         </div>
                     </section>
