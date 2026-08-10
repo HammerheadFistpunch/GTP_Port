@@ -1,5 +1,17 @@
 # GTP_Port Project Log
 
+## 2026-08-10 - Markdown split-preview containment corrected
+
+Corrected the remaining editor preview layout issues found in hosted testing:
+
+- explicitly restored normal whitespace wrapping inside the sanitized preview
+  so inherited Tina UI styles cannot force prose into a clipped single line
+- gave the Markdown source and preview the same bounded editing height
+- moved vertical overflow into each pane so large images and long articles
+  scroll inside the editor instead of expanding the entire split-view row
+- retained contained horizontal scrolling only for code blocks and tables
+- applied a matched viewport-relative height to the narrow/mobile layout
+
 ## 2026-08-10 - Immich picker infinite scrolling implemented
 
 Completed:

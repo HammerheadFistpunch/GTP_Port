@@ -119,6 +119,12 @@ test("the sanitized Markdown preview wraps prose without making the pane scroll 
     );
 
     assert.match(editor, /overflowX: "hidden"/);
+    assert.match(editor, /height: 520, minHeight: 0/);
+    assert.match(editor, /overflowY: "auto"/);
+    assert.match(editor, /whiteSpace: "normal"/);
+    assert.match(editor, /resize: "none"/);
+    assert.match(editor, /\.markdown-body-preview \{ min-width: 0; white-space: normal !important; \}/);
+    assert.match(editor, /height: 60vh !important;/);
     assert.match(editor, /\.markdown-body-preview p,[\s\S]*overflow-wrap: anywhere; word-break: break-word;/);
     assert.match(editor, /\.markdown-body-preview pre \{[^}]*overflow-x: auto;/);
     assert.match(editor, /\.markdown-body-preview table \{[^}]*overflow-x: auto;/);

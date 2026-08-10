@@ -201,14 +201,15 @@ const styles: Record<string, CSSProperties> = {
         fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase",
     },
     textarea: {
-        width: "100%", boxSizing: "border-box", minHeight: 520, padding: 16,
+        width: "100%", height: 520, minHeight: 0, boxSizing: "border-box", padding: 16,
         border: "1px solid #d1d5db", borderRadius: 8, background: "#111827",
         color: "#f9fafb", fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
-        fontSize: 14, lineHeight: 1.65, resize: "vertical", tabSize: 4,
+        fontSize: 14, lineHeight: 1.65, overflowY: "auto", resize: "none", tabSize: 4,
     },
     preview: {
-        width: "100%", maxWidth: "100%", boxSizing: "border-box", minHeight: 520,
-        padding: 20, overflowX: "hidden", overflowWrap: "anywhere", border: "1px solid #d1d5db",
+        width: "100%", maxWidth: "100%", height: 520, minHeight: 0, boxSizing: "border-box",
+        padding: 20, overflowX: "hidden", overflowY: "auto", overflowWrap: "anywhere",
+        whiteSpace: "normal", wordBreak: "break-word", border: "1px solid #d1d5db",
         borderRadius: 8, background: "#ffffff", color: "#1f2937",
         fontFamily: "Georgia, Cambria, 'Times New Roman', serif", fontSize: 16, lineHeight: 1.7,
     },
@@ -407,8 +408,12 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
                     .markdown-editor-toolbar { gap: 5px !important; }
                     .markdown-editor-toolbar button { min-width: 38px; min-height: 38px; }
                     .markdown-body-editor-grid textarea,
-                    .markdown-body-editor-grid .markdown-body-preview { min-height: 60vh !important; }
+                    .markdown-body-editor-grid .markdown-body-preview {
+                        height: 60vh !important;
+                        min-height: 0 !important;
+                    }
                 }
+                .markdown-body-preview { min-width: 0; white-space: normal !important; }
                 .markdown-body-preview > :first-child { margin-top: 0; }
                 .markdown-body-preview > :last-child { margin-bottom: 0; }
                 .markdown-body-preview p,
@@ -422,7 +427,7 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
                 .markdown-body-preview a,
                 .markdown-body-preview blockquote,
                 .markdown-body-preview figcaption,
-                .markdown-body-preview code { overflow-wrap: anywhere; word-break: break-word; }
+                .markdown-body-preview code { overflow-wrap: anywhere; word-break: break-word; white-space: normal; }
                 .markdown-body-preview h1,
                 .markdown-body-preview h2,
                 .markdown-body-preview h3 { line-height: 1.25; margin: 1.5em 0 0.6em; }
@@ -431,7 +436,7 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
                 .markdown-body-preview blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid #9ca3af; color: #4b5563; }
                 .markdown-body-preview pre { width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; overflow-x: auto; padding: 1rem; border-radius: 6px; background: #111827; color: #f9fafb; }
                 .markdown-body-preview code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
-                .markdown-body-preview pre code { overflow-wrap: normal; word-break: normal; }
+                .markdown-body-preview pre code { overflow-wrap: normal; word-break: normal; white-space: pre; }
                 .markdown-body-preview table { display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
                 .markdown-body-preview th,
                 .markdown-body-preview td { padding: 0.5rem; border: 1px solid #d1d5db; text-align: left; }
