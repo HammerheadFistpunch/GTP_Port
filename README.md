@@ -19,7 +19,7 @@ The site currently includes:
 - Tina-managed Journal Sections with stable slugs, aliases, and Active/Retired state
 - owner-facing **Topics** taxonomy with stable `/tags/[slug]/` archives, Active/Retired state, aliases, and optional replacement-topic migration
 - related-story ranking based primarily on shared Topics, then same Journal Section
-- Markdown-first Journal authoring with Write/Split/Preview, formatting controls, inline code, links, Immich/R2 selection, Media Manager image insertion, external images, and YouTube insertion
+- title/body-first Journal authoring with a compact icon toolbar, compact Section/Status/Topics dropdowns, desktop Write/Split/Preview, simplified mobile Write/Preview, Immich/R2 selection, Media Manager/external images, and inline YouTube insertion
 - the same Markdown editor on Standard Page and Custom Page body fields, without changing their structured metadata or page-block controls
 - safe Markdown/MDX Import that accepts body-only Google Docs exports, fills the body during review, lists selectable active Topics, and creates the same simplified Journal model as manual authoring
 - a compact structured Homepage
@@ -28,7 +28,7 @@ The site currently includes:
 - a structured professional-background Resume maintained from one Tina-backed source
 - shared media/lightbox and Immich gallery support
 - an Access-protected Immich browse/search/preview service with duplicate-safe R2 publishing
-- one shared Tina Immich picker across structured image fields, Markdown insertion, and Import review
+- one shared Tina Immich picker with direct album opening and responsive full-screen mobile behavior across structured image fields, Markdown insertion, and Import review
 - dependency-free `/robots.txt`, `/sitemap.xml`, and `/rss.xml`
 - canonical/Open Graph/Twitter metadata in the shared layout
 
@@ -62,15 +62,18 @@ Draft content remains stored in Git/Tina but does not receive a public route.
 Current Journal fields:
 
 - Title
+- Markdown body
+- Journal Section
+- Status (Draft/Published)
+- Topics
 - Description
 - Publication Date
-- Status (Draft/Published)
-- Journal Section
-- Topics
 - Cover Image
 - optional Immich Gallery
-- optional structured media
-- Markdown body
+
+New entries default to Draft and today's date. Older structured-media data still
+renders, but Additional Media is no longer exposed for new authoring because
+images and YouTube belong inline in the body.
 
 Deprecated placement/type/project metadata was removed during Sprint 14.
 

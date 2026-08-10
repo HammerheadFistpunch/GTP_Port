@@ -149,11 +149,14 @@ working across a structured image field, Markdown insertion, and Import review.
 Saved content uses permanent `media.angrysquirrel.org` URLs and renders
 publicly through R2.
 
-**Open maintenance follow-up:** The Immich picker needs additional fixes on
-mobile devices. Desktop acceptance does not close mobile UX acceptance. Capture
-the exact device/browser reproduction steps and affected interactions during the
-next mobile test pass, then address them before treating the picker as fully
-polished across form factors.
+**Authoring UX follow-up implemented:** The picker now exposes albums as
+thumbnail cards that open directly into their photos, and its dialog becomes a
+full-screen, touch-sized mobile interface with responsive photo/album grids.
+Journal creation is now title/body-first with a compact icon toolbar, Write as
+the default mode, mobile Write/Preview controls, compact Section/Status/Topics
+dropdowns below the body,
+today's date as the new-entry default, and no redundant Additional Media field.
+Legacy structured-media rendering remains supported for portability.
 
 ### Sprint 18 - gallery architecture and security
 **Status:** Planned; paused until the owner returns to gallery work.

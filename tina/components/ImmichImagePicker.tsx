@@ -13,6 +13,7 @@ interface Album {
     id: string;
     albumName: string;
     assetCount?: number;
+    previewUrl?: string | null;
 }
 
 interface AssetPage {
@@ -23,6 +24,7 @@ interface AssetPage {
 interface ImmichImagePickerProps {
     onSelect: (url: string, asset: ImmichEditorAsset) => void;
     buttonLabel?: string;
+    compact?: boolean;
 }
 
 const styles: Record<string, CSSProperties> = {
@@ -51,7 +53,7 @@ const styles: Record<string, CSSProperties> = {
         background: "#fff", color: "#334155", cursor: "pointer", fontWeight: 700,
     },
     filters: {
-        display: "grid", gridTemplateColumns: "minmax(12rem, 1fr) auto minmax(11rem, .5fr) auto",
+        display: "grid", gridTemplateColumns: "minmax(12rem, 1fr) auto auto",
         gap: 8, padding: "14px 22px", borderBottom: "1px solid #dbe3ee",
     },
     input: {
@@ -63,6 +65,7 @@ const styles: Record<string, CSSProperties> = {
         background: "#2563eb", color: "#fff", cursor: "pointer", fontWeight: 700,
     },
     body: { overflowY: "auto", padding: 22 },
+    navigation: { display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, marginBottom: 14 },
     message: {
         margin: "0 0 14px", padding: "10px 12px", borderRadius: 6,
         background: "#eff6ff", color: "#1e3a8a", fontSize: 13, lineHeight: 1.5,
@@ -81,6 +84,16 @@ const styles: Record<string, CSSProperties> = {
     },
     image: { display: "block", width: "100%", height: 130, objectFit: "cover", background: "#e2e8f0" },
     cardText: { padding: 9, overflowWrap: "anywhere", fontSize: 12, lineHeight: 1.4 },
+    albumCard: {
+        display: "grid", gridTemplateRows: "112px auto", minWidth: 0, padding: 0,
+        overflow: "hidden", border: "1px solid #cbd5e1", borderRadius: 8,
+        background: "#f8fafc", color: "#172033", cursor: "pointer", textAlign: "left",
+    },
+    albumImage: { display: "block", width: "100%", height: 112, objectFit: "cover", background: "#e2e8f0" },
+    albumPlaceholder: {
+        display: "grid", placeItems: "center", width: "100%", height: 112,
+        background: "#e2e8f0", color: "#64748b", fontSize: 28,
+    },
     footer: { display: "flex", justifyContent: "center", paddingTop: 18 },
 };
 
@@ -93,13 +106,15 @@ const responseMessage = async (response: Response, fallback: string) => {
     }
 };
 
-export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from Immich" }: ImmichImagePickerProps) {
+export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from Immich", compact = false }: ImmichImagePickerProps) {
     const [open, setOpen] = React.useState(false);
+    const [view, setView] = React.useState<"photos" | "albums">("photos");
     const [assets, setAssets] = React.useState<ImmichEditorAsset[]>([]);
     const [albums, setAlbums] = React.useState<Album[]>([]);
     const [query, setQuery] = React.useState("");
     const [search, setSearch] = React.useState<"smart" | "filename">("smart");
     const [albumId, setAlbumId] = React.useState("");
+    const [albumName, setAlbumName] = React.useState("");
     const [nextPage, setNextPage] = React.useState<number | null>(null);
     const [loading, setLoading] = React.useState(false);
     const [publishingId, setPublishingId] = React.useState("");
@@ -128,7 +143,6 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
 
     React.useEffect(() => {
         if (!open) return;
-        void loadAssets();
         fetch("/admin/api/media/albums", { credentials: "same-origin", headers: { accept: "application/json" } })
             .then((response) => response.ok ? response.json() : { albums: [] })
             .then((result: unknown) => {
@@ -139,6 +153,11 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
             })
             .catch(() => setAlbums([]));
     }, [open]);
+
+    React.useEffect(() => {
+        if (!open || view !== "photos") return;
+        void loadAssets();
+    }, [open, view, albumId]);
 
     React.useEffect(() => {
         if (!open) return;
@@ -152,6 +171,20 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
     const searchAssets = (event: FormEvent) => {
         event.preventDefault();
         void loadAssets();
+    };
+
+    const openAlbum = (album: Album) => {
+        setQuery("");
+        setAlbumId(album.id);
+        setAlbumName(album.albumName);
+        setView("photos");
+    };
+
+    const showAllPhotos = () => {
+        setQuery("");
+        setAlbumId("");
+        setAlbumName("");
+        setView("photos");
     };
 
     const publish = async (asset: ImmichEditorAsset) => {
@@ -179,36 +212,58 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
 
     return (
         <>
-            <button type="button" style={styles.button} onClick={() => setOpen(true)}>{buttonLabel}</button>
+            <button
+                type="button"
+                className={compact ? "immich-picker-trigger immich-picker-trigger--compact" : "immich-picker-trigger"}
+                style={{ ...styles.button, ...(compact ? { width: 34, height: 34, padding: 0, display: "grid", placeItems: "center", fontSize: 16 } : {}) }}
+                onClick={() => setOpen(true)}
+                aria-label={buttonLabel}
+                title={compact ? buttonLabel : undefined}
+            >{compact ? "▧" : buttonLabel}</button>
             {open && (
-                <div style={styles.backdrop} role="presentation" onMouseDown={(event) => {
+                <div className="immich-picker-backdrop" style={styles.backdrop} role="presentation" onMouseDown={(event) => {
                     if (event.target === event.currentTarget && !publishingId) setOpen(false);
                 }}>
-                    <section role="dialog" aria-modal="true" aria-labelledby="immich-picker-title" style={styles.dialog}>
-                        <header style={styles.header}>
+                    <section className="immich-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="immich-picker-title" style={styles.dialog}>
+                        <header className="immich-picker-header" style={styles.header}>
                             <div>
                                 <h2 id="immich-picker-title" style={styles.title}>Choose an Immich image</h2>
                                 <p style={styles.help}>Selecting an image publishes or reuses its permanent website copy in R2.</p>
                             </div>
                             <button type="button" style={styles.close} onClick={() => setOpen(false)} disabled={Boolean(publishingId)}>Close</button>
                         </header>
-                        <form style={styles.filters} onSubmit={searchAssets}>
+                        {view === "photos" && <form className="immich-picker-filters" style={styles.filters} onSubmit={searchAssets}>
                             <input style={styles.input} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search images" aria-label="Search images" />
                             <select style={styles.input} value={search} onChange={(event) => setSearch(event.target.value as "smart" | "filename")} aria-label="Search type">
                                 <option value="smart">Smart search</option>
                                 <option value="filename">Filename</option>
                             </select>
-                            <select style={styles.input} value={albumId} onChange={(event) => setAlbumId(event.target.value)} aria-label="Album">
-                                <option value="">All images</option>
-                                {albums.map((album) => <option key={album.id} value={album.id}>{album.albumName}{typeof album.assetCount === "number" ? ` (${album.assetCount})` : ""}</option>)}
-                            </select>
                             <button type="submit" style={styles.secondary} disabled={loading || Boolean(publishingId)}>Search</button>
-                        </form>
-                        <div style={styles.body}>
+                        </form>}
+                        <div className="immich-picker-body" style={styles.body}>
+                            <nav style={styles.navigation} aria-label="Immich library">
+                                <button type="button" style={view === "albums" ? styles.secondary : styles.close} onClick={() => setView("albums")}>Albums</button>
+                                <button type="button" style={view === "photos" && !albumId ? styles.secondary : styles.close} onClick={showAllPhotos}>All photos</button>
+                                {albumId && <strong style={styles.help}>Album: {albumName}</strong>}
+                            </nav>
                             {error && <p role="alert" style={styles.error}>{error}</p>}
                             {publishingId && <p style={styles.message}>Publishing permanent thumbnail and web copies to R2…</p>}
-                            {!loading && !assets.length && !error && <p style={styles.message}>No matching images found.</p>}
-                            <div style={styles.grid}>
+                            {view === "albums" && !albums.length && <p style={styles.message}>No albums found.</p>}
+                            {view === "albums" && <div className="immich-picker-album-grid" style={styles.grid}>
+                                {albums.map((album) => (
+                                    <button key={album.id} type="button" style={styles.albumCard} onClick={() => openAlbum(album)}>
+                                        {album.previewUrl
+                                            ? <img src={album.previewUrl} alt="" style={styles.albumImage} loading="lazy" />
+                                            : <span style={styles.albumPlaceholder} aria-hidden="true">▧</span>}
+                                        <span style={styles.cardText}>
+                                            <strong>{album.albumName}</strong><br />
+                                            {typeof album.assetCount === "number" ? `${album.assetCount} photo${album.assetCount === 1 ? "" : "s"}` : "Open album"}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>}
+                            {view === "photos" && !loading && !assets.length && !error && <p style={styles.message}>No matching images found.</p>}
+                            {view === "photos" && <div className="immich-picker-asset-grid" style={styles.grid}>
                                 {assets.map((asset) => (
                                     <button key={asset.id} type="button" style={styles.card} disabled={Boolean(publishingId)} onClick={() => void publish(asset)}>
                                         <img src={asset.previewUrl} alt="" style={styles.image} loading="lazy" />
@@ -218,15 +273,40 @@ export default function ImmichImagePicker({ onSelect, buttonLabel = "Choose from
                                         </span>
                                     </button>
                                 ))}
-                            </div>
-                            <div style={styles.footer}>
+                            </div>}
+                            {view === "photos" && <div style={styles.footer}>
                                 {nextPage && <button type="button" style={styles.secondary} disabled={loading || Boolean(publishingId)} onClick={() => void loadAssets(nextPage, true)}>{loading ? "Loading…" : "Load more"}</button>}
                                 {loading && !nextPage && <span style={styles.help}>Loading images…</span>}
-                            </div>
+                            </div>}
                         </div>
                     </section>
                 </div>
             )}
+            <style>{`
+                @media (max-width: 640px) {
+                    .immich-picker-backdrop { padding: 0 !important; place-items: stretch !important; }
+                    .immich-picker-dialog {
+                        width: 100vw !important; height: 100dvh !important; max-height: none !important;
+                        border-radius: 0 !important;
+                    }
+                    .immich-picker-header { padding: 14px 12px 10px !important; }
+                    .immich-picker-header h2 { font-size: 18px !important; }
+                    .immich-picker-header p { display: none; }
+                    .immich-picker-filters { grid-template-columns: minmax(0, 1fr) !important; padding: 10px 12px !important; }
+                    .immich-picker-filters input,
+                    .immich-picker-filters select,
+                    .immich-picker-filters button { min-height: 44px; width: 100%; }
+                    .immich-picker-body { padding: 12px !important; }
+                    .immich-picker-asset-grid,
+                    .immich-picker-album-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; }
+                    .immich-picker-asset-grid button { grid-template-rows: 104px auto !important; }
+                    .immich-picker-asset-grid img { height: 104px !important; }
+                }
+                @media (max-width: 360px) {
+                    .immich-picker-asset-grid,
+                    .immich-picker-album-grid { grid-template-columns: minmax(0, 1fr) !important; }
+                }
+            `}</style>
         </>
     );
 }

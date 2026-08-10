@@ -85,6 +85,9 @@ export default function TopicField({ input, field, meta }: TopicFieldProps) {
     }, [cms]);
 
     const visibleTopics = topics.filter((topic) => topic.active || selected.has(topic.reference));
+    const selectedLabels = visibleTopics
+        .filter((topic) => selected.has(topic.reference))
+        .map((topic) => topic.label);
 
     const toggle = (reference: string, checked: boolean) => {
         const next = checked
@@ -102,19 +105,24 @@ export default function TopicField({ input, field, meta }: TopicFieldProps) {
             <p style={{ margin: "0 0 10px", color: "#6b7280", fontSize: 13, lineHeight: 1.5 }}>
                 {field.description || "Choose what this story is about. Topics power related stories and topic archives."}
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 8 }}>
-                {visibleTopics.map((topic) => (
-                    <label key={topic.reference} style={{ display: "flex", alignItems: "center", gap: 8, padding: "9px 10px", border: "1px solid #d1d5db", borderRadius: 6, background: "#fff", color: "#111827", fontSize: 14 }}>
-                        <input
-                            type="checkbox"
-                            checked={selected.has(topic.reference)}
-                            disabled={!topic.active && !selected.has(topic.reference)}
-                            onChange={(event) => toggle(topic.reference, event.target.checked)}
-                        />
-                        <span>{topic.label}{!topic.active ? " (retired)" : ""}</span>
-                    </label>
-                ))}
-            </div>
+            <details style={{ position: "relative", border: "1px solid #d1d5db", borderRadius: 6, background: "#fff", color: "#111827" }}>
+                <summary style={{ minHeight: 44, boxSizing: "border-box", padding: "11px 12px", cursor: "pointer", fontSize: 14 }}>
+                    {selectedLabels.length ? selectedLabels.join(", ") : "Choose Topics"}
+                </summary>
+                <div style={{ display: "grid", gap: 4, maxHeight: 280, overflowY: "auto", padding: "4px 8px 8px", borderTop: "1px solid #e5e7eb" }}>
+                    {visibleTopics.map((topic) => (
+                        <label key={topic.reference} style={{ display: "flex", alignItems: "center", gap: 8, minHeight: 40, padding: "5px 4px", color: "#111827", fontSize: 14 }}>
+                            <input
+                                type="checkbox"
+                                checked={selected.has(topic.reference)}
+                                disabled={!topic.active && !selected.has(topic.reference)}
+                                onChange={(event) => toggle(topic.reference, event.target.checked)}
+                            />
+                            <span>{topic.label}{!topic.active ? " (retired)" : ""}</span>
+                        </label>
+                    ))}
+                </div>
+            </details>
             {status && <p style={{ margin: "8px 0 0", color: "#64748b", fontSize: 12 }}>{status}</p>}
             <p style={{ margin: "8px 0 0", color: "#64748b", fontSize: 12 }}>
                 Add, rename, or retire Topics under Settings → Topics. Retired Topics remain visible on stories that already use them.

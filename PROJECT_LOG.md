@@ -1,5 +1,35 @@
 # GTP_Port Project Log
 
+## 2026-08-09 - Sprint 17 authoring UX follow-up implemented
+
+Implemented from owner review:
+
+- added an Albums view with cover thumbnails/counts and direct album opening
+  in the shared Immich picker
+- rebuilt the picker at mobile widths as a full-viewport dialog with stacked
+  touch-sized controls and responsive photo/album grids
+- reordered Journal creation around Title and Entry Content first, followed by
+  Journal Section, Status, Topics, and the remaining supporting metadata
+- retained compact selects for Journal Section/Status and converted Topics from
+  an always-open checkbox grid to an expandable multi-select dropdown
+- defaulted new entries to Draft, today's date, an empty body, and Write mode
+- consolidated formatting and view controls into one compact accessible icon
+  toolbar; removed Split from the mobile control set
+- removed the redundant Additional Media authoring field and empty stored
+  arrays while preserving legacy Astro schema/layout read compatibility
+- regenerated `tina/tina-lock.json` from source rather than editing it by hand
+
+Validation:
+
+- all 30 authoring/media tests pass
+- focused strict TypeScript for the changed Tina editor/picker paths passes
+- full repository TypeScript reaches only the pre-existing `TopicField` generic
+  mismatch
+- Tina admin production bundle and regenerated schema lock build successfully
+  with cloud checks/indexing disabled
+- Astro-only build remains blocked by the workspace network approval gate
+- `git diff --check` passes
+
 ## 2026-08-09 - Sprint 17 hosted acceptance completed
 
 Completed and owner-verified against the deployed site:

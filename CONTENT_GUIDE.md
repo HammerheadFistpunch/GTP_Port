@@ -32,15 +32,19 @@ Every file in `src/content/entries/*.mdx` is a Journal entry. There is no separa
 Current Journal model:
 
 - Title
+- Markdown body
+- Journal Section
+- Status (Draft/Published)
+- Topics
 - Description
 - Publication Date
-- Status (Draft/Published)
-- Journal Section
-- Topics
 - Cover Image
 - optional Immich Gallery
-- optional structured media
-- Markdown body
+
+The editor presents those fields in composition order: title and body first,
+then compact Journal Section, Status, and multi-select Topics dropdowns, then supporting metadata. New entries default to
+Draft and today's date. Additional Media is retired from authoring; use inline
+images or YouTube in the body. Legacy structured media remains renderable.
 
 Portfolio uses dedicated Custom Pages and direct Journal destinations. Durable entry URLs remain `/archive/[slug]/`.
 
@@ -89,7 +93,7 @@ Distinct concepts should remain distinct. A name similarity is not a reason to m
 
 ## Markdown body editor
 
-Journal, Standard Page, and Custom Page body fields store portable Markdown/MDX source and provide Write/Split/Preview modes plus toolbar insertion for:
+Journal, Standard Page, and Custom Page body fields store portable Markdown/MDX source. The compact icon toolbar sits immediately above the writing surface. Desktop provides Write/Split/Preview; mobile intentionally provides Write/Preview to avoid an unusable split view. The toolbar inserts:
 
 - bold
 - italic
@@ -118,6 +122,9 @@ This applies only to body fields. Structured Homepage, Journal landing, Resume, 
 ## Images and media
 
 Use **Immich image** to browse the private Immich library and select an image.
+Open **Albums** to see album covers/counts, then open an album to jump directly
+to its photos. On mobile the picker occupies the full viewport and uses a
+touch-sized responsive grid.
 Selection publishes or reuses permanent `thumbnail` and `web` copies in R2;
 the editor inserts only the public `web` URL. Use **Media image** for a
 repository-managed upload, or **Image URL** for a credential-free external
@@ -125,8 +132,7 @@ HTTPS source.
 
 The same **Choose from Immich** control is available on structured image
 fields such as Journal covers, Homepage images, Custom Page headers/social
-images, image blocks, and image-type Additional Media. Existing `/uploads/...`
-and HTTPS values remain valid.
+images, and image blocks. Existing `/uploads/...` and HTTPS values remain valid.
 
 Immich galleries use public `share.angrysquirrel.org` links and remain live-backed; changes to the public album do not require rewriting the Journal body.
 

@@ -1,12 +1,17 @@
 # Sprint 17 Media Integration Inventory
 
-Last reviewed: 2026-08-09
+Last reviewed: 2026-08-09 after authoring UX follow-up
 
 **Status:** Complete, deployed, and owner-accepted.
 
 Hosted acceptance confirmed the shared picker works in structured fields,
 Markdown insertion, and Import review; durable content stores permanent
 `media.angrysquirrel.org` URLs that render publicly through R2.
+
+The follow-up adds direct album browsing/opening and full-screen mobile picker
+behavior. It also retires Journal Additional Media from authoring in favor of
+inline body images/YouTube; the public layout retains read compatibility for
+legacy structured media.
 
 ## Shared authoring contract
 
@@ -34,11 +39,11 @@ sources remain supported.
 | Custom Page → Social Sharing Image | `seoImage` string | `FlexiblePageLayout.astro` → `BaseLayout.astro` |
 | Custom Page → Image block | `blocks[].src` string | `PageBlockRenderer.astro` |
 | Journal → Cover Image | `coverImage` string | Journal cards, archives, homepage, and `EntryLayout.astro` |
-| Journal → Additional Media source | `media[].src` string; picker applies when Media Type is Image | `EntryLayout.astro` → `Image.astro` |
 
 These fields keep their existing source shape and use the shared
-`ExternalImageField` control. No Astro schema or stored-content migration is
-needed.
+`ExternalImageField` control. Empty `media: []` frontmatter was removed from
+existing entries; Astro validation/rendering remains backward-compatible with
+any legacy non-empty structured media.
 
 ## Markdown insertion
 

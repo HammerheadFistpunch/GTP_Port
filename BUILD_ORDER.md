@@ -21,6 +21,7 @@ The durable source of truth remains Git-backed Markdown/MDX on `gpt-handoff`. Us
 - owner-facing subject taxonomy is **Topics**; underlying collection and public `/tags/` routes remain stable
 - Topics support Active/Retired state and optional replacement-topic migration
 - Journal authoring is Markdown-first with formatting/link/media/YouTube insertion and Media Manager image selection
+- Journal creation is title/body-first; compact formatting controls sit above the body and supporting metadata follows it
 - Standard Page and Custom Page body fields use the same Markdown Write/Split/Preview editor; structured page fields remain unchanged
 - Import creates the same simplified Journal model as manual authoring
 - Resume is structured and maintained from one Tina-backed source
@@ -45,6 +46,11 @@ Hosted owner acceptance confirmed the deployed connector and editor paths are
 working, saved content uses `media.angrysquirrel.org`, and public rendering
 delivers the R2-backed asset. The inventory and shared-flow contract remain
 recorded in `SPRINT17_MEDIA_INVENTORY.md`.
+
+The authoring follow-up adds direct album opening plus full-screen mobile picker
+behavior. New Journal entries default to Draft and today's date, the editor
+defaults to Write mode, and the redundant Additional Media control has been
+retired in favor of inline image/YouTube insertion.
 
 ### Sprint 18 - gallery architecture and security (planned; paused)
 

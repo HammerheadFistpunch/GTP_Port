@@ -364,13 +364,16 @@ export default defineConfig({
                 ],
             },
             {
-                name: "entries", label: "Journal", path: "src/content/entries", format: "mdx", defaultItem: () => ({ draft: true }),
+                name: "entries", label: "Journal", path: "src/content/entries", format: "mdx", defaultItem: () => ({
+                    draft: true,
+                    date: new Date().toISOString(),
+                    body: "",
+                }),
                 fields: [
                     { type: "string", name: "title", label: "Title", required: true, isTitle: true },
-                    { type: "string", name: "description", label: "Description", required: true, ui: { component: "textarea" } },
-                    { type: "datetime", name: "date", label: "Publication Date", description: "Used for Journal chronology." },
-                    { type: "boolean", name: "draft", label: "Status", description: "Choose whether this story is public.", ui: { component: PublicationStatusField } },
+                    { type: "string", name: "body", label: "Entry Content (Markdown)", description: "Write portable Markdown. Use the toolbar for formatting, links, Immich/R2, managed/external images, and YouTube embeds.", required: true, isBody: true, ui: { component: MarkdownBodyField } },
                     { type: "string", name: "journalSection", label: "Journal Section", description: "Choose one active section, or leave blank for Latest only.", ui: { component: JournalSectionField } },
+                    { type: "boolean", name: "draft", label: "Status", description: "Choose whether this story is public.", ui: { component: PublicationStatusField } },
                     {
                         type: "object",
                         name: "tags",
@@ -380,19 +383,14 @@ export default defineConfig({
                         ui: { component: TopicField },
                         fields: [{ type: "reference", name: "tag", label: "Topic", required: true, collections: ["tags"] }],
                     },
+                    { type: "string", name: "description", label: "Description", required: true, ui: { component: "textarea" }, description: "Short summary used on Journal cards and in search/social metadata." },
+                    { type: "datetime", name: "date", label: "Publication Date", description: "Defaults to today for new entries and controls Journal chronology." },
                     { type: "image", name: "coverImage", label: "Cover Image", ui: externalImageUi },
                     { type: "object", name: "immichGallery", label: "Immich Gallery", description: "Display a live gallery from a public share.angrysquirrel.org album link.", fields: [
                         { type: "string", name: "shareUrl", label: "Public Share URL", required: true },
                         { type: "string", name: "title", label: "Gallery Title" },
                         { type: "string", name: "imageAltPrefix", label: "Image Description Prefix" },
                     ] },
-                    { type: "object", name: "media", label: "Additional Media", list: true, fields: [
-                        { type: "string", name: "type", label: "Media Type", required: true, options: [{ value: "image", label: "Image" }, { value: "video", label: "Video" }] },
-                        { type: "string", name: "src", label: "Source", required: true, description: "For images, choose an Immich/R2 or managed image. Video sources may use a complete HTTPS URL.", ui: externalImageUi },
-                        { type: "string", name: "alt", label: "Alternative Text / Video Title" },
-                        { type: "string", name: "caption", label: "Caption" },
-                    ] },
-                    { type: "string", name: "body", label: "Entry Content (Markdown)", description: "Write portable Markdown. Use the toolbar for formatting, links, Immich/R2, managed/external images, and YouTube embeds.", required: true, isBody: true, ui: { component: MarkdownBodyField } },
                 ],
             },
         ],

@@ -61,14 +61,18 @@ Every Content Entry is a Journal entry. There is no `placement` state and no pro
 Journal entries contain:
 
 - title
-- description
-- publication date
-- Draft/Published status
+- Markdown body
 - Journal Section
 - Topics
+- Draft/Published status
+- description
+- publication date
 - cover image
-- optional Immich/structured media
-- Markdown body
+- optional Immich gallery
+
+New Journal entries default to Draft and today's date. Additional Media has
+been removed from Tina authoring; inline images and YouTube are the supported
+new-entry workflow. The layout still reads legacy structured media.
 
 Portfolio is composed from dedicated Custom Pages plus direct Journal destinations. Entry detail URLs remain durable under `/archive/[slug]/`.
 
@@ -99,7 +103,13 @@ Manage them under **Settings → Topics**.
 
 ## Markdown authoring
 
-Journal bodies are Markdown-first. The custom editor provides Write/Split/Preview plus toolbar insertion for bold, italic, strikethrough, inline code, lists, hyperlinks, Immich/R2 images, Media Manager images, external images, and YouTube.
+Journal bodies are Markdown-first. The title and body lead the Journal form,
+with classification/status and supporting metadata below. The custom editor
+uses a compact icon toolbar for bold, italic, strikethrough, inline code, lists,
+links, Immich/R2 images, Media Manager images, external images, and YouTube.
+Write is the default; desktop adds Split while mobile keeps only Write/Preview.
+Journal Section and Status use native selects; Topics uses a compact expandable
+multi-select instead of an always-open checkbox wall.
 
 Use standard Markdown wherever possible. The only approved custom inline body element is the self-closing YouTube element documented in `CONTENT_GUIDE.md`.
 
@@ -191,6 +201,11 @@ returned `web` variant after publication/reuse succeeds. `ExternalImageField`
 uses it for structured sources; `MarkdownBodyField` uses it for portable image
 syntax; Import reuses both paths. The field/renderer inventory and deliberate
 Sprint 18 exclusions are in `SPRINT17_MEDIA_INVENTORY.md`.
+
+Albums are displayed as openable thumbnail cards rather than only a search
+filter. On screens up to 640px the picker is a full-viewport dialog with stacked
+filters, touch-sized controls, and a responsive two-column image grid (one
+column below 360px). Preserve these constraints when changing picker layout.
 
 ## Active roadmap
 

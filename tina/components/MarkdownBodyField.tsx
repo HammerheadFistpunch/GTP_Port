@@ -185,11 +185,13 @@ const renderPreview = (markdown: string) => {
 
 const styles: Record<string, CSSProperties> = {
     editor: { width: "100%", maxWidth: "100%", minWidth: 0, containerType: "inline-size" },
-    toolbar: { display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 },
+    toolbar: { display: "flex", flexWrap: "wrap", alignItems: "center", gap: 4, marginBottom: 10 },
+    toolbarSpacer: { flex: "1 1 16px" },
     toolDivider: { width: 1, alignSelf: "stretch", margin: "2px 3px", background: "#d1d5db" },
     button: {
-        padding: "7px 10px", background: "#ffffff", border: "1px solid #d1d5db",
-        borderRadius: 6, color: "#374151", cursor: "pointer", fontSize: 13, fontWeight: 600,
+        display: "grid", placeItems: "center", width: 34, height: 34, padding: 0,
+        background: "#ffffff", border: "1px solid #d1d5db", borderRadius: 6,
+        color: "#374151", cursor: "pointer", fontSize: 14, fontWeight: 700,
     },
     activeButton: { background: "#eff6ff", borderColor: "#2563eb", color: "#1d4ed8" },
     grid: { display: "grid", gap: 12, width: "100%", maxWidth: "100%", minWidth: 0 },
@@ -221,7 +223,7 @@ const styles: Record<string, CSSProperties> = {
 
 export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFieldProps) {
     const cms = useCMS();
-    const [mode, setMode] = React.useState<EditorMode>("split");
+    const [mode, setMode] = React.useState<EditorMode>("write");
     const markdown = typeof input.value === "string" ? input.value : "";
     const html = React.useMemo(() => renderPreview(markdown), [markdown]);
     const unsupported = React.useMemo(() => unsupportedMdxComponents(markdown), [markdown]);
@@ -314,32 +316,33 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
             </div>
             {field.description && <p style={styles.help}>{field.description}</p>}
 
-            <div style={styles.toolbar} role="group" aria-label="Markdown formatting toolbar">
-                <button type="button" style={styles.button} onClick={() => wrap("**")}>Bold</button>
-                <button type="button" style={styles.button} onClick={() => wrap("*")}>Italic</button>
-                <button type="button" style={styles.button} onClick={() => wrap("~~")}>Strike</button>
-                <button type="button" style={styles.button} onClick={() => wrap("`", "`", "code")}>Code</button>
+            <div className="markdown-editor-toolbar" style={styles.toolbar} role="toolbar" aria-label="Markdown editor toolbar">
+                <button type="button" style={styles.button} aria-label="Bold" title="Bold" onClick={() => wrap("**")}>B</button>
+                <button type="button" style={{ ...styles.button, fontStyle: "italic" }} aria-label="Italic" title="Italic" onClick={() => wrap("*")}>I</button>
+                <button type="button" style={{ ...styles.button, textDecoration: "line-through" }} aria-label="Strikethrough" title="Strikethrough" onClick={() => wrap("~~")}>S</button>
+                <button type="button" style={{ ...styles.button, fontSize: 11 }} aria-label="Inline code" title="Inline code" onClick={() => wrap("`", "`", "code")}>&lt;/&gt;</button>
                 <span style={styles.toolDivider} aria-hidden="true" />
-                <button type="button" style={styles.button} onClick={() => transformLines(false)}>Bullets</button>
-                <button type="button" style={styles.button} onClick={() => transformLines(true)}>Numbered</button>
-                <button type="button" style={styles.button} onClick={insertLink}>Link</button>
+                <button type="button" style={styles.button} aria-label="Bulleted list" title="Bulleted list" onClick={() => transformLines(false)}>•≡</button>
+                <button type="button" style={{ ...styles.button, fontSize: 12 }} aria-label="Numbered list" title="Numbered list" onClick={() => transformLines(true)}>1.</button>
+                <button type="button" style={styles.button} aria-label="Insert link" title="Insert link" onClick={insertLink}>↗</button>
                 <span style={styles.toolDivider} aria-hidden="true" />
-                <button type="button" style={styles.button} onClick={insertManagedImage}>Media image</button>
-                <ImmichImagePicker buttonLabel="Immich image" onSelect={(url) => insertImage(url)} />
-                <button type="button" style={styles.button} onClick={insertImageUrl}>Image URL</button>
-                <button type="button" style={styles.button} onClick={insertYouTube}>YouTube</button>
-            </div>
-
-            <div style={styles.toolbar} role="group" aria-label="Markdown editor view">
+                <button type="button" style={styles.button} aria-label="Insert Media Manager image" title="Media Manager image" onClick={insertManagedImage}>▣</button>
+                <ImmichImagePicker compact buttonLabel="Insert Immich image" onSelect={(url) => insertImage(url)} />
+                <button type="button" style={styles.button} aria-label="Insert image URL" title="Image URL" onClick={insertImageUrl}>⌁</button>
+                <button type="button" style={styles.button} aria-label="Insert YouTube video" title="YouTube" onClick={insertYouTube}>▶</button>
+                <span style={styles.toolbarSpacer} aria-hidden="true" />
                 {(["write", "split", "preview"] as EditorMode[]).map((option) => (
                     <button
                         key={option}
                         type="button"
+                        className={option === "split" ? "markdown-editor-split-toggle" : undefined}
                         aria-pressed={mode === option}
+                        aria-label={`${option[0].toUpperCase() + option.slice(1)} view`}
+                        title={`${option[0].toUpperCase() + option.slice(1)} view`}
                         style={{ ...styles.button, ...(mode === option ? styles.activeButton : {}) }}
                         onClick={() => setMode(option)}
                     >
-                        {option[0].toUpperCase() + option.slice(1)}
+                        {option === "write" ? "✎" : option === "split" ? "◫" : "◉"}
                     </button>
                 ))}
             </div>
@@ -400,6 +403,11 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
                     .markdown-body-editor-grid[data-mode="split"] {
                         grid-template-columns: minmax(0, 1fr) !important;
                     }
+                    .markdown-editor-split-toggle { display: none !important; }
+                    .markdown-editor-toolbar { gap: 5px !important; }
+                    .markdown-editor-toolbar button { min-width: 38px; min-height: 38px; }
+                    .markdown-body-editor-grid textarea,
+                    .markdown-body-editor-grid .markdown-body-preview { min-height: 60vh !important; }
                 }
                 .markdown-body-preview > :first-child { margin-top: 0; }
                 .markdown-body-preview > :last-child { margin-bottom: 0; }

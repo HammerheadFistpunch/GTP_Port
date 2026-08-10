@@ -1,6 +1,6 @@
 # Documentation Index
 
-Last reviewed: 2026-08-09 after Sprint 17 hosted acceptance
+Last reviewed: 2026-08-09 after the Sprint 17 authoring UX follow-up
 
 ## Active project documents
 
@@ -36,11 +36,11 @@ Phase 2 is complete and Phase 3 is underway. The owner-facing model is now:
 - Journal Sections are Tina-managed documents
 - subject taxonomy is labeled **Topics** in Tina while preserving the underlying `tags` collection and `/tags/` public routes
 - Topics are retired rather than directly deleted and may optionally point to a replacement
-- Journal authoring is Markdown-first with formatting, link, Media Manager image, external image, and YouTube insertion
+- Journal authoring is title/body-first with a compact icon toolbar, simplified mobile modes, and supporting metadata below the body
 - Standard Page and Custom Page bodies use the same Markdown editor; other page fields retain their structured/plain-text controls
 - Import writes the same simplified Journal model
 - production deployment is deliberate through **Publish Site**; automatic production branch deployments are disabled
-- the Sprint 16 Access-protected Immich-to-R2 backend and Sprint 17 shared structured-field/Markdown/Import picker are deployed and owner-accepted; Sprint 18 gallery architecture/security is planned and paused
+- the Sprint 16 Access-protected Immich-to-R2 backend and Sprint 17 shared structured-field/Markdown/Import picker are deployed and owner-accepted; direct album opening and responsive mobile picker/editor behavior are implemented; Sprint 18 gallery architecture/security is planned and paused
 
 ## Source hierarchy
 
