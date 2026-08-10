@@ -15,6 +15,11 @@ const topicReference = z.string().regex(
     "Topics must reference a document in src/content/tags.",
 );
 
+const optionalTopicReference = z.preprocess(
+    (value) => value === "" ? undefined : value,
+    topicReference.optional(),
+);
+
 const tags = defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/tags" }),
     schema: z.object({
@@ -25,7 +30,7 @@ const tags = defineCollection({
         ),
         description: z.string().optional(),
         active: z.boolean().default(true),
-        replacement: topicReference.optional(),
+        replacement: optionalTopicReference,
         aliases: z.array(z.string().regex(
             /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
             "Topic aliases must use lowercase letters, numbers, and single hyphens.",
