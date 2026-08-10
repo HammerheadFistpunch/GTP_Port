@@ -208,7 +208,7 @@ const styles: Record<string, CSSProperties> = {
     },
     preview: {
         width: "100%", maxWidth: "100%", boxSizing: "border-box", minHeight: 520,
-        padding: 20, overflowX: "auto", overflowWrap: "anywhere", border: "1px solid #d1d5db",
+        padding: 20, overflowX: "hidden", overflowWrap: "anywhere", border: "1px solid #d1d5db",
         borderRadius: 8, background: "#ffffff", color: "#1f2937",
         fontFamily: "Georgia, Cambria, 'Times New Roman', serif", fontSize: 16, lineHeight: 1.7,
     },
@@ -411,14 +411,27 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
                 }
                 .markdown-body-preview > :first-child { margin-top: 0; }
                 .markdown-body-preview > :last-child { margin-bottom: 0; }
+                .markdown-body-preview p,
+                .markdown-body-preview li,
+                .markdown-body-preview h1,
+                .markdown-body-preview h2,
+                .markdown-body-preview h3,
+                .markdown-body-preview h4,
+                .markdown-body-preview h5,
+                .markdown-body-preview h6,
+                .markdown-body-preview a,
+                .markdown-body-preview blockquote,
+                .markdown-body-preview figcaption,
+                .markdown-body-preview code { overflow-wrap: anywhere; word-break: break-word; }
                 .markdown-body-preview h1,
                 .markdown-body-preview h2,
                 .markdown-body-preview h3 { line-height: 1.25; margin: 1.5em 0 0.6em; }
                 .markdown-body-preview a { color: #2563eb; text-decoration: underline; }
                 .markdown-body-preview img { display: block; width: auto; max-width: 100%; height: auto; object-fit: contain; margin: 1rem 0; border-radius: 6px; }
                 .markdown-body-preview blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid #9ca3af; color: #4b5563; }
-                .markdown-body-preview pre { max-width: 100%; box-sizing: border-box; overflow-x: auto; padding: 1rem; border-radius: 6px; background: #111827; color: #f9fafb; }
+                .markdown-body-preview pre { width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; overflow-x: auto; padding: 1rem; border-radius: 6px; background: #111827; color: #f9fafb; }
                 .markdown-body-preview code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+                .markdown-body-preview pre code { overflow-wrap: normal; word-break: normal; }
                 .markdown-body-preview table { display: block; width: 100%; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
                 .markdown-body-preview th,
                 .markdown-body-preview td { padding: 0.5rem; border: 1px solid #d1d5db; text-align: left; }

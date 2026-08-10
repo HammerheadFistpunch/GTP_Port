@@ -111,3 +111,15 @@ test("Journal creation is body-first and omits the redundant Additional Media co
     assert.match(topics, /<details/);
     assert.match(topics, /Choose Topics/);
 });
+
+test("the sanitized Markdown preview wraps prose without making the pane scroll sideways", async () => {
+    const editor = await readFile(
+        new URL("../tina/components/MarkdownBodyField.tsx", import.meta.url),
+        "utf8",
+    );
+
+    assert.match(editor, /overflowX: "hidden"/);
+    assert.match(editor, /\.markdown-body-preview p,[\s\S]*overflow-wrap: anywhere; word-break: break-word;/);
+    assert.match(editor, /\.markdown-body-preview pre \{[^}]*overflow-x: auto;/);
+    assert.match(editor, /\.markdown-body-preview table \{[^}]*overflow-x: auto;/);
+});
