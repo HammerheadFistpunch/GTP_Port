@@ -190,25 +190,6 @@ export const searchAssets = async (env, requestUrl) => {
     const config = getMediaConfiguration(env);
     const query = parseAssetQuery(requestUrl);
 
-    if (query.albumId) {
-        const response = await immichFetch(config, `albums/${query.albumId}`, {}, { withoutAssets: "false" });
-        const album = await response.json();
-        let items = imageAssets(album.assets);
-        if (query.query) {
-            const needle = query.query.toLocaleLowerCase();
-            items = items.filter((asset) => (asset.originalFileName || "").toLocaleLowerCase().includes(needle));
-        }
-        const offset = (query.page - 1) * query.size;
-        const pageItems = items.slice(offset, offset + query.size);
-        return {
-            items: pageItems.map((asset) => normalizeAsset(asset)),
-            page: query.page,
-            size: query.size,
-            nextPage: offset + query.size < items.length ? query.page + 1 : null,
-            total: items.length,
-        };
-    }
-
     const path = query.query && query.search === "smart" ? "search/smart" : "search/metadata";
     const body = {
         page: query.page,
@@ -219,6 +200,7 @@ export const searchAssets = async (env, requestUrl) => {
     if (query.query) {
         body[query.search === "filename" ? "originalFileName" : "query"] = query.query;
     }
+    if (query.albumId) body.albumIds = [query.albumId];
     if (query.takenAfter) body.takenAfter = new Date(query.takenAfter).toISOString();
     if (query.takenBefore) body.takenBefore = new Date(query.takenBefore).toISOString();
 

@@ -1,5 +1,22 @@
 # GTP_Port Project Log
 
+## 2026-08-10 - Immich v3 album browsing compatibility fix
+
+Corrected the follow-up album-opening failure in the shared Immich picker:
+
+- replaced the legacy `GET /albums/{id}` asset lookup, which no longer returns
+  an album's asset list in Immich v3
+- album photos now load through Immich's supported paginated
+  `POST /search/metadata` endpoint with an `albumIds` filter
+- retained filename and smart searches within an opened album
+- added a backend regression test covering the exact endpoint, request body,
+  returned image, total, and next-page behavior
+
+Validation:
+
+- the new album browsing regression test passes
+- all functional Sprint 16 media backend tests pass
+
 ## 2026-08-09 - Sprint 17 authoring UX follow-up implemented
 
 Implemented from owner review:

@@ -153,6 +153,47 @@ test("smart search sends credentials only to the configured Immich origin", asyn
     }
 });
 
+test("album browsing uses Immich's paginated metadata search", async () => {
+    const originalFetch = globalThis.fetch;
+    let request;
+    globalThis.fetch = async (url, init) => {
+        request = { url: url.toString(), init };
+        return Response.json({
+            assets: {
+                items: [{
+                    id: assetId,
+                    type: "IMAGE",
+                    originalFileName: "album-photo.jpg",
+                    fileCreatedAt: "2026-08-02T12:00:00.000Z",
+                }],
+                nextPage: 2,
+                total: 31,
+            },
+        });
+    };
+
+    try {
+        const result = await searchAssets(
+            createEnv(),
+            new URL(`https://angrysquirrel.org/admin/api/media/assets?albumId=${assetId}&page=1&size=30`),
+        );
+
+        assert.equal(request.url, "https://photos.example.test/api/search/metadata");
+        assert.deepEqual(JSON.parse(request.init.body), {
+            page: 1,
+            size: 30,
+            type: "IMAGE",
+            withExif: true,
+            albumIds: [assetId],
+        });
+        assert.equal(result.items[0].originalFileName, "album-photo.jpg");
+        assert.equal(result.nextPage, 2);
+        assert.equal(result.total, 31);
+    } finally {
+        globalThis.fetch = originalFetch;
+    }
+});
+
 test("publishing writes deterministic Immich variants once and reuses them", async () => {
     const bucket = createBucket();
     const env = createEnv(bucket);
