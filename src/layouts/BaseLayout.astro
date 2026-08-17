@@ -4,6 +4,7 @@ import "../styles/global.css";
 import { getEntry } from "astro:content";
 import Navigation from "../components/ui/Navigation.astro";
 import Footer from "../components/ui/Footer.astro";
+import appearance from "../data/appearance.json";
 
 interface Props {
   title?: string;
@@ -38,11 +39,60 @@ const canonicalUrl = new URL(
 const socialImage = image
   ? new URL(image, Astro.site ?? Astro.url.origin).toString()
   : undefined;
+
+const uiFontStacks: Record<string, string> = {
+  Lato: '"Lato", sans-serif',
+  Inter: '"Inter", sans-serif',
+  "Source Sans 3": '"Source Sans 3", sans-serif',
+  "System Sans": 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+};
+
+const editorialFontStacks: Record<string, string> = {
+  Newsreader: '"Newsreader", serif',
+  Merriweather: '"Merriweather", serif',
+  "Source Serif 4": '"Source Serif 4", serif',
+  Georgia: 'Georgia, "Times New Roman", serif',
+};
+
+const headingScale = Math.max(0.75, Math.min(1.4, Number(appearance.headingScale) || 1));
+const scaled = (value: number) => Number((value * headingScale).toFixed(3));
+
+const appearanceStyle = [
+  `--font-ui:${uiFontStacks[appearance.uiFont] ?? uiFontStacks.Lato}`,
+  `--font-editorial:${editorialFontStacks[appearance.editorialFont] ?? editorialFontStacks.Newsreader}`,
+  `--body-font-size:${appearance.bodyFontSize}px`,
+  `--article-font-size:${appearance.articleFontSize}px`,
+  `--h1-min:${scaled(3)}rem`,
+  `--h1-fluid:${scaled(7)}vw`,
+  `--h1-max:${scaled(5.5)}rem`,
+  `--h2-min:${scaled(2.2)}rem`,
+  `--h2-fluid:${scaled(5)}vw`,
+  `--h2-max:${scaled(3.4)}rem`,
+  `--h3-size:${scaled(2)}rem`,
+  `--h4-size:${scaled(1.5)}rem`,
+  `--h5-size:${scaled(1.25)}rem`,
+  `--h6-size:${scaled(1)}rem`,
+  `--line-height:${appearance.lineHeight}`,
+  `--content-width:${appearance.contentWidth}px`,
+  `--reading-width:${appearance.readingWidth}px`,
+  `--bg-primary:${appearance.backgroundColor}`,
+  `--bg-surface:${appearance.surfaceColor}`,
+  `--bg-elevated:${appearance.elevatedColor}`,
+  `--text-primary:${appearance.textColor}`,
+  `--text-secondary:${appearance.secondaryTextColor}`,
+  `--accent:${appearance.accentColor}`,
+  `--radius-sm:${appearance.smallRadius}px`,
+  `--radius-md:${appearance.mediumRadius}px`,
+  `--space-sm:${appearance.smallSpacing}px`,
+  `--space-md:${appearance.mediumSpacing}px`,
+  `--space-lg:${appearance.largeSpacing}px`,
+  `--space-xl:${appearance.extraLargeSpacing}px`,
+].join(";");
 ---
 
 <!doctype html>
 
-<html lang="en">
+<html lang="en" style={appearanceStyle}>
   <head>
     <meta charset="UTF-8" />
 
@@ -85,7 +135,7 @@ const socialImage = image
     />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <meta name="theme-color" content="#121417" />
+    <meta name="theme-color" content={appearance.backgroundColor} />
     <meta name="apple-mobile-web-app-title" content={site.siteName} />
 
     <!-- Open Graph -->

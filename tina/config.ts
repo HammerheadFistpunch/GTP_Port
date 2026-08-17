@@ -141,6 +141,39 @@ const flexiblePageBlockTemplates = [
     },
 ];
 
+const appearanceFields = [
+    { type: "string" as const, name: "uiFont", label: "UI Font", required: true, options: [
+        { value: "Lato", label: "Lato" },
+        { value: "Inter", label: "Inter" },
+        { value: "Source Sans 3", label: "Source Sans 3" },
+        { value: "System Sans", label: "System Sans" },
+    ], description: "Used for navigation, buttons, labels, and general interface text." },
+    { type: "string" as const, name: "editorialFont", label: "Editorial Font", required: true, options: [
+        { value: "Newsreader", label: "Newsreader" },
+        { value: "Merriweather", label: "Merriweather" },
+        { value: "Source Serif 4", label: "Source Serif 4" },
+        { value: "Georgia", label: "Georgia" },
+    ], description: "Used for headings and editorial typography." },
+    { type: "number" as const, name: "bodyFontSize", label: "Body Font Size (px)", required: true, description: "Base site text size. Recommended range: 16–22." },
+    { type: "number" as const, name: "articleFontSize", label: "Article Font Size (px)", required: true, description: "Journal and long-form paragraph size. Recommended range: 18–26." },
+    { type: "number" as const, name: "headingScale", label: "Heading Scale", required: true, description: "Multiplier for headings. 1.0 is the current design; try 0.9–1.15." },
+    { type: "number" as const, name: "lineHeight", label: "Line Height", required: true, description: "Base line-height multiplier. Recommended range: 1.4–1.9." },
+    { type: "number" as const, name: "contentWidth", label: "Maximum Site Width (px)", required: true, description: "Maximum width for primary site containers." },
+    { type: "number" as const, name: "readingWidth", label: "Reading Column Width (px)", required: true, description: "Maximum width of long-form article text." },
+    { type: "string" as const, name: "backgroundColor", label: "Page Background", required: true, description: "CSS color, preferably a hex value." },
+    { type: "string" as const, name: "surfaceColor", label: "Surface Background", required: true, description: "Cards, menus, and secondary surfaces." },
+    { type: "string" as const, name: "elevatedColor", label: "Elevated Surface", required: true, description: "Higher-contrast elevated surfaces." },
+    { type: "string" as const, name: "textColor", label: "Primary Text", required: true },
+    { type: "string" as const, name: "secondaryTextColor", label: "Secondary Text", required: true },
+    { type: "string" as const, name: "accentColor", label: "Accent Color", required: true },
+    { type: "number" as const, name: "smallRadius", label: "Small Corner Radius (px)", required: true },
+    { type: "number" as const, name: "mediumRadius", label: "Medium Corner Radius (px)", required: true },
+    { type: "number" as const, name: "smallSpacing", label: "Small Spacing (px)", required: true },
+    { type: "number" as const, name: "mediumSpacing", label: "Medium Spacing (px)", required: true },
+    { type: "number" as const, name: "largeSpacing", label: "Large Spacing (px)", required: true },
+    { type: "number" as const, name: "extraLargeSpacing", label: "Extra Large Spacing (px)", required: true },
+];
+
 export default defineConfig({
     branch,
     cmsCallback: installAdminNavigation,
@@ -150,6 +183,15 @@ export default defineConfig({
     media: { tina: { mediaRoot: "uploads", publicFolder: "public" } },
     schema: {
         collections: [
+            {
+                name: "appearance",
+                label: "Appearance",
+                path: "src/data",
+                format: "json",
+                match: { include: "appearance" },
+                ui: { allowedActions: { create: false, delete: false } },
+                fields: appearanceFields,
+            },
             {
                 name: "tags",
                 label: "Topics",

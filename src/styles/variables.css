@@ -1,8 +1,7 @@
 :root {
     /* ===========================
-     COLORS
-  =========================== */
-
+       COLORS
+    =========================== */
     --bg-primary: #121417;
     --bg-surface: #1B1F24;
     --bg-elevated: #252A31;
@@ -10,33 +9,45 @@
     --text-secondary: #A8B0B8;
     --accent: #4F91C7;
     --border-color: rgba(255,255,255,.08);
-    /* ===========================
-     TYPOGRAPHY
-  =========================== */
 
+    /* ===========================
+       TYPOGRAPHY
+    =========================== */
     --font-ui: "Lato", sans-serif;
     --font-editorial: "Newsreader", serif;
+    --body-font-size: 18px;
+    --article-font-size: 21px;
+    --h1-min: 3rem;
+    --h1-fluid: 7vw;
+    --h1-max: 5.5rem;
+    --h2-min: 2.2rem;
+    --h2-fluid: 5vw;
+    --h2-max: 3.4rem;
+    --h3-size: 2rem;
+    --h4-size: 1.5rem;
+    --h5-size: 1.25rem;
+    --h6-size: 1rem;
     --content-width: 1200px;
     --reading-width: 760px;
     --line-height: 1.7;
-    /* ===========================
-     SPACING
-  =========================== */
 
+    /* ===========================
+       SPACING
+    =========================== */
     --space-xs: .5rem;
-    --space-sm: 1rem;
-    --space-md: 2rem;
-    --space-lg: 4rem;
-    --space-xl: 5rem;
-    /* ===========================
-     RADIUS
-  =========================== */
+    --space-sm: 16px;
+    --space-md: 32px;
+    --space-lg: 64px;
+    --space-xl: 80px;
 
+    /* ===========================
+       RADIUS
+    =========================== */
     --radius-sm: 8px;
     --radius-md: 16px;
-    /* ===========================
-     SHADOWS
-  =========================== */
 
+    /* ===========================
+       SHADOWS
+    =========================== */
     --shadow-soft: 0 8px 30px rgba(0,0,0,.25);
 }

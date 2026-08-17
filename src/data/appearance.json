@@ -1,0 +1,22 @@
+{
+  "uiFont": "Lato",
+  "editorialFont": "Newsreader",
+  "bodyFontSize": 18,
+  "articleFontSize": 21,
+  "headingScale": 1,
+  "lineHeight": 1.7,
+  "contentWidth": 1200,
+  "readingWidth": 760,
+  "backgroundColor": "#121417",
+  "surfaceColor": "#1B1F24",
+  "elevatedColor": "#252A31",
+  "textColor": "#F2F4F5",
+  "secondaryTextColor": "#A8B0B8",
+  "accentColor": "#4F91C7",
+  "smallRadius": 8,
+  "mediumRadius": 16,
+  "smallSpacing": 16,
+  "mediumSpacing": 32,
+  "largeSpacing": 64,
+  "extraLargeSpacing": 80
+}

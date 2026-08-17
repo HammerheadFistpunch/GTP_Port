@@ -3,20 +3,18 @@
 ========================================================== */
 
 .container {
-    width: min(1200px, calc(100% - 3rem));
+    width: min(var(--content-width), calc(100% - 3rem));
     margin-inline: auto;
 }
-
 
 /* ==========================================================
    READING WIDTH
 ========================================================== */
 
 .reading-width {
-    width: min(760px, calc(100% - 3rem));
+    width: min(var(--reading-width), calc(100% - 3rem));
     margin-inline: auto;
 }
-
 
 /* ==========================================================
    GRID
@@ -24,21 +22,20 @@
 
 .grid {
     display: grid;
-    gap: 2rem;
+    gap: var(--space-md);
 }
 
 .grid-2 {
     display: grid;
-    gap: 2rem;
+    gap: var(--space-md);
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
 .grid-3 {
     display: grid;
-    gap: 2rem;
+    gap: var(--space-md);
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
-
 
 /* ==========================================================
    FLEX
@@ -60,7 +57,6 @@
     align-items: center;
 }
 
-
 /* ==========================================================
    SPACING
 ========================================================== */
@@ -78,7 +74,6 @@
     padding-bottom: var(--space-lg);
 }
 
-
 /* ==========================================================
    CARD
 ========================================================== */
@@ -90,7 +85,6 @@
     box-shadow: var(--shadow-soft);
     overflow: hidden;
 }
-
 
 /* ==========================================================
    TEXT

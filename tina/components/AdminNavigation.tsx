@@ -13,6 +13,7 @@ interface NavigationItem {
 
 const navigationItems: NavigationItem[] = [
     { name: "Site Settings", category: "Settings", target: "#/collections/edit/settings/~/site" },
+    { name: "Appearance", category: "Settings", target: "#/collections/edit/appearance/~/appearance" },
     { name: "Topics", category: "Settings", target: "#/collections/tags/~" },
     { name: "Main Homepage", category: "Pages", target: "#/collections/edit/homepage/~/home" },
     { name: "Journal Homepage", category: "Pages", target: "#/collections/edit/archivePage/~/journal" },
