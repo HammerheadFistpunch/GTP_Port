@@ -1,6 +1,6 @@
 # AngrySquirrel.org Help Guide
 
-This is the owner-facing reference for editing, importing, publishing, media, appearance, and common site changes.
+This is the owner-facing reference for editing, importing, publishing, media, and common site changes.
 
 ## 1. TinaCMS navigation
 
@@ -10,7 +10,6 @@ Current owner navigation:
 
 - **Settings**
   - Site Settings
-  - Appearance
   - Topics
   - Publish Site
 - **Pages**
@@ -215,7 +214,7 @@ Use **Content → Import** to turn Markdown/MDX into a normal Journal draft.
 - body-only Google Docs Markdown exports
 - Markdown with YAML frontmatter
 
-Frontmatter is optional. The importer generates canonical Tina frontmatter after review.
+Frontmatter is optional. The importer is supposed to generate canonical Tina frontmatter after review.
 
 ### Recommended Google Docs workflow
 
@@ -323,66 +322,68 @@ Use **Settings → Site Settings** in Tina for normal changes such as:
 
 If a change is not exposed there, the presentation logic is in Astro components/layouts rather than content.
 
-## 12. Appearance: fonts, sizes, colors, spacing, and widths
+## 12. Where visual changes live
 
-For normal site-wide visual changes, use **Settings → Appearance** in Tina. You no longer need to edit CSS for the common design controls listed below.
+### Colors and design tokens
 
-The stored Appearance data lives at:
+Edit:
 
-`src/data/appearance.json`
+`src/styles/variables.css`
 
-### Typography controls
+Current key variables include:
 
-- **UI Font** — navigation, buttons, labels, and interface text
-- **Editorial Font** — headings and editorial display type
-- **Body Font Size** — base site text size in pixels
-- **Article Font Size** — long-form Journal paragraph size in pixels
-- **Heading Scale** — global multiplier for heading sizes; `1.0` preserves the original scale
-- **Line Height** — global text line-height multiplier
+```css
+--bg-primary
+--bg-surface
+--bg-elevated
+--text-primary
+--text-secondary
+--accent
+--border-color
+--font-ui
+--font-editorial
+--content-width
+--reading-width
+--line-height
+--space-*
+--radius-*
+--shadow-soft
+```
 
-Supported UI fonts are Lato, Inter, Source Sans 3, and the system sans-serif stack. Supported editorial fonts are Newsreader, Merriweather, Source Serif 4, and Georgia.
+Changing these variables is the cleanest way to make a site-wide visual change.
 
-### Layout controls
+### Fonts
 
-- **Maximum Site Width** — shared `.container` width
-- **Reading Column Width** — long-form `.reading-width` and article width
+The main font-family variables live in:
 
-A few component-specific layouts may intentionally impose their own narrower constraints; Appearance controls the shared design system rather than overriding every local layout decision.
+`src/styles/variables.css`
 
-### Color controls
+Current defaults:
 
-- Page Background
-- Surface Background
-- Elevated Surface
-- Primary Text
-- Secondary Text
-- Accent Color
+```css
+--font-ui: "Lato", sans-serif;
+--font-editorial: "Newsreader", serif;
+```
 
-Use CSS color values; hex colors such as `#4F91C7` are recommended.
+Typography rules using those variables live primarily in:
 
-### Shape and spacing controls
+`src/styles/typography.css`
 
-- Small / Medium Corner Radius
-- Small / Medium / Large / Extra Large Spacing
+If changing fonts, update both how the font is loaded/imported and the relevant variable. Then verify headings, body text, navigation, cards, and mobile layouts.
 
-These feed the shared CSS variables used by cards, sections, utilities, and other components.
+### Global CSS
 
-### Safe adjustment ranges
+`src/styles/global.css` imports the shared styling layers and defines global body/link/image/accessibility behavior.
 
-The editor descriptions provide recommended ranges. For small experiments, change one or two values at a time, save, deliberately publish, and review desktop and mobile. The committed default values reproduce the pre-Appearance design.
+### Utilities
 
-### What still requires code
+Shared helper classes live in:
 
-Appearance intentionally does **not** expose arbitrary CSS, per-page margins, custom class names, animation rules, or every component-specific measurement. Those remain code-controlled to prevent accidental layout breakage.
+`src/styles/utilities.css`
 
-The implementation lives in:
+### Component-specific styling
 
-- `src/data/appearance.json` — Tina-edited values
-- `src/layouts/BaseLayout.astro` — converts values into global CSS custom properties
-- `src/styles/variables.css` — fallback/default design tokens
-- `src/styles/typography.css` — typography rules and supported web-font loading
-- `src/styles/utilities.css` — shared container/spacing helpers
-- `tina/config.ts` — Appearance editor fields
+Many `.astro` components include scoped styles. If a change should affect only one component, edit that component rather than adding a broad global override.
 
 ## 13. Where code changes live
 
@@ -390,9 +391,8 @@ The implementation lives in:
 | --- | --- |
 | Site content | `src/content/` via Tina |
 | Nav/footer/site settings | `src/content/settings/site.md` |
-| Normal global visual settings | **Settings → Appearance** / `src/data/appearance.json` |
-| CSS token fallbacks | `src/styles/variables.css` |
-| Typography rules/font loading | `src/styles/typography.css` |
+| Colors/global design tokens | `src/styles/variables.css` |
+| Typography rules | `src/styles/typography.css` |
 | Global CSS behavior | `src/styles/global.css` |
 | Reusable UI | `src/components/` |
 | Shared page/entry layouts | `src/layouts/` |
@@ -418,11 +418,7 @@ The previous working Cloudflare deployment should remain live. Read the first us
 
 ### Tina reports a schema mismatch
 
-Do not assume reindexing alone will fix it. Verify that `tina/config.ts`, stored content/data, renderers, and `tina/tina-lock.json` all describe the same model. If an Astro content collection changed, also verify `src/content.config.ts`. Regenerate the lock through Tina tooling, then reindex TinaCloud.
-
-### An Appearance change looks wrong
-
-Restore the affected value in **Settings → Appearance** and save again. Because Appearance is Git-backed, previous values are also recoverable from Git history. If the editor itself is unavailable after an Appearance schema change, restore `src/data/appearance.json` and verify the Tina schema/lock before reindexing.
+Do not assume reindexing alone will fix it. Verify that `tina/config.ts`, `src/content.config.ts`, stored content, renderers, and `tina/tina-lock.json` all describe the same model. Regenerate the lock through Tina tooling, then reindex TinaCloud.
 
 ### An old URL needs to move
 

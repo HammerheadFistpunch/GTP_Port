@@ -11,7 +11,6 @@ The project is intentionally content-portable: TinaCMS is the editing interface,
 - Structured Resume, About, Contact, Homepage, and Journal landing pages
 - Custom Pages for standalone or nested portfolio/editorial destinations
 - TinaCMS authoring at `/admin/`
-- Tina-managed global Appearance controls for typography, font sizes, layout widths, colors, spacing, and corner radii
 - Deliberate publishing: Tina saves to Git first; production is published separately
 - Private Immich browsing from Tina with permanent public website copies stored in Cloudflare R2
 - Git-backed Markdown/MDX import, including body-only Google Docs Markdown exports
@@ -43,7 +42,7 @@ Public visitors
 | --- | --- |
 | GitHub | Durable source, content history, deployment branch |
 | Astro | Static site generation and public routing |
-| TinaCMS / TinaCloud | Owner-facing content and appearance editor |
+| TinaCMS / TinaCloud | Owner-facing content editor |
 | Cloudflare Pages | Production hosting and Pages Functions |
 | Cloudflare Access | Protects `/admin/` and private admin APIs |
 | Cloudflare Tunnel | Private server-to-server path to Immich |
@@ -60,12 +59,11 @@ Public visitors
 - Fixed page content: `src/content/pages/`
 - Custom Pages: `src/content/flexible-pages/`
 - Navigation/footer/site settings: `src/content/settings/site.md`
-- Global appearance settings: `src/data/appearance.json`
 - Tina schema/editor configuration: `tina/config.ts` and `tina/components/`
 - Astro content validation: `src/content.config.ts`
 - Public routes: `src/pages/`
 - Shared layouts/components: `src/layouts/`, `src/components/`
-- Global styling rules/defaults: `src/styles/`
+- Global styling: `src/styles/`
 
 TinaCloud is an editor. GitHub content is the durable source of truth.
 
@@ -75,7 +73,7 @@ TinaCloud is an editor. GitHub content is the durable source of truth.
 
 1. Open `https://angrysquirrel.org/admin/` and authenticate through Cloudflare Access/TinaCloud.
 2. Choose the appropriate area:
-   - **Settings** — Site Settings, Appearance, Topics, Publish Site
+   - **Settings** — site settings, Topics, Publish Site
    - **Pages** — Homepage, Journal Homepage, About, Contact, Resume, Custom Pages
    - **Content** — Journal, Journal Sections, Import
    - **Media** — Media Manager
@@ -83,12 +81,6 @@ TinaCloud is an editor. GitHub content is the durable source of truth.
 4. Continue editing as needed. Saving does **not** intentionally publish production.
 5. When the editing session is ready, open **Settings → Publish Site**.
 6. Publish once, then review the live site.
-
-### Change fonts, sizes, colors, or spacing
-
-Open **Settings → Appearance**. The editable values are global design tokens rather than arbitrary CSS, so normal visual changes do not require code edits. The initial defaults reproduce the existing site design.
-
-Appearance currently exposes UI/editorial font choices, body and article font size, heading scale, line height, maximum site/reading widths, the core color palette, spacing scale, and corner radii.
 
 ### Create a Journal entry
 
@@ -139,8 +131,8 @@ npm run build:astro
 A Tina/content schema change is not complete until all affected layers agree:
 
 1. `tina/config.ts`
-2. `src/content.config.ts` when an Astro content collection changes
-3. stored content/data
+2. `src/content.config.ts`
+3. stored Markdown/MDX content
 4. route/layout/component consumers
 5. generated `tina/tina-lock.json`
 6. TinaCloud indexing/editor behavior
