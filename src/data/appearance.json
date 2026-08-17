@@ -1,8 +1,8 @@
 {
   "uiFont": "Lato",
   "editorialFont": "Newsreader",
-  "bodyFontSize": 20,
-  "articleFontSize": 21,
+  "bodyFontSize": 18,
+  "articleFontSize": 24,
   "headingScale": 1,
   "lineHeight": 1.7,
   "contentWidth": 1200,
