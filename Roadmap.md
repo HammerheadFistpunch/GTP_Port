@@ -1,182 +1,126 @@
 # GTP_Port Roadmap
 
-Last updated: 2026-08-09
-Working branch: `gpt-handoff`
+Last updated: 2026-08-17
 
-## Vision
+## Product direction
 
-Build AngrySquirrel.org as a fast, dark, editorial-first personal site that combines long-form publishing with a professional portfolio. Astro owns static routing/rendering, TinaCMS owns controlled editing and curation, and Git-backed Markdown/MDX remains the portable source of truth.
+AngrySquirrel.org is intended to remain a fast, low-maintenance personal site with two equally important jobs:
+
+1. present professional portfolio/resume material clearly; and
+2. support long-form editorial publishing without locking content into a proprietary CMS.
+
+The durable architecture is Astro + Git-backed Markdown/MDX + TinaCMS, deployed on Cloudflare. Immich remains the private source media library while selected website assets are copied to R2 for public delivery.
+
+## Current state
+
+The core platform is operational:
+
+- Astro 6 static site on Cloudflare Pages
+- TinaCloud owner editing at `/admin/`
+- deliberate **Publish Site** workflow rather than automatic production builds on every save
+- unified Journal content model with Draft/Published status
+- Tina-managed Journal Sections and Topics
+- durable `/archive/[slug]/` Journal detail URLs and `/tags/[slug]/` Topic archives
+- structured Homepage, Journal landing page, Resume, About, and Contact content
+- Custom Pages with constrained reusable blocks
+- Markdown-first authoring for Journal and page body content
+- Markdown/MDX import including body-only Google Docs exports
+- private Immich browsing/search/album access from Tina
+- permanent R2 publication for selected website images
+- responsive Immich picker and common structured-image integration
+- RSS, sitemap, robots, canonical, Open Graph, and Twitter metadata
+
+## Active priorities
+
+### 1. Gallery architecture and privacy
+
+**Status: next major feature area.**
+
+The current Immich Gallery block still depends on live gallery/share behavior. Replace or harden it so public gallery pages do not expose long-lived Immich share tokens or reveal the home origin.
+
+Evaluate:
+
+- R2-mirrored gallery manifests/assets
+- a restricted Cloudflare Worker/Pages Function gallery facade
+- a deliberate hybrid where gallery metadata is live but public images remain edge-hosted
+
+Acceptance goals:
+
+- no private Immich API credentials in browser content
+- no residential/home origin disclosure
+- graceful behavior if Immich is offline
+- gallery authoring remains practical in Tina
+- existing gallery content has a migration path
+
+### 2. Immich picker polish
+
+**Status: follow-up refinement.**
+
+Known UX work:
+
+- use infinite scrolling instead of manual **Load more** in image and gallery pickers
+- continue verifying album browsing against large libraries
+- preserve full-screen/touch-friendly mobile behavior
+- keep Markdown and preview panes usable at narrow and desktop widths
+
+### 3. Authoring/editor hardening
+
+Continue simplifying Tina around the owner's workflow rather than exposing implementation details.
+
+Priorities:
+
+- confirm all Draft → Published → Draft transitions correctly remove/add public routes after a deliberate publish
+- ensure Topics/Journal Sections can be created safely without breaking TinaCloud schema/indexing or production builds
+- add clearer recovery behavior for invalid content references
+- retain body portability and sanitized preview behavior
+
+### 4. Documentation as maintained product surface
+
+The repository now has five durable documentation files only:
+
+- `README.md`
+- `HELP.md`
+- `Roadmap.md`
+- `SITE_MAINTENANCE_GUIDE.md`
+- `SITE_MAP.md`
+
+Update these when behavior changes. Do not recreate sprint diaries, temporary audit documents, or duplicate feature guides unless there is a specific short-lived engineering need; use issues/commits for implementation history.
+
+## Planned / optional improvements
+
+These are useful candidates but not current requirements:
+
+- **Pagefind search** when Journal volume makes search valuable
+- **Giscus comments** if public discussion is desired
+- **generated Resume PDF** sourced from the existing structured Resume content, never a second manually maintained resume dataset
+- **more advanced related-content ranking** if current shared-Topic/Section ranking becomes insufficient
+- **additional Custom Page blocks** only when a real page cannot be built cleanly with the constrained set
+- **configuration-as-code for Cloudflare** only after the complete existing Pages/Tunnel/Access/R2 configuration is inventoried and can be represented without losing dashboard-managed settings
 
 ## Architecture guardrails
 
-- Keep Journal and Portfolio content semantic and portable.
-- Use structured fields/blocks only where layout or repeatable metadata benefits from structure.
-- Separate durable content from how a landing page presents it.
-- Generate public routes statically; no application database is required.
-- Add redirects before retiring established public URLs.
-- Every Tina schema change must stay synchronized with Astro validation, content, renderers, and the generated Tina lock.
-- Preserve the existing typography and color system unless a future redesign explicitly changes it.
-- Never expose GitHub or Cloudflare publishing secrets to browser-delivered code.
-- Finish each sprint with documentation and verification appropriate to the changes made.
+- Git-backed content remains portable and authoritative.
+- Tina should make owner tasks easier without becoming a second source of truth.
+- Keep public output static wherever practical.
+- Use structured fields where structure has a clear editorial or rendering benefit; keep prose as Markdown.
+- Treat established public slugs/paths as durable. Add redirects before moving them.
+- Keep Immich credentials, Cloudflare service tokens, deploy hooks, and other secrets server-side only.
+- Public website media should not require the home Immich server to remain online after publication.
+- Never hand-edit generated Tina lock data.
+- Any schema change must update Tina, Astro validation, stored content, renderers/queries, lock/index state, and tests together.
+- Preserve the current visual system unless intentionally redesigning it.
 
-## Phase 1 - Site and authoring foundation
+## Definition of done for future work
 
-### Sprint 1 - Flexible page foundation
-**Status:** Complete and deployed.
+A feature is complete when applicable items are true:
 
-Created Tina-manageable static and nested Flexible Pages with safe path validation, drafting, deletion, and shared rendering.
-
-### Sprint 2 - Reorderable page blocks and media
-**Status:** Complete and deployed.
-
-Added constrained page-builder blocks for Markdown, images, YouTube, Immich galleries, child-page links, and CTAs, plus responsive media/lightbox behavior.
-
-### Sprint 3 - Portfolio hierarchy and tile board
-**Status:** Complete; later superseded by Sprint 9 simplification.
-
-Built the original Tina-curated Portfolio landing/category model and reusable selection logic.
-
-### Sprint 4 - Journal sections and landing page
-**Status:** Complete and deployed.
-
-Established Journal sections and an explicit featured-story workflow. Sprint 14 later moved those sections from a hard-coded enum to Tina-managed Journal Section documents.
-
-### Sprint 5 - Tags and subject archives
-**Status:** Complete and deployed; refined in Sprint 14.
-
-Added controlled subject documents, stable slugs/aliases, entry references, and static `/tags/[slug]/` archives. Sprint 14 renamed the owner-facing concept to **Topics** and added Active/Retired and replacement-topic management without changing the durable `/tags/` public URLs.
-
-### Sprint 6 - Homepage redesign
-**Status:** Complete, deployed, and owner-accepted.
-
-Created the compact Homepage with Hero, Journal preview, About, capabilities, technology, and curated Portfolio destinations with editable visibility/order/content.
-
-### Sprint 7 - Navigation and information architecture
-**Status:** Complete and deployed.
-
-Added nested editable navigation, removed About from the primary header, and kept Journal section navigation local to the Journal experience.
-
-## Phase 2 - Publishing-system simplification
-
-### Sprint 8 - Tina/content-model audit
-**Status:** Complete.
-
-Produced the field/consumer migration map and feasibility decisions in `TINA_AUDIT.md` and `TINA_FEASIBILITY.md` before deleting compatibility data.
-
-### Sprint 9 - Public Portfolio/Homepage simplification
-**Status:** Complete and deployed.
-
-Removed the Portfolio landing dependency, kept Video and Photography as direct Custom Pages, routed Projects/Research/Writing into Journal-backed destinations, retired old proof/category content, and installed redirects.
-
-### Sprint 10 - Tina navigation and schema cleanup
-**Status:** Complete; final cleanup superseded by Sprint 14.
-
-Grouped Tina around owner tasks and removed dead/transitional fields proven safe to remove.
-
-### Sprint 11 - Deliberate publishing workflow
-**Status:** Complete and operational.
-
-The protected Tina **Publish Site** action, Access validation, server-only Cloudflare deploy hook, deployment-state UI, duplicate-publish protection, and deployment manifest are operational. Automatic production branch deployments have been disabled so ordinary Tina saves no longer publish the site automatically.
-
-### Sprint 12 - Markdown-first authoring and external media
-**Status:** Complete, deployed, and owner-verified.
-
-Added the Markdown-first editor with sanitized live preview, external HTTPS/Immich image support, safe Markdown/MDX import, and whole-collection round-trip/body-policy regression tests.
-
-### Sprint 13 - Resume rebuild
-**Status:** Complete, deployed, and owner-verified.
-
-Rebuilt `/resume/` as an editorial professional-background page backed by structured Tina fields for profile, capabilities, experience/highlights, education, and public links. The superseded renderers were removed. `RESUME_DESIGN.md` defines the source model and records the decision not to maintain a second PDF dataset.
-
-### Sprint 14 - Migration, QA, and documentation
-**Status:** Complete and owner-accepted.
-
-Sprint 14 closed Phase 2 by reconciling the public architecture, Tina editor, Journal model, publishing workflow, and documentation.
-
-Key outcomes:
-
-- removed deprecated `placement`, `entryType`, `primaryTopic`, `technologies`, and manual entry-link metadata from Journal authoring/runtime behavior
-- deleted deprecated `Photography-Samples.mdx` and preserved its old public route with a redirect
-- standardized every Content Entry as a Journal entry; Portfolio is now composed from dedicated Custom Pages and direct Journal destinations
-- replaced hard-coded Journal Section options with Tina-managed section documents supporting stable slugs, aliases, and Active/Retired state
-- renamed owner-facing Tags to **Topics** while preserving underlying references and `/tags/` routes
-- added safe Topic retirement and optional replacement-topic behavior; direct Topic deletion is disabled in Tina
-- updated related-story ranking to favor shared Topics with same Journal Section as a secondary signal
-- upgraded the Markdown editor toolbar with bold, italic, strikethrough, inline code, lists, links, Media Manager image insertion, external-image insertion, and YouTube insertion
-- mirrored the simplified Journal model and active Topic/Section registries in Import
-- simplified Tina navigation to Settings, Pages, Content, and Media owner workflows
-- removed the unused Resume body field during a synchronized Tina schema/lock migration
-- added `/robots.txt`, `/sitemap.xml`, `/rss.xml`, and RSS autodiscovery
-- disabled Cloudflare automatic production deployments and retained **Publish Site** as the deliberate production trigger
-- completed hosted Tina review of the new Journal, Journal Sections, Topics, Import, Media, Resume, and page-editor structure
-
-`SPRINT14_QA.md` records source evidence, owner verification, and any formal checks intentionally left as maintenance hardening rather than blockers to Phase 2 acceptance.
-
-## Phase 3 - unified authoring and Cloudflare media delivery
-
-### Sprint 15 - unified page-body Markdown editing
-**Status:** Complete; TinaCloud reindex and hosted editor verification remain deployment follow-up.
-
-Replaced only the Standard Page and Custom Page body controls with the same Markdown Write/Split/Preview editor used by Journal entries. Existing body files and Astro Markdown rendering remain unchanged. Homepage section fields, Journal landing fields, Resume structured fields, SEO descriptions, and Custom Page block fields remain structured or plain-text controls.
-
-### Sprint 16 - Immich-to-R2 media backend
-**Status:** Complete, deployed, and owner-accepted.
-
-Implemented the Access-protected Cloudflare service for server-side Immich
-browsing, private previews, deterministic publication of Immich-generated
-`thumbnail` and `web` variants to R2, duplicate-safe reuse, private
-credentials, and public delivery through `media.angrysquirrel.org`.
-
-The least-privilege Immich API key, Cloudflare Tunnel/Access service identity,
-R2 bucket/custom domain, Pages binding, and production variables/secrets are
-configured. Hosted acceptance confirmed authenticated status/browse/preview,
-first publication, public delivery without an admin session, repeat
-`reused: true` behavior, continued uncached R2 delivery while the Immich
-Tunnel was stopped, and successful Immich browsing after Tunnel recovery.
-
-### Sprint 17 - site-wide Immich/R2 integration
-**Status:** Complete, deployed, and owner-accepted.
-
-Inventoried applicable image fields, Markdown insertion, Import, stored source
-shapes, and public renderers. Added one reusable Tina picker that privately
-browses/searches Immich, publishes or reuses the selected asset, and inserts
-only its permanent R2 `web` URL. Structured image fields, Journal/Page
-Markdown, and Import review share this flow while existing `/uploads/...` and
-external HTTPS sources remain supported.
-
-Hosted owner acceptance confirmed the deployed connector and editor flow are
-working across a structured image field, Markdown insertion, and Import review.
-Saved content uses permanent `media.angrysquirrel.org` URLs and renders
-publicly through R2.
-
-**Authoring UX follow-up implemented:** The picker now exposes albums as
-thumbnail cards that open directly into their photos, and its dialog becomes a
-full-screen, touch-sized mobile interface with responsive photo/album grids.
-Journal creation is now title/body-first with a compact icon toolbar, Write as
-the default mode, mobile Write/Preview controls, compact Section/Status/Topics
-dropdowns below the body,
-today's date as the new-entry default, and no redundant Additional Media field.
-Legacy structured-media rendering remains supported for portability.
-
-### Sprint 18 - gallery architecture and security
-**Status:** Planned; paused until the owner returns to gallery work.
-
-Revisit R2-mirrored galleries, a restricted live-gallery Worker facade, or a deliberate hybrid after the shared asset pipeline is operating. No share token should remain in page content and no gallery route should reveal the home origin.
-
-## Deferred / future candidates
-
-These are intentionally outside the completed Phase 2 roadmap:
-
-- **Pagefind search** — add when Journal/content volume makes search materially useful
-- **Giscus comments** — add when public discussion is desired
-- **generated Resume PDF** — only if it can consume the same structured Resume source without parallel maintenance
-- **advanced related-content ranking** — current shared-Topic/Section scoring is intentionally simple and predictable
-- **expanded visual page-builder controls** — only if the constrained Custom Page blocks become limiting
-
-## Document roles
-
-- `BUILD_ORDER.md` - current Phase 3 sequence and implementation gates
-- `Roadmap.md` - completed milestones and future candidates
-- `PROJECT_LOG.md` - chronological implementation and verification history
-- `SPRINT14_QA.md` - Phase 2 closeout evidence
-- feature/owner guides - operating and maintenance instructions
+- implementation is on the latest `gpt-handoff` branch
+- stored content remains valid and portable
+- Tina editor behavior is verified
+- Astro build succeeds
+- authoring tests/type checks pass where relevant
+- Cloudflare bindings/secrets/access policies are verified when touched
+- public routes and responsive rendering are reviewed
+- redirects are added for changed public URLs
+- security-sensitive endpoints are tested for both allowed and denied access when authentication changes
+- the relevant durable documentation above is updated

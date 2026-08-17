@@ -1,162 +1,69 @@
 # AngrySquirrel.org Site Maintenance Guide
 
-This guide describes the current post-Phase-2 AngrySquirrel.org repository and how to make small changes safely.
+This guide is for code, deployment, infrastructure, schema, security, and recovery work. Owner editing instructions live in `HELP.md`.
 
-## The short version
+## 1. Maintenance rule: start from the remote branch
 
-| Change | Primary files | Minimum check |
-| --- | --- | --- |
-| Edit words, links, images, Topics, Sections, or Journal entries | TinaCMS / `src/content/` | deliberate Publish Site build + deployed review |
-| Change colors, fonts, spacing, or component appearance | `src/styles/` or component `.astro` | `npm run build:astro` |
-| Add/remove/change a Tina field | Tina schema + Astro schema + stored content + consumer + Tina lock | Tina indexing/reindex + production build |
-| Change routes, collections, packages, or filenames | multiple connected files | full build + link/redirect review |
+Before changing code:
 
-The most important rule remains:
+1. retrieve the current remote `gpt-handoff` head;
+2. treat that branch as the source of truth;
+3. check whether Tina or another editor has added newer content commits;
+4. make maintenance changes on top of that exact head.
 
-> A Tina field is not complete until the editing schema, Astro validation, stored Markdown/MDX, rendered consumer, and generated Tina lock agree.
+Do not overwrite newer Tina content with an older local checkout.
 
-## Safe working routine
-
-1. Pull the latest `gpt-handoff` branch.
-2. Check for existing/unrelated Tina content commits before editing.
-3. Start locally with `npm run dev` when Tina work is involved, or `npm run build:astro` for Astro-only visual work.
-4. Make one focused change at a time.
-5. Review changed files before committing.
-6. Run the smallest relevant checks; use the full gate for schema/routing/dependency work.
-7. Push to `gpt-handoff`.
-8. For ordinary content changes, use **Settings → Publish Site** only when the editing session is ready for production.
-9. Review the deployed result.
-
-Automatic production branch deployments are disabled; a Tina save should not publish production by itself.
-
-## Repository map
+## 2. Repository map
 
 | Location | Responsibility |
 | --- | --- |
 | `src/content/entries/` | Journal MDX entries |
-| `src/content/tags/` | Topic documents; owner-facing label is Topics, public routes remain `/tags/` |
-| `src/content/journal-sections/` | dynamic Journal Section documents |
-| `src/content/pages/` | fixed editable Homepage, Journal, About, Contact, Resume |
+| `src/content/tags/` | Topic documents; public routes remain `/tags/` |
+| `src/content/journal-sections/` | Journal Section documents |
+| `src/content/pages/` | fixed editable Homepage, Journal, About, Contact, Resume data |
 | `src/content/flexible-pages/` | Custom Pages with explicit public paths |
-| `src/content/settings/site.md` | navigation/footer/site settings |
-| `src/content.config.ts` | Astro validation |
-| `tina/config.ts` | Tina collections and fields |
-| `tina/components/` | custom Tina controls/editor behavior |
+| `src/content/settings/site.md` | navigation/footer/site identity settings |
+| `src/content.config.ts` | Astro content validation |
+| `tina/config.ts` | Tina collections, fields, navigation behavior |
+| `tina/components/` | custom Tina controls, Markdown editor, Immich picker, import UI |
 | `tina/tina-lock.json` | generated Tina schema lock; never hand-edit |
-| `src/pages/` | public route/query behavior |
+| `src/pages/` | public routes and route-generation logic |
 | `src/layouts/` | shared page/entry presentation |
 | `src/components/` | reusable UI/content components |
-| `src/styles/` | global visual system |
-| `functions/admin/api/publish.js` | Access-validated deploy-hook relay |
-| `functions/admin/api/media/` | Access-validated private Immich browse and R2 publish endpoints |
-| `src/server/media-backend.js` | Immich request validation, response minimization, deterministic R2 publication |
-| `src/pages/deployment.json.ts` | saved/live deployment comparison manifest |
-| `PUBLISHING_GUIDE.md` | deliberate publishing operation/security/recovery |
-| `MEDIA_BACKEND_GUIDE.md` | media backend activation, endpoint contract, security, and recovery |
+| `src/styles/variables.css` | design tokens, colors, fonts, widths, spacing |
+| `src/styles/typography.css` | typography rules |
+| `src/styles/global.css` | global CSS and shared imports |
+| `src/styles/utilities.css` | shared helper classes |
+| `functions/admin/api/publish.js` | Access-protected Cloudflare deploy-hook relay |
+| `functions/admin/api/media/` | Access-protected Immich browse/preview/R2 publication endpoints |
+| `src/server/media-backend.js` | media validation, Immich requests, deterministic R2 publication |
+| `src/pages/deployment.json.ts` | public saved/live deployment comparison manifest |
+| `tests/` | authoring/import/schema regression tests |
 
-## Current content model
+See `SITE_MAP.md` for the public/Tina/source relationship.
 
-Every Content Entry is a Journal entry. There is no `placement` state and no project/article entry type split.
+## 3. Local setup and checks
 
-Journal entries contain:
+Required Node version: `>=22.22.0`.
 
-- title
-- Markdown body
-- Journal Section
-- Topics
-- Draft/Published status
-- description
-- publication date
-- cover image
-- optional Immich gallery
+```bash
+npm install
+npm run dev
+```
 
-New Journal entries default to Draft and today's date. Additional Media has
-been removed from Tina authoring; inline images and YouTube are the supported
-new-entry workflow. The layout still reads legacy structured media.
+Available scripts:
 
-Portfolio is composed from dedicated Custom Pages plus direct Journal destinations. Entry detail URLs remain durable under `/archive/[slug]/`.
+```bash
+npm run dev          # Tina-aware Astro development
+npm run build        # Tina build + Astro production build
+npm run build:astro  # Astro-only build
+npm run test:authoring
+npm run preview
+```
 
-## Journal Sections
+### Full validation gate
 
-Sections answer **where a story belongs**.
-
-Manage them under **Content → Journal Sections**. Sections have a name, stable slug, description, Active/Retired state, and optional previous slugs.
-
-- Rename the visible name freely.
-- Treat the slug as durable.
-- Retire rather than deleting a section that has historical use.
-- Retired/missing sections fall back to Latest instead of breaking story routes.
-
-## Topics
-
-Topics answer **what a story is about** and drive subject archives/related-story relevance.
-
-Manage them under **Settings → Topics**.
-
-- Add Topics when they are reusable subjects.
-- Rename Topic Name freely; keep the permanent slug stable.
-- Retire a Topic instead of deleting it.
-- Retired Topics disappear from normal new-entry selection but remain valid on old entries.
-- Use Replacement Topic only for an intentional consolidation.
-- Direct Topic deletion is disabled in Tina.
-- Underlying public archives remain `/tags/[slug]/` for compatibility.
-
-## Markdown authoring
-
-Journal bodies are Markdown-first. The title and body lead the Journal form,
-with classification/status and supporting metadata below. The custom editor
-uses a compact icon toolbar for bold, italic, strikethrough, inline code, lists,
-links, Immich/R2 images, Media Manager images, external images, and YouTube.
-Write is the default; desktop adds Split while mobile keeps only Write/Preview.
-Journal Section and Status use native selects; Topics uses a compact expandable
-multi-select instead of an always-open checkbox wall.
-
-Use standard Markdown wherever possible. The only approved custom inline body element is the self-closing YouTube element documented in `CONTENT_GUIDE.md`.
-
-## Import maintenance
-
-The Tina **Content → Import** screen accepts both canonical Markdown/MDX with YAML frontmatter and body-only Google Docs Markdown exports. Body-only input must remain entirely intact in the review body field; Tina owns final frontmatter serialization when the draft is created. Keep active Topics visible and selectable in review so importing never depends on remembering taxonomy labels. Import review reuses the ordinary Markdown editor and shared Immich picker.
-
-Importer parsing, safety, filename/title inference, and Topic resolution coverage lives in `tests/sprint12c-import.test.mjs`. Run `npm run test:authoring` after importer or Journal schema changes.
-
-## Custom Pages
-
-Custom Pages use explicit `path` frontmatter for routing. Physical folders are editorial organization only.
-
-Changing the page title does not change the URL. Changing `path` does. Add a redirect before moving an established URL.
-
-Use Draft for reversible unpublishing. Page blocks are intentionally constrained; do not add unrestricted layout/style controls unless a later roadmap phase explicitly approves that direction.
-
-## Resume
-
-The Resume is one structured source under `src/content/pages/resume.md`, exposed through Tina. Do not create a second independently maintained Resume dataset for a PDF. If a generated PDF is added later, it should consume the same structured source.
-
-## Visual changes
-
-Global colors/spacing live primarily in `src/styles/variables.css`; typography lives in the shared typography styles. Component-local visual changes belong in the component's scoped styles.
-
-Preserve the existing typography/color system unless a future redesign explicitly changes it.
-
-## Tina schema changes
-
-For any schema change:
-
-1. update `tina/config.ts`
-2. update `src/content.config.ts` if stored shape/validation changes
-3. update stored Markdown/MDX as needed
-4. update every renderer/query/consumer
-5. run `npm run dev` so Tina regenerates `tina/tina-lock.json`
-6. review and commit the lock with the schema change
-7. deploy
-8. reindex `gpt-handoff` in TinaCloud
-9. open `/admin/` and verify the affected editor
-10. run/confirm production build behavior
-
-A TinaCloud reindex cannot repair a stale committed lock by itself.
-
-## Full validation gate
-
-Use for schema, route, dependency, or substantial rendering changes:
+Use for schema, route, dependency, import, authoring, or substantial rendering changes:
 
 ```bash
 npm run test:authoring
@@ -166,47 +73,254 @@ git diff --check
 git status --short
 ```
 
-Then verify affected public routes, redirects, metadata, responsive behavior, and deliberate publishing.
+For isolated Astro visual work where Tina credentials are unavailable, at minimum run:
 
-## Publishing
+```bash
+npm run build:astro
+```
 
-Normal owner workflow:
+Then manually review the affected routes and responsive states.
 
-1. save edits in Tina
-2. keep unfinished work Draft
-3. finish the session
-4. open **Settings → Publish Site**
-5. publish once when Saved and Live differ
-6. review the deployed site
+## 4. Tina/content schema changes
 
-Do not re-enable automatic production branch deployments unless intentionally abandoning the deliberate publishing model.
+A schema change is incomplete until all applicable layers agree:
 
-## Page body editing
+1. `tina/config.ts`
+2. `src/content.config.ts`
+3. stored Markdown/MDX/frontmatter
+4. every route/query/layout/component consumer
+5. generated `tina/tina-lock.json`
+6. TinaCloud index/editor behavior
+7. tests/build
 
-Journal entries, Standard Pages (About/Contact), and the legacy body region on Custom Pages use the shared Markdown Write/Split/Preview editor. These fields remain raw Markdown/MDX body content in Git; Astro renders them through the existing collection `render()` path.
+### Safe sequence
 
-Do not automatically apply the Markdown field to every textarea. Homepage section copy, Journal landing copy, Resume records, SEO descriptions, captions, and Custom Page block controls are intentionally separate structured/plain-text fields.
+1. Pull/resolve the latest `gpt-handoff` head.
+2. Update `tina/config.ts`.
+3. Update Astro validation if the stored shape changed.
+4. Migrate stored content as needed.
+5. Update all consumers/renderers/queries.
+6. Run Tina locally so the lock is regenerated by Tina tooling.
+7. Review the generated lock; never hand-edit it.
+8. Run authoring tests, type check, and build.
+9. Commit/push the coherent change.
+10. Reindex `gpt-handoff` in TinaCloud if required.
+11. Open `/admin/` and verify the affected editor.
+12. Deliberately publish and verify production.
 
-## Media backend maintenance
+A TinaCloud reindex cannot repair a stale or contradictory committed schema/lock by itself.
 
-The Sprint 16 backend keeps Immich credentials and its private origin in server-only Cloudflare secrets. `/admin/api/media/*` is protected by the same Access JWT validation used for publishing plus an exact-owner identity check.
+## 5. Content and route safety
 
-Do not put `IMMICH_BASE_URL`, `IMMICH_API_KEY`, or Access service-token values in Tina code, `PUBLIC_` variables, content frontmatter, or client-delivered JavaScript. R2 is accessed through the `MEDIA_BUCKET` binding; no S3 credential belongs in the application.
+### Journal
 
-Published object keys are revisioned and immutable. Do not overwrite or automatically delete old revisions because existing Markdown may still reference them. See `MEDIA_BACKEND_GUIDE.md` before changing endpoints, bindings, retention, caching, or origin protection.
+Every Content Entry is a Journal entry. Current stored/editor model includes title, Markdown body, Journal Section, Draft/Published status, Topics, description, publication date, cover image, and optional gallery.
 
-`ImmichImagePicker.tsx` is the shared owner-facing client. It calls only the
-protected same-origin endpoints, shows protected thumbnails, then inserts the
-returned `web` variant after publication/reuse succeeds. `ExternalImageField`
-uses it for structured sources; `MarkdownBodyField` uses it for portable image
-syntax; Import reuses both paths. The field/renderer inventory and deliberate
-Sprint 18 exclusions are in `SPRINT17_MEDIA_INVENTORY.md`.
+Do not reintroduce deprecated placement/type/project fields without a deliberate migration design.
 
-Albums are displayed as openable thumbnail cards rather than only a search
-filter. On screens up to 640px the picker is a full-viewport dialog with stacked
-filters, touch-sized controls, and a responsive two-column image grid (one
-column below 360px). Preserve these constraints when changing picker layout.
+### Custom Pages
 
-## Active roadmap
+Custom Pages use explicit `path` values. Folder location is editorial organization only.
 
-Sprints 16 and 17 are complete, deployed, and owner-accepted. Gallery architecture/security remains planned as Sprint 18 and is intentionally paused. See `BUILD_ORDER.md`, `Roadmap.md`, `SPRINT17_MEDIA_INVENTORY.md`, and `MEDIA_BACKEND_GUIDE.md`.
+Changing a title is normally safe. Changing `path` changes the public URL and should be accompanied by a redirect for established routes.
+
+### Topics and Sections
+
+Treat slugs as durable identifiers. Prefer retirement/aliases over destructive deletion when historical content references a taxonomy item.
+
+## 6. Deliberate publishing system
+
+Tina saves content commits to `gpt-handoff`; production publishing is a separate action.
+
+### Architecture
+
+```text
+Tina save
+→ GitHub gpt-handoff changes
+→ no automatic production rebuild
+→ Settings > Publish Site
+→ /admin/api/publish
+→ Access JWT + exact-owner validation
+→ server-only Cloudflare deploy hook
+→ Cloudflare Pages build
+→ /deployment.json reports live commit
+```
+
+Automatic production branch deployments should remain disabled unless the deliberate publishing model is intentionally abandoned.
+
+### Runtime values
+
+| Name | Type | Purpose |
+| --- | --- | --- |
+| `CLOUDFLARE_ACCESS_DOMAIN` | variable | Access team domain |
+| `CLOUDFLARE_ACCESS_AUD` | variable | Access application audience |
+| `PUBLISH_ALLOWED_EMAIL` | variable | exact owner identity allowed to publish |
+| `PUBLISH_GITHUB_REPOSITORY` | variable | repository name |
+| `PUBLISH_GITHUB_BRANCH` | variable | `gpt-handoff` |
+| `CLOUDFLARE_DEPLOY_HOOK_URL` | encrypted secret | production deploy hook |
+| `PUBLISH_STATE` | KV binding | duplicate-publish lock |
+
+The deploy hook must never be exposed in browser-delivered code or committed source.
+
+### Publish verification after infrastructure changes
+
+1. Save a harmless Tina change.
+2. Verify GitHub receives it.
+3. Verify Cloudflare does **not** automatically start a production build.
+4. Verify Saved and Live differ in **Publish Site**.
+5. Publish once.
+6. Verify Cloudflare builds and `/deployment.json` eventually reports the target commit live.
+
+### Failed build recovery
+
+A failed Pages build should not replace the last working deployment.
+
+1. Read the first useful Cloudflare build error.
+2. Fix the source/content problem on top of the latest `gpt-handoff`.
+3. Push/save the correction.
+4. Allow any duplicate-publish lock to clear if necessary.
+5. Publish the corrected current branch head.
+
+If the deploy hook may have leaked, revoke it first, create a replacement, update the encrypted secret, then deploy again.
+
+## 7. Immich → R2 media backend
+
+### Architecture
+
+```text
+Authenticated Tina editor
+→ /admin/api/media/*
+→ Cloudflare Access validation + exact-owner check
+→ private Immich origin through Cloudflare Tunnel/Access service identity
+→ Immich thumbnail/preview variants
+→ immutable versioned objects in R2
+→ media.angrysquirrel.org
+```
+
+Immich is the source library. R2 is the durable public website-media store.
+
+### Protected endpoints
+
+| Endpoint | Method | Purpose |
+| --- | --- | --- |
+| `/admin/api/media` | GET | configuration/status without revealing secrets |
+| `/admin/api/media/albums` | GET | list albums |
+| `/admin/api/media/assets` | GET | browse/search/filter assets |
+| `/admin/api/media/preview/:assetId` | GET | private editor preview proxy |
+| `/admin/api/media/publish` | POST | copy/reuse public R2 variants |
+
+### Media runtime configuration
+
+| Name | Type | Required | Purpose |
+| --- | --- | ---: | --- |
+| `MEDIA_BUCKET` | R2 binding | yes | public website image store |
+| `MEDIA_PUBLIC_BASE_URL` | variable | yes | `https://media.angrysquirrel.org` |
+| `MEDIA_VARIANT_VERSION` | variable | optional | publication recipe version, default `v1` |
+| `IMMICH_BASE_URL` | encrypted secret | yes | private Immich origin |
+| `IMMICH_API_KEY` | encrypted secret | yes | read-only Immich API key |
+| `IMMICH_ACCESS_CLIENT_ID` | encrypted secret | recommended | Access service identity |
+| `IMMICH_ACCESS_CLIENT_SECRET` | encrypted secret | recommended | Access service secret |
+| `MEDIA_ALLOWED_EMAIL` | variable | optional | exact owner, or falls back to publish identity |
+| `CLOUDFLARE_ACCESS_DOMAIN` | variable | yes | shared Access team domain |
+| `CLOUDFLARE_ACCESS_AUD` | variable | yes | shared Access audience |
+
+### Immich API permissions
+
+The website media API key should be least-privilege and read-only. Keep only the permissions needed to read/view assets and read albums. Do not grant upload, delete, update, user, admin, or share-management permissions unless architecture changes explicitly require them.
+
+### R2 object strategy
+
+Published media uses immutable revision/version paths similar to:
+
+```text
+immich/<asset-id>/<source-revision>/<variant-version>/thumbnail
+immich/<asset-id>/<source-revision>/<variant-version>/web
+```
+
+Do not overwrite old revisions. Do not automatically delete them; existing Markdown may still reference them.
+
+If Immich image quality/dimensions change, increment `MEDIA_VARIANT_VERSION` so new selections use a new immutable URL recipe.
+
+### Media verification after credential/config changes
+
+While authenticated to `/admin/`:
+
+1. confirm `/admin/api/media` returns configured status;
+2. browse at least one asset;
+3. confirm private preview works;
+4. publish an asset and receive both `thumbnail` and `web` URLs on `media.angrysquirrel.org`;
+5. publish the same unchanged asset again and confirm reuse;
+6. open the public `web` URL in a private browser session;
+7. optionally stop the Immich tunnel temporarily and confirm the R2 URL still works;
+8. restore the tunnel and confirm browsing recovers.
+
+### Credential rotation
+
+If an Immich API key or Access service token is suspected exposed, revoke it at the source first, then replace the corresponding encrypted Cloudflare secret and deploy the corrected configuration.
+
+## 8. Cloudflare configuration guidance
+
+The project intentionally relies on existing dashboard-managed Pages bindings/secrets and does not use a partial Wrangler configuration as an incomplete source of truth.
+
+If moving to configuration-as-code later, first inventory and reproduce the complete Pages configuration, including bindings, secrets, Access expectations, KV, R2, deployment behavior, and environment-specific values.
+
+## 9. Visual-system maintenance
+
+Global visual tokens live in `src/styles/variables.css`.
+
+Current font variables:
+
+```css
+--font-ui: "Lato", sans-serif;
+--font-editorial: "Newsreader", serif;
+```
+
+Typography rules live in `src/styles/typography.css`; global behavior is in `src/styles/global.css`; reusable helpers are in `src/styles/utilities.css`.
+
+Prefer modifying a design token for intentional site-wide changes. Prefer scoped component styles for local changes.
+
+After typography/font changes, verify fallback loading, headings, body measure, navigation wrapping, cards, editor previews, and mobile layouts.
+
+## 10. Importer maintenance
+
+The importer accepts frontmatter-bearing Markdown/MDX and body-only Markdown exports. Tina owns canonical serialization of the created draft.
+
+Importer changes should preserve these invariants:
+
+- body-only input reaches Review Import intact
+- frontmatter is optional
+- title/filename can be inferred then edited
+- active Topics are visible/selectable
+- unsafe executable MDX and credential-bearing URLs are rejected
+- existing files are never overwritten
+- imported output becomes a Draft in the normal Journal collection
+- ordinary Markdown stays portable
+
+Run `npm run test:authoring` after importer, Markdown editor, or Journal schema changes.
+
+## 11. Security checklist
+
+Periodically verify:
+
+- `/admin/` requires Cloudflare Access
+- `/admin/api/publish` rejects unauthenticated/wrong-identity requests
+- `/admin/api/media/*` rejects unauthenticated/wrong-identity requests
+- secrets do not appear in source, frontmatter, browser bundles, logs, or public JSON
+- Immich origin is not publicly exposed through an inbound home-server port
+- R2 public objects do not reveal private Immich URLs or credentials
+- deploy hook remains encrypted/server-only
+- Access service-token values remain paired and encrypted
+- old R2 revisions are removed only after repository reference checks
+- public gallery/share architecture is reviewed separately because it has different privacy characteristics from single-image R2 publication
+
+## 12. Documentation maintenance
+
+Keep only these durable project docs current:
+
+- `README.md`
+- `HELP.md`
+- `Roadmap.md`
+- `SITE_MAINTENANCE_GUIDE.md`
+- `SITE_MAP.md`
+
+When a feature changes, update the appropriate durable guide in the same change. Implementation history belongs in Git commits/issues rather than permanent sprint logs.
