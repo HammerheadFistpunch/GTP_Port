@@ -261,12 +261,31 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
     };
 
     const transformLines = (numbered = false) => {
-        replaceSelection((selected) => {
-            const source = selected || "List item";
-            return source.split("\n").map((line, index) =>
-                `${numbered ? `${index + 1}.` : "-"} ${line.replace(/^\s*(?:[-*+] |\d+\. )/, "")}`
-            ).join("\n");
-        });
+        const textarea = textareaRef.current;
+        const start = textarea?.selectionStart ?? markdown.length;
+        const end = textarea?.selectionEnd ?? markdown.length;
+        const selected = markdown.slice(start, end);
+        const source = selected || "List item";
+        const items = source
+            .split("\n")
+            .map((line) => line.replace(/^\s*(?:[-*+] |\d+\. )/, "").trim())
+            .filter(Boolean);
+        const list = items.map((line, index) =>
+            `${numbered ? `${index + 1}.` : "-"} ${line}`
+        ).join("\n");
+        const before = markdown.slice(0, start);
+        const after = markdown.slice(end);
+        const leading = before && !before.endsWith("\n\n") ? (before.endsWith("\n") ? "\n" : "\n\n") : "";
+        const trailing = after && !after.startsWith("\n\n") ? (after.startsWith("\n") ? "\n" : "\n\n") : "";
+        const inserted = `${leading}${list}${trailing}`;
+        const next = `${before}${inserted}${after}`;
+        setMarkdown(next, start + leading.length, start + leading.length + list.length);
+    };
+
+    const insertHardBreak = () => {
+        replaceSelection((selected) => selected
+            ? selected.replace(/[ \t]*\n/g, "  \n")
+            : "  \n");
     };
 
     const insertLink = () => {
@@ -325,6 +344,7 @@ export default function MarkdownBodyField({ input, field, meta }: MarkdownBodyFi
                 <span style={styles.toolDivider} aria-hidden="true" />
                 <button type="button" style={styles.button} aria-label="Bulleted list" title="Bulleted list" onClick={() => transformLines(false)}>•≡</button>
                 <button type="button" style={{ ...styles.button, fontSize: 12 }} aria-label="Numbered list" title="Numbered list" onClick={() => transformLines(true)}>1.</button>
+                <button type="button" style={styles.button} aria-label="Insert line break" title="Line break" onClick={insertHardBreak}>↵</button>
                 <button type="button" style={styles.button} aria-label="Insert link" title="Insert link" onClick={insertLink}>↗</button>
                 <span style={styles.toolDivider} aria-hidden="true" />
                 <button type="button" style={styles.button} aria-label="Insert Media Manager image" title="Media Manager image" onClick={insertManagedImage}>▣</button>
