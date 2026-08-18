@@ -213,7 +213,6 @@ export const ImportEntryScreen = () => {
             tags: references.map((tag) => ({ tag })),
             coverImage: entry.coverImage.trim() || undefined,
             immichGallery: entry.immichGallery,
-            media: entry.media,
             body: entry.body,
         };
 
