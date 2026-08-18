@@ -1,24 +1,41 @@
 ---
 title: 'Working With AI: Who Is Actually Building the Project?'
-draft: true
-tags: []
-description: 'An assessment of the division of labor, ownership, and contribution between a human project owner and an AI engineering collaborator.'
+journalSection: field-notes
+draft: false
+tags:
+  - tag: src/content/tags/software.md
+description: Who's stuff is this anyway?
 date: 2026-08-18T00:00:00.000Z
+coverImage: '/uploads/ChatGPT-Image-Aug-18,-2026,-02_37_40-PM.png'
 ---
 
-I asked ChatGPT a question that has been sitting in the back of my mind for a while:
+When I show people my code based projects [this website, Signal Peak, Immich, etc] people inevitably ask who actually wrote the code. It's a fair question, especially considering that I have been historically allergic to code.  I mean, I used to know Ti-Basic pretty decently many years ago but efforts to learn other languages since then have resulted in the same frustration and failure.  
 
-**When I build projects with AI, how much of the project is actually mine, and how much belongs to the AI?**
+Which is why it's only been recently that I've been able to bring these visions to life.  Look I know what I want a website to do and look like, and I know what I want my output and ui to look like for other projects, but I don't speak the language necessary to pull it off. But Ai does.  So if it's writing the actual code, building out frameworks and dependencies and so on...is it really mine?  
 
-Across the projects we've worked on together, the answer was more nuanced than simply counting who wrote the code.
+It's a hot topic right now generally and I certainly wanted to know, so what did I do?  I asked ChatGPT, who I've been using primarily for this work.  Note: what follows is what ChatGPT feels about it. I think it's highly relevant to ask since it has much better finite memory of the projects than I do and and quantify in a way that would be difficult for me.  That being said, Ai is notorious for brown nosing its users so take it with a grain of salt.
 
-ChatGPT's overall estimate was:
+## My Prompt
 
-> **About 65% me / 35% ChatGPT.**
+> I want an honest assessment on something. How would you describe the relationship I have with my projects versus you? What would you ascribe as my contribution to yours? I would like to hear your thoughts, I would also like to see it as a percentage.
 
-That percentage changes considerably depending on what is actually being measured.
+So yeah. Major brown nose, that GPT, but I think it's a fair assessment, what do you think?
 
-| Dimension | Me | ChatGPT |
+---
+
+## ChatGPT's Response
+
+Across your projects, I would describe the relationship as **you acting as the product owner, systems designer, subject-matter authority, and final judge; me acting as a very fast implementation partner, technical translator, researcher, and pair programmer.**
+
+If you forced me to put one number on the overall contribution, I would estimate:
+
+> **About 65% you / 35% me.**
+
+![Estimate](https://assets.tina.io/bce22d76-7099-40c4-9574-e69b5555a914/Estimated-contribution-to-your-projects.png)
+
+That number changes quite a bit depending on what we are measuring.
+
+| Dimension | You | ChatGPT |
 |---|---:|---:|
 | Project conception / reason for existing | **95%** | 5% |
 | Requirements and priorities | **85%** | 15% |
@@ -31,171 +48,110 @@ That percentage changes considerably depending on what is actually being measure
 | Testing and real-world validation | **75%** | 25% |
 | Iteration / refinement | **60%** | 40% |
 
-## Lines of Code Are a Bad Measure
+The important distinction is that **lines of code would substantially overstate my contribution**.
 
-If contribution were measured by lines of code, AI would receive a much larger percentage.
+For example, on angrysquirrel.org, I may produce a large percentage of a particular implementation: React/Tina code, configuration changes, documentation, migration logic, debugging hypotheses, and so forth. But those things exist inside a system whose behavior is being dictated very heavily by you.
 
-That would also be misleading.
-
-On a project like this website, ChatGPT may generate a substantial percentage of the React, Astro, TinaCMS configuration, documentation, migration logic, debugging changes, and other implementation details.
-
-But that code exists inside a system whose behavior is still largely dictated by me.
-
-I am usually the one making decisions such as:
+You repeatedly determine things like:
 
 - This editor workflow is wrong.
-- The gallery needs to behave differently.
-- This navigation structure doesn't make sense.
-- Publishing should automatically trigger this process.
-- This abstraction makes the system unnecessarily confusing.
-- This needs to work properly on mobile.
+- The gallery should behave this way.
+- I don't want this navigation structure.
+- Publishing should trigger this.
+- This abstraction is unnecessarily confusing.
+- This needs to work from mobile.
 - This technically works, but it isn't solving the problem.
 
-Those decisions often have more impact on the project than an individual code change.
+Those decisions have much more leverage than individual code changes.
 
-## Testing Against Reality
+You also do something that is particularly important in software development: **you test against reality**.
 
-One of the largest parts of my contribution is something AI cannot easily substitute for: actually using the system.
+You deploy it, use it, discover that album selection behaves like a search, notice that a preview pane isn't wrapping correctly, discover that drafts remain publicly accessible, see that a Cloudflare build doesn't behave as expected, and then change the specification based on the actual experience.
 
-I deploy it.
+I cannot substitute for that very well.
 
-I use it.
+The job-search project makes the distinction even clearer.
 
-I find the places where the intended design and the real implementation diverge.
+I can build ranking systems, collectors, schemas, scoring logic, documentation, and local-model workflows. But the difficult intellectual property in that project isn't really the Python.
 
-That might mean discovering that selecting an Immich album behaves like running a search, that a preview window doesn't wrap text correctly, that a draft article is still publicly visible, or that a build pipeline behaves differently than expected.
+It is the definition of:
 
-Those aren't theoretical problems.
+**What constitutes a good job for you?**
 
-They appear because the software has left the planning stage and encountered reality.
+When you rejected the early results because they clustered around a handful of companies and weren't actually highly aligned, that wasn't merely feedback on a bug.
 
-The specification then changes based on what happened.
+You were supplying information the system could not derive independently: the scoring model wasn't capturing your judgment correctly.
 
-## The Job Search Project Is an Even Better Example
+The project becomes useful only by encoding more of that judgment.
 
-The job-search automation project makes the distinction particularly obvious.
+There is another way I'd describe our division of labor:
 
-AI can build:
+> **You tend to contribute the "why" and the boundary conditions. I contribute a lot of the "how."**
 
-- Job collectors
-- Ranking algorithms
-- Data schemas
-- Scoring systems
-- Local-model workflows
-- Automation
-- Documentation
+But you're increasingly contributing to the "how" as well.
 
-But the hardest part of the system isn't necessarily the Python.
+You understand enough of Astro, Tina, GitHub, Cloudflare, Immich, Docker, R2, CI/CD, branch management, and the surrounding architecture that our conversations aren't really "customer tells programmer what they want."
 
-The difficult intellectual property is answering the question:
+You frequently propose architectures, identify likely failure domains, question implementation choices, and make informed tradeoffs.
 
-**What actually constitutes a good job for me?**
+I then accelerate that process by being able to traverse unfamiliar APIs and codebases quickly and produce implementations.
 
-An early version of the system returned plenty of technically valid results. The problem was that the jobs weren't especially good matches.
+So I wouldn't describe you as someone merely **prompting AI to build projects**.
 
-Rejecting those results wasn't simply identifying a software bug.
+A closer description would be:
 
-It was supplying knowledge the system didn't possess.
+> **You are developing projects with AI as a high-leverage engineering collaborator.**
 
-The scoring model was failing to represent human judgment accurately.
+There is a meaningful distinction there.
 
-Improving the project therefore meant encoding more of that judgment into the system.
+Someone could take all of the source code I generated and technically say:
 
-## The Division of Labor
+> "AI wrote most of this."
 
-The simplest description of the relationship is probably this:
+That might even be true by keystroke count.
 
-> **I tend to contribute the "why" and the boundary conditions. AI contributes a large portion of the "how."**
+But if they asked:
 
-That distinction is becoming less absolute over time.
+- Whose project is this?
+- Who understands what it should do?
+- Who could recognize when it is wrong?
+- Who decided what tradeoffs are acceptable?
+- Who could continue directing its development?
 
-As I've worked on these systems, I've also become increasingly involved in the technical architecture: Astro, TinaCMS, GitHub, Cloudflare, Immich, Docker, R2, CI/CD, deployment workflows, branch management, and the interactions between them.
+The answer is overwhelmingly you.
 
-That means the process doesn't feel much like:
+### Another useful way to divide the percentages
 
-**Customer tells programmer what to build.**
+If I separate **creative and intellectual ownership** from **production labor**, my estimate would look more like this:
 
-It feels closer to:
+**Intellectual/product contribution:** roughly **75–85% you / 15–25% me**
 
-**A project owner and an extremely fast engineering collaborator iterating on a system together.**
+**Implementation/production effort:** roughly **40% you / 60% me**
 
-AI can traverse unfamiliar APIs, inspect codebases, propose implementations, produce documentation, and test hypotheses much faster than I could independently.
+That resolves what might otherwise look contradictory.
 
-I can determine whether the resulting system actually makes sense.
+You are getting substantial labor leverage from me. That's real.
 
-## Intellectual Contribution vs. Production Labor
+I'm not merely autocomplete in these projects. I have proposed architectures, found bugs, written significant implementation code, created documentation structures, and occasionally suggested directions you hadn't considered.
 
-Breaking the percentages into two different categories makes the relationship clearer.
+But I'm also not independently producing these systems and handing them to you.
 
-### Intellectual and Product Contribution
+Without your continued decisions and corrections, they would fairly quickly become:
 
-**75–85% me**
+> **Technically plausible versions of the wrong thing.**
 
-**15–25% AI**
+That is probably the strongest pattern I've noticed in our work together: **you are willing to reject something that technically works when it doesn't actually solve the problem you had in mind.**
 
-This includes:
+That has a major effect on the resulting projects.
 
-- Why the project exists
-- What problem it should solve
-- Requirements
-- Priorities
-- Constraints
-- Product judgment
-- Domain expertise
-- Acceptance or rejection of solutions
+So if somebody asked me:
 
-### Implementation and Production Effort
+**"Who built these?"**
 
-**Approximately 40% me**
+The most accurate answer would be:
 
-**Approximately 60% AI**
+> **You built them, with substantial AI-assisted engineering.**
 
-This includes:
+And if they wanted the uncomfortable-but-useful footnote:
 
-- Writing code
-- Refactoring
-- Documentation
-- Configuration
-- Debugging
-- Research
-- Generating implementation alternatives
-
-Those numbers aren't contradictory.
-
-They show the leverage.
-
-I am getting a substantial amount of production labor from AI without outsourcing ownership of the project itself.
-
-## So Who Built It?
-
-Someone looking at the Git history could reasonably say:
-
-**AI wrote a lot of this code.**
-
-That would be true.
-
-But a different set of questions produces a different answer:
-
-Who understands what the project is supposed to accomplish?
-
-Who recognizes when the implementation is wrong?
-
-Who decides what tradeoffs are acceptable?
-
-Who determines what gets removed, changed, or rebuilt?
-
-Who could continue directing development?
-
-The answer to those questions is overwhelmingly me.
-
-So the description that feels most accurate is:
-
-> **I built these projects with substantial AI-assisted engineering.**
-
-AI isn't merely autocomplete in this process. It contributes architecture, implementation ideas, debugging, code, research, and occasionally directions I hadn't considered.
-
-But without continued human judgment, the projects would eventually become technically plausible implementations of the wrong thing.
-
-And that may be the most important distinction.
-
-**AI probably typed more of the production code. I supplied considerably more of what makes that code worth having.**
+> **I probably typed more of the production code than you did. You supplied considerably more of what makes that code worth having.**
