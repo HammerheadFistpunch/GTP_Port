@@ -44,7 +44,7 @@ journalPreview:
   title: From the Journal
   titleHref: /journal/
   subtitle: Where I store all my best nuts
-  featuredEntry: src/content/entries/2025-lexus-lx-700h-first-drive.mdx
+  featuredEntry: src/content/entries/Signal-Peak---My-first-official-software-release.mdx
   recentLimit: 3
   emptyMessage: Journal entries are coming soon.
 aboutSection:
@@ -92,3 +92,4 @@ technologySection:
     label: See software projects
     href: /journal/projects/
 ---
+
