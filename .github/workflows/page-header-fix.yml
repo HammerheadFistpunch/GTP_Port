@@ -1,0 +1,123 @@
+name: Apply page header fix
+
+on:
+  pull_request:
+    branches: [gpt-handoff]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.head_ref == 'agent/page-header-fix'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out gpt-handoff
+        uses: actions/checkout@v4
+        with:
+          ref: gpt-handoff
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.0'
+          cache: npm
+
+      - name: Apply header and schema changes
+        shell: bash
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          import json
+
+          def replace(path, old, new, expected=None):
+              p = Path(path)
+              text = p.read_text()
+              count = text.count(old)
+              if expected is not None and count != expected:
+                  raise SystemExit(f"{path}: expected {expected} matches, found {count}: {old[:80]!r}")
+              if count == 0:
+                  raise SystemExit(f"{path}: replacement target not found: {old[:80]!r}")
+              p.write_text(text.replace(old, new))
+
+          old_header_fields = '''                    { type: "string", name: "title", label: "Page Title", required: true, isTitle: true },\n                    { type: "string", name: "eyebrow", label: "Eyebrow" },\n                    { type: "string", name: "headline", label: "Headline", required: true },\n                    { type: "string", name: "description", label: "Description", required: true, ui: { component: "textarea" } },'''
+          new_header_fields = '''                    { type: "string", name: "title", label: "Page Title", required: true, isTitle: true, description: "Required page identity and browser title. Also becomes the visible heading when Headline is blank." },\n                    { type: "string", name: "eyebrow", label: "Optional Eyebrow" },\n                    { type: "string", name: "headline", label: "Optional Display Headline", description: "Leave blank to use Page Title as the visible heading." },\n                    { type: "string", name: "description", label: "Optional Header Description", ui: { component: "textarea" }, description: "Leave blank for a cleaner header. Site-level metadata provides the SEO fallback." },'''
+          replace('tina/config.ts', old_header_fields, new_header_fields, expected=3)
+          replace(
+              'tina/config.ts',
+              '                    { type: "string", name: "description", label: "Page Description", required: true, ui: { component: "textarea" } },',
+              '                    { type: "string", name: "description", label: "Optional Header Description", ui: { component: "textarea" }, description: "Optional supporting copy shown below the page title." },',
+              expected=1,
+          )
+
+          replace(
+              'src/content.config.ts',
+              '            headline: z.string(),\n            description: z.string(),',
+              '            headline: z.string().optional(),\n            description: z.string().optional(),',
+              expected=2,
+          )
+          replace(
+              'src/content.config.ts',
+              '        description: z.string(),\n        eyebrow: z.string().optional(),\n        headerImage:',
+              '        description: z.string().optional(),\n        eyebrow: z.string().optional(),\n        headerImage:',
+              expected=1,
+          )
+
+          replace('src/layouts/StandardPageLayout.astro', '  headline: string;\n  description: string;', '  headline?: string;\n  description?: string;', expected=1)
+          replace('src/layouts/StandardPageLayout.astro', '  links = [],\n} = Astro.props;\n---', '  links = [],\n} = Astro.props;\nconst displayHeadline = headline?.trim() || title;\n---', expected=1)
+          replace('src/layouts/StandardPageLayout.astro', '        <h1>{headline}</h1>\n        <p class="introduction">{description}</p>', '        <h1>{displayHeadline}</h1>\n        {description && <p class="introduction">{description}</p>}', expected=1)
+
+          replace('src/components/journal/JournalLanding.astro', '  headline: string;\n  description: string;', '  headline?: string;\n  description?: string;', expected=1)
+          replace('src/components/journal/JournalLanding.astro', '  canonicalPath,\n} = Astro.props;\n\nconst sectionLinks', '  canonicalPath,\n} = Astro.props;\nconst displayHeadline = headline?.trim() || title;\n\nconst sectionLinks', expected=1)
+          replace('src/components/journal/JournalLanding.astro', '        <h1>{headline}</h1>\n        <p class="introduction">{description}</p>', '        <h1>{displayHeadline}</h1>\n        {description && <p class="introduction">{description}</p>}', expected=1)
+
+          replace('src/layouts/FlexiblePageLayout.astro', '  description: string;', '  description?: string;', expected=1)
+          replace('src/layouts/FlexiblePageLayout.astro', '        <h1>{title}</h1>\n        <p class="introduction">{description}</p>', '        <h1>{title}</h1>\n        {description && <p class="introduction">{description}</p>}', expected=1)
+
+          replace(
+              'src/components/ui/Navigation.astro',
+              '    <a href="/" class="logo" aria-current={currentPath === "/" ? "page" : undefined}>\n      {site.logoText}\n    </a>',
+              '    <a href="/" class="logo" aria-current={currentPath === "/" ? "page" : undefined}>\n      <img class="logo-mark" src="/favicon.svg" alt="" aria-hidden="true" />\n      <span>{site.logoText}</span>\n    </a>',
+              expected=1,
+          )
+          replace(
+              'src/components/ui/Navigation.astro',
+              '.logo {\n  font-family: var(--font-ui);',
+              '.logo {\n  display: inline-flex;\n  align-items: center;\n  gap: .65rem;\n  font-family: var(--font-ui);',
+              expected=1,
+          )
+          replace(
+              'src/components/ui/Navigation.astro',
+              '  letter-spacing: .03em;\n}\n\n.nav-toggle {',
+              '  letter-spacing: .03em;\n}\n\n.logo-mark {\n  display: block;\n  width: 2rem;\n  height: 2rem;\n  flex: 0 0 auto;\n  border-radius: 50%;\n}\n\n.nav-toggle {',
+              expected=1,
+          )
+
+          lock_path = Path('tina/tina-lock.json')
+          lock = json.loads(lock_path.read_text())
+          collections = {collection['name']: collection for collection in lock['schema']['collections']}
+          for collection_name in ('archivePage', 'standardPage', 'resumePage'):
+              fields = {field['name']: field for field in collections[collection_name]['fields']}
+              for field_name in ('headline', 'description'):
+                  fields[field_name].pop('required', None)
+          flexible_fields = {field['name']: field for field in collections['flexiblePages']['fields']}
+          flexible_fields['description'].pop('required', None)
+          lock_path.write_text(json.dumps(lock, separators=(',', ':')))
+          PY
+
+      - name: Install and validate
+        run: |
+          npm ci
+          npm run test:authoring
+          npx tsc --noEmit
+          npm run build:astro
+
+      - name: Commit validated changes to gpt-handoff
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- tina/config.ts tina/tina-lock.json src/content.config.ts src/layouts/StandardPageLayout.astro src/layouts/FlexiblePageLayout.astro src/components/journal/JournalLanding.astro src/components/ui/Navigation.astro
+          git commit -m "Simplify page headers and add site logo"
+          git push origin HEAD:gpt-handoff
