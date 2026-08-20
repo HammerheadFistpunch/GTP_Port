@@ -1,6 +1,6 @@
 # GTP_Port Roadmap
 
-Last updated: 2026-08-17
+Last updated: 2026-08-20
 
 ## Product direction
 
@@ -32,9 +32,94 @@ The core platform is operational:
 
 ## Active priorities
 
-### 1. Gallery architecture and privacy
+### 1. Page-header simplification and homepage identity
 
-**Status: next major feature area.**
+**Status: next UI/content cleanup.**
+
+The current page-header model exposes too many required text layers at once: page title, eyebrow, headline, and description. This creates redundant copy and visually crowded headers.
+
+Planned changes:
+
+- add the site logo to the main/homepage header
+- simplify the shared page-header content model
+- stop requiring all of page title, eyebrow, headline, and description simultaneously
+- prefer a required primary title/headline with optional supporting fields
+- make Astro components adapt cleanly when optional header fields are omitted
+- update Tina schema/editor labels so authors are not forced to invent redundant copy
+
+Acceptance goals:
+
+- homepage header clearly carries the site identity/logo
+- ordinary pages can render a clean header with only the content they actually need
+- existing content remains compatible or receives a safe migration
+- header cleanup reduces visual clutter without changing the established typography/color system
+
+### 2. SEO and analytics optimization
+
+**Status: ready for audit and implementation after header cleanup.**
+
+The site already has RSS, sitemap, robots, canonical, Open Graph, and Twitter metadata. The next phase should verify and strengthen the complete search/discovery layer rather than assuming those pieces are sufficient.
+
+SEO audit scope:
+
+- page titles and meta descriptions
+- canonical URL consistency
+- Open Graph/social metadata
+- structured data/schema markup where useful
+- sitemap and robots behavior
+- image alt text and media metadata
+- internal linking and Journal/Topic/Section relationships
+- indexability of Draft versus Published content
+- SEO field design in Tina, avoiding unnecessary editor clutter
+
+Analytics scope:
+
+- establish a privacy-conscious baseline, with Cloudflare Web Analytics as the first option to evaluate
+- measure pageviews and useful engagement rather than collecting data without a decision purpose
+- consider event tracking for outbound links, portfolio interactions, galleries/media, contact actions, downloads, and Journal engagement
+- document privacy implications before introducing any third-party analytics service
+
+Acceptance goals:
+
+- important public pages have intentional titles/descriptions/canonicals
+- structured metadata validates where implemented
+- Draft content is not indexed or exposed through public discovery surfaces
+- analytics can answer useful site/product questions with minimal tracking burden
+- no paid analytics dependency is required for baseline operation
+
+### 3. Journal comments/community layer
+
+**Status: evaluate before implementation.**
+
+Comments are now a planned feature area rather than merely an optional idea. Do not select a platform until the operational, privacy, moderation, and security tradeoffs are compared.
+
+Evaluate at least:
+
+- GitHub-backed systems such as Giscus
+- lightweight hosted comment systems
+- self-hosted approaches that fit the existing static/Cloudflare architecture
+
+Requirements:
+
+- low maintenance
+- strong spam resistance
+- practical moderation
+- minimal tracking/privacy impact
+- dark-theme compatibility
+- no meaningful ongoing cost
+- no unnecessary exposure of the home Immich/server environment
+- graceful behavior if the comment provider is unavailable
+
+Acceptance goals:
+
+- comments can be enabled deliberately on Journal content without making the static site fragile
+- moderation and deletion workflows are understood before launch
+- privacy/security implications are documented
+- the chosen system does not become a second content source of truth for the site's authored articles
+
+### 4. Gallery architecture and privacy
+
+**Status: major feature area.**
 
 The current Immich Gallery block still depends on live gallery/share behavior. Replace or harden it so public gallery pages do not expose long-lived Immich share tokens or reveal the home origin.
 
@@ -52,7 +137,7 @@ Acceptance goals:
 - gallery authoring remains practical in Tina
 - existing gallery content has a migration path
 
-### 2. Immich picker polish
+### 5. Immich picker polish
 
 **Status: follow-up refinement.**
 
@@ -63,7 +148,7 @@ Known UX work:
 - preserve full-screen/touch-friendly mobile behavior
 - keep Markdown and preview panes usable at narrow and desktop widths
 
-### 3. Authoring/editor hardening
+### 6. Authoring/editor hardening
 
 Continue simplifying Tina around the owner's workflow rather than exposing implementation details.
 
@@ -74,7 +159,7 @@ Priorities:
 - add clearer recovery behavior for invalid content references
 - retain body portability and sanitized preview behavior
 
-### 4. Documentation as maintained product surface
+### 7. Documentation as maintained product surface
 
 The repository now has five durable documentation files only:
 
@@ -91,7 +176,6 @@ Update these when behavior changes. Do not recreate sprint diaries, temporary au
 These are useful candidates but not current requirements:
 
 - **Pagefind search** when Journal volume makes search valuable
-- **Giscus comments** if public discussion is desired
 - **generated Resume PDF** sourced from the existing structured Resume content, never a second manually maintained resume dataset
 - **more advanced related-content ranking** if current shared-Topic/Section ranking becomes insufficient
 - **additional Custom Page blocks** only when a real page cannot be built cleanly with the constrained set
