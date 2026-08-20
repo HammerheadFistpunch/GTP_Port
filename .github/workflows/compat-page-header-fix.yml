@@ -1,0 +1,94 @@
+name: Apply Tina-compatible page header fix
+
+on:
+  push:
+    branches: [gpt-handoff]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.event.head_commit.message == 'Run Tina-compatible page header fix'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out gpt-handoff
+        uses: actions/checkout@v4
+        with:
+          ref: gpt-handoff
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.0'
+          cache: npm
+
+      - name: Apply compatibility refactor
+        shell: bash
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          import json
+
+          def replace(path, old, new, expected=None):
+              p = Path(path)
+              text = p.read_text()
+              count = text.count(old)
+              if expected is not None and count != expected:
+                  raise SystemExit(f"{path}: expected {expected} matches, found {count}: {old[:100]!r}")
+              if count == 0:
+                  raise SystemExit(f"{path}: target not found: {old[:100]!r}")
+              p.write_text(text.replace(old, new))
+
+          # Restore a stable required SEO description across every member of the Pages union.
+          replace('src/content.config.ts', '            description: z.string().optional(),\n            sectionOrder: homepageSectionOrder,', '            description: z.string(),\n            sectionOrder: homepageSectionOrder,', expected=1)
+          replace('src/content.config.ts', '            headline: z.string().optional(),\n            description: z.string().optional(),', '            headline: z.string().optional(),\n            description: z.string(),', expected=2)
+
+          # Tina: description remains required metadata; eyebrow/headline remain optional display controls.
+          replace(
+              'tina/config.ts',
+              '{ type: "string", name: "description", label: "SEO Description", ui: { component: "textarea" }, description: "Optional homepage metadata. Site Settings provides the fallback when blank." },',
+              '{ type: "string", name: "description", label: "SEO Description", required: true, ui: { component: "textarea" }, description: "Required search/social summary. This is metadata and is not automatically shown in the page header." },',
+              expected=1,
+          )
+          replace(
+              'tina/config.ts',
+              '{ type: "string", name: "description", label: "Optional Header Description", ui: { component: "textarea" }, description: "Leave blank for a cleaner header. Site-level metadata provides the SEO fallback." },',
+              '{ type: "string", name: "description", label: "SEO Description", required: true, ui: { component: "textarea" }, description: "Required search/social summary. It is not automatically shown in the visible page header." },',
+              expected=3,
+          )
+
+          # Keep metadata for BaseLayout, but do not force that copy into the visible page header.
+          replace('src/layouts/StandardPageLayout.astro', '  description?: string;', '  description: string;', expected=1)
+          replace('src/layouts/StandardPageLayout.astro', '        {description && <p class="introduction">{description}</p>}\n', '', expected=1)
+          replace('src/components/journal/JournalLanding.astro', '  description?: string;', '  description: string;', expected=1)
+          replace('src/components/journal/JournalLanding.astro', '        {description && <p class="introduction">{description}</p>}\n', '', expected=1)
+
+          # Restore Tina lock nullability to String! for the shared page description field.
+          lock_path = Path('tina/tina-lock.json')
+          lock = json.loads(lock_path.read_text())
+          collections = {c['name']: c for c in lock['schema']['collections']}
+          for collection_name in ('homepage', 'archivePage', 'standardPage', 'resumePage'):
+              fields = {f['name']: f for f in collections[collection_name]['fields']}
+              fields['description']['required'] = True
+          lock_path.write_text(json.dumps(lock, separators=(',', ':')))
+
+          # The helper deletes itself in the validated commit.
+          Path('.github/workflows/compat-page-header-fix.yml').unlink()
+          PY
+
+      - name: Validate authoring and Astro build
+        run: |
+          npm ci
+          npm run test:authoring
+          npm run build:astro
+
+      - name: Commit validated compatibility fix
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- tina/config.ts tina/tina-lock.json src/content.config.ts src/layouts/StandardPageLayout.astro src/components/journal/JournalLanding.astro .github/workflows/compat-page-header-fix.yml
+          git commit -m "Make page headers Tina-compatible"
+          git push origin HEAD:gpt-handoff
