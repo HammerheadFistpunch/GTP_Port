@@ -1,4 +1,4 @@
-name: Fix Tina page description nullability
+name: Clean temporary branches
 
 on:
   pull_request:
@@ -8,68 +8,26 @@ permissions:
   contents: write
 
 jobs:
-  apply:
+  cleanup:
     if: github.head_ref == 'agent/page-header-nullability'
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
-      - name: Check out gpt-handoff
-        uses: actions/checkout@v4
-        with:
-          ref: gpt-handoff
-          fetch-depth: 0
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.22.0'
-          cache: npm
-
-      - name: Align page description nullability
+      - name: Remove temporary branches
         shell: bash
         run: |
-          python <<'PY'
-          from pathlib import Path
-          import json
-
-          def replace(path, old, new, expected=1):
-              p = Path(path)
-              text = p.read_text()
-              count = text.count(old)
-              if count != expected:
-                  raise SystemExit(f"{path}: expected {expected} matches, found {count}: {old!r}")
-              p.write_text(text.replace(old, new))
-
-          replace(
-              'tina/config.ts',
-              '{ type: "string", name: "description", label: "SEO Description", required: true, ui: { component: "textarea" } },',
-              '{ type: "string", name: "description", label: "SEO Description", ui: { component: "textarea" }, description: "Optional homepage metadata. Site Settings provides the fallback when blank." },',
-          )
-
-          replace(
-              'src/content.config.ts',
-              '            description: z.string(),\n            sectionOrder: homepageSectionOrder,',
-              '            description: z.string().optional(),\n            sectionOrder: homepageSectionOrder,',
-          )
-
-          lock_path = Path('tina/tina-lock.json')
-          lock = json.loads(lock_path.read_text())
-          homepage = next(c for c in lock['schema']['collections'] if c['name'] == 'homepage')
-          description = next(f for f in homepage['fields'] if f['name'] == 'description')
-          description.pop('required', None)
-          lock_path.write_text(json.dumps(lock, separators=(',', ':')))
-          PY
-
-      - name: Install and validate
-        run: |
-          npm ci
-          npm run test:authoring
-          npm run build:astro
-
-      - name: Commit validated fix to gpt-handoff
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- tina/config.ts tina/tina-lock.json src/content.config.ts
-          git commit -m "Align Tina page description nullability"
-          git push origin HEAD:gpt-handoff
+          set -euo pipefail
+          for branch in \
+            agent/page-header-fix \
+            noop \
+            agent/page-header-nullability
+          do
+            ref="heads/${branch}"
+            if gh api "repos/${GITHUB_REPOSITORY}/git/ref/${ref}" >/dev/null 2>&1; then
+              gh api --method DELETE "repos/${GITHUB_REPOSITORY}/git/refs/${ref}"
+              echo "Deleted ${branch}"
+            else
+              echo "Already absent: ${branch}"
+            fi
+          done
