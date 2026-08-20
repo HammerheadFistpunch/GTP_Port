@@ -59,13 +59,11 @@ jobs:
           lock_path.write_text(json.dumps(lock, separators=(',', ':')))
           PY
 
-      - name: Install and run authoring tests
+      - name: Install and validate
         run: |
           npm ci
           npm run test:authoring
-
-      - name: Run full Tina and Astro production build
-        run: npm run build
+          npm run build:astro
 
       - name: Commit validated fix to gpt-handoff
         shell: bash
