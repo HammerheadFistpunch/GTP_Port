@@ -17,8 +17,8 @@ hero:
     label: About me
     href: /about
   secondaryCta:
-    label: Journal
-    href: /journal/
+    label: Resume
+    href: /resume/
 portfolioLinks:
   visible: true
   title: Explore the Work
