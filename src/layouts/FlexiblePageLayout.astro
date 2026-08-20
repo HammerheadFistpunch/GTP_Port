@@ -6,7 +6,7 @@ import { getSupportedImageSource } from "../lib/image-sources";
 
 interface Props {
   title: string;
-  description: string;
+  description?: string;
   eyebrow?: string;
   headerImage?: string;
   headerImageAlt?: string;
@@ -55,7 +55,7 @@ const safeSeoImage = getSupportedImageSource(seoImage) || undefined;
       <Container width="reading">
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
         <h1>{title}</h1>
-        <p class="introduction">{description}</p>
+        {description && <p class="introduction">{description}</p>}
       </Container>
     </header>
 

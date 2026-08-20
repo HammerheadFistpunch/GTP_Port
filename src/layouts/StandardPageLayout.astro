@@ -10,8 +10,8 @@ interface Link {
 interface Props {
   title: string;
   eyebrow?: string;
-  headline: string;
-  description: string;
+  headline?: string;
+  description?: string;
   headerStyle?: "compact" | "featured";
   links?: Link[];
 }
@@ -24,6 +24,7 @@ const {
   headerStyle = "compact",
   links = [],
 } = Astro.props;
+const displayHeadline = headline?.trim() || title;
 ---
 
 <BaseLayout {title} {description}>
@@ -31,8 +32,8 @@ const {
     <header class="page-header">
       <Container width="reading">
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-        <h1>{headline}</h1>
-        <p class="introduction">{description}</p>
+        <h1>{displayHeadline}</h1>
+        {description && <p class="introduction">{description}</p>}
 
         {links.length > 0 && (
           <nav class="page-links" aria-label={`${title} links`}>

@@ -20,8 +20,8 @@ export interface JournalPostSummary {
 interface Props {
   title: string;
   eyebrow?: string;
-  headline: string;
-  description: string;
+  headline?: string;
+  description?: string;
   sectionTitle: string;
   emptyMessage: string;
   posts: JournalPostSummary[];
@@ -44,6 +44,7 @@ const {
   activeSection,
   canonicalPath,
 } = Astro.props;
+const displayHeadline = headline?.trim() || title;
 
 const sectionLinks = [
   { label: "Latest", href: "/journal/", active: !activeSection },
@@ -60,8 +61,8 @@ const sectionLinks = [
     <Container>
       <header class="journal-header">
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-        <h1>{headline}</h1>
-        <p class="introduction">{description}</p>
+        <h1>{displayHeadline}</h1>
+        {description && <p class="introduction">{description}</p>}
       </header>
 
       <CategoryNav categories={sectionLinks} />

@@ -90,7 +90,8 @@ const isItemCurrent = (item: (typeof navigation)[number]) =>
 <nav class="site-nav" aria-label="Primary navigation">
   <div class="nav-container">
     <a href="/" class="logo" aria-current={currentPath === "/" ? "page" : undefined}>
-      {site.logoText}
+      <img class="logo-mark" src="/favicon.svg" alt="" aria-hidden="true" />
+      <span>{site.logoText}</span>
     </a>
 
     <button
@@ -280,12 +281,23 @@ const isItemCurrent = (item: (typeof navigation)[number]) =>
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
   font-family: var(--font-ui);
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--text-primary);
   text-decoration: none;
   letter-spacing: .03em;
+}
+
+.logo-mark {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
 }
 
 .nav-toggle {
