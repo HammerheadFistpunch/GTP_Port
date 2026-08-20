@@ -1,0 +1,33 @@
+name: Clean temporary branches
+
+on:
+  pull_request:
+    branches: [gpt-handoff]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.head_ref == 'agent/page-header-nullability'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Remove temporary branches
+        shell: bash
+        run: |
+          set -euo pipefail
+          for branch in \
+            agent/page-header-fix \
+            noop \
+            agent/page-header-nullability
+          do
+            ref="heads/${branch}"
+            if gh api "repos/${GITHUB_REPOSITORY}/git/ref/${ref}" >/dev/null 2>&1; then
+              gh api --method DELETE "repos/${GITHUB_REPOSITORY}/git/refs/${ref}"
+              echo "Deleted ${branch}"
+            else
+              echo "Already absent: ${branch}"
+            fi
+          done
