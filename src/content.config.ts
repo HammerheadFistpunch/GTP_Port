@@ -146,7 +146,7 @@ const pages = defineCollection({
     schema: z.discriminatedUnion("pageType", [
         z.object({
             pageType: z.literal("home"),
-            description: z.string().optional(),
+            description: z.string(),
             sectionOrder: homepageSectionOrder,
             hero: z.object({
                 visible: z.boolean().default(true),
@@ -205,7 +205,7 @@ const pages = defineCollection({
             title: z.string(),
             eyebrow: z.string().optional(),
             headline: z.string().optional(),
-            description: z.string().optional(),
+            description: z.string(),
             sectionTitle: z.string(),
             emptyMessage: z.string(),
             featuredEntry: z.string().optional(),
@@ -215,7 +215,7 @@ const pages = defineCollection({
             title: z.string(),
             eyebrow: z.string().optional(),
             headline: z.string().optional(),
-            description: z.string().optional(),
+            description: z.string(),
             headerStyle,
             links: z.array(link).default([]),
             professionalSummary: z.string().default(""),

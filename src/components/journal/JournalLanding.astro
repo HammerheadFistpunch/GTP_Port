@@ -21,7 +21,7 @@ interface Props {
   title: string;
   eyebrow?: string;
   headline?: string;
-  description?: string;
+  description: string;
   sectionTitle: string;
   emptyMessage: string;
   posts: JournalPostSummary[];
@@ -62,7 +62,6 @@ const sectionLinks = [
       <header class="journal-header">
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
         <h1>{displayHeadline}</h1>
-        {description && <p class="introduction">{description}</p>}
       </header>
 
       <CategoryNav categories={sectionLinks} />

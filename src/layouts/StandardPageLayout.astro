@@ -11,7 +11,7 @@ interface Props {
   title: string;
   eyebrow?: string;
   headline?: string;
-  description?: string;
+  description: string;
   headerStyle?: "compact" | "featured";
   links?: Link[];
 }
@@ -33,7 +33,6 @@ const displayHeadline = headline?.trim() || title;
       <Container width="reading">
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
         <h1>{displayHeadline}</h1>
-        {description && <p class="introduction">{description}</p>}
 
         {links.length > 0 && (
           <nav class="page-links" aria-label={`${title} links`}>
