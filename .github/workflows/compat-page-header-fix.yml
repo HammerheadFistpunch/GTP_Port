@@ -41,11 +41,9 @@ jobs:
                   raise SystemExit(f"{path}: target not found: {old[:100]!r}")
               p.write_text(text.replace(old, new))
 
-          # Restore a stable required SEO description across every member of the Pages union.
           replace('src/content.config.ts', '            description: z.string().optional(),\n            sectionOrder: homepageSectionOrder,', '            description: z.string(),\n            sectionOrder: homepageSectionOrder,', expected=1)
           replace('src/content.config.ts', '            headline: z.string().optional(),\n            description: z.string().optional(),', '            headline: z.string().optional(),\n            description: z.string(),', expected=2)
 
-          # Tina: description remains required metadata; eyebrow/headline remain optional display controls.
           replace(
               'tina/config.ts',
               '{ type: "string", name: "description", label: "SEO Description", ui: { component: "textarea" }, description: "Optional homepage metadata. Site Settings provides the fallback when blank." },',
@@ -59,13 +57,11 @@ jobs:
               expected=3,
           )
 
-          # Keep metadata for BaseLayout, but do not force that copy into the visible page header.
           replace('src/layouts/StandardPageLayout.astro', '  description?: string;', '  description: string;', expected=1)
           replace('src/layouts/StandardPageLayout.astro', '        {description && <p class="introduction">{description}</p>}\n', '', expected=1)
           replace('src/components/journal/JournalLanding.astro', '  description?: string;', '  description: string;', expected=1)
           replace('src/components/journal/JournalLanding.astro', '        {description && <p class="introduction">{description}</p>}\n', '', expected=1)
 
-          # Restore Tina lock nullability to String! for the shared page description field.
           lock_path = Path('tina/tina-lock.json')
           lock = json.loads(lock_path.read_text())
           collections = {c['name']: c for c in lock['schema']['collections']}
@@ -74,8 +70,8 @@ jobs:
               fields['description']['required'] = True
           lock_path.write_text(json.dumps(lock, separators=(',', ':')))
 
-          # The helper deletes itself in the validated commit.
           Path('.github/workflows/compat-page-header-fix.yml').unlink()
+          Path('.github/compat-page-header-trigger').unlink(missing_ok=True)
           PY
 
       - name: Validate authoring and Astro build
@@ -89,6 +85,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- tina/config.ts tina/tina-lock.json src/content.config.ts src/layouts/StandardPageLayout.astro src/components/journal/JournalLanding.astro .github/workflows/compat-page-header-fix.yml
+          git add -- tina/config.ts tina/tina-lock.json src/content.config.ts src/layouts/StandardPageLayout.astro src/components/journal/JournalLanding.astro .github/workflows/compat-page-header-fix.yml .github/compat-page-header-trigger
           git commit -m "Make page headers Tina-compatible"
           git push origin HEAD:gpt-handoff
