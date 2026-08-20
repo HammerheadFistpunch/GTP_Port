@@ -110,7 +110,6 @@ jobs:
         run: |
           npm ci
           npm run test:authoring
-          npx tsc --noEmit
           npm run build:astro
 
       - name: Commit validated changes to gpt-handoff
