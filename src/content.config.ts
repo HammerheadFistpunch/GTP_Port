@@ -146,7 +146,7 @@ const pages = defineCollection({
     schema: z.discriminatedUnion("pageType", [
         z.object({
             pageType: z.literal("home"),
-            description: z.string(),
+            description: z.string().optional(),
             sectionOrder: homepageSectionOrder,
             hero: z.object({
                 visible: z.boolean().default(true),

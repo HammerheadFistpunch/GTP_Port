@@ -256,7 +256,7 @@ export default defineConfig({
                 ui: { allowedActions: { create: false, delete: false } },
                 fields: [
                     { type: "string", name: "pageType", label: "Page Type", required: true, options: [{ value: "home", label: "Homepage" }], ui: { component: "hidden" } },
-                    { type: "string", name: "description", label: "SEO Description", required: true, ui: { component: "textarea" } },
+                    { type: "string", name: "description", label: "SEO Description", ui: { component: "textarea" }, description: "Optional homepage metadata. Site Settings provides the fallback when blank." },
                     { type: "string", name: "sectionOrder", label: "Homepage Section Order", list: true, required: true, description: "Drag the rows into place. The arrow buttons provide the same control from a keyboard.", ui: { component: SectionOrderField } },
                     {
                         type: "object", name: "hero", label: "Homepage Hero", required: true,
