@@ -20,7 +20,7 @@ export interface JournalPostSummary {
 interface Props {
   title: string;
   eyebrow?: string;
-  headline?: string;
+  headline: string;
   description: string;
   sectionTitle: string;
   emptyMessage: string;
@@ -34,7 +34,6 @@ interface Props {
 const {
   title,
   eyebrow,
-  headline,
   description,
   sectionTitle,
   emptyMessage,
@@ -44,7 +43,6 @@ const {
   activeSection,
   canonicalPath,
 } = Astro.props;
-const displayHeadline = headline?.trim() || title;
 
 const sectionLinks = [
   { label: "Latest", href: "/journal/", active: !activeSection },
@@ -61,7 +59,7 @@ const sectionLinks = [
     <Container>
       <header class="journal-header">
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-        <h1>{displayHeadline}</h1>
+        <h1>{title}</h1>
       </header>
 
       <CategoryNav categories={sectionLinks} />
@@ -119,12 +117,6 @@ const sectionLinks = [
     text-transform: uppercase;
   }
   .journal-header h1 { max-width: 24ch; font-size: clamp(2.15rem, 5vw, 3.8rem); }
-  .introduction {
-    max-width: 44rem;
-    margin-bottom: 0;
-    color: var(--text-secondary);
-    font-size: 1.15rem;
-  }
   .featured-story {
     padding: clamp(2rem, 5vw, 4rem) 0;
     border-bottom: 1px solid var(--border-color);
