@@ -234,7 +234,7 @@ const flexiblePages = defineCollection({
             const error = validateFlexiblePagePath(value);
             if (error) context.addIssue({ code: "custom", message: error });
         }),
-        description: z.string().optional(),
+        description: z.string(),
         eyebrow: z.string().optional(),
         headerImage: imageSource.optional(),
         headerImageAlt: z.string().optional(),
