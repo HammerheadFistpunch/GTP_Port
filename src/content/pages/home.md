@@ -17,7 +17,7 @@ hero:
     label: Portfolio
     href: /portfolio
   secondaryCta:
-    label: Read Journal
+    label: Journal
     href: /journal/
 portfolioLinks:
   visible: true
