@@ -14,8 +14,8 @@ hero:
   description: 'Making complex things simple and engaging for over two decades. '
   image: /uploads/ground-squirrel-line-art-transparent.png
   primaryCta:
-    label: Watch Video
-    href: /portfolio/video/
+    label: Portfolio
+    href: /portfolio
   secondaryCta:
     label: Read Journal
     href: /journal/
