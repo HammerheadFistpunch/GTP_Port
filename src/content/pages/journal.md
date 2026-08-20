@@ -1,7 +1,7 @@
 ---
 pageType: archive
 title: The Angry Squirrel Journal
-eyebrow: The AngrySquirrel Journal
+eyebrow: Where I hide all my best nuts
 headline: Where I hide all my best nuts
 description: What's new at "The Squirrel"
 sectionTitle: Latest entries
