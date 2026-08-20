@@ -15,7 +15,7 @@ hero:
   image: /uploads/ground-squirrel-line-art-transparent.png
   primaryCta:
     label: About me
-    href: /about
+    href: /about/
   secondaryCta:
     label: Resume
     href: /resume/
