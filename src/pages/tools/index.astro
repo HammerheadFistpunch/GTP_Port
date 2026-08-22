@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/ui/Container.astro";
+---
+
+<BaseLayout
+  title="Tools"
+  description="Software projects and browser-based tools from TheAngrySquirrel."
+  canonicalPath="/tools/"
+>
+  <section class="tools-page">
+    <Container width="wide">
+      <header class="tools-header">
+        <p class="eyebrow">Tools</p>
+        <h1>Things to download. Things to use.</h1>
+        <p class="lede">Software projects, utilities, calculators, and other small tools.</p>
+      </header>
+
+      <div class="tool-grid">
+        <a class="tool-card" href="/tools/software/">
+          <span class="card-kicker">Software</span>
+          <h2>Software</h2>
+          <p>Projects with repositories, releases, downloads, and supporting documentation.</p>
+          <span class="card-link">Browse software →</span>
+        </a>
+
+        <a class="tool-card" href="/tools/online/">
+          <span class="card-kicker">Online tools</span>
+          <h2>Online Tools</h2>
+          <p>Small browser-based applets and calculators that run directly on the site.</p>
+          <span class="card-link">Open online tools →</span>
+        </a>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .tools-page { padding: var(--space-lg) 0 var(--space-xl); }
+  .tools-header { width: min(820px, 100%); margin-bottom: var(--space-lg); }
+  .eyebrow, .card-kicker { color: var(--accent); font-family: var(--font-ui); font-size: .82rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+  h1 { margin: .35rem 0 0; font-size: clamp(2.5rem, 6vw, 4.75rem); }
+  .lede { max-width: 720px; color: var(--text-secondary); font-family: var(--font-ui); font-size: 1.1rem; line-height: 1.6; }
+  .tool-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md); }
+  .tool-card { display: block; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--bg-surface); color: var(--text-primary); text-decoration: none; }
+  .tool-card:hover, .tool-card:focus-visible { border-color: var(--accent); transform: translateY(-2px); }
+  .tool-card h2 { margin: .5rem 0 .65rem; font-size: clamp(1.7rem, 3vw, 2.35rem); }
+  .tool-card p { margin: 0 0 1.2rem; color: var(--text-secondary); line-height: 1.6; }
+  .card-link { font-family: var(--font-ui); font-weight: 800; }
+  @media (max-width: 720px) { .tool-grid { grid-template-columns: 1fr; } }
+</style>
