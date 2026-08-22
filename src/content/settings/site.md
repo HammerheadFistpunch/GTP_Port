@@ -20,6 +20,8 @@ navigation:
         href: /journal/projects/
       - label: Writing
         href: /journal/
+  - label: Journal
+    href: /journal/
   - label: Tools
     href: /tools/
     children:
@@ -27,8 +29,6 @@ navigation:
         href: /tools/software/
       - label: Online Tools
         href: /tools/online/
-  - label: Journal
-    href: /journal/
   - label: Resume
     href: /resume/
   - label: Get in Touch
@@ -53,3 +53,4 @@ footerLinks:
   - label: Resume
     href: /resume
 ---
+
