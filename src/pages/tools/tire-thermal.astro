@@ -1,35 +1,80 @@
 ---
+import { getCollection, getEntry, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/ui/Container.astro";
+import PageBlockRenderer from "../../components/flexible/PageBlockRenderer.astro";
 import TireThermalCalculator from "../../components/tools/TireThermalCalculator.astro";
+
+const page = await getEntry("flexiblePages", "tools/tire-thermal");
+if (!page) {
+  throw new Error("Missing Custom Page content: tools/tire-thermal");
+}
+
+const flexiblePages = await getCollection("flexiblePages");
+const { Content } = await render(page);
+const breadcrumbs = [
+  { label: "Tools", href: "/tools/" },
+  { label: "Online Tools", href: "/tools/online/" },
+];
 ---
 
 <BaseLayout
-  title="Tire Thermal Risk Estimator"
-  description="Compare cold and hot tire pressure with IR surface temperature, speed, and time to identify elevated thermal-load signals."
+  title={page.data.seoTitle || page.data.title}
+  description={page.data.seoDescription || page.data.description}
+  image={page.data.seoImage || undefined}
   canonicalPath="/tools/tire-thermal/"
 >
   <section class="tool-page">
     <Container width="wide">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        {breadcrumbs.map((item) => (
+          <>
+            <span aria-hidden="true">/</span>
+            <a href={item.href}>{item.label}</a>
+          </>
+        ))}
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{page.data.title}</span>
+      </nav>
+
       <header class="tool-header">
-        <p class="eyebrow">Garage tool</p>
-        <h1>Tire Thermal Risk Estimator</h1>
-        <p class="lede">
-          An experimental calculator that compares pressure rise, estimated
-          internal-air heating, IR surface temperature, and operating exposure
-          to identify elevated tire thermal load without claiming a precise
-          carcass temperature or failure threshold.
-        </p>
+        {page.data.eyebrow && <p class="eyebrow">{page.data.eyebrow}</p>}
+        <h1>{page.data.title}</h1>
+        {page.data.description && <p class="lede">{page.data.description}</p>}
       </header>
 
       <TireThermalCalculator />
+
+      <div class="cms-content">
+        <PageBlockRenderer blocks={page.data.blocks} {flexiblePages} />
+        <Content />
+      </div>
     </Container>
   </section>
 </BaseLayout>
 
 <style>
   .tool-page {
-    padding: var(--space-lg) 0 var(--space-xl);
+    padding: var(--space-md) 0 var(--space-xl);
+  }
+
+  .breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: var(--space-md);
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+  }
+
+  .breadcrumbs a {
+    color: inherit;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--accent);
   }
 
   .tool-header {
@@ -59,5 +104,14 @@ import TireThermalCalculator from "../../components/tools/TireThermalCalculator.
     font-family: var(--font-ui);
     font-size: clamp(1rem, 2vw, 1.2rem);
     line-height: 1.6;
+  }
+
+  .cms-content {
+    width: min(860px, 100%);
+    margin-top: var(--space-lg);
+  }
+
+  .cms-content :global(p:last-child) {
+    margin-bottom: 0;
   }
 </style>
