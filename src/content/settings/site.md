@@ -20,6 +20,13 @@ navigation:
         href: /journal/projects/
       - label: Writing
         href: /journal/
+  - label: Tools
+    href: /tools/
+    children:
+      - label: Software
+        href: /tools/software/
+      - label: Online Tools
+        href: /tools/online/
   - label: Journal
     href: /journal/
   - label: Resume
@@ -33,6 +40,8 @@ footerLinks:
     href: /portfolio/video/
   - label: Photography
     href: /portfolio/photography/
+  - label: Tools
+    href: /tools/
   - label: Projects
     href: /journal/projects/
   - label: Journal
@@ -44,4 +53,3 @@ footerLinks:
   - label: Resume
     href: /resume
 ---
-
