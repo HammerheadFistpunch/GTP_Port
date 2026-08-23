@@ -11,13 +11,12 @@ import {
   validateFlexiblePagePath,
 } from "../lib/flexible-pages";
 
-const RESERVED_STATIC_PATHS = new Set(["tools/tire-thermal"]);
-
 export async function getStaticPaths() {
+  const reservedStaticPaths = new Set(["tools/tire-thermal"]);
   const pages = await getCollection("flexiblePages");
   const publishedPages = pages.filter((page) => {
     if (page.data.draft) return false;
-    return !RESERVED_STATIC_PATHS.has(normalizeFlexiblePagePath(page.data.path));
+    return !reservedStaticPaths.has(normalizeFlexiblePagePath(page.data.path));
   });
   const routes = new Map<string, string>();
 
