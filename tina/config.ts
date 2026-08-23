@@ -128,6 +128,44 @@ const flexiblePageBlockTemplates = [
         ],
     },
     {
+        name: "bentoGrid",
+        label: "Bento Grid",
+        ui: {
+            itemProps: (item: Record<string, unknown>) => ({ label: (item?.heading as string) || "Bento Grid" }),
+            defaultItem: { tiles: [] },
+        },
+        fields: [
+            { type: "string" as const, name: "heading", label: "Section Heading" },
+            { type: "string" as const, name: "introduction", label: "Introduction", ui: { component: "textarea" } },
+            {
+                type: "object" as const,
+                name: "tiles",
+                label: "Bento Tiles",
+                list: true,
+                description: "Add and drag tiles into the order you want them to appear.",
+                ui: {
+                    itemProps: (item: Record<string, unknown>) => ({ label: (item?.title as string) || "Bento tile" }),
+                    defaultItem: { size: "small" },
+                },
+                fields: [
+                    { type: "string" as const, name: "title", label: "Title", required: true },
+                    { type: "string" as const, name: "eyebrow", label: "Category / Eyebrow" },
+                    { type: "string" as const, name: "description", label: "Description", ui: { component: "textarea" } },
+                    { type: "image" as const, name: "image", label: "Image", ui: externalImageUi },
+                    { type: "string" as const, name: "imageAlt", label: "Image Alt Text" },
+                    { type: "string" as const, name: "internalPath", label: "Internal Custom Page Path", description: "Use a Custom Page path without a leading slash, such as tools/tire-thermal. If this resolves to a published Custom Page, it takes priority over the URL below." },
+                    { type: "string" as const, name: "href", label: "Custom or External URL", description: "Use a site path or full external URL when the tile does not target another Custom Page." },
+                    { type: "string" as const, name: "linkLabel", label: "Link Label", description: "Optional. Defaults to View." },
+                    { type: "string" as const, name: "size", label: "Tile Size", required: true, options: [
+                        { value: "small", label: "Small" },
+                        { value: "wide", label: "Wide" },
+                        { value: "large", label: "Large" },
+                    ] },
+                ],
+            },
+        ],
+    },
+    {
         name: "callToAction",
         label: "Call to Action",
         ui: { itemProps: (item: Record<string, unknown>) => ({ label: (item?.heading as string) || (item?.label as string) || "Call to Action" }), defaultItem: { style: "primary" } },
