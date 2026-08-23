@@ -31,6 +31,14 @@ const safeExternalUrl = (value?: string) => {
   const sanitized = safeHref(value, "");
   return /^https?:\/\//i.test(sanitized) ? sanitized : "";
 };
+const resolveBentoHref = (internalPath?: string, href?: string) => {
+  if (hasText(internalPath)) {
+    const normalized = normalizeFlexiblePagePath(internalPath || "");
+    if (publishedPages.has(normalized)) return `/${normalized}/`;
+  }
+
+  return safeHref(href);
+};
 
 const renderableBlocks = blocks.filter((block) => {
   switch (block._template) {
@@ -45,6 +53,9 @@ const renderableBlocks = blocks.filter((block) => {
     case "childPages":
       return hasText(block.heading) || hasText(block.introduction) ||
         block.paths.some((path) => publishedPages.has(normalizeFlexiblePagePath(path)));
+    case "bentoGrid":
+      return hasText(block.heading) || hasText(block.introduction) ||
+        block.tiles.some((tile) => hasText(tile.title));
     case "callToAction":
       return hasText(block.label) && Boolean(safeHref(block.href));
   }
@@ -110,6 +121,52 @@ const renderableBlocks = blocks.filter((block) => {
                     <p>{page.data.description}</p>
                   </a>,
                 ];
+              })}
+            </div>
+          </>
+        )}
+
+        {block._template === "bentoGrid" && (
+          <>
+            {(block.heading || block.introduction) && (
+              <div class="page-block__bento-heading">
+                {block.heading && <h2>{block.heading}</h2>}
+                {block.introduction && <p>{block.introduction}</p>}
+              </div>
+            )}
+            <div class="page-block__bento-grid">
+              {block.tiles.filter((tile) => hasText(tile.title)).map((tile) => {
+                const href = resolveBentoHref(tile.internalPath, tile.href);
+                const image = safeImage(tile.image);
+                const content = (
+                  <>
+                    {image && (
+                      <div class="page-block__bento-image">
+                        <img src={image} alt={tile.imageAlt || ""} loading="lazy" decoding="async" />
+                      </div>
+                    )}
+                    <div class="page-block__bento-copy">
+                      {tile.eyebrow && <p class="page-block__bento-eyebrow">{tile.eyebrow}</p>}
+                      <h3>{tile.title}</h3>
+                      {tile.description && <p>{tile.description}</p>}
+                      {href && (
+                        <span class="page-block__bento-link">
+                          {tile.linkLabel || "View"} <span aria-hidden="true">→</span>
+                        </span>
+                      )}
+                    </div>
+                  </>
+                );
+
+                return href ? (
+                  <a class={`page-block__bento-tile page-block__bento-tile--${tile.size}`} href={href}>
+                    {content}
+                  </a>
+                ) : (
+                  <article class={`page-block__bento-tile page-block__bento-tile--${tile.size}`}>
+                    {content}
+                  </article>
+                );
               })}
             </div>
           </>
@@ -192,6 +249,113 @@ const renderableBlocks = blocks.filter((block) => {
     color: var(--text-secondary);
   }
 
+  .page-block__bento-heading {
+    margin-bottom: var(--space-md);
+  }
+
+  .page-block__bento-heading h2,
+  .page-block__bento-heading p {
+    margin-top: 0;
+  }
+
+  .page-block__bento-heading p {
+    max-width: 70ch;
+    margin-bottom: 0;
+    color: var(--text-secondary);
+  }
+
+  .page-block__bento-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: minmax(10rem, auto);
+    grid-auto-flow: dense;
+    gap: var(--space-sm);
+  }
+
+  .page-block__bento-tile {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    overflow: hidden;
+    flex-direction: column;
+    grid-column: span 2;
+    min-height: 15rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  a.page-block__bento-tile:hover,
+  a.page-block__bento-tile:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .page-block__bento-tile--wide {
+    grid-column: span 4;
+  }
+
+  .page-block__bento-tile--large {
+    grid-column: span 4;
+    grid-row: span 2;
+    min-height: 24rem;
+  }
+
+  .page-block__bento-image {
+    min-height: 8rem;
+    flex: 1 1 10rem;
+    overflow: hidden;
+    background: var(--bg-elevated);
+  }
+
+  .page-block__bento-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    object-fit: cover;
+  }
+
+  .page-block__bento-copy {
+    padding: var(--space-md);
+  }
+
+  .page-block__bento-copy h3,
+  .page-block__bento-copy p {
+    margin: 0;
+  }
+
+  .page-block__bento-copy h3 {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    line-height: 1.08;
+  }
+
+  .page-block__bento-copy h3 + p {
+    margin-top: var(--space-xs);
+    color: var(--text-secondary);
+  }
+
+  .page-block__bento-eyebrow {
+    margin-bottom: 0.5rem !important;
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .page-block__bento-link {
+    display: inline-block;
+    margin-top: var(--space-sm);
+    font-family: var(--font-ui);
+    font-weight: 700;
+  }
+
   .page-block__cta {
     display: flex;
     align-items: center;
@@ -207,6 +371,28 @@ const renderableBlocks = blocks.filter((block) => {
     margin-bottom: var(--space-xs);
   }
 
+  @media (max-width: 900px) {
+    .page-block__bento-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: auto;
+    }
+
+    .page-block__bento-tile,
+    .page-block__bento-tile--wide,
+    .page-block__bento-tile--large {
+      grid-row: auto;
+    }
+
+    .page-block__bento-tile {
+      grid-column: span 1;
+    }
+
+    .page-block__bento-tile--wide,
+    .page-block__bento-tile--large {
+      grid-column: span 2;
+    }
+  }
+
   @media (max-width: 760px) {
     .page-blocks {
       gap: var(--space-md);
@@ -218,8 +404,16 @@ const renderableBlocks = blocks.filter((block) => {
   }
 
   @media (max-width: 640px) {
-    .page-block__tiles {
+    .page-block__tiles,
+    .page-block__bento-grid {
       grid-template-columns: 1fr;
+    }
+
+    .page-block__bento-tile,
+    .page-block__bento-tile--wide,
+    .page-block__bento-tile--large {
+      grid-column: span 1;
+      min-height: 0;
     }
 
     .page-block__cta {
