@@ -40,6 +40,22 @@ export const flexiblePageBlockSchema = z.discriminatedUnion("_template", [
         paths: z.array(z.string()).default([]),
     }),
     z.object({
+        _template: z.literal("bentoGrid"),
+        heading: optionalText,
+        introduction: optionalText,
+        tiles: z.array(z.object({
+            title: optionalText,
+            eyebrow: optionalText,
+            description: optionalText,
+            image: optionalImageSource,
+            imageAlt: optionalText,
+            internalPath: optionalText,
+            href: optionalText,
+            linkLabel: optionalText,
+            size: z.enum(["small", "wide", "large"]).default("small"),
+        })).default([]),
+    }),
+    z.object({
         _template: z.literal("callToAction"),
         heading: optionalText,
         text: optionalText,
