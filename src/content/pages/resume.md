@@ -38,9 +38,9 @@ experience:
     location: 'Salt Lake City, Utah'
     description: 'Led hands-on marketing and communications work across public campaigns, digital content, video, live production, print, and internal and external messaging.'
     highlights:
-      - 'Developed targeted social and multi-channel campaigns supporting hazardous household waste, crisis coordination, substance-use programs, and other public-health priorities.'
-      - 'Modernized video production infrastructure and established scalable live-stream workflows for faster, more reliable public communication.'
-      - 'Brought large-format printing in-house, reducing production costs by approximately 75% while improving turnaround, quality control, and brand consistency.'
+      - Developed targeted public-health messaging and multi-channel campaigns by translating complex program requirements into clear audience-specific content and coordinating closely with program stakeholders.
+      - 'Modernized video and live-stream production by redesigning technical infrastructure and workflows, improving the department’s ability to create and distribute timely communications.'
+      - 'Brought large-format printing in-house by evaluating production costs and rebuilding the workflow internally, reducing production expenses by 75% while improving turnaround and brand control.'
       - 'Coordinated creative assets, stakeholders, production timelines, and changing priorities in a fast-moving public-service environment.'
   - period: Dec 2011 – Feb 2024
     title: Creative Producer
