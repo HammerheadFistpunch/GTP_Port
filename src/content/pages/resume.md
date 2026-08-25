@@ -48,12 +48,12 @@ experience:
     location: 'Salt Lake City, Utah'
     description: 'Managed enterprise creative and communications work spanning executive communications, strategic growth, recruitment, public information, live events, and multi-channel media production.'
     highlights:
-      - 'Directed enterprise town halls and live-stream events averaging more than 150 participants, connecting executive leaders with local and national audiences.'
-      - Produced more than 200 live and recorded communication pieces during the COVID-19 pandemic under demanding timelines.
-      - 'Led projects from concept, scripting, and talent coordination through production, editing, and distribution across internal, social, and external channels.'
-      - 'Implemented a digital asset management system and improved production workflows, generating approximately $10,000 in savings while improving access and reuse.'
-      - Co-chaired the Disability Caregiver Resource Group and helped double membership through focused internal outreach and communication.
-      - Supported and coached executive sponsors and project stakeholders for high-visibility communications and production needs.
+      - 'Translated complex clinical, operational, and strategic information into clear enterprise communications for employees, leaders, recruits, and public-facing audiences across live, video, and digital formats.'
+      - 'Directed enterprise town halls and live-stream events by coordinating C-suite leaders, production teams, and stakeholder messaging, connecting leadership with audiences averaging 150+ participants per stream.'
+      - 'Produced 200+ live and recorded communications during the COVID-19 response, converting rapidly changing healthcare information into accurate, time-critical content under demanding timelines.'
+      - Led media campaigns supporting strategic growth and recruitment by aligning cross-functional healthcare teams around centralized narratives and coordinated deliverables.
+      - 'Prepared and coached executive sponsors for high-visibility communications by clarifying requirements, messaging priorities, and presentation needs.'
+      - 'Implemented a digital asset management system and redesigned production workflows, generating approximately $10,000 in cost savings while improving content reuse and execution speed.'
   - period: 2020 – Present
     title: Automotive Journalist / Content Writer
     organization: Freelance
