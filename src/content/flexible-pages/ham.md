@@ -12,10 +12,11 @@ blocks:
 ---
 
 
+
 This is KI7NNK and welcome to my APRS.FI landing page.
 
-Check out my software page to see my radio related projects
-Be sure to say hi if you are nearby, I am reachable at the frequency listed on my voice comment on APRS
-Or reach out via APRS message.  
+- Check out my software page to see my radio related projects.
+- Be sure to say hi if you are nearby, I am reachable at the frequency listed on my voice comment on APRS.
+- Or reach out via APRS message.
 
 
