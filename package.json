@@ -16,11 +16,11 @@
   "dependencies": {
     "@astrojs/mdx": "^6.0.3",
     "@cloudflare/pages-plugin-cloudflare-access": "^1.0.5",
-    "@tinacms/astro": "^0.5.1",
-    "@tinacms/cli": "^2.5.3",
+    "@tinacms/astro": "^0.6.1",
+    "@tinacms/cli": "^2.6.1",
     "astro": "^6.4.6",
     "marked": "16.4.2",
-    "tinacms": "^3.10.0",
+    "tinacms": "^3.12.1",
     "yaml": "2.9.0"
   },
   "devDependencies": {
