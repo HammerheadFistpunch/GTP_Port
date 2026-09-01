@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - chore/tina-upgrade-worker
+    paths:
+      - .github/workflows/tina-upgrade-worker.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   upgrade:
@@ -25,9 +27,10 @@ jobs:
         run: npx tinacms build --local --skip-cloud-checks --noTelemetry
       - name: Build Astro site
         run: npm run build:astro
-      - name: Package generated files
-        run: tar -czf /tmp/tina-upgrade.tgz package.json package-lock.json tina/tina-lock.json
-      - uses: actions/upload-artifact@v4
-        with:
-          name: tina-upgrade
-          path: /tmp/tina-upgrade.tgz
+      - name: Commit generated upgrade files to worker branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json tina/tina-lock.json
+          git commit -m "Generate Tina dependency upgrade"
+          git push
