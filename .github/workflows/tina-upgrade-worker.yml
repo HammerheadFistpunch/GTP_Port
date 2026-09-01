@@ -18,7 +18,7 @@ jobs:
           node-version: '22.22.0'
           cache: npm
       - name: Upgrade Tina packages
-        run: npm install tinacms@3.12.1 @tinacms/cli@2.6.1 --save
+        run: npm install tinacms@3.12.1 @tinacms/cli@2.6.1 @tinacms/astro@0.6.1 --save
       - name: Verify Tina versions
         run: npx tinacms doctor --json
       - name: Regenerate Tina lock
