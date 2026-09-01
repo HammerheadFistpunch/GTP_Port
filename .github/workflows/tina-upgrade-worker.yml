@@ -1,0 +1,33 @@
+name: Tina upgrade worker
+
+on:
+  push:
+    branches:
+      - chore/tina-upgrade-worker
+
+permissions:
+  contents: read
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.0'
+          cache: npm
+      - name: Upgrade Tina packages
+        run: npm install tinacms@3.12.1 @tinacms/cli@2.6.1 --save
+      - name: Verify Tina versions
+        run: npx tinacms doctor --json
+      - name: Regenerate Tina lock
+        run: npx tinacms build --local --skip-cloud-checks --noTelemetry
+      - name: Build Astro site
+        run: npm run build:astro
+      - name: Package generated files
+        run: tar -czf /tmp/tina-upgrade.tgz package.json package-lock.json tina/tina-lock.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tina-upgrade
+          path: /tmp/tina-upgrade.tgz
