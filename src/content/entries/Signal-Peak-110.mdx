@@ -1,5 +1,5 @@
 ---
-title: Signal Peak 1.1.0
+title: Signal Peak 1.2.0
 journalSection: projects
 draft: false
 tags:
@@ -9,9 +9,61 @@ date: 2026-09-08T23:56:32.588Z
 coverImage: /uploads/Screenshot-2026-09-08-180725.png
 ---
 
+
 I recent update to Signal Peak, my radio propagation mapping and modeling tool. Fixed a few bugs, but the biggest changes are:
 
-1. No longer region locked to Utah. Now available for the Continental US
-2. Updated output heatmaps that are more clear in terms of the signal gradient quality
-3. an inverse overlay that shows where signal ISN'T likely on the map based on the most available data.
-![inverse](https://assets.tina.io/bce22d76-7099-40c4-9574-e69b5555a914/Screenshot-2026-09-08-180801.png)
+Viewshed 1.2 builds on the 1.0 and 1.1 releases with improved RF visualization, more practical power controls, and significantly better station data management.
+
+## What’s New
+
+* Added a spreadsheet-style station editor for reviewing and modifying station data in one place.
+* Added per-station overrides for values such as antenna height, transmit power, gain, and location.
+* Added sortable station data, including sorting by station type such as digipeater or iGate.
+* Moved imperial/metric controls into the Advanced settings.
+* Removed the experimental HAAT tool to keep the interface focused on useful RF-planning workflows.
+
+## Coverage & Heat Map Improvements
+
+* Expanded signal-strength heat maps with multiple coverage bands.
+* Updated map legends to match the new signal-strength ranges.
+* Improved heat-map support for area-based analyses.
+* Improved representation of strong, usable, marginal, and weak predicted coverage.
+
+## RF Input Improvements
+
+* Added transmit-power input in both Watts and dBm.
+* Integrated power selection into the advanced propagation settings.
+* Preserved station-specific values where available while allowing global defaults for incomplete station records.
+
+## Station Workflow Improvements
+
+* Station results now correspond to the current analysis rather than accumulating results from previous runs.
+* Improved support for correcting inaccurate APRS station coordinates.
+* Improved custom/future station modeling with user-defined location, antenna height, power, gain, and frequency.
+* Refined the workflow for area, individual-station, and proposed-station studies.
+
+## Reliability Improvements
+
+* Fixed worker failures caused by Windows character-encoding issues during large multi-station jobs.
+* Improved handling of larger area analyses and station datasets.
+* Continued cleanup of station acquisition, caching, and propagation workflows.
+
+## Since 1.0
+
+The 1.0–1.2 releases collectively added:
+
+* Area coverage analysis
+* Individual station analysis
+* Custom/future station modeling
+* Interactive map-based station workflows
+* Station coordinate corrections
+* Terrain-aware propagation analysis
+* Signal-strength heat maps
+* Watts and dBm power input
+* Editable station parameters
+* Per-station RF overrides
+* Sortable station management
+* Improved large-job reliability
+
+Viewshed 1.2 continues moving toward a workflow that combines automated APRS and terrain data with operator-supplied site information where real-world antenna and infrastructure details are known.
+
