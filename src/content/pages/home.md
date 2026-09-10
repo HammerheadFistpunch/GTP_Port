@@ -44,7 +44,7 @@ journalPreview:
   title: From the Journal
   titleHref: /journal/
   subtitle: Where I store all my best nuts
-  featuredEntry: src/content/entries/Signal-Peak---My-first-official-software-release.mdx
+  featuredEntry: src/content/entries/Signal-Peak-110.mdx
   recentLimit: 3
   emptyMessage: Journal entries are coming soon.
 aboutSection:
